@@ -1,0 +1,4 @@
+services:
+  dba.admin.role:
+    class: Dba\AdminBundle\Services\RoleService
+    arguments: ['@security.role_hierarchy']

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+    <title>{% block title %}DBAdventure{% endblock %}</title>
+
+    {% stylesheets '@DbaGameBundle/Resources/assets/css/shared/*.scss' filter="scssphp" output="css/dbadventure.css" %}
+      <link rel="stylesheet" href="{{ asset_url }}" />
+    {% endstylesheets %}
+
+    {% stylesheets '@DbaGameBundle/Resources/assets/css/good.scss' filter="scssphp" output="css/good.css" %}
+      <link rel="stylesheet" href="{{ asset_url }}" />
+    {% endstylesheets %}
+
+    {% stylesheets '@DbaAdminBundle/Resources/assets/css/admin.scss' filter="scssphp" output="css/admin.css" %}
+      <link rel="stylesheet" href="{{ asset_url }}" />
+    {% endstylesheets %}
+  </head>
+  <body id="admin">
+    <div id="main">
+      <div class="container-fluid">
+        <div id="menu">
+          {% include "DbaAdminBundle::menu.html.twig" %}
+          {% block submenu %}{% endblock %}
+        </div>
+        <div id="content">
+          <div class="body">
+            {% include "DbaGameBundle::flash.html.twig" %}
+            {% block body %}{% endblock %}
+          </div>
+        </div>
+        <div class="clearfix">&nbsp;</div>
+      </div>
+
+      <footer id="footer">
+        <p class="text-muted">©DBAdventure.</p>
+      </footer>
+    </div>
+    <script src="{{ asset('/bundles/dbagame/js/jquery-3.1.1.js') }}"></script>
+    <script src="{{ asset('/bundles/dbagame/js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('/bundles/dbagame/js/generic-classes.js') }}"></script>
+    <script src="{{ asset('/bundles/dbagame/js/bootstrap-confirmation.min.js') }}"></script>
+    <script src="{{ asset('/bundles/dbaadmin/vendor/ckeditor/ckeditor.js') }}"></script>
+    <script src="{{ asset('/bundles/dbagame/js/dbadventure.js') }}"></script>
+    <script src="{{ asset('/bundles/dbaadmin/js/admin.js') }}"></script>
+    {% block javascripts %}{% endblock %}
+  </body>
+</html>

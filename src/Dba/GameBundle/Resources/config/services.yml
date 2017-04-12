@@ -1,0 +1,44 @@
+services:
+  dba.game.repos:
+    class: Dba\GameBundle\Services\RepositoryService
+    calls:
+      - [setContainer, ['@service_container']]
+  dba.game.services:
+    class: Dba\GameBundle\Services\ServicesService
+    calls:
+      - [setContainer, ['@service_container']]
+  dba.game.template:
+    class: Dba\GameBundle\Services\TemplateService
+    calls:
+      - [setContainer, ['@service_container']]
+  dba.game.player:
+    class: Dba\GameBundle\Services\PlayerService
+    calls:
+      - [setContainer, ['@service_container']]
+  dba.game.object:
+    class: Dba\GameBundle\Services\ObjectService
+    calls:
+      - [setContainer, ['@service_container']]
+  dba.game.spell:
+    class: Dba\GameBundle\Services\SpellService
+    calls:
+      - [setContainer, ['@service_container']]
+  dba.game.mail:
+    class: Dba\GameBundle\Services\MailService
+    calls:
+      - [setContainer, ['@service_container']]
+
+
+  player.subscriber:
+    class: Dba\GameBundle\EventListener\PlayerSubscriber
+    tags:
+      - { name: doctrine.event_subscriber, connection: default }
+  player.spell.subscriber:
+    class: Dba\GameBundle\EventListener\PlayerSpellSubscriber
+    tags:
+      - { name: kernel.event_subscriber }
+  player.activity.listener:
+    class: Dba\GameBundle\EventListener\PlayerActivityListener
+    arguments: ['@security.token_storage', '@doctrine.orm.entity_manager']
+    tags:
+      - { name: kernel.event_listener, event: kernel.controller, method: onCoreController }

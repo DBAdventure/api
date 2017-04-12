@@ -1,0 +1,99 @@
+{% extends 'DbaAdminBundle::base.html.twig' %}
+
+{% block body %}
+  <form class="form-horizontal" method="post" action="{{ path('admin.player.edit', {"id": player.id}) }}" autocomplete="off">
+    <div class="col-sm-10 col-sm-offset-2">
+      <img id="player-image-displayed" />
+    </div>
+
+    <ul class="nav nav-tabs" role="tablist">
+      <li class="active"><a href="#settings" aria-controls="home" role="tab" data-toggle="tab">{{ 'player.settings' | trans }}</a></li>
+      <li><a href="#map" aria-controls="profile" role="tab" data-toggle="tab">{{ 'player.map.race.side' | trans }}</a></li>
+      <li><a href="#skills" aria-controls="messages" role="tab" data-toggle="tab">{{ 'player.skills' | trans }}</a></li>
+      <li><a href="#stats" aria-controls="messages" role="tab" data-toggle="tab">{{ 'player.stats' | trans }}</a></li>
+    </ul>
+
+    <div class="tab-content">
+      <div role="tabpanel" class="tab-pane active" id="settings">
+        {% if form.roles is defined %}
+          {{ form_row(form.roles) }}
+        {% endif %}
+        {{ form_row(form.name) }}
+        {{ form_row(form.enabled) }}
+        {{ form_row(form.email) }}
+        {{ form_row(form.username) }}
+        {{ form_row(form.password) }}
+      </div>
+
+      <div role="tabpanel" class="tab-pane" id="map">
+        {% if form.race is defined %}
+          {{ form_row(form.race) }}
+        {% endif %}
+
+        {% if form.side is defined %}
+          {{ form_row(form.side) }}
+        {% endif %}
+
+        {{ form_row(form.map) }}
+        {{ form_row(form.x) }}
+        {{ form_row(form.y) }}
+
+        {% if form.appearance is defined %}
+          <table class="table-apparence">
+            <tr>
+              <td align="center" width="75" height="75" background="{{ asset('/bundles/dbagame/images/map/day/grass_0.png') }}" >
+                <img class="perso-images" type="image" src="{{ asset(player.imagePath) }}" border="0">
+              </td>
+              <td align="center" width="10" height="75"></td>
+              <td align="center" width="75" height="75" background="{{ asset('/bundles/dbagame/images/map/day/sand_0.png') }}" >
+                <img class="perso-images" type="image" src="{{ asset(player.imagePath) }}" border="0">
+              </td>
+              <td align="center" width="10" height="75"></td>
+              <td align="center" width="75" height="75" background="{{ asset('/bundles/dbagame/images/map/day/ground_0.png') }}" >
+                <img class="perso-images" type="image" src="{{ asset(player.imagePath) }}" border="0">
+              </td>
+            </tr>
+          </table>
+
+          {{ form_widget(form.appearance.type) }}
+          {{ form_widget(form.appearance.image) }}
+        {% endif %}
+      </div>
+
+      <div role="tabpanel" class="tab-pane" id="skills">
+        {{ form_row(form.accuracy) }}
+        {{ form_row(form.agility) }}
+        {{ form_row(form.strength) }}
+        {{ form_row(form.resistance) }}
+        {{ form_row(form.skill) }}
+        {{ form_row(form.vision) }}
+        {{ form_row(form.analysis) }}
+        {{ form_row(form.intellect) }}
+      </div>
+
+      <div role="tabpanel" class="tab-pane" id="stats">
+        {{ form_row(form.zeni) }}
+        {{ form_row(form.ki) }}
+        {{ form_row(form.maxKi) }}
+        {{ form_row(form.health) }}
+        {{ form_row(form.maxHealth) }}
+        {{ form_row(form.actionPoints) }}
+        {{ form_row(form.fatiguePoints) }}
+        {{ form_row(form.movementPoints) }}
+        {{ form_row(form.battlePoints) }}
+        {{ form_row(form.skillPoints) }}
+      </div>
+    </div>
+    {{ form_widget(form._token) }}
+
+    <div class="col-sm-offset-2 col-sm-10">
+      <button type="submit" class="btn btn-default">{{ 'save' | trans }}</button>
+    </div>
+  </form>
+{% endblock %}
+
+{% block javascripts %}
+  <script type="text/javascript">
+    DbaAdmin.players('/bundles/dbagame/images/avatars/players', '{{ 'form.choice.appearance' | trans | e('js') }}', '{{ player.image | e('js') }}');
+  </script>
+{% endblock %}

@@ -1,0 +1,49 @@
+{% extends 'DbaAdminBundle::base.html.twig' %}
+
+{% block body %}
+  <table class="table table-hover table-clickable">
+    <thead>
+      <tr>
+        <th>{{ 'news.subject' | trans }}</th>
+        <th>{{ 'news.message' | trans }}</th>
+        <th>{{ 'news.createdBy' | trans }}</th>
+        <th>{{ 'news.createdAt' | trans }}</th>
+        <th>{{ 'news.actions' | trans }}</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for news in newsList %}
+        <tr>
+          <td>
+            {{ news.subject }}
+          </td>
+          <td>
+            {{ news.message | truncate(80) }}
+          </td>
+          <td>
+            {{ news.createdBy.name }}
+          </td>
+          <td>
+            {{ news.createdAt | date }}
+          </td>
+          <td>
+            <a href="{{ path('admin.news.edit', {"id": news.id}) }}">
+              <img src="{{ asset('bundles/dbaadmin/images/edit.png') }}" alt="{{ 'edit' | trans }}" />
+            </a>
+            &nbsp;-&nbsp;
+            <a href="{{ path('admin.news.delete', {"id": news.id}) }}" class="delete-news" data-toggle="confirmation">
+              <img src="{{ asset('bundles/dbaadmin/images/trash.png') }}" alt="{{ 'delete' | trans }}" />
+            </a>
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}
+
+{% block javascripts %}
+  <script type="text/javascript">
+    DbaAdmin.confirmation();
+    DbaAdmin.clickable();
+  </script>
+{% endblock %}

@@ -1,0 +1,133 @@
+{% extends 'DbaAdminBundle::base.html.twig' %}
+
+{% block body %}
+  {% if map is null %}
+    <ul>
+      {% for map in maps %}
+        <li>
+          <a href="{{ path('admin.generator.map', {"id": map.id}) }}">{{ map.name | trans }}</a>
+          (<a href="{{ path('admin.generator.minimap', {"id": map.id}) }}">{{ 'admin.generator.minimap.generate' | trans }}</a>)
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <table class="map-generator">
+      {% for y in range(minY, maxY) %}
+        <tr>
+          {% for x in range(minX, maxX) %}
+            <td>
+              <img id="{{ x }}-{{ y }}" data-y="{{ y }}" data-x="{{ x }}" width="100" height="100" {% if mapData[x][y] is defined %}data-image="{{ mapData[x][y]['image'] }}" data-bonus="{{ mapData[x][y]['bonus'] }}" src="{{ '/bundles/dbagame/images/' ~ mapData[x][y]['image'] }}" {% else %}src="" {% endif %}/>
+            </td>
+            {% endfor %}
+        </tr>
+      {% endfor %}
+    </table>
+  {% endif %}
+{% endblock %}
+
+{% block javascripts %}
+  <script type="text/javascript">
+    DbaAdmin.setOption('assetPath', '/bundles/dbagame/images/');
+    DbaAdmin.mapGenerator();
+  </script>
+{% endblock %}
+
+{% block submenu %}
+  {% if map is not null %}
+    {% if map.maxX > divisor or map.maxY > divisor %}
+      <ul>
+        {% for idx in range(0, ((map.maxX / divisor) | round(0, 'floor')) - 1) %}
+          {% for idy in range(0, ((map.maxY / divisor) | round(0, 'floor')) - 1) %}
+            {% if partX != idx or partY != idy %}
+              <li><a href="{{ path('admin.generator.map', {"id": map.id, "partX": idx, "partY": idy}) }}">{{ 'admin.map.view' | trans({"%idxMin%": (idx * divisor) + 1, "%idxMax%": ((idx + 1) * divisor), "%idyMin%": (idy * divisor) + 1, "%idyMax%": ((idy + 1) * divisor)}) }}</a></li>
+            {% endif %}
+          {% endfor %}
+        {% endfor %}
+      </ul>
+    {% endif %}
+    <form class="form-horizontal" id="save-map-form" action="{{ path('admin.generator.map', {"id": map.id}) }}" method="POST">
+      <h1>{{ map.name | trans }}</h1>
+      <div class="form-group">
+        <label class="col-sm-5 control-label">{{ 'admin.map.max.size' | trans }}</label>
+        <div class="col-sm-7">
+          <input type="text" value="{{ map.maxX }}" disabled size="3"/> x <input type="text" value="{{ map.maxY }}" disabled size="3"/>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-sm-5 control-label">
+          {{ 'admin.map.position' | trans}}
+        </label>
+        <div class="col-sm-7">
+          <input type="text" id="position-x" value="0" readonly size="3"/> x <input type="text" id="position-y" value="0" readonly size="3"/>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-sm-5 control-label">
+          {{ 'admin.map.mode' | trans }}
+        </label>
+        <div class="col-sm-7">
+          <select id="available-modes" name="modes">
+            <option value="select">Select</option>
+            <option value="box">Box</option>
+            <option value="multi">Multi-boxes</option>
+            <option value="block">Block</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-sm-5 control-label">
+          {{ 'admin.map.zoom' | trans }}
+        </label>
+        <div class="col-sm-7">
+          <select name="zoom">
+            {% for idx in range(20, 100, 5) %}
+              <option value="{{ idx }}" {% if idx == 50 %} selected="selected"{% endif %}>{{ idx }}</option>
+            {% endfor %}
+          </select>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-sm-5 control-label">
+          {{ 'admin.map.boxes.selected' | trans }}
+        </label>
+        <div class="col-sm-7">
+          <input type="text" id="nb-selected-boxes" value="0" readonly size="4" />
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-sm-5 control-label">
+          {{ 'admin.map.image.select' | trans }}
+        </label>
+        <div class="col-sm-7">
+          <select id="available-images" name="available-images">
+            {% for image in availableImages %}
+              <option data-image="{{ image.box_file }}" value="{{ image.id }}">{{ image.name }}</option>
+            {% endfor %}
+          </select>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-sm-5 control-label">
+          {{ 'admin.map.bonus.select' | trans }}
+        </label>
+        <div class="col-sm-7">
+          <select id="available-bonus" name="available-bonus">
+            {% for bonus in availableBonus %}
+              <option value="{{ bonus.id }}">{{ bonus.name }}</option>
+            {% endfor %}
+          </select>
+        </div>
+      </div>
+
+      <input type="hidden" id="serialized-data" name="serialized-data" />
+      <button class="btn btn-success" type="submit">{{ 'save' | trans }} </button>
+      <button class="btn btn-warning" type="button" name="clear-selected-boxes">{{ 'admin.map.clear.selected' | trans }}</button>
+    </form>
+  {% endif %}
+{% endblock %}

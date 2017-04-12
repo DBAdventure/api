@@ -1,0 +1,3 @@
+game:
+  resource: "@DbaGameBundle/Controller"
+  type:     annotation

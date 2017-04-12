@@ -1,0 +1,65 @@
+{% extends 'DbaAdminBundle::base.html.twig' %}
+{% import "DbaGameBundle::default/macros.html.twig" as defaultHelper %}
+
+{% block body %}
+  <h2>{{ ('player.list') | trans }}</h2>
+
+  <div class="col-lg-6">
+
+    <form class="form-inline" method="POST" action="{{ path('admin.player.search') }}">
+      <label for="who">{{ 'player.search' | trans }}</label>
+      <div class="form-group">
+        <input type="text" id="who" name="who" class="form-control" />
+      </div>
+
+      <button type="submit" class="btn btn-default">{{ 'search' | trans }}</button>
+    </form>
+  </div>
+
+  {{ defaultHelper.pagination(nbPages, page, 'admin.player') }}
+
+  <table class="table table-hover table-clickable">
+    <thead>
+      <tr>
+        <th>{{ 'player.name' | trans }}</th>
+        <th>{{ 'player.level' | trans }}</th>
+        <th>{{ 'player.enabled' | trans }}</th>
+        <th>{{ 'player.actions' | trans }}</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for player in players %}
+        <tr>
+          <td>
+            {{ player.name }}
+          </td>
+          <td>
+            {{ player.level }}
+          </td>
+          <td>
+            {{ player.enabled }}
+          </td>
+          <td>
+            <a href="{{ path('admin.player.edit', {"id": player.id}) }}">
+              <img src="{{ asset('bundles/dbaadmin/images/edit.png') }}" alt="{{ 'edit' | trans }}" />
+            </a>
+            &nbsp;-&nbsp;
+            <a href="{{ path('admin.player.delete', {"id": player.id}) }}" class="delete-news" data-toggle="confirmation">
+              <img src="{{ asset('bundles/dbaadmin/images/trash.png') }}" alt="{{ 'delete' | trans }}" />
+            </a>
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  {{ defaultHelper.pagination(nbPages, page, 'admin.player') }}
+{% endblock %}
+
+{% block javascripts %}
+  <script type="text/javascript">
+    DbaAdmin.confirmation();
+    DbaAdmin.players();
+    DbaAdmin.clickable();
+  </script>
+{% endblock %}

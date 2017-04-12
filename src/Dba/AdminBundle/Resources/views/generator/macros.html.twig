@@ -1,0 +1,8 @@
+{% macro createSelect(name, images) %}
+  <select class="form-control image-part" name="images[{{ name }}]" data-target="#{{ name }}" required>
+    <option value=""></option>
+    {% for key, value in images %}
+      <option value="{{ value }}">{{ key }}</option>
+    {% endfor %}
+  </select>
+{% endmacro %}

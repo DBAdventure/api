@@ -1,0 +1,15 @@
+{% extends 'DbaAdminBundle::base.html.twig' %}
+{% import "DbaAdminBundle::generator/macros.html.twig" as helper %}
+
+{% block body %}
+  <h1>{{ map.name | trans }}</h1>
+  <div class="text-center">
+    <img src="{{ asset(imagePath) }}" />
+  </div>
+{% endblock %}
+
+{% block javascripts %}
+  <script type="text/javascript">
+    DbaAdmin.imageGenerator();
+  </script>
+{% endblock %}

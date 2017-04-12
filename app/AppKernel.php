@@ -18,7 +18,7 @@ class AppKernel extends Kernel
             new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
             new Nelmio\ApiDocBundle\NelmioApiDocBundle(),
             new FOS\RestBundle\FOSRestBundle(),
-            new AppBundle\AppBundle(),
+            new Dba\GameBundle\DbaGameBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {

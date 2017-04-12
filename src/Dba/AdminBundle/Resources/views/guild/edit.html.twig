@@ -1,0 +1,24 @@
+{% extends 'DbaAdminBundle::base.html.twig' %}
+
+{% block body %}
+  <form class="form-horizontal" method="post" action="{{ path('admin.guild.edit', {'id': guild.id}) }}" autocomplete="off">
+    {{ form_row(form.shortName) }}
+    {{ form_row(form.name) }}
+
+    {{ form_row(form.history) }}
+    {{ form_row(form.message) }}
+    {{ form_row(form.enabled) }}
+
+    {{ form_widget(form._token) }}
+
+    <div class="col-sm-offset-2 col-sm-10">
+      <button type="submit" class="btn btn-default">{{ 'save' | trans }}</button>
+    </div>
+  </form>
+{% endblock %}
+
+{% block javascripts %}
+  <script type="text/javascript">
+    DbaAdmin.guilds();
+  </script>
+{% endblock %}

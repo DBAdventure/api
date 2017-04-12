@@ -1,24 +1,43 @@
 # To get started with security, check out the documentation:
-# http://symfony.com/doc/current/security.html
+# http://symfony.com/doc/current/book/security.html
 security:
+  providers:
+    user_db:
+      entity: { class: Dba\GameBundle\Entity\Player, property: username }
 
-    # http://symfony.com/doc/current/security.html#b-configuring-how-users-are-loaded
-    providers:
-        in_memory:
-            memory: ~
+  role_hierarchy:
+    ROLE_MODO: ROLE_PLAYER
+    ROLE_ADMIN: ROLE_MODO
+    ROLE_SUPER_ADMIN: ROLE_ADMIN
 
-    firewalls:
-        # disables authentication for assets and the profiler, adapt it according to your needs
-        dev:
-            pattern: ^/(_(profiler|wdt)|css|images|js)/
-            security: false
+  firewalls:
+    dev:
+      pattern: ^/(_(profiler|wdt)|css|images|js)/
+      security: false
 
-        main:
-            anonymous: ~
-            # activate different ways to authenticate
+    main:
+      anonymous: ~
+      provider: user_db
+      form_login:
+        login_path: /
+        check_path: /login
+        always_use_default_target_path: true
+        default_target_path: /account/dashboard
+      logout:
+        path:   /logout
+        target: /
 
-            # http://symfony.com/doc/current/security.html#a-configuring-how-your-users-will-authenticate
-            #http_basic: ~
+  encoders:
+    Dba\GameBundle\Entity\Player: sha512
 
-            # http://symfony.com/doc/current/cookbook/security/form_login_setup.html
-            #form_login: ~
+  access_control:
+    - { path: ^/account, roles: ROLE_PLAYER }
+    - { path: ^/action, roles: ROLE_PLAYER }
+    - { path: ^/building, roles: ROLE_PLAYER }
+    - { path: ^/inbox, roles: ROLE_PLAYER }
+    - { path: ^/magic, roles: ROLE_PLAYER }
+    - { path: ^/inventory, roles: ROLE_PLAYER }
+    - { path: ^/map, roles: ROLE_PLAYER }
+    - { path: ^/guild, roles: ROLE_PLAYER }
+
+    - { path: ^/admin, roles: ROLE_MODO }

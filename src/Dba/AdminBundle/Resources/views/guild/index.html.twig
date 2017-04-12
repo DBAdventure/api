@@ -1,0 +1,57 @@
+{% extends 'DbaAdminBundle::base.html.twig' %}
+
+{% block body %}
+  {% for type, list in guilds %}
+    <h2>{{ ('guild.list.' ~ type) | trans }}</h2>
+    {% if list is empty %}
+      <p>{{ 'guild.list.empty' | trans }}</p>
+    {% else %}
+      <table class="table table-hover table-clickable">
+        <thead>
+          <tr>
+            <th>{{ 'guild.shortName' | trans }}</th>
+            <th>{{ 'guild.name' | trans }}</th>
+            <th>{{ 'guild.createdBy' | trans }}</th>
+            <th>{{ 'guild.nb.members' | trans }}</th>
+            <th>{{ 'guild.actions' | trans }}</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for guild in list %}
+            <tr>
+              <td>
+                {{ guild.shortName }}
+              </td>
+              <td>
+                {{ guild.name }}
+              </td>
+              <td>
+                {{ guild.createdBy.name }}
+              </td>
+              <td>
+                {{ guild.players | length }}
+              </td>
+              <td>
+                <a href="{{ path('admin.guild.edit', {"id": guild.id}) }}">
+                  <img src="{{ asset('bundles/dbaadmin/images/edit.png') }}" alt="{{ 'edit' | trans }}" />
+                </a>
+                &nbsp;-&nbsp;
+                <a href="{{ path('admin.guild.delete', {"id": guild.id}) }}" class="delete-news" data-toggle="confirmation">
+                  <img src="{{ asset('bundles/dbaadmin/images/trash.png') }}" alt="{{ 'delete' | trans }}" />
+                </a>
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    {% endif %}
+  {% endfor %}
+{% endblock %}
+
+{% block javascripts %}
+  <script type="text/javascript">
+    DbaAdmin.confirmation();
+    DbaAdmin.guilds();
+    DbaAdmin.clickable();
+  </script>
+{% endblock %}

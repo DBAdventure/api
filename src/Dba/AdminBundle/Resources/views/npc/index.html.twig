@@ -1,0 +1,53 @@
+{% extends 'DbaAdminBundle::base.html.twig' %}
+{% import "DbaGameBundle::default/macros.html.twig" as defaultHelper %}
+
+{% block body %}
+  <h2>{{ ('npc.list') | trans }}</h2>
+
+  {{ defaultHelper.pagination(nbPages, page, 'admin.npc') }}
+
+  <table class="table table-hover table-clickable">
+    <thead>
+      <tr>
+        <th>{{ 'npc.name' | trans }}</th>
+        <th>{{ 'npc.level' | trans }}</th>
+        <th>{{ 'npc.enabled' | trans }}</th>
+        <th>{{ 'npc.actions' | trans }}</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for npc in npcs %}
+        <tr>
+          <td>
+            {{ npc.name }}
+          </td>
+          <td>
+            {{ npc.level }}
+          </td>
+          <td>
+            {{ npc.enabled }}
+          </td>
+          <td>
+            <a href="{{ path('admin.player.edit', {"id": npc.id}) }}">
+              <img src="{{ asset('bundles/dbaadmin/images/edit.png') }}" alt="{{ 'edit' | trans }}" />
+            </a>
+            &nbsp;-&nbsp;
+            <a href="{{ path('admin.player.delete', {"id": npc.id}) }}" class="delete-news" data-toggle="confirmation">
+              <img src="{{ asset('bundles/dbaadmin/images/trash.png') }}" alt="{{ 'delete' | trans }}" />
+            </a>
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  {{ defaultHelper.pagination(nbPages, page, 'admin.npc') }}
+{% endblock %}
+
+{% block javascripts %}
+  <script type="text/javascript">
+    DbaAdmin.confirmation();
+    DbaAdmin.npcs();
+    DbaAdmin.clickable();
+  </script>
+{% endblock %}
