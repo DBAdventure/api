@@ -12,6 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\Collection;
 use FOS\UserBundle\Model\User as BaseUser;
 use Symfony\Component\Security\Core\User\AdvancedUserInterface;
+use JMS\Serializer\Annotation as JMS;
 
 /**
  * Player
@@ -29,6 +30,7 @@ use Symfony\Component\Security\Core\User\AdvancedUserInterface;
  * @ORM\Entity(repositoryClass="Dba\GameBundle\Repository\PlayerRepository")
  * @UniqueEntity({"email", "username", "name"})
  * @ORM\HasLifecycleCallbacks
+ * @JMS\ExclusionPolicy("all")
  */
 class Player implements AdvancedUserInterface, Serializable
 {
@@ -69,8 +71,6 @@ class Player implements AdvancedUserInterface, Serializable
 
     const AVAILABLE_MOVE = ['n', 'ne', 'e', 'se', 's', 'sw', 'w', 'nw'];
 
-    private $plainPassword = null;
-
     /**
      * Cache for statistics such as objects strengths, vision,
      * resistance, and others bonus
@@ -85,6 +85,7 @@ class Player implements AdvancedUserInterface, Serializable
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @JMS\Expose
      */
     private $id;
 
@@ -171,6 +172,7 @@ class Player implements AdvancedUserInterface, Serializable
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=50, nullable=false)
+     * @JMS\Expose
      * @Assert\NotBlank()
      * @Assert\Length(
      *      min = 3,
@@ -184,6 +186,7 @@ class Player implements AdvancedUserInterface, Serializable
      *
      * @ORM\Column(name="image", type="string", length=10, nullable=false)
      * @Assert\NotBlank()
+     * @JMS\Expose
      */
     private $image;
 
@@ -618,7 +621,7 @@ class Player implements AdvancedUserInterface, Serializable
      * @var ArrayCollection
      *
      * @ORM\OneToMany(targetEntity="PlayerEvent", mappedBy="player", cascade={"persist"})
-     */
+    */
     private $playerEvents = [];
 
     /**
@@ -2508,7 +2511,6 @@ class Player implements AdvancedUserInterface, Serializable
      */
     public function eraseCredentials()
     {
-        $this->plainPassword = null;
     }
 
     /**
@@ -2643,29 +2645,6 @@ class Player implements AdvancedUserInterface, Serializable
     public function setPassword($password)
     {
         $this->password = $password;
-        return $this;
-    }
-
-    /**
-     * Get plain password
-     *
-     * @return string
-     */
-    public function getPlainPassword()
-    {
-        return $this->plainPassword;
-    }
-
-    /**
-     * Set plain password
-     *
-     * @param string $password
-     *
-     * @return Player
-     */
-    public function setPlainPassword($password)
-    {
-        $this->plainPassword = $password;
         return $this;
     }
 

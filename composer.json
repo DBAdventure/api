@@ -18,6 +18,8 @@
         "doctrine/orm": "^2.5",
         "friendsofsymfony/rest-bundle": "^2.1",
         "incenteev/composer-parameter-handler": "^2.0",
+        "jms/serializer": "^1.6",
+        "jms/serializer-bundle": "^1.4",
         "nelmio/api-doc-bundle": "^2.13",
         "sensio/distribution-bundle": "^5.0",
         "sensio/framework-extra-bundle": "^3.0.2",

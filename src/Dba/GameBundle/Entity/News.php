@@ -3,7 +3,6 @@
 namespace Dba\GameBundle\Entity;
 
 use DateTime;
-use Serializable;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -14,7 +13,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Table(name="news", indexes={@ORM\Index(name="news_created_by", columns={"created_by"})})
  * @ORM\Entity
  */
-class News implements Serializable
+class News
 {
     /**
      * @var DateTime
@@ -228,26 +227,5 @@ class News implements Serializable
     public function getCreatedBy()
     {
         return $this->createdBy;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function serialize()
-    {
-        return serialize(array(
-            $this->subject
-        ));
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function unserialize($serialized)
-    {
-        $data = unserialize($serialized);
-        list(
-            $this->subject
-        ) = $data;
     }
 }

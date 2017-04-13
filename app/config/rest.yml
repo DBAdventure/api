@@ -1,4 +1,5 @@
 fos_rest:
+  body_listener: true
   view:
     view_response_listener: 'force'
     formats:

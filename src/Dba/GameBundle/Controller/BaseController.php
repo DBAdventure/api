@@ -2,11 +2,11 @@
 
 namespace Dba\GameBundle\Controller;
 
-use Dba\GameBundle\Entity\Player;
+use FOS\RestBundle\Controller\FOSRestController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Dba\GameBundle\Entity\Player;
 use Dba\GameBundle\Services;
-use FOS\RestBundle\Controller\FOSRestController;
 
 class BaseController extends FOSRestController
 {
