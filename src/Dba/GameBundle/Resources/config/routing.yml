@@ -1,3 +1,3 @@
 game:
-  resource: "@DbaGameBundle/Controller"
-  type:     annotation
+  resource: "@DbaGameBundle/Controller/DataController.php"
+  type:     rest
