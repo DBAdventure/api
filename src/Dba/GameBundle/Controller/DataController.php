@@ -13,7 +13,7 @@ class DataController extends BaseController
 {
     public function getDataAction()
     {
-        $playerRepository = $this->repos->getPlayerRepository();
+        $playerRepository = $this->repos()->getPlayerRepository();
         return [
             'nbObjects' => $this->repos()->getObjectRepository()->countObjects(),
             'nbBuildings' => $this->repos()->getBuildingRepository()->countBuildings(),
