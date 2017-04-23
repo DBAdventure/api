@@ -46,20 +46,17 @@ class DataController extends BaseController
         ];
     }
 
-    public function getAppearanceAction()
+    public function getDataAppearanceAction()
     {
         return [
             Race::HUMAN => [
-                'choice.group' => [],
                 'Famille de Bulma' => [
-                    'choice.character' => [],
                     'Bulma normal' => 'H.png',
                     'Bulma décontracté' => 'H6.png',
                     'Bulma et bébé trunks' => 'H21.png',
                     'Mère de Bulma' => 'H10.png'
                 ],
                 'Guerrier(Krilin, Yam...)' => [
-                    'choice.character' => [],
                     'Krilin normal' => 'H2.png',
                     'Krilin habit saïyen' => 'H13.png',
                     'Krilin avec des cheveux' => 'H18.png',
@@ -74,7 +71,6 @@ class DataController extends BaseController
                     'Jackie Chun' => 'H47.png'
                 ],
                 'Autres personnages' => [
-                    'choice.character' => [],
                     'Hercule' => 'H5.png',
                     'Tortue Génial' => 'H1.png',
                     'Plume' => 'H7.png',
@@ -97,9 +93,7 @@ class DataController extends BaseController
                 ],
             ],
             Race::HUMAN_SAIYAJIN => [
-                'choice.character' => [],
                 'Sangohan' => [
-                    'choice.clothes' => '',
                     'Bébé Sangohan' => 'HS5.png',
                     'Sangohan + Epée' => 'HS44.png',
                     'Sangohan écolier' => 'HS12.png',
@@ -126,7 +120,6 @@ class DataController extends BaseController
                     'Sangohan du futur' => 'HS7.png'
                 ],
                 'Trunks' => [
-                    'choice.clothes' => '',
                     'Trunks adolescent' => 'HS6.png',
                     'Trunks adolescent + epée' => 'HS33.png',
                     'Trunks Super Saïyen + épée' => 'HS8.png',
@@ -143,66 +136,53 @@ class DataController extends BaseController
                     'Trunks GT Super Saïyen' => 'HS38.png'
                 ],
                 'Sangoten' => [
-                    'choice.clothes' => '',
                     'Sangoten normal' => 'HS18.png',
                     'Sangoten Super Saïyen' => 'HS19.png',
                     'Sangoten GT normal' => 'HS40.png',
                     'Sangoten GT Super Saïyen' => 'HS41.png'
                 ],
                 'Gotrunks' => [
-                    'choice.clothes' => '',
                     'Gotrunks normal' => 'HS13.png',
                     'Gotrunks Super Saïyen' => 'HS14.png',
                     'Gotrunks Super Saïyen 3' => 'HS15.png',
                     'Gotrunks Super Saïyen 3 + Eclairs' => 'HS35.png'
                 ],
                 'Pan' => [
-                    'choice.clothes' => '',
                     'Pan' => 'H101.png',
                     'Pan Bébé' => 'HS47.png'
                 ],
                 'Justicier masqué' => [
-                    'choice.clothes' => '',
                     'Justicier masqué' => 'HS45.png'
                 ],
                 'Bra' => [
-                    'choice.clothes' => '',
                     'Bra' => 'HS46.png'
                 ],
             ],
             Race::NAMEKIAN => [
-                'choice.character' => [],
                 'Piccolo' => [
-                    'choice.character' => [],
                     'Piccolo enfant' => 'N10.png',
                     'Piccolo' => 'N.png',
                     'Dieuccolo' => 'N1.png'
                 ],
                 'Tout-puissant' => [
-                    'choice.character' => [],
                     'Tout-puissant' => 'N3.png'
                 ],
                 'Dendé' => [
-                    'choice.character' => [],
                     'Dendé jeune' => 'N2.png',
                     'Dendé adolescent' => 'N7.png'
                 ],
                 'Simple Namek' => [
-                    'choice.character' => [],
                     'Namek tunique rouge' => 'N4.png',
                     'Namek tunique bleu' => 'N5.png',
                     'Namek tunique verte' => 'N6.png'
                 ],
                 'Slug' => [
-                    'choice.character' => [],
                     'Slug avec casque' => 'N8.png',
                     'Slug sans casque' => 'N9.png'
                 ],
             ],
             RACE::SAIYAJIN => [
-                'choice.character' => [],
                 'Sangoku' => [
-                    'choice.clothes' => '',
                     'Sangoku normal' => 'S.png',
                     'Sangoku Kaïoken' => 'S35.png',
                     'Sangoku Super Saïyen' => 'S2.png',
@@ -224,7 +204,6 @@ class DataController extends BaseController
                     'Sangoku GT Super Saïyen 3 + Eclairs' => 'S27.png'
                 ],
                 'Végéta' => [
-                    'choice.clothes' => '',
                     'Végéta normal' => 'S3.png',
                     'Végéta normal habits saïyen' => 'S12.png',
                     'Végéta Super Saïyen' => 'S4.png',
@@ -237,7 +216,6 @@ class DataController extends BaseController
                     'Prince Végéta' => 'S52.png'
                 ],
                 'Fusion Goku et Végéta' => [
-                    'choice.clothes' => '',
                     'Végéto' => 'S13.png',
                     'Végéto Super Saïyen' => 'S14.png',
                     'Gogéta Super Saïyen 4' => 'S15.png',
@@ -245,7 +223,6 @@ class DataController extends BaseController
                     'Gogéta Super Saïyen 2 + Eclairs' => 'S26.png'
                 ],
                 'Broly' => [
-                    'choice.clothes' => '',
                     'Broly' => 'S17.png',
                     'Broly Super Saiyen' => 'S21.png',
                     'Broly Super Saiyen 2' => 'S22.png',
@@ -255,7 +232,6 @@ class DataController extends BaseController
                     'Broly Super Saïyen Légendaire Altern 3' => 'S53.png'
                 ],
                 'Autres Saïyens' => [
-                    'choice.character' => '',
                     'Nappa' => 'S7.png',
                     'Baddack' => 'S16.png',
                     'Raditz' => 'S6.png',
@@ -272,9 +248,7 @@ class DataController extends BaseController
                 ]
             ],
             Race::ALIEN => [
-                'choice.group' => [],
                 'Freezer et sa Famille' => [
-                    'choice.character' => '',
                     'Freezer normal' => 'A12.png',
                     'Freezer première transformation' => 'A13.png',
                     'Freezer deuxième transformation' => 'A14.png',
@@ -283,7 +257,6 @@ class DataController extends BaseController
                     'Metal Freezer' => 'A3.png'
                 ],
                 'Commando Ginue' => [
-                    'choice.character' => '',
                     'Giniue' => 'A7.png',
                     'Guldo' => 'A24.png',
                     'Geece' => 'A10.png',
@@ -291,7 +264,6 @@ class DataController extends BaseController
                     'Recoom' => 'A8.png'
                 ],
                 'Serviteur de Freezer' => [
-                    'choice.character' => '',
                     'Monstre bleu clair' => 'A.png',
                     'Monstre vert clair' => 'A5.png',
                     'Monstre vert foncé' => 'A1.png',
@@ -304,13 +276,11 @@ class DataController extends BaseController
                     'Kiwi' => 'A44.png'
                 ],
                 'Baby' => [
-                    'choice.character' => '',
                     'Baby' => 'A38.png',
                     'Baby végéta' => 'A15.png',
                     'Baby végéta gorille' => 'A39.png'
                 ],
                 "Les mercenaires de l'espace" => [
-                    'choice.character' => '',
                     'Bojack 1ère transformation' => 'A23.png',
                     'Bojack 2ème transformation' => 'A16.png',
                     'Zangya' => 'A22.png',
@@ -318,28 +288,23 @@ class DataController extends BaseController
                     'Bido' => 'A36.png'
                 ],
                 'Cooler' => [
-                    'choice.character' => '',
                     'Cooler' => 'A18.png',
                     'Super Cooler' => 'A17.png',
                     'Metal Cooler' => 'A19.png'
                 ],
 
                 'Tapion et son frère' => [
-                    'choice.character' => '',
                     'Tapion' => 'A20.png',
                     'Petit frère de Tapion' => 'A21.png'
                 ],
                 'Garlic' => [
-                    'choice.character' => '',
                     'Garlic Junior' => 'A26.png'
                 ],
                 'Janemba' => [
-                    'choice.character' => '',
                     'Janemba1' => 'A27.png',
                     'Janemba2' => 'A28.png'
                 ],
                 'Autres personnages' => [
-                    'choice.character' => '',
                     "Arbitre de l\'autre monde" => 'A31.png',
                     'Catapy' => 'A32.png',
                     'Zold' => 'A33.png',
@@ -351,9 +316,7 @@ class DataController extends BaseController
                 ],
             ],
             Race::CYBORG => [
-                'choice.group' => [],
                 'Les C' => [
-                    'choice.character' => [],
                     'C-13' => 'C11.png',
                     'C-13 Ultime' => 'C10.png',
                     'C-14' => 'C17.png',
@@ -368,7 +331,6 @@ class DataController extends BaseController
                     'C-20 sans chapeau' => 'C9.png'
                 ],
                 'Cell' => [
-                    'choice.character' => [],
                     'Cell première transformation' => 'C15.png',
                     'Cell deuxième transformation' => 'C7.png',
                     'Perfect Cell' => 'C1.png',
@@ -376,13 +338,11 @@ class DataController extends BaseController
                     'Mini cell' => 'C6.png'
                 ],
                 'Autres cyborgs' => [
-                    'choice.character' => [],
                     'Taopaïppaï' => 'C5.png',
                     'Gil' => 'C16.png'
                 ],
             ],
             Race::MAJIN => [
-                'choice.character' => [],
                 'Boubou' => [
                     'choice.shape' => '',
                     'Boubou' => 'M.png',
@@ -408,7 +368,6 @@ class DataController extends BaseController
                 ],
             ],
             Race::DRAGON => [
-                'choice.character' => [],
                 'Dragon de couleur' => [
                     'choice.shape' => '',
                     'Dragon bleu' => 'D.png',
@@ -432,7 +391,6 @@ class DataController extends BaseController
 
                 ],
                 'Autres personnages' => [
-                    'choice.character' => [],
                     'Nova Shenron' => 'D14.png',
                     'Nova Shenron Altern' => 'D20.png',
                     'Uu Shenron' => 'D15.png',
