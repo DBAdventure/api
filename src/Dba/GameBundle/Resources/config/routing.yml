@@ -1,3 +1,10 @@
+login:
+  path:     /login
+  defaults: { _controller: 'DbaGameBundle:Security:login' }
+
 game:
+  resource: "@DbaGameBundle/Controller/DefaultController.php"
+  type:     rest
+game_data:
   resource: "@DbaGameBundle/Controller/DataController.php"
   type:     rest

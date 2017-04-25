@@ -16,13 +16,10 @@ security:
       security: false
 
     main:
-      anonymous: ~
+      anonymous: true
       provider: user_db
-      form_login:
-        login_path: /
+      json_login:
         check_path: /login
-        always_use_default_target_path: true
-        default_target_path: /account/dashboard
       logout:
         path:   /logout
         target: /
@@ -31,13 +28,13 @@ security:
     Dba\GameBundle\Entity\Player: sha512
 
   access_control:
-    - { path: ^/account, roles: ROLE_PLAYER }
-    - { path: ^/action, roles: ROLE_PLAYER }
-    - { path: ^/building, roles: ROLE_PLAYER }
-    - { path: ^/inbox, roles: ROLE_PLAYER }
-    - { path: ^/magic, roles: ROLE_PLAYER }
-    - { path: ^/inventory, roles: ROLE_PLAYER }
-    - { path: ^/map, roles: ROLE_PLAYER }
-    - { path: ^/guild, roles: ROLE_PLAYER }
+    - { path: ^/api/account, roles: ROLE_PLAYER }
+    - { path: ^/api/action, roles: ROLE_PLAYER }
+    - { path: ^/api/building, roles: ROLE_PLAYER }
+    - { path: ^/api/inbox, roles: ROLE_PLAYER }
+    - { path: ^/api/magic, roles: ROLE_PLAYER }
+    - { path: ^/api/inventory, roles: ROLE_PLAYER }
+    - { path: ^/api/map, roles: ROLE_PLAYER }
+    - { path: ^/api/guild, roles: ROLE_PLAYER }
 
     - { path: ^/admin, roles: ROLE_MODO }
