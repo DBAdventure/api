@@ -9,9 +9,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
-/**
- * @Route("/account")
- */
 class AccountController extends BaseController
 {
     const TRAINING_ROOM_ACTION = 5;
@@ -37,6 +34,17 @@ class AccountController extends BaseController
         self::HE,
         self::KI
     ];
+
+
+    public function getPlayerAction()
+    {
+        if (!$this->getUser()) {
+            return $this->forbidden();
+        }
+
+        return $this->getUser();
+    }
+
     public function appearanceAction(Request $request)
     {
         $player = $this->getUser();

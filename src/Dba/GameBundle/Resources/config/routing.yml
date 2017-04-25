@@ -5,6 +5,13 @@ login:
 game:
   resource: "@DbaGameBundle/Controller/DefaultController.php"
   type:     rest
+
 game_data:
   resource: "@DbaGameBundle/Controller/DataController.php"
   type:     rest
+  prefix: /data
+
+game_account:
+  resource: "@DbaGameBundle/Controller/AccountController.php"
+  type:     rest
+  prefix: /account

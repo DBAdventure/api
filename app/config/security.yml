@@ -19,9 +19,9 @@ security:
       anonymous: true
       provider: user_db
       json_login:
-        check_path: /login
+        check_path: /api/login
       logout:
-        path:   /logout
+        path:   /api/logout
         target: /
 
   encoders:
