@@ -45,6 +45,14 @@ class AccountController extends BaseController
         return $this->getUser();
     }
 
+    public function getEventsAction()
+    {
+        return [
+            'player' => $this->getUser()->getPlayerEvents(),
+            'target' => $this->getUser()->getTargetEvents(),
+        ];
+    }
+
     public function appearanceAction(Request $request)
     {
         $player = $this->getUser();
@@ -94,26 +102,6 @@ class AccountController extends BaseController
         );
 
         return $this->redirect($this->generateUrl('home'));
-    }
-
-    /**
-     * @Route("/profile", name="account.profile", methods="GET")
-     * @Template()
-     */
-    public function profileAction()
-    {
-        return $this->render('DbaGameBundle::account/profile.html.twig');
-    }
-
-    /**
-     * @Route("/dashboard", name="account.dashboard", methods="GET")
-     * @Template()
-     */
-    public function dashboardAction()
-    {
-        return $this->render(
-            'DbaGameBundle::account/dashboard.html.twig'
-        );
     }
 
     /**

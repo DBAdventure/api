@@ -11,7 +11,7 @@ use Dba\GameBundle\Entity\Race;
 
 class DataController extends BaseController
 {
-    public function getAction()
+    public function getGameAction()
     {
         $playerRepository = $this->repos()->getPlayerRepository();
         return [
