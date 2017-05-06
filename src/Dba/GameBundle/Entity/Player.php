@@ -620,20 +620,6 @@ class Player implements AdvancedUserInterface, Serializable
     /**
      * @var ArrayCollection
      *
-     * @ORM\OneToMany(targetEntity="PlayerEvent", mappedBy="player", cascade={"persist"})
-    */
-    private $playerEvents = [];
-
-    /**
-     * @var ArrayCollection
-     *
-     * @ORM\OneToMany(targetEntity="PlayerEvent", mappedBy="target", cascade={"persist"})
-     */
-    private $targetEvents = [];
-
-    /**
-     * @var ArrayCollection
-     *
      * @ORM\OneToMany(targetEntity="PlayerObject", mappedBy="player", cascade={"persist"})
      */
     private $playerObjects = [];
@@ -2398,72 +2384,6 @@ class Player implements AdvancedUserInterface, Serializable
         }
 
         return false;
-    }
-
-    /**
-     * Add player event
-     *
-     * @param PlayerEvent $playerEvent
-     *
-     * @return Player
-     */
-    public function addPlayerEvent(PlayerEvent $playerEvent)
-    {
-        $this->playerEvents[] = $playerEvent;
-        return $this;
-    }
-
-    /**
-     * Remove Event
-     *
-     * @param PlayerEvent $playerEvent
-     */
-    public function removePlayerEvent(PlayerEvent $playerEvent)
-    {
-        $this->playerEvents->removeElement($playerEvent);
-    }
-
-    /**
-     * Get Event
-     *
-     * @return ArrayCollection
-     */
-    public function getPlayerEvents()
-    {
-        return $this->playerEvents;
-    }
-
-    /**
-     * Add target event
-     *
-     * @param PlayerEvent $targetEvent
-     *
-     * @return Player
-     */
-    public function addTargetEvent(PlayerEvent $targetEvent)
-    {
-        $this->targetEvents[] = $targetEvent;
-        return $this;
-    }
-
-    /**
-     * Remove Event
-     *
-     * @param PlayerEvent $targetEvent
-     */
-    public function removeTargetEvent(PlayerEvent $targetEvent)
-    {
-        $this->targetEvents->removeElement($targetEvent);
-    }
-
-    /**
-     * Get Event
-     *
-     * @return ArrayCollection
-     */
-    public function getTargetEvents()
-    {
-        return $this->targetEvents;
     }
 
     /**

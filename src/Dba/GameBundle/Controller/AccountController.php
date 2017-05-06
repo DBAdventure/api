@@ -47,9 +47,18 @@ class AccountController extends BaseController
 
     public function getEventsAction()
     {
+        $repos = $this->repos()->getPlayerEventRepository();
         return [
-            'player' => $this->getUser()->getPlayerEvents(),
-            'target' => $this->getUser()->getTargetEvents(),
+            'player' => $repos->findBy(
+                ['player' => $this->getUser()],
+                ['createdAt' => 'DESC'],
+                10
+            ),
+            'target' => $repos->findBy(
+                ['target' => $this->getUser()],
+                ['createdAt' => 'DESC'],
+                10
+            ),
         ];
     }
 
