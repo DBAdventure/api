@@ -578,7 +578,7 @@ class Player implements AdvancedUserInterface, Serializable
     private $headPrice = 0;
 
     /**
-     * @var Side
+     * @var Player
      *
      * @ORM\ManyToOne(targetEntity="Player", fetch="EAGER")
      * @ORM\JoinColumn(name="target_id", referencedColumnName="id", nullable=true, onDelete="SET NULL")
@@ -590,6 +590,7 @@ class Player implements AdvancedUserInterface, Serializable
      *
      * @ORM\ManyToOne(targetEntity="Side", fetch="EAGER")
      * @ORM\JoinColumn(name="side_id", referencedColumnName="id", nullable=false)
+     * @JMS\Expose
      */
     private $side;
 
@@ -598,6 +599,7 @@ class Player implements AdvancedUserInterface, Serializable
      *
      * @ORM\ManyToOne(targetEntity="Rank", fetch="EAGER")
      * @ORM\JoinColumn(name="rank_id", referencedColumnName="id", nullable=false)
+     * @JMS\Expose
      */
     private $rank;
 
@@ -606,6 +608,7 @@ class Player implements AdvancedUserInterface, Serializable
      *
      * @ORM\ManyToOne(targetEntity="Race", fetch="EAGER")
      * @ORM\JoinColumn(name="race_id", referencedColumnName="id", nullable=false)
+     * @JMS\Expose
      */
     private $race;
 
@@ -614,6 +617,7 @@ class Player implements AdvancedUserInterface, Serializable
      *
      * @ORM\ManyToOne(targetEntity="Map", fetch="EAGER")
      * @ORM\JoinColumn(name="map_id", referencedColumnName="id", nullable=false)
+     * @JMS\Expose
      */
     private $map;
 
@@ -635,6 +639,7 @@ class Player implements AdvancedUserInterface, Serializable
      * @var GuildPlayer
      *
      * @ORM\OneToOne(targetEntity="GuildPlayer", mappedBy="player", cascade={"persist"})
+     * @JMS\Expose
      */
     private $guildPlayer;
 

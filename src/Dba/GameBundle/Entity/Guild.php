@@ -5,6 +5,7 @@ namespace Dba\GameBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Validator\Constraints as Assert;
+use JMS\Serializer\Annotation as JMS;
 
 /**
  * Guild
@@ -85,6 +86,7 @@ class Guild
      * @var ArrayCollection
      *
      * @ORM\OneToMany(targetEntity="Dba\GameBundle\Entity\GuildPlayer", mappedBy="guild", cascade={"all"})
+     * @JMS\Exclude
      */
     private $players;
 
