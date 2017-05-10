@@ -11,25 +11,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 
-/**
- * @Route("/map")
- */
 class MapController extends BaseController
 {
-    /**
-     * @Route("/refresh/menu", name="map.refresh.menu", methods="GET")
-     * @Template()
-     */
-    public function refreshMenuAction()
-    {
-        return $this->jsonContent(
-            [
-                'player' => 'DbaGameBundle::menu/player.html.twig',
-                'movement' => 'DbaGameBundle::menu/movement.html.twig'
-            ]
-        );
-    }
-
     /**
      * @Route("/mini.png", name="map.mini.png", methods="GET")
      * @Template()
@@ -138,54 +121,34 @@ class MapController extends BaseController
         );
     }
 
-    /**
-     * @Route("/{what}", name="map", methods="GET", requirements={"what": "(partial|elements)"},
-              defaults={"what": null})
-     * @Template()
-     */
-    public function mapAction($what)
+    public function getAction()
     {
         $mapRepo = $this->repos()->getMapRepository();
         $borders = $mapRepo->findPlayerBorders($this->getUser());
 
-        switch ($what) {
-            case 'partial':
-                return new JsonResponse(
-                    [
-                        'content' => $this->render(
-                            'DbaGameBundle::map/map.html.twig',
-                            [
-                                'map' => $this->getMap($mapRepo),
-                                'borders' => $borders,
-                                'items' => $this->getItems($mapRepo, $borders)
-                            ]
-                        )->getContent()
-                    ]
-                );
-                break;
-            case 'elements':
-                return new JsonResponse(
-                    [
-                        'content' => $this->render(
-                            'DbaGameBundle::map/elements.html.twig',
-                            [
-                                'map' => $this->getMap($mapRepo),
-                                'items' => $this->getItems($mapRepo, $borders)
-                            ]
-                        )->getContent()
-                    ]
-                );
-                break;
-        }
+        return [
+            'map' => $this->getMap($mapRepo),
+            'borders' => $borders,
+            'items' => $this->getItems($mapRepo, $borders)
+        ];
+    }
 
-        return $this->render(
-            'DbaGameBundle::map/index.html.twig',
-            [
+    public function getRefreshAction($what)
+    {
+        $mapRepo = $this->repos()->getMapRepository();
+        $borders = $mapRepo->findPlayerBorders($this->getUser());
+
+        if ($what == 'partial') {
+            return [
                 'map' => $this->getMap($mapRepo),
                 'borders' => $borders,
                 'items' => $this->getItems($mapRepo, $borders)
-            ]
-        );
+            ];
+        }
+        return [
+            'map' => $this->getMap($mapRepo),
+            'items' => $this->getItems($mapRepo, $borders)
+        ];
     }
 
 

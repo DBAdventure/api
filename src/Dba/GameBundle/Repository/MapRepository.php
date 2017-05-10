@@ -104,21 +104,9 @@ EOT;
 
                 foreach ($qb->getQuery()->getResult() as $result) {
                     $object = $result[0];
-                    if (method_exists($object, 'getImagePath')) {
-                        list($height, $width)= getimagesize($rootPath . $object->getImagePath());
-                    } else {
-                        list($height, $width)= getimagesize($rootPath . $object->getMapObjectType()->getImagePath());
-                    }
-
-                    if (empty($this->items['size'][$object->getX()][$object->getY()])) {
-                        $this->items['size'][$object->getX()][$object->getY()] = 0;
-                    }
-
-                    $this->items['size'][$object->getX()][$object->getY()] += $width;
                     $this->items[$type][$object->getX()][$object->getY()][] = [
                         'entity' => $object,
                         'distance' => $result['distance'],
-                        'width' => $width
                     ];
                 }
             }

@@ -22,3 +22,8 @@ game_account:
   resource: "@DbaGameBundle/Controller/AccountController.php"
   type:     rest
   prefix: /account
+
+game_map:
+  resource: "@DbaGameBundle/Controller/MapController.php"
+  type:     rest
+  prefix: /map
