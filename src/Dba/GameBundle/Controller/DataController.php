@@ -32,8 +32,13 @@ class DataController extends BaseController
             'nbAliens' => $playerRepository->countByRace(Race::ALIEN),
             'nbCyborgs' => $playerRepository->countByRace(Race::CYBORG),
             'nbMajins' => $playerRepository->countByRace(Race::MAJIN),
-            'onlinePlayers'  => count($playerRepository->getOnlinePlayers()),
         ];
+    }
+
+    public function getOnlineAction()
+    {
+        $playerRepository = $this->repos()->getPlayerRepository();
+        return ['nbOnlinePlayers' => count($playerRepository->getOnlinePlayers())];
     }
 
     public function getNewsAction()

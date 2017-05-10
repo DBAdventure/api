@@ -2,6 +2,13 @@ login:
   path:     /login
   defaults: { _controller: 'DbaGameBundle:Security:login' }
 
+clear:
+  path:     /clear
+  defaults: { _controller: 'DbaGameBundle:Security:clear' }
+
+logout:
+  path:     /logout
+
 game:
   resource: "@DbaGameBundle/Controller/DefaultController.php"
   type:     rest

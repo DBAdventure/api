@@ -22,7 +22,7 @@ security:
         check_path: /api/login
       logout:
         path:   /api/logout
-        target: /
+        target: /api/clear
 
   encoders:
     Dba\GameBundle\Entity\Player: sha512
