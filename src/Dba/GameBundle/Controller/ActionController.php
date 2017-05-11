@@ -394,23 +394,23 @@ class ActionController extends BaseController
         $this->dispatchEvent(DbaEvents::BEFORE_STEAL, $player, $target, ['messages' => &$messages]);
         list($luck, $zenisAdded) = $playerService->steal($player, $target);
         if ($luck >= -3 && $luck < -2.5) {
-            $messages[] = $this->trans('action.steal.completely.missed');
-            $eventMessage = 'event.action.steal.completely.missed';
+            $messages[] = $this->trans('action.steal.completelyMissed');
+            $eventMessage = 'event.action.steal.completelyMissed';
         } elseif ($luck >= -2.5 && $luck < -1.5) {
             $messages[] = $this->trans('action.steal.missed');
             $eventMessage = 'event.action.steal.missed';
         } elseif ($luck >= -1.5 && $luck < -0.5) {
-            $messages[] = $this->trans('action.steal.moderately.successful');
-            $eventMessage = 'event.action.steal.moderately.successful';
+            $messages[] = $this->trans('action.steal.moderatelySuccessful');
+            $eventMessage = 'event.action.steal.moderatelySuccessful';
         } elseif ($luck >= -0.5 && $luck < 0.5) {
             $messages[] = $this->trans('action.steal.successful');
             $eventMessage = 'event.action.steal.successful';
         } elseif ($luck >= 0.5 && $luck < 1.5) {
-            $messages[] = $this->trans('action.steal.well.successful');
-            $eventMessage = 'event.action.steal.well.successful';
+            $messages[] = $this->trans('action.steal.wellSuccessful');
+            $eventMessage = 'event.action.steal.wellSuccessful';
         } elseif ($luck >= 1.5 && $luck < 2.5) {
-            $messages[] = $this->trans('action.steal.very.well');
-            $eventMessage = 'event.action.steal.very.well';
+            $messages[] = $this->trans('action.steal.verywell');
+            $eventMessage = 'event.action.steal.verywell';
         } else {
             $messages[] = $this->trans('action.steal.perfectly');
             $eventMessage = 'event.action.steal.perfectly';
@@ -481,11 +481,11 @@ class ActionController extends BaseController
         } elseif ($luck >= 30 and $luck <= 44) {
             $messages[] = $this->trans('action.analysis.failed'); //'Évaluation échouée';
         } elseif ($luck >= 15 and $luck <= 29) {
-            $messages[] = $this->trans('action.analysis.moderately.successful'); //'Évaluation moyennement réussie';
+            $messages[] = $this->trans('action.analysis.moderatelySuccessful'); //'Évaluation moyennement réussie';
         } elseif ($luck >= 8 and $luck <= 14) {
             $messages[] = $this->trans('action.analysis.successful'); //'Évaluation bien réussie !';
         } elseif ($luck >= 1 and $luck <= 7) {
-            $messages[] = $this->trans('action.analysis.well.successful'); //'Évaluation très bien réussie !';
+            $messages[] = $this->trans('action.analysis.wellSuccessful'); //'Évaluation très bien réussie !';
         } elseif ($luck == 0) {
             $messages[] = $this->trans('action.analysis.excellent'); //'Évaluation excellente !!';
         }
@@ -726,23 +726,23 @@ class ActionController extends BaseController
         list($luck, $healPoints, $fatiguePoints) = $playerService->heal($player, $target);
 
         if ($luck < -20) {
-            $messages[] = $this->trans('action.heal.completely.missed');
-            $eventMessage = 'event.action.heal.completely.missed';
+            $messages[] = $this->trans('action.heal.completelyMissed');
+            $eventMessage = 'event.action.heal.completelyMissed';
         } elseif ($luck >= -20 && $luck < -10) {
             $messages[] = $this->trans('action.heal.missed');
             $eventMessage = 'event.action.heal.missed';
         } elseif ($luck >= -10 && $luck < -5) {
-            $messages[] = $this->trans('action.heal.moderately.successful');
-            $eventMessage = 'event.action.heal.moderately.successful';
+            $messages[] = $this->trans('action.heal.moderatelySuccessful');
+            $eventMessage = 'event.action.heal.moderatelySuccessful';
         } elseif ($luck >= -5 && $luck < 0) {
             $messages[] = $this->trans('action.heal.successful');
             $eventMessage = 'event.action.heal.successful';
         } elseif ($luck >= 0 && $luck < 5) {
-            $messages[] = $this->trans('action.heal.well.successful');
-            $eventMessage = 'event.action.heal.well.successful';
+            $messages[] = $this->trans('action.heal.wellSuccessful');
+            $eventMessage = 'event.action.heal.wellSuccessful';
         } elseif ($luck >= 5 && $luck < 15) {
-            $messages[] = $this->trans('action.heal.very.well');
-            $eventMessage = 'event.action.heal.very.well';
+            $messages[] = $this->trans('action.heal.verywell');
+            $eventMessage = 'event.action.heal.verywell';
         } else {
             $messages[] = $this->trans('action.heal.perfectly');
             $eventMessage = 'event.action.heal.perfectly';
