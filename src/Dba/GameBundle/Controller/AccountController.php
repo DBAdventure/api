@@ -42,7 +42,67 @@ class AccountController extends BaseController
             return $this->forbidden();
         }
 
-        return $this->getUser();
+        $player = $this->getUser();
+        return [
+            'id' => $player->getId(),
+            'username' => $player->getUsername(),
+            'email' => $player->getEmail(),
+            'name' => $player->getName(),
+            'image' => $player->getImage(),
+            'x' => $player->getX(),
+            'y' => $player->getY(),
+            'side_points' => $player->getSidePoints(),
+            'action_points' => $player->getActionPoints(),
+            'fatigue_points' => $player->getFatiguePoints(),
+            'movement_points' => $player->getMovementPoints(),
+            'battle_points' => $player->getBattlePoints(),
+            'skill_points' => $player->getSkillPoints(),
+            'created_at' => $player->getCreatedAt(),
+            'updated_at' => $player->getUpdatedAt(),
+            'time_remainning' => [
+                'action_points' => $player->getTimeRemaining(Player::ACTION_POINT),
+                'fatigue_points' => $player->getTimeRemaining(Player::FATIGUE_POINT),
+                'movement_points' => $player->getTimeRemaining(Player::MOVEMENT_POINT),
+                'ki_points' => $player->getTimeRemaining(Player::KI_POINT),
+            ],
+            'zeni' => $player->getZeni(),
+            'level' => $player->getLevel(),
+            'specifications' => $player->getSpecifications(),
+            'last_login' => $player->getLastLogin(),
+            'roles' => $player->getRoles(),
+            'class' => $player->getClass(),
+            'map' => $player->getMap(),
+            'rank' => $player->getRank(),
+            'side' => $player->getSide(),
+            'target' => $player->getTarget(),
+            'stats' => [
+                'death_count' => $player->getDeathCount(),
+                'nb_kill_good' => $player->getNbKillGood(),
+                'nb_hit_good' => $player->getNbHitGood(),
+                'nb_damage_good' => $player->getNbDamageGood(),
+                'nb_kill_bad' => $player->getNbKillBad(),
+                'nb_hit_bad' => $player->getNbHitBad(),
+                'nb_damage_bad' => $player->getNbDamageBad(),
+                'nb_kill_npc' => $player->getNbKillNpc(),
+                'nb_hit_npc' => $player->getNbHitNpc(),
+                'nb_damage_npc' => $player->getNbDamageNpc(),
+                'nb_kill_hq' => $player->getNbKillHq(),
+                'nb_hit_hq' => $player->getNbHitHq(),
+                'nb_damage_hq' => $player->getNbDamageHq(),
+                'nb_stolen_zeni' => $player->getNbStolenZeni(),
+                'nb_action_stolen_zeni' => $player->getNbActionStolenZeni(),
+                'nb_dodge' => $player->getNbDodge(),
+                'nb_wanted' => $player->getNbWanted(),
+                'nb_analysis' => $player->getNbAnalysis(),
+                'nb_spell' => $player->getNbSpell(),
+                'nb_health_given' => $player->getNbHealthGiven(),
+                'nb_total_health_given' => $player->getNbTotalHealthGiven(),
+                'nb_slap_taken' => $player->getNbSlapTaken(),
+                'nb_slap_given' => $player->getNbSlaGiven(),
+            ],
+            'betrayals' => $player->getBetrayals(),
+            'head_price' => $player->getHeadPrice(),
+        ];
     }
 
     public function getEventsAction()

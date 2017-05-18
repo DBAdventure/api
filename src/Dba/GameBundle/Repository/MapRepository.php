@@ -83,7 +83,7 @@ EOT;
      *
      * @return array
      */
-    public function findItems(array $repositories, Player $player, array $borders, $rootPath)
+    public function findItems(array $repositories, Player $player, array $borders)
     {
         if (empty($this->items)) {
             foreach ($repositories as $type => $repo) {

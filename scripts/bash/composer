@@ -1,0 +1,23 @@
+#!/bin/bash
+
+source ${DIR}/bash/common
+
+
+function composer_clean() {
+    if [ $(${COMPOSER_BIN} status -v | wc -l) -gt 1 ]; then
+        display "There are uncommited changes in Vendors libs"
+        display "Clearing all Vendors (no check)"
+        rm -rf ${PROJECT_DIR}/vendor/*
+        check
+    else
+        display "Vendor are clean"
+    fi
+}
+
+function composer_install() {
+    pushd ${PROJECT_DIR}
+    display "Install dependencies"
+    ${COMPOSER_BIN}  --profile install -n -o
+    check
+    popd
+}

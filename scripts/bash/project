@@ -1,0 +1,43 @@
+#!/bin/bash
+
+source ${DIR}/bash/common
+source ${DIR}/bash/composer
+
+
+function project_setup() {
+    ENV=$(check_env $1)
+
+    pushd ${PROJECT_DIR}
+    composer_clean
+    composer_install
+    assets_setup
+    popd
+}
+
+function assets_setup() {
+    display "Install assets"
+    ${SF_CONSOLE} assets:install --env=${ENV} --relative
+}
+
+
+function cache_setup() {
+    ENV=$(check_env $1)
+
+    rm -rf /tmp/sf.*.lock
+    pushd ${PROJECT_DIR}
+    VERSION=`git rev-parse --short HEAD`
+    sed -i.bak -r "s/^(\s*)(assets_version: *)/\1assets_version: ${VERSION}/" app/config/parameters.yml
+    ${SF_CONSOLE} assetic:dump --env=${ENV}
+    ${SF_CONSOLE} cache:clear --env=${ENV}
+    ${SF_CONSOLE} cache:warmup --env=${ENV}
+    popd
+}
+
+function check_env() {
+    local ENV=$1
+    if [ -z ${ENV} ]; then
+        ENV=dev
+    fi
+
+    echo $ENV
+}

@@ -72,12 +72,12 @@ class Player implements AdvancedUserInterface, Serializable
     const AVAILABLE_MOVE = ['n', 'ne', 'e', 'se', 's', 'sw', 'w', 'nw'];
 
     /**
-     * Cache for statistics such as objects strengths, vision,
+     * Cache for specifications such as objects strength, vision,
      * resistance, and others bonus
      *
      * @var array
      */
-    protected $stats = [];
+    protected $specifications = [];
 
     /**
      * @var integer
@@ -144,6 +144,7 @@ class Player implements AdvancedUserInterface, Serializable
      * @var DateTime
      *
      * @ORM\Column(name="last_login", type="datetime", nullable=true)
+     * @JMS\Expose
      */
     private $lastLogin;
 
@@ -201,6 +202,7 @@ class Player implements AdvancedUserInterface, Serializable
      * @var integer
      *
      * @ORM\Column(name="level", type="integer", nullable=false)
+     * @JMS\Expose
      */
     private $level = 0;
 
@@ -765,7 +767,7 @@ class Player implements AdvancedUserInterface, Serializable
      */
     public function getTotalAccuracy()
     {
-        return $this->stats['total']['accuracy'];
+        return $this->specifications['total']['accuracy'];
     }
 
     /**
@@ -775,7 +777,7 @@ class Player implements AdvancedUserInterface, Serializable
      */
     public function getObjectsAccuracy()
     {
-        return $this->stats['objects']['accuracy'];
+        return $this->specifications['objects']['accuracy'];
     }
 
     /**
@@ -808,7 +810,7 @@ class Player implements AdvancedUserInterface, Serializable
      */
     public function getTotalAgility()
     {
-        return $this->stats['total']['agility'];
+        return $this->specifications['total']['agility'];
     }
 
     /**
@@ -818,7 +820,7 @@ class Player implements AdvancedUserInterface, Serializable
      */
     public function getObjectsAgility()
     {
-        return $this->stats['objects']['agility'];
+        return $this->specifications['objects']['agility'];
     }
 
     /**
@@ -851,7 +853,7 @@ class Player implements AdvancedUserInterface, Serializable
      */
     public function getTotalStrength()
     {
-        return $this->stats['total']['strength'];
+        return $this->specifications['total']['strength'];
     }
 
     /**
@@ -861,7 +863,7 @@ class Player implements AdvancedUserInterface, Serializable
      */
     public function getObjectsStrength()
     {
-        return $this->stats['objects']['strength'];
+        return $this->specifications['objects']['strength'];
     }
 
     /**
@@ -894,7 +896,7 @@ class Player implements AdvancedUserInterface, Serializable
      */
     public function getTotalResistance()
     {
-        return $this->stats['total']['resistance'];
+        return $this->specifications['total']['resistance'];
     }
 
     /**
@@ -904,7 +906,7 @@ class Player implements AdvancedUserInterface, Serializable
      */
     public function getObjectsResistance()
     {
-        return $this->stats['objects']['resistance'];
+        return $this->specifications['objects']['resistance'];
     }
 
     /**
@@ -937,7 +939,7 @@ class Player implements AdvancedUserInterface, Serializable
      */
     public function getTotalSkill()
     {
-        return $this->stats['total']['skill'];
+        return $this->specifications['total']['skill'];
     }
 
     /**
@@ -947,7 +949,7 @@ class Player implements AdvancedUserInterface, Serializable
      */
     public function getObjectsSkill()
     {
-        return $this->stats['objects']['skill'];
+        return $this->specifications['objects']['skill'];
     }
 
     /**
@@ -980,7 +982,7 @@ class Player implements AdvancedUserInterface, Serializable
      */
     public function getTotalVision()
     {
-        return $this->stats['total']['vision'];
+        return $this->specifications['total']['vision'];
     }
 
     /**
@@ -990,7 +992,7 @@ class Player implements AdvancedUserInterface, Serializable
      */
     public function getObjectsVision()
     {
-        return $this->stats['objects']['vision'];
+        return $this->specifications['objects']['vision'];
     }
 
     /**
@@ -1023,7 +1025,7 @@ class Player implements AdvancedUserInterface, Serializable
      */
     public function getTotalAnalysis()
     {
-        return $this->stats['total']['analysis'];
+        return $this->specifications['total']['analysis'];
     }
 
     /**
@@ -1033,7 +1035,7 @@ class Player implements AdvancedUserInterface, Serializable
      */
     public function getObjectsAnalysis()
     {
-        return $this->stats['objects']['analysis'];
+        return $this->specifications['objects']['analysis'];
     }
 
     /**
@@ -1066,7 +1068,7 @@ class Player implements AdvancedUserInterface, Serializable
      */
     public function getTotalIntellect()
     {
-        return $this->stats['total']['intellect'];
+        return $this->specifications['total']['intellect'];
     }
 
     /**
@@ -1076,7 +1078,7 @@ class Player implements AdvancedUserInterface, Serializable
      */
     public function getObjectsIntellect()
     {
-        return $this->stats['objects']['intellect'];
+        return $this->specifications['objects']['intellect'];
     }
 
     /**
@@ -1132,7 +1134,7 @@ class Player implements AdvancedUserInterface, Serializable
      */
     public function getTotalMaxKi()
     {
-        return $this->stats['total']['max_ki'];
+        return $this->specifications['total']['max_ki'];
     }
 
     /**
@@ -1142,7 +1144,7 @@ class Player implements AdvancedUserInterface, Serializable
      */
     public function getObjectsMaxKi()
     {
-        return $this->stats['objects']['max_ki'];
+        return $this->specifications['objects']['max_ki'];
     }
 
     /**
@@ -1198,7 +1200,7 @@ class Player implements AdvancedUserInterface, Serializable
      */
     public function getTotalMaxHealth()
     {
-        return $this->stats['total']['max_health'];
+        return $this->specifications['total']['max_health'];
     }
 
     /**
@@ -1208,7 +1210,7 @@ class Player implements AdvancedUserInterface, Serializable
      */
     public function getObjectsMaxHealth()
     {
-        return $this->stats['objects']['max_health'];
+        return $this->specifications['objects']['max_health'];
     }
 
     /**
@@ -2733,7 +2735,7 @@ class Player implements AdvancedUserInterface, Serializable
      */
     public function getInventoryWeight()
     {
-        return isset($this->stats['weight']) ? $this->stats['weight'] : 0;
+        return isset($this->specifications['weight']) ? $this->specifications['weight'] : 0;
     }
 
     /**
@@ -2741,17 +2743,9 @@ class Player implements AdvancedUserInterface, Serializable
      *
      * @return string
      */
-    public function getDisplayName()
+    public function getSpecifications()
     {
-        if (empty($this->getGuildPlayer()) || !$this->getGuildPlayer()->isEnabled()) {
-            return $this->name;
-        }
-
-        return sprintf(
-            '[%s] - %s',
-            $this->getGuildPlayer()->getGuild()->getShortName(),
-            $this->getName()
-        );
+        return $this->specifications;
     }
 
     /**
@@ -2799,39 +2793,6 @@ class Player implements AdvancedUserInterface, Serializable
         }
 
         return 1;
-    }
-
-    /**
-     * Get image path
-     *
-     * @return string
-     */
-    public function getImagePath()
-    {
-        $directory = $this->isPlayer() ? 'players' : 'npc';
-        return sprintf('/bundles/dbagame/images/avatars/%s/%s', $directory, $this->getImage());
-    }
-
-    /**
-     * Get inventory image path
-     *
-     * @return string
-     */
-    public function getInventoryImagePath()
-    {
-        $directory = $this->isPlayer() ? 'players' : 'npc';
-        return sprintf('/bundles/dbagame/images/avatars/inventory/%s/%s', $directory, $this->getImage());
-    }
-
-    /**
-     * Get action image path
-     *
-     * @return string
-     */
-    public function getActionImagePath($type)
-    {
-        preg_match('~^([A-Z]+)~', $this->getImage(), $matches);
-        return sprintf('/bundles/dbagame/images/actions/%s/%s.png', $matches[1], $type);
     }
 
     /**
@@ -3342,10 +3303,10 @@ class Player implements AdvancedUserInterface, Serializable
             $firstSkill = $this->findBestSkill();
             $secondSkill = $this->findBestSkill($firstSkill);
         } else {
-            $stats = ['st','ac','ag','an','sk','in','re','vi','mk','mh'];
-            $rand = array_rand($stats, 2);
-            $firstSkill = $stats[$rand[0]];
-            $secondSkill = $stats[$rand[1]];
+            $specifications = ['st','ac','ag','an','sk','in','re','vi','mk','mh'];
+            $rand = array_rand($specifications, 2);
+            $firstSkill = $specifications[$rand[0]];
+            $secondSkill = $specifications[$rand[1]];
         }
 
         // Everything with strength
@@ -3444,7 +3405,7 @@ class Player implements AdvancedUserInterface, Serializable
      */
     public function reloadBonus()
     {
-        $this->stats = [
+        $this->specifications = [
             'objects' => [
                 'strength' => 0,
                 'accuracy' => 0,
@@ -3469,6 +3430,18 @@ class Player implements AdvancedUserInterface, Serializable
                 'max_ki' => $this->getMaxKi(),
                 'max_health' => $this->getMaxHealth(),
             ],
+            'default' => [
+                'strength' => $this->getStrength(),
+                'accuracy' => $this->getAccuracy(),
+                'agility' => $this->getAgility(),
+                'analysis' => $this->getAnalysis(),
+                'skill' => $this->getSkill(),
+                'intellect' => $this->getIntellect(),
+                'resistance' => $this->getResistance(),
+                'vision' => $this->getVision(),
+                'max_ki' => $this->getMaxKi(),
+                'max_health' => $this->getMaxHealth(),
+            ],
             'weight' => 0
         ];
 
@@ -3477,18 +3450,18 @@ class Player implements AdvancedUserInterface, Serializable
                 continue;
             }
 
-            $this->stats['weight'] += $playerObject->getObject()->getWeight();
+            $this->specifications['weight'] += $playerObject->getObject()->getWeight();
             if (empty($playerObject->isEquipped())) {
                 continue;
             }
 
             foreach ($playerObject->getObject()->getBonus() as $type => $bonus) {
-                if (!isset($this->stats['total'][$type])) {
+                if (!isset($this->specifications['total'][$type])) {
                     continue;
                 }
 
-                $this->stats['objects'][$type] += $bonus;
-                $this->stats['total'][$type] += $bonus;
+                $this->specifications['objects'][$type] += $bonus;
+                $this->specifications['total'][$type] += $bonus;
             }
         }
     }

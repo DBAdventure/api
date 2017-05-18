@@ -15,6 +15,7 @@ use Dba\GameBundle\Entity\Type;
 
 class BaseTestCase extends WebTestCase
 {
+    protected $player;
     protected $client;
     protected $container;
 

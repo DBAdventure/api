@@ -169,8 +169,7 @@ class MapController extends BaseController
                 'objects' => $this->repos()->getMapObjectRepository(),
             ],
             $this->getUser(),
-            $borders,
-            $this->getParameter('kernel.root_dir') . '/../web/'
+            $borders
         );
     }
 }

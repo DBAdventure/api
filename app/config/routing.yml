@@ -1,7 +1,7 @@
 game:
-    resource: "@DbaGameBundle/Resources/config/routing.yml"
-    prefix: /api
+  resource: "@DbaGameBundle/Resources/config/routing.yml"
+  prefix: /api
 
 NelmioApiDocBundle:
-    resource: "@NelmioApiDocBundle/Resources/config/routing.yml"
-    prefix:   /api/doc
+  resource: "@NelmioApiDocBundle/Resources/config/routing.yml"
+  prefix:   /api/doc
