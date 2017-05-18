@@ -13,10 +13,6 @@ use Symfony\Component\HttpFoundation\Response;
 
 class MapController extends BaseController
 {
-    /**
-     * @Route("/mini.png", name="map.mini.png", methods="GET")
-     * @Template()
-     */
     public function renderMinimapAction()
     {
         // @TODO Minimap: Check for map in inventory
@@ -67,8 +63,10 @@ class MapController extends BaseController
      * Draw Ellipse for mini map
      *
      * @param resource $originalImage Original image
-     * @param Entity $entity Entity to display
-     * @param resource $color Color of the ellipse
+     * @param Entity   $entity        Entity to display
+     * @param resource $color         Color of the ellipse
+     *
+     * @return void
      */
     protected function drawEllipse($originalImage, $entity, $color)
     {
@@ -83,8 +81,9 @@ class MapController extends BaseController
     }
 
     /**
-     * @Route("/mini", name="map.mini", methods="GET")
-     * @Template()
+     * Mini map
+     *
+     * @return array
      */
     public function miniAction()
     {
@@ -121,6 +120,11 @@ class MapController extends BaseController
         );
     }
 
+    /**
+     * Get map
+     *
+     * @return array
+     */
     public function getAction()
     {
         $mapRepo = $this->repos()->getMapRepository();
@@ -132,25 +136,6 @@ class MapController extends BaseController
             'items' => $this->getItems($mapRepo, $borders)
         ];
     }
-
-    public function getRefreshAction($what)
-    {
-        $mapRepo = $this->repos()->getMapRepository();
-        $borders = $mapRepo->findPlayerBorders($this->getUser());
-
-        if ($what == 'partial') {
-            return [
-                'map' => $this->getMap($mapRepo),
-                'borders' => $borders,
-                'items' => $this->getItems($mapRepo, $borders)
-            ];
-        }
-        return [
-            'map' => $this->getMap($mapRepo),
-            'items' => $this->getItems($mapRepo, $borders)
-        ];
-    }
-
 
     /**
      * Get map data
@@ -171,7 +156,7 @@ class MapController extends BaseController
      * Get items on the map
      *
      * @param MapRepository $mapRepo Map repository
-     * @param array $borders Limits
+     * @param array         $borders Limits
      *
      * @return array
      */

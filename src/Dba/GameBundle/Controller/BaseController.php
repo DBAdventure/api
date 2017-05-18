@@ -7,6 +7,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Dba\GameBundle\Entity\Player;
 use Dba\GameBundle\Services;
+use JMS\Serializer\SerializerBuilder;
 
 class BaseController extends FOSRestController
 {
@@ -70,5 +71,19 @@ class BaseController extends FOSRestController
         }
         $response->setStatusCode(JsonResponse::HTTP_FORBIDDEN);
         return $response;
+    }
+
+    /**
+     * Get serialize object
+     *
+     * @return Serializer
+     */
+    protected function getSerializer()
+    {
+        if (empty($this->serializer)) {
+            $this->serializer = SerializerBuilder::create()->build();
+        }
+
+        return $this->serializer;
     }
 }
