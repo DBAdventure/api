@@ -35,7 +35,6 @@ class AccountController extends BaseController
         self::KI
     ];
 
-
     public function getPlayerAction()
     {
         if (!$this->getUser()) {
@@ -53,8 +52,11 @@ class AccountController extends BaseController
             'y' => $player->getY(),
             'side_points' => $player->getSidePoints(),
             'action_points' => $player->getActionPoints(),
+            'max_action_points' => $player->getMaxActionPoints(),
             'fatigue_points' => $player->getFatiguePoints(),
+            'max_fatigue_points' => $player->getMaxFatiguePoints(),
             'movement_points' => $player->getMovementPoints(),
+            'max_movement_points' => $player->getMaxMovementPoints(),
             'battle_points' => $player->getBattlePoints(),
             'skill_points' => $player->getSkillPoints(),
             'created_at' => $player->getCreatedAt(),
@@ -67,7 +69,28 @@ class AccountController extends BaseController
             ],
             'zeni' => $player->getZeni(),
             'level' => $player->getLevel(),
-            'specifications' => $player->getSpecifications(),
+            'total_strength' => $player->getTotalStrength(),
+            'total_accuracy' => $player->getTotalAccuracy(),
+            'total_agility' => $player->getTotalAgility(),
+            'total_analysis' => $player->getTotalAnalysis(),
+            'total_skill' => $player->getTotalSkill(),
+            'total_intellect' => $player->getTotalIntellect(),
+            'total_resistance' => $player->getTotalResistance(),
+            'total_vision' => $player->getTotalVision(),
+            'total_max_ki' => $player->getTotalMaxKi(),
+            'total_max_health' => $player->getTotalMaxHealth(),
+            'strength' => $player->getStrength(),
+            'accuracy' => $player->getAccuracy(),
+            'agility' => $player->getAgility(),
+            'analysis' => $player->getAnalysis(),
+            'skill' => $player->getSkill(),
+            'intellect' => $player->getIntellect(),
+            'resistance' => $player->getResistance(),
+            'vision' => $player->getVision(),
+            'max_ki' => $player->getMaxKi(),
+            'max_health' => $player->getMaxHealth(),
+            'health' => $player->getHealth(),
+            'ki' => $player->getKi(),
             'last_login' => $player->getLastLogin(),
             'roles' => $player->getRoles(),
             'class' => $player->getClass(),
@@ -98,7 +121,7 @@ class AccountController extends BaseController
                 'nb_health_given' => $player->getNbHealthGiven(),
                 'nb_total_health_given' => $player->getNbTotalHealthGiven(),
                 'nb_slap_taken' => $player->getNbSlapTaken(),
-                'nb_slap_given' => $player->getNbSlaGiven(),
+                'nb_slap_given' => $player->getNbSlapGiven(),
             ],
             'betrayals' => $player->getBetrayals(),
             'head_price' => $player->getHeadPrice(),

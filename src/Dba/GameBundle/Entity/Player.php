@@ -619,7 +619,6 @@ class Player implements AdvancedUserInterface, Serializable
      *
      * @ORM\ManyToOne(targetEntity="Map", fetch="EAGER")
      * @ORM\JoinColumn(name="map_id", referencedColumnName="id", nullable=false)
-     * @JMS\Expose
      */
     private $map;
 
@@ -2739,16 +2738,6 @@ class Player implements AdvancedUserInterface, Serializable
     }
 
     /**
-     * Get display name
-     *
-     * @return string
-     */
-    public function getSpecifications()
-    {
-        return $this->specifications;
-    }
-
-    /**
      * Get map vision
      *
      * @return integer
@@ -3419,18 +3408,6 @@ class Player implements AdvancedUserInterface, Serializable
                 'max_health' => 0,
             ],
             'total' => [
-                'strength' => $this->getStrength(),
-                'accuracy' => $this->getAccuracy(),
-                'agility' => $this->getAgility(),
-                'analysis' => $this->getAnalysis(),
-                'skill' => $this->getSkill(),
-                'intellect' => $this->getIntellect(),
-                'resistance' => $this->getResistance(),
-                'vision' => $this->getVision(),
-                'max_ki' => $this->getMaxKi(),
-                'max_health' => $this->getMaxHealth(),
-            ],
-            'default' => [
                 'strength' => $this->getStrength(),
                 'accuracy' => $this->getAccuracy(),
                 'agility' => $this->getAgility(),
