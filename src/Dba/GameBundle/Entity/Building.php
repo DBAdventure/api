@@ -4,6 +4,7 @@ namespace Dba\GameBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use JMS\Serializer\Annotation as JMS;
 
 /**
  * Building
@@ -11,6 +12,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Table(name="building", uniqueConstraints={@ORM\UniqueConstraint(name="building_name", columns={"name"})},
               indexes={@ORM\Index(name="building_map_id", columns={"map_id"})})
  * @ORM\Entity(repositoryClass="Dba\GameBundle\Repository\BuildingRepository")
+ * @JMS\ExclusionPolicy("all")
  */
 class Building
 {
@@ -24,6 +26,7 @@ class Building
      *
      * @ORM\Column(name="name", type="string", length=80, nullable=false)
      * @Assert\NotBlank()
+     * @JMS\Expose
      */
     private $name;
 
@@ -32,6 +35,7 @@ class Building
      *
      * @ORM\Column(name="image", type="string", length=50, nullable=false)
      * @Assert\NotBlank()
+     * @JMS\Expose
      */
     private $image;
 
@@ -56,6 +60,7 @@ class Building
      *
      * @ORM\Column(name="type", type="integer", nullable=false)
      * @Assert\NotBlank()
+     * @JMS\Expose
      */
     private $type;
 
@@ -65,6 +70,7 @@ class Building
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @JMS\Expose
      */
     private $id;
 

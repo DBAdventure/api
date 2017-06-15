@@ -3,8 +3,6 @@
 namespace Dba\GameBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -19,20 +17,13 @@ use Dba\GameBundle\Entity\MapBonus;
 use Dba\GameBundle\Entity\MapObject;
 use Dba\GameBundle\Entity\MapObjectType;
 
-/**
- * @Route("/action")
- */
 class ActionController extends BaseController
 {
     const DEFAULT_BATTLE_POINT_KILL = 20;
     const DEFAULT_BATTLE_POINT_KILL_SLAP = 10;
     const DEFAULT_NPC_ZENI = 50;
 
-    /**
-     * @Route("/convert", name="action.convert", methods="GET")
-     * @Template()
-     */
-    public function convertAction()
+    public function postConvertAction()
     {
         $player = $this->getUser();
         if (!$player->canConvert()) {
@@ -44,19 +35,10 @@ class ActionController extends BaseController
         $this->em()->persist($player);
         $this->em()->flush();
 
-        return $this->jsonContent(
-            [
-                'player' => 'DbaGameBundle::menu/player.html.twig',
-                'movement' => 'DbaGameBundle::menu/movement.html.twig'
-            ]
-        );
+        return [];
     }
 
-    /**
-     * @Route("/move/{where}", name="action.move", methods="GET")
-     * @Template()
-     */
-    public function moveAction($where)
+    public function postMoveAction($where)
     {
         $player = $this->getUser();
         if ($player->getMovementPoints() < Player::MOVEMENT_ACTION ||
@@ -78,21 +60,13 @@ class ActionController extends BaseController
         $this->em()->persist($player);
         $this->em()->flush();
 
-        return $this->jsonContent(
-            [
-                'player' => 'DbaGameBundle::menu/player.html.twig',
-                'movement' => 'DbaGameBundle::menu/movement.html.twig'
-            ]
-        );
+        return [];
     }
 
     /**
-     * @Route("/attack/{player_id}/{type}", name="action.attack", methods="GET", requirements={"player_id": "\d+"},
-              defaults={"type": null})
      * @ParamConverter("target", class="Dba\GameBundle\Entity\Player", options={"id" = "player_id"})
-     * @Template()
      */
-    public function attackAction(Player $target, $type)
+    public function postAttackAction(Player $target, $type = null)
     {
         $player = $this->getUser();
         if ($player->getActionPoints() < Player::ATTACK_ACTION ||
@@ -235,11 +209,9 @@ class ActionController extends BaseController
     }
 
     /**
-     * @Route("/pickup/{id}", name="action.pickup", methods="GET", requirements={"id": "\d+"})
      * @ParamConverter("mapObject", class="Dba\GameBundle\Entity\MapObject")
-     * @Template()
      */
-    public function pickupAction(MapObject $mapObject)
+    public function postPickupAction(MapObject $mapObject)
     {
         $player = $this->getUser();
         if ($player->getActionPoints() < Player::PICKUP_ACTION ||
@@ -358,11 +330,9 @@ class ActionController extends BaseController
     }
 
     /**
-     * @Route("/steal/{player_id}", name="action.steal", methods="GET", requirements={"player_id": "\d+"})
      * @ParamConverter("target", class="Dba\GameBundle\Entity\Player", options={"id" = "player_id"})
-     * @Template()
      */
-    public function stealAction(Player $target)
+    public function postStealAction(Player $target)
     {
         $player = $this->getUser();
         if ($player->getActionPoints() < Player::STEAL_ACTION ||
@@ -452,11 +422,9 @@ class ActionController extends BaseController
     }
 
     /**
-     * @Route("/analysis/{player_id}", name="action.analysis", methods="GET", requirements={"player_id": "\d+"})
      * @ParamConverter("target", class="Dba\GameBundle\Entity\Player", options={"id": "player_id"})
-     * @Template()
      */
-    public function analysisAction(Player $target)
+    public function postAnalysisAction(Player $target)
     {
         $player = $this->getUser();
         if ($player->getActionPoints() < Player::ANALYSIS_ACTION ||
@@ -521,11 +489,9 @@ class ActionController extends BaseController
     }
 
     /**
-     * @Route("/slap/{player_id}", name="action.slap", methods="GET", requirements={"player_id": "\d+"})
      * @ParamConverter("target", class="Dba\GameBundle\Entity\Player", options={"id" = "player_id"})
-     * @Template()
      */
-    public function slapAction(Player $target)
+    public function postSlapAction(Player $target)
     {
         $player = $this->getUser();
         if ($player->getActionPoints() < Player::SLAP_ACTION ||
@@ -588,14 +554,42 @@ class ActionController extends BaseController
     }
 
     /**
-     * @Route("/give/{player_id}/{object}", name="action.give", methods={"GET", "POST"},
-              requirements={"player_id": "\d+", "object": "\d+"}, defaults={"object": null})
-     * @Route("/give/{player_id}", name="action.give.zeni", methods={"POST"}, requirements={"player_id": "\d+"})
+     * @ParamConverter("target", class="Dba\GameBundle\Entity\Player", options={"id" = "player_id"})
+     */
+    public function getGiveAction(Request $request, Player $target)
+    {
+        $player = $this->getUser();
+        if ($player->getActionPoints() < Player::GIVE_ACTION ||
+            $player->getX() != $target->getX() ||
+            $player->getY() != $target->getY() ||
+            $player->getMap()->getId() != $target->getMap()->getId() ||
+            $player->getId() == $target->getId()
+        ) {
+            // failed to give
+            return $this->forbidden();
+        }
+
+        $objects = [];
+        $playerObjects = $player->getPlayerObjects();
+        foreach ($playerObjects as $playerObject) {
+            if (empty($playerObject->getNumber())) {
+                continue;
+            }
+
+            $objects[] = $playerObject;
+        }
+
+        return [
+            'target' => $target,
+            'playerObjects' => $objects
+        ];
+    }
+
+    /**
      * @ParamConverter("target", class="Dba\GameBundle\Entity\Player", options={"id" = "player_id"})
      * @ParamConverter("object", class="Dba\GameBundle\Entity\Object", options={"id" = "object"}, isOptional="true")
-     * @Template()
      */
-    public function giveAction(Request $request, Player $target, Object $object = null)
+    public function postGiveAction(Request $request, Player $target)
     {
         $player = $this->getUser();
         if ($player->getActionPoints() < Player::GIVE_ACTION ||
@@ -609,76 +603,74 @@ class ActionController extends BaseController
         }
 
         $messages = [];
-        if ($request->isMethod('POST')) {
-            if (empty($object)) {
-                $zeni = $request->request->get('zeni');
-                if (!empty($zeni)) {
-                    $zeni = $zeni > $player->getZeni()  ? $player->getZeni() : $zeni;
-                    $player->setZeni($player->getZeni() - $zeni);
-                    $target->setZeni($target->getZeni() + $zeni);
-                    $player->usePoints(Player::ACTION_POINT, Player::GIVE_ACTION);
-                    $this->em()->persist($target);
-                    $this->em()->persist($player);
-                    $this->em()->flush();
-                    $this->services()->getPlayerService()->addEvent(
-                        $player,
-                        $target,
-                        'event.action.give.zeni',
-                        [
-                            '%zeni%' => $zeni
-                        ]
-                    );
-                }
-            } else {
-                $playerObject = $this->repos()->getPlayerObjectRepository()->findOneBy(
+        if (empty($object)) {
+            $zeni = $request->request->get('zeni');
+            if (!empty($zeni)) {
+                $zeni = $zeni > $player->getZeni()  ? $player->getZeni() : $zeni;
+                $player->setZeni($player->getZeni() - $zeni);
+                $target->setZeni($target->getZeni() + $zeni);
+                $player->usePoints(Player::ACTION_POINT, Player::GIVE_ACTION);
+                $this->em()->persist($target);
+                $this->em()->persist($player);
+                $this->em()->flush();
+                $this->services()->getPlayerService()->addEvent(
+                    $player,
+                    $target,
+                    'event.action.give.zeni',
                     [
-                        'player' => $player,
-                        'object' => $object
+                        '%zeni%' => $zeni
                     ]
                 );
+            }
+        } else {
+            $playerObject = $this->repos()->getPlayerObjectRepository()->findOneBy(
+                [
+                    'player' => $player,
+                    'object' => $object
+                ]
+            );
 
-                if (empty($playerObject) or empty($playerObject->getNumber())) {
-                    return $this->forbidden();
-                }
+            if (empty($playerObject) or empty($playerObject->getNumber())) {
+                return $this->forbidden();
+            }
 
-                $quantity = $request->request->get('quantity', 1);
-                if ($quantity > $playerObject->getNumber()) {
-                    $quantity = $playerObject->getNumber();
-                }
+            $quantity = $request->request->get('quantity', 1);
+            if ($quantity > $playerObject->getNumber()) {
+                $quantity = $playerObject->getNumber();
+            }
 
-                $objectService = $this->services()->getObjectService();
-                $targetObject = $objectService->addToInventory(
+            $objectService = $this->services()->getObjectService();
+            $targetObject = $objectService->addToInventory(
+                $target,
+                $playerObject->getObject(),
+                false,
+                $quantity
+            );
+
+            if (is_numeric($targetObject)) {
+                $messages[] = $this->trans('action.give.error.' . $targetObject);
+            } else {
+                $playerObject->setNumber($playerObject->getNumber() - $quantity);
+                $player->usePoints(Player::ACTION_POINT, Player::GIVE_ACTION);
+                $this->em()->persist($targetObject);
+                $this->em()->persist($playerObject);
+                $this->em()->persist($target);
+                $this->em()->persist($player);
+                $this->em()->flush();
+                $this->em()->refresh($playerObject);
+                $this->services()->getPlayerService()->addEvent(
+                    $player,
                     $target,
-                    $playerObject->getObject(),
-                    false,
-                    $quantity
+                    'event.action.give.item',
+                    [
+                        '%objectName%' => $this->trans(
+                            $playerObject->getObject()->getName() . '.name',
+                            [],
+                            'objects'
+                        ),
+                        '%quantity%' => $quantity
+                    ]
                 );
-
-                if (is_numeric($targetObject)) {
-                    $messages[] = $this->trans('action.give.error.' . $targetObject);
-                } else {
-                    $playerObject->setNumber($playerObject->getNumber() - $quantity);
-                    $player->usePoints(Player::ACTION_POINT, Player::GIVE_ACTION);
-                    $this->em()->persist($targetObject);
-                    $this->em()->persist($playerObject);
-                    $this->em()->persist($target);
-                    $this->em()->persist($player);
-                    $this->em()->flush();
-                    $this->em()->refresh($playerObject);
-                    $this->services()->getPlayerService()->addEvent(
-                        $player,
-                        $target,
-                        'event.action.give.item',
-                        [
-                            '%objectName%' => $this->trans(
-                                $playerObject->getObject()->getName() . '.name',
-                                [],
-                                'objects'
-                            ),
-                            '%quantity%' => $quantity
-                        ]
-                    );
-                }
             }
         }
 
@@ -692,22 +684,17 @@ class ActionController extends BaseController
             $objects[] = $playerObject;
         }
 
-        return $this->jsonContent(
-            'DbaGameBundle::action/give.html.twig',
-            [
-                'messages' => $messages,
-                'target' => $target,
-                'playerObjects' => $objects
-            ]
-        );
+        return [
+            'messages' => $messages,
+            'target' => $target,
+            'playerObjects' => $objects
+        ];
     }
 
     /**
-     * @Route("/heal/{player_id}", name="action.heal", methods="GET", requirements={"player_id": "\d+"})
      * @ParamConverter("target", class="Dba\GameBundle\Entity\Player", options={"id" = "player_id"})
-     * @Template()
      */
-    public function healAction(Player $target)
+    public function postHealAction(Player $target)
     {
         $player = $this->getUser();
         if ($player->getActionPoints() < Player::HEAL_ACTION ||
@@ -804,16 +791,7 @@ class ActionController extends BaseController
         );
     }
 
-    /**
-     * @Route("/spell/{player_id}/{spell_id}/{type}", name="action.spell", methods="GET",
-              requirements={"player_id": "\d+", "spell_id": "\d+"},
-              defaults={"type": null, "spell_id": null})
-     * @ParamConverter("target", class="Dba\GameBundle\Entity\Player", options={"id" = "player_id"})
-     * @ParamConverter("playerSpell", class="Dba\GameBundle\Entity\PlayerSpell", isOptional="true",
-                       options={"id" = "spell_id"})
-     * @Template()
-     */
-    public function spellAction(Player $target, $type, PlayerSpell $playerSpell = null)
+    public function getSpellAction(Player $target)
     {
         $player = $this->getUser();
         if ($player->getActionPoints() < Player::SPELL_ACTION ||
@@ -827,21 +805,36 @@ class ActionController extends BaseController
             return $this->forbidden();
         }
 
-        if (empty($playerSpell)) {
-            return $this->jsonContent(
-                'DbaGameBundle::action/spell.html.twig',
-                [
-                    'playerSpells' => $player->getPlayerSpells(),
-                    'messages' => [],
-                    'target' => $target,
-                    'attackType' => null,
-                    'isDead' => false,
-                    'distances' => [
-                        'max_x' => abs($target->getX() - $player->getX()),
-                        'max_y' => abs($target->getY() - $player->getY())
-                    ]
-                ]
-            );
+        return [
+            'playerSpells' => $player->getPlayerSpells(),
+            'messages' => [],
+            'target' => $target,
+            'attackType' => null,
+            'isDead' => false,
+            'distances' => [
+                'max_x' => abs($target->getX() - $player->getX()),
+                'max_y' => abs($target->getY() - $player->getY())
+            ]
+        ];
+    }
+
+    /**
+     * @ParamConverter("target", class="Dba\GameBundle\Entity\Player", options={"id" = "player_id"})
+     * @ParamConverter("playerSpell", class="Dba\GameBundle\Entity\PlayerSpell",
+                       options={"id" = "spell_id"})
+     */
+    public function postSpellAction(Player $target, $type, PlayerSpell $playerSpell)
+    {
+        $player = $this->getUser();
+        if ($player->getActionPoints() < Player::SPELL_ACTION ||
+            $player->getX() != $target->getX() ||
+            $player->getY() != $target->getY() ||
+            $player->getMap()->getId() != $target->getMap()->getId() ||
+            $player->getId() == $target->getId() ||
+            (!empty($playerSpell) && !$this->canMakeAction($player, $target, $playerSpell))
+        ) {
+            // failed to attack
+            return $this->forbidden();
         }
 
         if (!$playerSpell->canBeUsed()) {

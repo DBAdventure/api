@@ -18,6 +18,11 @@ game_data:
   type:     rest
   prefix: /data
 
+game_action:
+  resource: "@DbaGameBundle/Controller/ActionController.php"
+  type:     rest
+  prefix: /action
+
 game_account:
   resource: "@DbaGameBundle/Controller/AccountController.php"
   type:     rest
