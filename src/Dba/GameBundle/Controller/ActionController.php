@@ -95,15 +95,12 @@ class ActionController extends BaseController
             $this->em()->persist($player);
             $this->em()->flush();
 
-            return $this->jsonContent(
-                'DbaGameBundle::action/attack.html.twig',
-                [
-                    'messages' => $return,
-                    'target' => $target,
-                    'attackType' => $type,
-                    'isDead' => false
-                ]
-            );
+            return [
+                'messages' => $return,
+                'target' => $target,
+                'attackType' => $type,
+                'isDead' => false
+            ];
         }
 
         $messages = [];
@@ -197,15 +194,12 @@ class ActionController extends BaseController
         $this->em()->persist($target);
         $this->em()->flush();
 
-        return $this->jsonContent(
-            'DbaGameBundle::action/attack.html.twig',
-            [
-                'messages' => $messages,
-                'isDead' => $isDead,
-                'target' => $target,
-                'attackType' => $type
-            ]
-        );
+        return [
+            'messages' => $messages,
+            'isDead' => $isDead,
+            'target' => $target,
+            'attackType' => $type
+        ];
     }
 
     /**
@@ -321,12 +315,9 @@ class ActionController extends BaseController
         $this->em()->remove($mapObject);
         $this->em()->flush();
 
-        return $this->jsonContent(
-            'DbaGameBundle::action/pickup.html.twig',
-            [
-                'messages' => $messages
-            ]
-        );
+        return [
+            'messages' => $messages
+        ];
     }
 
     /**
@@ -351,13 +342,10 @@ class ActionController extends BaseController
             $this->em()->persist($player);
             $this->em()->flush();
 
-            return $this->jsonContent(
-                'DbaGameBundle::action/steal.html.twig',
-                [
-                    'messages' => $return,
-                    'target' => $target
-                ]
-            );
+            return [
+                'messages' => $return,
+                'target' => $target
+            ];
         }
 
         $messages = [];
@@ -412,13 +400,10 @@ class ActionController extends BaseController
         $this->em()->persist($target);
         $this->em()->flush();
 
-        return $this->jsonContent(
-            'DbaGameBundle::action/steal.html.twig',
-            [
-                'messages' => $messages,
-                'target' => $target
-            ]
-        );
+        return [
+            'messages' => $messages,
+            'target' => $target
+        ];
     }
 
     /**
@@ -543,14 +528,11 @@ class ActionController extends BaseController
         $this->em()->persist($target);
         $this->em()->flush();
 
-        return $this->jsonContent(
-            'DbaGameBundle::action/slap.html.twig',
-            [
-                'messages' => $messages,
-                'target' => $target,
-                'isDead' => $isDead
-            ]
-        );
+        return [
+            'messages' => $messages,
+            'target' => $target,
+            'isDead' => $isDead
+        ];
     }
 
     /**
@@ -782,13 +764,10 @@ class ActionController extends BaseController
         $this->em()->flush();
 
 
-        return $this->jsonContent(
-            'DbaGameBundle::action/heal.html.twig',
-            [
-                'messages' => $messages,
-                'target' => $target
-            ]
-        );
+        return [
+            'messages' => $messages,
+            'target' => $target
+        ];
     }
 
     public function getSpellAction(Player $target)
@@ -860,15 +839,12 @@ class ActionController extends BaseController
             $this->em()->persist($player);
             $this->em()->flush();
 
-            return $this->jsonContent(
-                'DbaGameBundle::action/spell.html.twig',
-                [
-                    'messages' => $return,
-                    'target' => $target,
-                    'attackType' => $type,
-                    'isDead' => false
-                ]
-            );
+            return [
+                'messages' => $return,
+                'target' => $target,
+                'attackType' => $type,
+                'isDead' => false
+            ];
         }
 
         $messages = [];
@@ -983,20 +959,17 @@ class ActionController extends BaseController
         $this->em()->persist($playerSpell);
         $this->em()->flush();
 
-        return $this->jsonContent(
-            'DbaGameBundle::action/spell.html.twig',
-            [
-                'playerSpells' => $player->getPlayerSpells(),
-                'messages' => $messages,
-                'isDead' => $isDead,
-                'target' => $target,
-                'attackType' => $type,
-                'distances' => [
-                    'max_x' => abs($target->getX() - $player->getX()),
-                    'max_y' => abs($target->getY() - $player->getY())
-                ]
+        return [
+            'playerSpells' => $player->getPlayerSpells(),
+            'messages' => $messages,
+            'isDead' => $isDead,
+            'target' => $target,
+            'attackType' => $type,
+            'distances' => [
+                'max_x' => abs($target->getX() - $player->getX()),
+                'max_y' => abs($target->getY() - $player->getY())
             ]
-        );
+        ];
     }
 
     /**
