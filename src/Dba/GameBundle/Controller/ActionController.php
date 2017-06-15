@@ -64,7 +64,7 @@ class ActionController extends BaseController
     }
 
     /**
-     * @ParamConverter("target", class="Dba\GameBundle\Entity\Player", options={"id" = "player_id"})
+     * @ParamConverter("target", class="Dba\GameBundle\Entity\Player")
      */
     public function postAttackAction(Player $target, $type = null)
     {
@@ -321,7 +321,7 @@ class ActionController extends BaseController
     }
 
     /**
-     * @ParamConverter("target", class="Dba\GameBundle\Entity\Player", options={"id" = "player_id"})
+     * @ParamConverter("target", class="Dba\GameBundle\Entity\Player")
      */
     public function postStealAction(Player $target)
     {
@@ -407,7 +407,7 @@ class ActionController extends BaseController
     }
 
     /**
-     * @ParamConverter("target", class="Dba\GameBundle\Entity\Player", options={"id": "player_id"})
+     * @ParamConverter("target", class="Dba\GameBundle\Entity\Player")
      */
     public function postAnalysisAction(Player $target)
     {
@@ -474,7 +474,7 @@ class ActionController extends BaseController
     }
 
     /**
-     * @ParamConverter("target", class="Dba\GameBundle\Entity\Player", options={"id" = "player_id"})
+     * @ParamConverter("target", class="Dba\GameBundle\Entity\Player")
      */
     public function postSlapAction(Player $target)
     {
@@ -536,7 +536,7 @@ class ActionController extends BaseController
     }
 
     /**
-     * @ParamConverter("target", class="Dba\GameBundle\Entity\Player", options={"id" = "player_id"})
+     * @ParamConverter("target", class="Dba\GameBundle\Entity\Player")
      */
     public function getGiveAction(Request $request, Player $target)
     {
@@ -568,8 +568,8 @@ class ActionController extends BaseController
     }
 
     /**
-     * @ParamConverter("target", class="Dba\GameBundle\Entity\Player", options={"id" = "player_id"})
-     * @ParamConverter("object", class="Dba\GameBundle\Entity\Object", options={"id" = "object"}, isOptional="true")
+     * @ParamConverter("target", class="Dba\GameBundle\Entity\Player")
+     * @ParamConverter("object", class="Dba\GameBundle\Entity\Object", isOptional="true")
      */
     public function postGiveAction(Request $request, Player $target)
     {
@@ -674,7 +674,7 @@ class ActionController extends BaseController
     }
 
     /**
-     * @ParamConverter("target", class="Dba\GameBundle\Entity\Player", options={"id" = "player_id"})
+     * @ParamConverter("target", class="Dba\GameBundle\Entity\Player")
      */
     public function postHealAction(Player $target)
     {
@@ -798,9 +798,8 @@ class ActionController extends BaseController
     }
 
     /**
-     * @ParamConverter("target", class="Dba\GameBundle\Entity\Player", options={"id" = "player_id"})
-     * @ParamConverter("playerSpell", class="Dba\GameBundle\Entity\PlayerSpell",
-                       options={"id" = "spell_id"})
+     * @ParamConverter("target", class="Dba\GameBundle\Entity\Player")
+     * @ParamConverter("playerSpell", class="Dba\GameBundle\Entity\PlayerSpell")
      */
     public function postSpellAction(Player $target, $type, PlayerSpell $playerSpell)
     {
