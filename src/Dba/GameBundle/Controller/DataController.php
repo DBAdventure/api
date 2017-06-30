@@ -51,7 +51,7 @@ class DataController extends BaseController
         ];
     }
 
-    public function getDataAppearanceAction()
+    public function getAppearanceAction()
     {
         return [
             Race::HUMAN => [
