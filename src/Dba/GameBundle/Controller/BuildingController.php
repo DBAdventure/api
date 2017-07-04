@@ -24,13 +24,11 @@ class BuildingController extends BaseController
     const TELEPORT_ACTION = 5;
 
     /**
-     * @Route("/teleport/{id}/{where}", name="building.teleport", methods="GET")
      * @ParamConverter("building", class="Dba\GameBundle\Entity\Building")
-     * @Template()
      *
      * @return JsonResponse
      */
-    public function teleportAction(Building $building, $where)
+    public function postTeleportAction(Building $building, $where)
     {
         $player = $this->getUser();
         if ($player->getX() != $building->getX() || $player->getY() != $building->getY() ||
@@ -55,12 +53,11 @@ class BuildingController extends BaseController
     }
 
     /**
-     * @Route("/enter/{id}", name="building.enter", methods="GET", requirements={"id": "\d+"})
      * @ParamConverter("building", class="Dba\GameBundle\Entity\Building")
      *
      * @return JsonResponse
      */
-    public function enterAction(Building $building)
+    public function getEnterAction(Building $building)
     {
         $player = $this->getUser();
         if ($player->getX() != $building->getX() || $player->getY() != $building->getY() ||
@@ -99,24 +96,17 @@ class BuildingController extends BaseController
 
         return new JsonResponse(
             [
-                'content' => $this->render(
-                    'DbaGameBundle::building/' . $template,
-                    [
-                        'building' => $building,
-                        'objects' => empty($objects) ? [] : $objects
-                    ]
-                )->getContent()
+                'building' => $building,
+                'objects' => empty($objects) ? [] : $objects
             ]
         );
     }
+
     /**
-     * @Route("/shop/magic/{building_id}/buy/{spell_id}", name="building.spell.buy", methods="GET",
-              requirements={"building_id": "\d+", "spell_id": "\d+"})
      * @ParamConverter("building", class="Dba\GameBundle\Entity\Building", options={"id" = "building_id"})
      * @ParamConverter("spell", class="Dba\GameBundle\Entity\Spell", options={"id" = "spell_id"})
-     * @Template()
      */
-    public function buySpellAction(Building $building, Spell $spell)
+    public function postBuySpellAction(Building $building, Spell $spell)
     {
         $player = $this->getUser();
         if ($player->getX() != $building->getX() || $player->getY() != $building->getY() ||
@@ -190,13 +180,10 @@ class BuildingController extends BaseController
 
 
     /**
-     * @Route("/shop/{building_id}/sell/{object_id}", name="building.shop.sell", methods="GET",
-              requirements={"building_id": "\d+", "object_id": "\d+"})
      * @ParamConverter("building", class="Dba\GameBundle\Entity\Building", options={"id" = "building_id"})
      * @ParamConverter("object", class="Dba\GameBundle\Entity\Object", options={"id" = "object_id"})
-     * @Template()
      */
-    public function sellAction(Building $building, Object $object)
+    public function postSellAction(Building $building, Object $object)
     {
         $player = $this->getUser();
         if ($player->getX() != $building->getX() || $player->getY() != $building->getY() ||
@@ -231,13 +218,9 @@ class BuildingController extends BaseController
     }
 
     /**
-     * @Route("/bank/{building_id}/deposit", name="building.bank.deposit", methods="POST",
-              requirements={"building_id": "\d+"})
      * @ParamConverter("building", class="Dba\GameBundle\Entity\Building", options={"id" = "building_id"})
-     * @param Request $request Request
-     * @Template()
      */
-    public function depositAction(Building $building, Request $request)
+    public function postDepositAction(Building $building, Request $request)
     {
         $player = $this->getUser();
         if ($player->getX() != $building->getX() || $player->getY() != $building->getY() ||
@@ -289,13 +272,10 @@ class BuildingController extends BaseController
     }
 
     /**
-     * @Route("/bank/{building_id}/withdraw", name="building.bank.withdraw", methods="POST",
-              requirements={"building_id": "\d+"})
      * @ParamConverter("building", class="Dba\GameBundle\Entity\Building", options={"id" = "building_id"})
      * @param Request $request Request
-     * @Template()
      */
-    public function withdrawAction(Building $building, Request $request)
+    public function postWithdrawAction(Building $building, Request $request)
     {
         $player = $this->getUser();
         if ($player->getX() != $building->getX() || $player->getY() != $building->getY() ||

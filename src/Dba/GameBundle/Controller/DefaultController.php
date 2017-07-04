@@ -20,7 +20,8 @@ class DefaultController extends BaseController
 
         $player = new Player();
         $form = $this->createForm(PlayerRegistration::class, $player);
-        $form->handleRequest($request);
+        $data = json_decode($request->getContent(), true);
+        $form->submit($data);
         if (!$form->isSubmitted() || !$form->isValid()) {
             return $this->badRequest($this->getErrorMessages($form));
         }

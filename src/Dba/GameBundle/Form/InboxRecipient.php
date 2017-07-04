@@ -32,6 +32,7 @@ class InboxRecipient extends AbstractType
         $resolver->setDefaults(
             [
                 'data_class' => Entity\Player::class,
+                'csrf_protection' => false,
             ]
         );
     }

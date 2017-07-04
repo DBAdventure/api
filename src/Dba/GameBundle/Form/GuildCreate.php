@@ -48,6 +48,7 @@ class GuildCreate extends AbstractType
         $resolver->setDefaults(
             [
                 'data_class' => Entity\Guild::class,
+                'csrf_protection' => false,
             ]
         );
     }

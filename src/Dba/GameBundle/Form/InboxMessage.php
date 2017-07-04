@@ -52,6 +52,7 @@ class InboxMessage extends AbstractType
         $resolver->setDefaults(
             [
                 'data_class' => Entity\Inbox::class,
+                'csrf_protection' => false,
             ]
         );
     }
