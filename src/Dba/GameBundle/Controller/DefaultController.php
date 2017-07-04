@@ -21,69 +21,60 @@ class DefaultController extends BaseController
         $player = new Player();
         $form = $this->createForm(PlayerRegistration::class, $player);
         $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
-            $player->setPassword(
-                $this->container->get('security.password_encoder')->encodePassword(
-                    $player,
-                    $player->getPassword()
-                )
-            );
-            $player->setConfirmationToken(rtrim(strtr(base64_encode(random_bytes(32)), '+/', '-_'), '='));
-            $player->setRoles([Player::ROLE_PLAYER]);
-            $player->setZeni(50);
-            $player->setRank(
-                $this->repos()->getRankRepository()->findOneBy(
-                    [
-                        'race' => $player->getRace(),
-                        'level' => 1,
-                    ]
-                )
-            );
-            $player->setActionPoints(30);
-            $player->setMovementPoints(100);
-            $player->setFatiguePoints(30);
-            $player->setBattlePoints(0);
-
-            $player->setSidePoints(
-                $player->getSide()->getId() == Side::GOOD ?
-                1 :
-                -1
-            );
-
-            $player->setIp($request->getClientIp());
-            $dateTime = new DateTime();
-            $player->setActionUpdatedAt($dateTime);
-            $player->setKiUpdatedAt($dateTime);
-            $player->setMovementUpdatedAt($dateTime);
-            $player->setFatigueUpdatedAt($dateTime);
-
-            $this->services()->getPlayerService()->respawn($player);
-
-            $this->setRegisterStats($request, $player);
-            $this->addPlayerObjects($player);
-
-            $this->em()->persist($player);
-            $this->em()->flush();
-            $this->services()->getMailService()->send(
-                $player,
-                $this->trans('account.registered'),
-                'account-confirm'
-            );
-
-            return $this->
-
-            $this->addFlash(
-                'success',
-                $this->trans('account.created')
-            );
-
-            return $this->redirect($this->generateUrl('home'));
+        if (!$form->isSubmitted() || !$form->isValid()) {
+            return $this->badRequest($this->getErrorMessages($form));
         }
-
-        return $this->render(
-            'DbaGameBundle::default/register.html.twig',
-            ['form' => $form->createView()]
+        $player->setPassword(
+            $this->container->get('security.password_encoder')->encodePassword(
+                $player,
+                $player->getPassword()
+            )
         );
+        $player->setConfirmationToken(rtrim(strtr(base64_encode(random_bytes(32)), '+/', '-_'), '='));
+        $player->setRoles([Player::ROLE_PLAYER]);
+        $player->setZeni(50);
+        $player->setRank(
+            $this->repos()->getRankRepository()->findOneBy(
+                [
+                    'race' => $player->getRace(),
+                    'level' => 1,
+                ]
+            )
+        );
+        $player->setActionPoints(30);
+        $player->setMovementPoints(100);
+        $player->setFatiguePoints(30);
+        $player->setBattlePoints(0);
+
+        $player->setSidePoints(
+            $player->getSide()->getId() == Side::GOOD ?
+            1 :
+            -1
+        );
+
+        $player->setIp($request->getClientIp());
+        $dateTime = new DateTime();
+        $player->setActionUpdatedAt($dateTime);
+        $player->setKiUpdatedAt($dateTime);
+        $player->setMovementUpdatedAt($dateTime);
+        $player->setFatigueUpdatedAt($dateTime);
+
+        $this->services()->getPlayerService()->respawn($player);
+
+        $this->setRegisterStats($request, $player);
+        $this->addPlayerObjects($player);
+
+        $this->em()->persist($player);
+        $this->em()->flush();
+        $this->services()->getMailService()->send(
+            $player,
+            $this->trans('account.registered'),
+            'account-confirm'
+        );
+
+        return [
+            'messages' => 'account.created'
+        ];
     }
 
     protected function setRegisterStats($request, Player $player)

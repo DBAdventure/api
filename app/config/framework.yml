@@ -1,4 +1,6 @@
 framework:
+  csrf_protection:
+    enabled:        false
   secret: '%secret%'
   router:
     resource: '%kernel.root_dir%/config/routing.yml'

@@ -5,6 +5,7 @@ namespace Dba\GameBundle\Controller;
 use FOS\RestBundle\Controller\FOSRestController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Form\Form;
 use Dba\GameBundle\Entity\Player;
 use Dba\GameBundle\Services;
 use JMS\Serializer\SerializerBuilder;
@@ -56,6 +57,7 @@ class BaseController extends FOSRestController
     {
         return $this->get('translator')->trans($message, $params, $domain);
     }
+
     /**
      * Get forbidden response
      *
@@ -74,6 +76,23 @@ class BaseController extends FOSRestController
     }
 
     /**
+     * Get bad request response
+     *
+     * @param string $message Optional error message
+     *
+     * @return Response
+     */
+    public function badRequest($message = null)
+    {
+        $response = new JsonResponse([]);
+        if (!empty($message)) {
+            $response->setData(['error' => $message]);
+        }
+        $response->setStatusCode(JsonResponse::HTTP_BAD_REQUEST);
+        return $response;
+    }
+
+    /**
      * Get serialize object
      *
      * @return Serializer
@@ -85,5 +104,25 @@ class BaseController extends FOSRestController
         }
 
         return $this->serializer;
+    }
+
+    protected function getErrorMessages(Form $form) {
+        $errors = array();
+
+        foreach ($form->getErrors() as $key => $error) {
+            if ($form->isRoot()) {
+                $errors['#'][] = $error->getMessage();
+            } else {
+                $errors[] = $error->getMessage();
+            }
+        }
+
+        foreach ($form->all() as $child) {
+            if (!$child->isValid()) {
+                $errors[$child->getName()] = $this->getErrorMessages($child);
+            }
+        }
+
+        return $errors;
     }
 }

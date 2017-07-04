@@ -5,12 +5,12 @@ use Symfony\Component\Debug\Debug;
 
 /** @var \Composer\Autoload\ClassLoader $loader */
 $loader = require __DIR__.'/../app/autoload.php';
-include_once __DIR__.'/../var/bootstrap.php.cache';
 
 $env = getenv('ENVIRONMENT');
-if ($env === 'dev') {
+if ($env !== 'prod') {
     Debug::enable();
 } else {
+    include_once __DIR__.'/../var/bootstrap.php.cache';
     $env = 'prod';
 }
 
