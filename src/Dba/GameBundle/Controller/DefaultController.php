@@ -68,7 +68,7 @@ class DefaultController extends BaseController
 
         $this->services()->getPlayerService()->respawn($player);
 
-        $this->setRegisterStats($request, $player);
+        $this->setRegisterStats($data['class'], $player);
         $this->addPlayerObjects($player);
 
         $this->em()->persist($player);
@@ -84,10 +84,9 @@ class DefaultController extends BaseController
         ];
     }
 
-    protected function setRegisterStats($request, Player $player)
+    protected function setRegisterStats($class, Player $player)
     {
-        $playerRegistration = $request->request->get('player_registration');
-        switch ($playerRegistration['class']) {
+        switch ($class) {
             case 1:
                 $player->setHealth(770);
                 $player->setMaxHealth(770);

@@ -1,0 +1,17 @@
+<h3>You did it! You registered!</h3>
+
+Hi <strong>{{ player.name }}!</strong>
+
+<p>You're successfully registered.</p>
+
+<p>
+  <strong>Login:</strong> {{ player.username}}
+</p>
+
+<p>
+  To validate your account, go to: <a href="{{ url('confirm', {"id": player.id, "token": player.confirmationToken}) }}">{{ url('confirm', {"id": player.id, "token": player.confirmationToken}) }}</a>.
+</p>
+
+<p>
+  Thanks!
+</p>

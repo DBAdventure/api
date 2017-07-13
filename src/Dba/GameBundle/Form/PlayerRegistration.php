@@ -22,47 +22,17 @@ class PlayerRegistration extends AbstractType
         $builder
             ->add(
                 'username',
-                Type\TextType::class,
-                [
-                    'label' => 'form.login',
-                ]
+                Type\TextType::class
             )
             ->add(
                 'name',
-                Type\TextType::class,
-                [
-                    'label' => 'form.name',
-                ]
+                Type\TextType::class
             )
             ->add(
-                'password',
-                Type\RepeatedType::class,
-                [
-                    'first_name' => 'password',
-                    'second_name' => 'password_confirm',
-                    'type' => Type\PasswordType::class,
-                    'first_options' => [
-                        'label' => 'form.password',
-                    ],
-                    'second_options' => [
-                        'label' => 'form.password.confirm',
-                    ],
-                ]
+                'password'
             )
             ->add(
-                'email',
-                Type\RepeatedType::class,
-                [
-                    'first_name' => 'email',
-                    'second_name' => 'email_confirm',
-                    'type' => Type\EmailType::class,
-                    'first_options' => [
-                        'label' => 'form.email',
-                    ],
-                    'second_options' => [
-                        'label' => 'form.email.confirm',
-                    ],
-                ]
+                'email'
             )
             ->add(
                 'class',
@@ -76,7 +46,6 @@ class PlayerRegistration extends AbstractType
                         'analyst' => 5,
                         'ranger' => 6
                     ],
-                    'label' => 'form.class',
                     'mapped' => false,
                 ]
             )
@@ -104,9 +73,6 @@ class PlayerRegistration extends AbstractType
                         );
                         return $qb;
                     },
-                    'choice_label' => 'name',
-                    'label' => 'form.race',
-                    'choice_translation_domain' => true
                 ]
             )
             ->add(
@@ -124,9 +90,6 @@ class PlayerRegistration extends AbstractType
                         );
                         return $qb;
                     },
-                    'choice_label' => 'name',
-                    'label' => 'form.side',
-                    'choice_translation_domain' => true
                 ]
             )
             ->add(
