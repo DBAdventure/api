@@ -29,10 +29,22 @@ class PlayerRegistration extends AbstractType
                 Type\TextType::class
             )
             ->add(
-                'password'
+                'password',
+                Type\TextType::class
             )
             ->add(
-                'email'
+                'password_confirm',
+                Type\TextType::class,
+                ['mapped' => false]
+            )
+            ->add(
+                'email',
+                Type\TextType::class
+            )
+            ->add(
+                'email_confirm',
+                Type\TextType::class,
+                ['mapped' => false]
             )
             ->add(
                 'class',
@@ -114,6 +126,7 @@ class PlayerRegistration extends AbstractType
         $resolver->setDefaults(
             [
                 'data_class' => Entity\Player::class,
+                'cascade_validation' => true,
                 'csrf_protection' => false,
             ]
         );

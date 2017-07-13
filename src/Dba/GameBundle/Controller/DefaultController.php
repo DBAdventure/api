@@ -20,14 +20,7 @@ class DefaultController extends BaseController
 
         $player = new Player();
         $form = $this->createForm(PlayerRegistration::class, $player);
-        $data = json_decode($request->getContent(), true);
-        if (!empty($data['password_confirm'])) {
-            unset($data['password_confirm']);
-        }
-        if (!empty($data['email_confirm'])) {
-            unset($data['email_confirm']);
-        }
-        $form->submit($data);
+        $form->handleRequest($request);
         if (!$form->isSubmitted() || !$form->isValid()) {
             return $this->badRequest($this->getErrorMessages($form));
         }
@@ -68,7 +61,7 @@ class DefaultController extends BaseController
 
         $this->services()->getPlayerService()->respawn($player);
 
-        $this->setRegisterStats($data['class'], $player);
+        $this->setRegisterStats($request, $player);
         $this->addPlayerObjects($player);
 
         $this->em()->persist($player);
@@ -79,14 +72,13 @@ class DefaultController extends BaseController
             'account-confirm'
         );
 
-        return [
-            'messages' => 'account.created'
-        ];
+        return [];
     }
 
-    protected function setRegisterStats($class, Player $player)
+    protected function setRegisterStats(Request $request, Player $player)
     {
-        switch ($class) {
+        $playerRegistration = $request->request->get('player_registration');
+        switch ($playerRegistration['class']) {
             case 1:
                 $player->setHealth(770);
                 $player->setMaxHealth(770);
