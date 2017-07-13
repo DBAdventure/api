@@ -21,6 +21,12 @@ class DefaultController extends BaseController
         $player = new Player();
         $form = $this->createForm(PlayerRegistration::class, $player);
         $data = json_decode($request->getContent(), true);
+        if (!empty($data['password_confirm'])) {
+            unset($data['password_confirm']);
+        }
+        if (!empty($data['email_confirm'])) {
+            unset($data['email_confirm']);
+        }
         $form->submit($data);
         if (!$form->isSubmitted() || !$form->isValid()) {
             return $this->badRequest($this->getErrorMessages($form));

@@ -6,7 +6,7 @@ use Symfony\Component\Debug\Debug;
 /** @var \Composer\Autoload\ClassLoader $loader */
 $loader = require __DIR__.'/../app/autoload.php';
 
-$env = getenv('ENVIRONMENT');
+$env = getenv('ENVIRONMENT') ? getenv('ENVIRONMENT') : 'dev';
 if ($env !== 'prod') {
     Debug::enable();
 } else {
