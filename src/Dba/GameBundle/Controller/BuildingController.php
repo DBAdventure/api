@@ -68,11 +68,11 @@ class BuildingController extends BaseController
 
         switch ($building->getType()) {
             case Building::TYPE_TELEPORT:
-                $template = 'teleport.html.twig';
+                $template = 'teleport';
                 break;
 
             case Building::TYPE_WANTED:
-                $template = 'wanted.html.twig';
+                $template = 'wanted';
                 $objects = [
                     'minimalAmount' => self::MINIMAL_WANTED_AMOUNT,
                 ];
@@ -80,26 +80,25 @@ class BuildingController extends BaseController
 
             case Building::TYPE_BANK:
                 $objects = $this->repos()->getBankRepository()->findOneByPlayer($player);
-                $template = 'bank.html.twig';
+                $template = 'bank';
                 break;
 
             case Building::TYPE_MAGIC:
                 $objects = $this->repos()->getSpellRepository()->findByRace($player->getRace());
-                $template = 'magic.html.twig';
+                $template = 'magic';
                 break;
 
             default:
                 $objects = $this->repos()->getObjectRepository()->findByType($building->getType(), ['price' => 'ASC']);
-                $template = 'shop.html.twig';
+                $template = 'shop';
                 break;
         }
 
-        return new JsonResponse(
-            [
-                'building' => $building,
-                'objects' => empty($objects) ? [] : $objects
-            ]
-        );
+        return [
+            'building' => $building,
+            'objects' => empty($objects) ? [] : $objects,
+            'template' => $template,
+        ];
     }
 
     /**
@@ -144,7 +143,6 @@ class BuildingController extends BaseController
               requirements={"building_id": "\d+", "object_id": "\d+"})
      * @ParamConverter("building", class="Dba\GameBundle\Entity\Building", options={"id" = "building_id"})
      * @ParamConverter("object", class="Dba\GameBundle\Entity\Object", options={"id" = "object_id"})
-     * @Template()
      */
     public function buyAction(Building $building, Object $object)
     {
@@ -321,13 +319,9 @@ class BuildingController extends BaseController
     }
 
     /**
-     * @Route("/wanted/{building_id}", name="building.wanted", methods="POST",
-              requirements={"building_id": "\d+"})
      * @ParamConverter("building", class="Dba\GameBundle\Entity\Building", options={"id" = "building_id"})
-     * @param Request $request Request
-     * @Template()
      */
-    public function wantedAction(Building $building, Request $request)
+    public function postWantedAction(Building $building, Request $request)
     {
         $player = $this->getUser();
         if ($player->getX() != $building->getX() || $player->getY() != $building->getY() ||

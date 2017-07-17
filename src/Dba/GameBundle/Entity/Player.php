@@ -3536,4 +3536,14 @@ class Player implements AdvancedUserInterface, Serializable
             $this->emailCanonical
         ) = $data;
     }
+
+
+    /**
+     * @JMS\VirtualProperty()
+     * @JMS\SerializedName("can_be_healed")
+     */
+    public function canBeHealed()
+    {
+        return $this->getHealth() < $this->getTotalMaxHealth();
+    }
 }

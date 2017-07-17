@@ -754,10 +754,10 @@ class ActionController extends BaseController
         $this->em()->persist($target);
         $this->em()->flush();
 
-
         return [
             'messages' => $messages,
-            'target' => $target
+            'target' => $target,
+            'canBeHealed' => $target->getHealth() < $target->getTotalMaxHealth(),
         ];
     }
 

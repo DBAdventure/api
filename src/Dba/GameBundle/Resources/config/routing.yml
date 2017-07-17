@@ -32,3 +32,8 @@ game_map:
   resource: "@DbaGameBundle/Controller/MapController.php"
   type:     rest
   prefix: /map
+
+game_building:
+  resource: "@DbaGameBundle/Controller/BuildingController.php"
+  type:     rest
+  prefix: /building
