@@ -6,7 +6,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Dba\GameBundle\Entity\Player;
 use Dba\GameBundle\Entity\Spell;
@@ -25,11 +24,10 @@ class BuildingController extends BaseController
 
     /**
      * @ParamConverter("building", class="Dba\GameBundle\Entity\Building")
-     *
-     * @return JsonResponse
      */
-    public function postTeleportAction(Building $building, $where)
+    public function postTeleportAction(Building $building, Request $request)
     {
+        $where = $request->request->get('where');
         $player = $this->getUser();
         if ($player->getX() != $building->getX() || $player->getY() != $building->getY() ||
             $player->getMap()->getId() != $building->getMap()->getId() ||
@@ -49,13 +47,11 @@ class BuildingController extends BaseController
         $this->em()->persist($player);
         $this->em()->flush();
 
-        return new JsonResponse();
+        return [];
     }
 
     /**
      * @ParamConverter("building", class="Dba\GameBundle\Entity\Building")
-     *
-     * @return JsonResponse
      */
     public function getEnterAction(Building $building)
     {
@@ -68,11 +64,11 @@ class BuildingController extends BaseController
 
         switch ($building->getType()) {
             case Building::TYPE_TELEPORT:
-                $template = 'teleport';
+                $type = 'teleport';
                 break;
 
             case Building::TYPE_WANTED:
-                $template = 'wanted';
+                $type = 'wanted';
                 $objects = [
                     'minimalAmount' => self::MINIMAL_WANTED_AMOUNT,
                 ];
@@ -80,24 +76,24 @@ class BuildingController extends BaseController
 
             case Building::TYPE_BANK:
                 $objects = $this->repos()->getBankRepository()->findOneByPlayer($player);
-                $template = 'bank';
+                $type = 'bank';
                 break;
 
             case Building::TYPE_MAGIC:
                 $objects = $this->repos()->getSpellRepository()->findByRace($player->getRace());
-                $template = 'magic';
+                $type = 'magic';
                 break;
 
             default:
                 $objects = $this->repos()->getObjectRepository()->findByType($building->getType(), ['price' => 'ASC']);
-                $template = 'shop';
+                $type = 'shop';
                 break;
         }
 
         return [
             'building' => $building,
             'objects' => empty($objects) ? [] : $objects,
-            'template' => $template,
+            'type' => $type,
         ];
     }
 
