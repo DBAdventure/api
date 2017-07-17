@@ -1,0 +1,64 @@
+logout: Deconnexion
+login: Connexion
+login.remember: Se souvenir de oi
+login.signin: Sign in
+register: "S'enregistrer"
+password: Mot de passe
+forgot.password: Mot de passe oublié
+stats.players.active: Joueurs actifs
+stats.players.good: Les gentils
+stats.players.bad: Les méchants
+saiyajins: Saïyens
+saiyajin: Saïyen
+human-saiyajins: Humain-Saïyens
+human-saiyajin: Humain-Saïyen
+humans: Humains
+human: Humain
+namekians: Nameks
+namekian: Namek
+dragons: Dragons
+dragon: Dragon
+aliens: Aliens
+alien: Alien
+cyborgs: Cyborgs
+cyborg: Cyborg
+majins: Majins
+majin: Majin
+faq: F.A.Q
+team: "L'équipe"
+contact: Contact
+rules.supports: "Règles et aides"
+ranking: Classement
+history: Histoire
+nav.toggle: Toggle navigation
+warrior: Guerrier
+magus: Mage
+thief: Voleur
+healer: Soigneur
+analyst: Analyste
+form.login: Identifiant
+form.name: Nom
+register.welcome: 'Welcome to this new adventure!'
+register.intro: 'Nous allons faire ensemble la création de ton personnage, ne néglige donc surtout pas cette étape.'
+register.personalinfo: 'Personnal informations'
+register.speciality: 'Specialty of the character'
+register.speciality.intro: "Au cours du jeu, tu affronteras des joueurs divers et variés. Certain seront des mages pour attaquer de loin, d'autre des soigneurs pour protéger leurs amis etc. Et pour ton personnage, quelle sera sa spécialité ? Retrouve ci-dessous la liste des classes officielles de Dbadventure V3 et fais ton choix. Il te sera possible de combiner plusieurs classes ou bien changer d'orientation en cours de jeu mais ça ne sera pas facile. Choisis l'orientation initiale de ton personnage pour améliorer certaines de ses compétences de départ."
+register.advantages: 'Advantages'
+register.weakness: 'Weakness'
+register.stats: 'Statistics'
+register.various: 'Various'
+register.warrior.intro: "Puissant et robuste, vous combattrez au corps à corps. Vous vous épuisez moins que les autres classes. Très efficace contre tout type d'adversaire, seuls les voleurs réussiront à parer vos attaques. Le guerrier sera un parfait membre d'une unité d'attaque mais dépendra de ses coéquipiers pour savoir qui frapper sans foncer tête baissée au risque de se faire prendre au dépourvu."
+register.magus.intro: "Doté d'une intelligence supérieure, vous vous distinguerez des autres classes par la diversité de votre talent : apprenez des sorts puissants pouvant toucher au loin, protégez vos alliés grâce à la magie, handicapez l'ennemi avec des sorts spéciaux ou encore, dcéuplez votre puissance en vous métamorphosant en une créature redoutable. Pourtant, derrière ces vertus remarquables se cache un revers de la lame : votre seule arme est votre esprit, donc sans sort de défense, vous représentez une proie facile à vaincre sans compter que vous vous épuisez facilement."
+register.thief.intro: "Votre faible puissance sera largement compensée par votre capacité à parer les attaques des guerriers. Comme le soigneur, vous ne souffrez pas de la fatigue lors de vos vols. Richesse semble bien définir votre avenir mais ce ne sera pas chose facile, il faudra bien ouvrir l'oeil si vous ne souhaitez pas succomber facilement à la puissance dévastatrice des mages. Classe rusée donc, mais à surveiller."
+register.healer.intro: "Classe aux nombreuses vertus. Votre savoir vous permet de guérir vos frères blessés aux combats. Rétablissez leur vivacité grâce à la médecine. Les mages auront bien du mal à vous faire tomber étant donné que vous maitrisez parfaitement les soins à appliquer face à tout type de magie. Les soigneurs ne souffrent pas de la fatigue lors de leurs actions médicales. Sachez également que certain habitants de l'île affirment avoir vu des soigneurs réaliser de véritables miracles comme par exemple rendre la vue ou estomper un empoisonnement."
+register.analyst.intro: "Classe défensive tacticienne indispensable à la bataille, effectuez un compte rendu de l'ennemi, déterminez sa principale qualité, son orientation, son arsenal et bien plus encore. Jouez en équipe avec les voleurs en leur informant des trésors à dérober. Aidez les soigneurs en leur indiquant quels sont vos frères à bout de souffle ou sous influence de malédiction. Cette classe représente le soutien exceptionnel lors des grandes guerres, sans compter qu'elle est capable de bien observer les attaques de ses adversaires lui permettant ainsi de bien se défendre face à tout type d'attaque. On regrette cependant que cette immense qualité ne se retrouve pas côté offensif de l'analyste..."
+register.ranger.intro: ""
+register.humans.intro: "Face à la puissance remarquable des autre races, les mages humains ont du s'adapter et apprendre des sorts pouvant rivaliser avec les plus grands combattants de l'île. Pour cette troisième époque, la race humaine a usée de toute sa technologie de pointe pour maitriser des sorts de défense et de malus permettant à la fois de défendre ses alliés comme handicaper l'adversaire. Un mage humain sera un membre fondamental d'une unité de combattants car il saura protéger ses alliés, handicaper l'ennemi et même avantager ses frères offensifs en désactivant les sorts de soutien de l'ennemi."
+register.human-saiyajins.intro: "L'union des humains et des saïyens donna naissance à cette race exceptionnelle comblant à la fois les défauts de ses pères et offrant une diversité de sorts. Un mage humain saïyen est très polyvalent, son talent a de quoi rendre jaloux les autre races. Il peut se transformer en un combattant redoutable, handicaper l'ennemi en réduisant ses points de mouvements ou encore frapper plusieurs cibles à la fois. On retrouve là toute l'influence de la puissance saïyenne et la tacticité des humains chez le mage humain saïyen."
+register.namekians.intro: "Autrefois, les Nameks d'origine pacifiste, n'avaient que peu de combattants. Mais face à la menace que représentent leurs adversaires pour leur peuple, les Nameks ont exploité du mieux que possible leur intelligence supérieure à de très nombreuses races afin de créer des mages surpuissants n'ayant désormais plus rien à voir avec leurs ancêtres. Ces nouveaux combattants savent économiser leurs points de mouvements, protéger leurs amis ou même décupler leur puissance en se sacrifiant pour eux. Et comme si cela ne suffisait pas, un mage Namek est même capable de tuer en un coup et d'imiter partiellement les capacités des autres classes (vol, soin)."
+register.saiyajins.intro: "Dotée d'une puissance sans limite, cette race légendaire bénéficie de nombreux sorts de transformation avec en complément la capacité d'éloigner l'ennemi. Les saïyens sont tellement avide de puissance qu'ils en négligent la défense ou les contre face aux sorts spéciaux de l'adversaire. Un saïyen représentera donc pour cette troisième époque, l'attaquant idéal à condition d'assurer sa sécurité à l'aide des autres races et classes."
+register.aliens.intro: "Représentant le pire cauchemar pour des peuples ayant été réduits à l'esclavage, les mages aliens seront des adversaires très difficiles à combattre. Grâce au talent des mercenaires de l'espace, de Freezer, Cooler, Janemba ou encore Tapion et Minosha, les mages aliens peuvent se vanter de posséder le plus grand nombre de sorts spéciaux parmi toutes les races. Pour résumé leur potentiel, ils excellent dans tous les domaines, que ce soit en termes d'attaque, de soutien ou de défense."
+register.cyborgs.intro: "Tacticien défensif, le mage cyborg se remarquera par son énorme potentiel défensif mais également ses sorts tactiques pouvant réduire les points de mouvement adverses mais aussi désarmant la cible. Il sait jouer en équipe avec les mages humains afin de créer des barrières défensives optimales. A travers les âges, ces êtres cybernétiques réalisèrent l'immense avantage de leur résistance robotique. Ainsi, ils développèrent encore et encore cette incroyable endurance du combat leur permettant pour cette troisième époque, de bénéficier de mages cyborgs pouvant lancer de puissants sorts nécessitant une consommation de Ki très réduite."
+register.majins.intro: "La puissance des mages majins ne cesse de s'intensifier à travers les âges. Pour cette troisième époque, ils se sont eux aussi entrainés dur afin de maitriser de nouvelles techniques impressionnantes. Comme les Nameks, ils savent économiser leurs points de mouvements, et encore plus efficacement qu'à la précédente époque. Les grandes nouveautés pour le mage Majin reposent sur la maitrise de la résurrection et l'absorption suprême pouvant décupler très fortement le potentiel offensif de celui-ci. Une panoplie de stratégie s'offre donc à cette race."
+register.dragons.intro: "Créatures légendaires, cette race bénéficie de sorts très variés. Les dragons se distinguent des autres races par leurs attaques ayant de nombreux effets négatifs pour l&#9;adversaire et bénéfiques pour les alliés. On raconte même qu'ils sont capables de réaliser des miracles comme décupler leur puissance à l'aide des fameuses Dragon Ball ou encore ramener à la vie leurs amis vaincus au combat. Mais attention cependant à la consommation de Ki très élevée pouvant épuiser très vite le Dragon..."
+map: Map

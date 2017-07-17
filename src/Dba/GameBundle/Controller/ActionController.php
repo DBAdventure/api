@@ -5,7 +5,6 @@ namespace Dba\GameBundle\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Dba\GameBundle\Event\ActionEvent;
 use Dba\GameBundle\Event\DbaEvents;
 use Dba\GameBundle\Entity\Object;
@@ -459,18 +458,10 @@ class ActionController extends BaseController
         $this->em()->persist($target);
         $this->em()->flush();
 
-        return new JsonResponse(
-            [
-                'content' => $this->render(
-                    'DbaGameBundle::action/analysis.html.twig',
-                    [
-                        'messages' => $messages,
-                        'target' => $target,
-                        'competences' => $competences
-                    ]
-                )->getContent()
-            ]
-        );
+        return [
+            'messages' => $messages,
+            'competences' => $competences
+        ];
     }
 
     /**
