@@ -28,7 +28,9 @@ use JMS\Serializer\Annotation as JMS;
               @ORM\Index(name="player_side_id", columns={"side_id"}),
               @ORM\Index(name="player_target_id", columns={"target_id"})})
  * @ORM\Entity(repositoryClass="Dba\GameBundle\Repository\PlayerRepository")
- * @UniqueEntity({"email", "username", "name"})
+ * @UniqueEntity("name")
+ * @UniqueEntity("email")
+ * @UniqueEntity("username")
  * @ORM\HasLifecycleCallbacks
  * @JMS\ExclusionPolicy("all")
  */
@@ -99,7 +101,7 @@ class Player implements AdvancedUserInterface, Serializable
     /**
      * @var string
      *
-     * @ORM\Column(name="username", type="string", length=180, nullable=false)
+     * @ORM\Column(name="username", type="string", length=180, nullable=false, unique=true)
      * @Assert\NotBlank()
      */
     private $username;
@@ -114,7 +116,7 @@ class Player implements AdvancedUserInterface, Serializable
     /**
      * @var string
      *
-     * @ORM\Column(name="email", type="string", length=180, nullable=false)
+     * @ORM\Column(name="email", type="string", length=180, nullable=false, unique=true)
      * @Assert\NotBlank()
      */
     private $email;
@@ -172,7 +174,7 @@ class Player implements AdvancedUserInterface, Serializable
     /**
      * @var string
      *
-     * @ORM\Column(name="name", type="string", length=50, nullable=false)
+     * @ORM\Column(name="name", type="string", length=50, nullable=false, unique=true)
      * @JMS\Expose
      * @Assert\NotBlank()
      * @Assert\Length(
