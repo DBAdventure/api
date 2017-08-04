@@ -125,6 +125,8 @@ class AccountController extends BaseController
             ],
             'betrayals' => $player->getBetrayals(),
             'head_price' => $player->getHeadPrice(),
+            'inventory_max_weight' => $player->getInventoryMaxWeight(),
+            'inventory_weight' => $player->getInventoryWeight(),
         ];
     }
 
