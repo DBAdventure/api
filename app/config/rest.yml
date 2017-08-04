@@ -7,3 +7,13 @@ fos_rest:
   format_listener:
     rules:
       - { path: ^/api, priorities: [ json ], fallback_format: json, prefer_extension: true }
+
+nelmio_cors:
+  defaults:
+    allow_credentials: true
+    allow_origin: ['*']
+    allow_headers: ['x-csrftoken', 'content-type']
+    allow_methods: ['POST', 'GET', 'PUT', 'PATCH', 'DELETE']
+    forced_allow_origin_value: false
+    hosts: ['localhost']
+    max_age: 3600
