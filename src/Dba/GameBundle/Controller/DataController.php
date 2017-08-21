@@ -2,6 +2,7 @@
 namespace Dba\GameBundle\Controller;
 
 use DateTime;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Dba\GameBundle\Form\PlayerRegistration;
 use Dba\GameBundle\Entity\Player;
 use Dba\GameBundle\Entity\Object;
@@ -49,6 +50,17 @@ class DataController extends BaseController
             ),
         ];
     }
+
+    /**
+     * @ParamConverter("player", class="Dba\GameBundle\Entity\Player")
+     */
+    public function getPlayerInfoAction(Player $player)
+    {
+        return [
+            'player' => $player
+        ];
+    }
+
 
     public function getAppearanceAction()
     {

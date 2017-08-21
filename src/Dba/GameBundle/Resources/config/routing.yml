@@ -28,6 +28,11 @@ game_account:
   type:     rest
   prefix: /account
 
+game_inbox:
+  resource: "@DbaGameBundle/Controller/InboxController.php"
+  type:     rest
+  prefix: /inbox
+
 game_map:
   resource: "@DbaGameBundle/Controller/MapController.php"
   type:     rest

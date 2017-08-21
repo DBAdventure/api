@@ -7,21 +7,12 @@ use Dba\GameBundle\Entity\Inbox;
 use Dba\GameBundle\Entity\Side;
 use Dba\GameBundle\Form;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
-/**
- * @Route("/inbox")
- */
 class InboxController extends BaseController
 {
-    /**
-     * @Route("", name="inbox", methods="GET")
-     * @Template()
-     */
-    public function indexAction(Request $request)
+    public function getInboxAction()
     {
         $messages = $this->repos()->getInboxRepository()->findBy(
             [
@@ -33,20 +24,136 @@ class InboxController extends BaseController
             ]
         );
 
-        return $this->displayList($request, $messages, Inbox::DIRECTORY_INBOX);
+        return $this->displayList($messages, Inbox::DIRECTORY_INBOX);
+    }
+
+    public function getOutboxAction()
+    {
+        $messages = $this->repos()->getInboxRepository()->findBy(
+            [
+                'sender' => $this->getUser(),
+                'senderDirectory' => Inbox::DIRECTORY_OUTBOX
+            ],
+            [
+                'createdAt' => 'DESC'
+            ]
+        );
+        return $this->displayList($messages, Inbox::DIRECTORY_OUTBOX);
+    }
+
+    public function getArchiveAction()
+    {
+        $messages = $this->repos()->getInboxRepository()
+                  ->findArchive(
+                      $this->getUser()
+                  );
+        return $this->displayList($messages, Inbox::DIRECTORY_ARCHIVE);
+    }
+
+    protected function displayList(array $messages, $directory)
+    {
+        $parameters = [
+            'messages' => !empty($messages) ? $messages : [],
+            'directory' => $directory,
+            'page' => 'list'
+        ];
+
+        return $parameters;
     }
 
     /**
-     * @Route("/write/{messageId}", name="inbox.write", methods={"GET", "POST"},
-              defaults={"messageId": null}, requirements={"messageId": "\d+"})
-     * @ParamConverter("message", class="Dba\GameBundle\Entity\Inbox", isOptional="true", options={"id" = "messageId"})
-     * @Route("/write/player/{playerId}", name="inbox.write.player", methods={"GET", "POST"},
-              defaults={"playerId": null}, requirements={"playerId": "\d+"})
-     * @ParamConverter("player", class="Dba\GameBundle\Entity\Player", options={"id" = "playerId"})
-     * @Route("/write/guild", name="inbox.write.guild", methods={"GET", "POST"}, defaults={"guild": true})
-     * @Template()
+     * @ParamConverter("message", class="Dba\GameBundle\Entity\Inbox", options={"id" = "id"})
      */
-    public function writeAction(Request $request, Inbox $message = null, Player $player = null, $guild = null)
+    public function postArchiveAction(Inbox $message)
+    {
+        if (in_array(
+            $this->getUser()->getId(),
+            [$message->getRecipient()->getId(), $message->getSender()->getId()]
+        ) &&
+            $message->canArchive()
+        ) {
+            if ($this->getUser()->getId() == $message->getRecipient()->getId()) {
+                $message->setRecipientDirectory(Inbox::DIRECTORY_ARCHIVE);
+            } else {
+                $message->setSenderDirectory(Inbox::DIRECTORY_ARCHIVE);
+            }
+
+            $this->em()->persist($message);
+            $this->em()->flush();
+        }
+        return [];
+    }
+
+    /**
+     * @ParamConverter("message", class="Dba\GameBundle\Entity\Inbox")
+     */
+    public function getReadAction(Inbox $message)
+    {
+        $playerId = $this->getUser()->getId();
+        $recipientId = $message->getRecipient()->getId();
+        $senderId = $message->getSender()->getId();
+        if (!in_array($playerId, [$senderId, $recipientId])
+        ) {
+            return $this->forbidden();
+        }
+
+        if ($recipientId != $playerId) {
+            $directory = $message->getSenderDirectory();
+        } else {
+            $directory = $message->getRecipientDirectory();
+            if ($directory == Inbox::DIRECTORY_INBOX
+                && $message->getStatus() == Inbox::STATUS_UNREAD
+            ) {
+                $message->setStatus(Inbox::STATUS_READ);
+                $this->em()->persist($message);
+                $this->em()->flush();
+            }
+        }
+
+        if ($directory == Inbox::DIRECTORY_TRASH) {
+            return $this->forbidden();
+        }
+
+        return [
+            'page' => 'read',
+            'message' => $message,
+            'directory' => $directory
+        ];
+    }
+
+    /**
+     * @ParamConverter("message", class="Dba\GameBundle\Entity\Inbox", isOptional="true", options={"id" = "messageId"})
+     */
+    public function postWriteAction(Request $request, Inbox $message = null)
+    {
+        return $this->write($request, $message);
+    }
+
+    /**
+     * @ParamConverter("message", class="Dba\GameBundle\Entity\Inbox", isOptional="true", options={"id" = "messageId"})
+     */
+    public function postWriteReplyAction(Request $request, Inbox $message = null)
+    {
+        return $this->write($request, $message);
+    }
+
+    /**
+     * @ParamConverter("message", class="Dba\GameBundle\Entity\Inbox", isOptional="true", options={"id" = "messageId"})
+     */
+    public function postWriteGuildAction(Request $request, Inbox $message = null)
+    {
+        return $this->write($request, $message, null, true);
+    }
+
+    /**
+     * @ParamConverter("player", class="Dba\GameBundle\Entity\Player", options={"id" = "playerId"})
+     */
+    public function postWritePlayerAction(Request $request, Player $player)
+    {
+        return $this->write($request, null, $player);
+    }
+
+    protected function write(Request $request, Inbox $message = null, Player $player = null, $guild = null)
     {
         $originalInbox = new Inbox();
         if (!empty($message) && in_array(
@@ -133,152 +240,14 @@ class InboxController extends BaseController
             return $this->redirect($this->generateUrl('inbox'));
         }
 
-        if ($request->isXmlHttpRequest()) {
-            return $this->jsonContent(
-                'DbaGameBundle::inbox/write.html.twig',
-                [
-                    'form' => $form->createView(),
-                    'message' => $message
-                ]
-            );
-        }
 
-        return $this->render(
-            'DbaGameBundle::inbox/index.html.twig',
-            [
-                'page' => 'write',
-                'form' => $form->createView(),
-                'message' => $message
-            ]
-        );
-    }
-
-    /**
-     * @Route("/read/{id}", name="inbox.read", methods={"GET"}, defaults={"id": null})
-     * @ParamConverter("message", class="Dba\GameBundle\Entity\Inbox")
-     * @Template()
-     */
-    public function readAction(Request $request, Inbox $message)
-    {
-        $playerId = $this->getUser()->getId();
-        $recipientId = $message->getRecipient()->getId();
-        $senderId = $message->getSender()->getId();
-        if (!in_array($playerId, [$senderId, $recipientId])
-        ) {
-            return $this->forbidden();
-        }
-
-        if ($recipientId != $playerId) {
-            $directory = $message->getSenderDirectory();
-        } else {
-            $directory = $message->getRecipientDirectory();
-            if ($directory == Inbox::DIRECTORY_INBOX
-                && $message->getStatus() == Inbox::STATUS_UNREAD
-            ) {
-                $message->setStatus(Inbox::STATUS_READ);
-                $this->em()->persist($message);
-                $this->em()->flush();
-            }
-        }
-
-        if ($directory == Inbox::DIRECTORY_TRASH) {
-            return $this->forbidden();
-        }
-
-        if ($request->isXmlHttpRequest()) {
-            return $this->jsonContent(
-                'DbaGameBundle::inbox/read.html.twig',
-                [
-                    'message' => $message,
-                    'directory' => $directory
-                ]
-            );
-        }
-
-        return $this->render(
-            'DbaGameBundle::inbox/index.html.twig',
-            [
-                'page' => 'read',
-                'message' => $message,
-                'directory' => $directory
-            ]
-        );
-    }
-
-    /**
-     * @Route("/outbox", name="inbox.outbox", methods={"GET"})
-     * @Template()
-     */
-    public function outboxAction(Request $request)
-    {
-        $messages = $this->repos()->getInboxRepository()->findBy(
-            [
-                'sender' => $this->getUser(),
-                'senderDirectory' => Inbox::DIRECTORY_OUTBOX
-            ],
-            [
-                'createdAt' => 'DESC'
-            ]
-        );
-        return $this->displayList($request, $messages, Inbox::DIRECTORY_OUTBOX);
-    }
-
-    protected function displayList(Request $request, array $messages, $directory)
-    {
-        $parameters = [
-            'messages' => $messages,
-            'directory' => $directory,
-            'page' => 'list'
+        return [
+            'page' => 'write',
+            'form' => $form->createView(),
+            'message' => $message
         ];
-
-        if ($request->isXmlHttpRequest()) {
-            return $this->jsonContent(
-                'DbaGameBundle::inbox/list.html.twig',
-                $parameters
-            );
-        }
-
-        return $this->render(
-            'DbaGameBundle::inbox/index.html.twig',
-            $parameters
-        );
     }
-
-    /**
-     * @Route("/archive/{id}", name="inbox.archive", methods={"GET"}, defaults={"id": null})
-     * @ParamConverter("message", class="Dba\GameBundle\Entity\Inbox", isOptional="true", options={"id" = "id"})
-     * @Template()
-     */
-    public function archiveAction(Request $request, Inbox $message = null)
-    {
-        if (!empty($message) && in_array(
-            $this->getUser()->getId(),
-            [$message->getRecipient()->getId(), $message->getSender()->getId()]
-        ) &&
-            $message->canArchive()
-        ) {
-            if ($this->getUser()->getId() == $message->getRecipient()->getId()) {
-                $message->setRecipientDirectory(Inbox::DIRECTORY_ARCHIVE);
-            } else {
-                $message->setSenderDirectory(Inbox::DIRECTORY_ARCHIVE);
-            }
-
-            $this->em()->persist($message);
-            $this->em()->flush();
-        }
-
-        $messages = $this->repos()->getInboxRepository()
-                  ->findArchive(
-                      $this->getUser()
-                  );
-        return $this->displayList($request, $messages, Inbox::DIRECTORY_ARCHIVE);
-    }
-
-    /**
-     * @Route("/clear/{what}", name="inbox.clear", methods={"GET"})
-     * @Template()
-     */
-    public function clearAction($what)
+    public function postClearAction($what)
     {
         $player = $this->getUser();
         $inboxRepo = $this->repos()->getInboxRepository();
@@ -329,16 +298,10 @@ class InboxController extends BaseController
         }
 
         $this->em()->flush();
-
-        return $this->redirect($this->generateUrl($route));
+        return [];
     }
 
-    /**
-     * @Route("/delete/{id}", name="inbox.delete", methods={"GET"})
-     * @ParamConverter("message", class="Dba\GameBundle\Entity\Inbox")
-     * @Template()
-     */
-    public function deleteAction(Inbox $message)
+    public function deleteMessageAction(Inbox $message)
     {
         $playerId = $this->getUser()->getId();
         $recipientId = $message->getRecipient()->getId();
@@ -356,7 +319,6 @@ class InboxController extends BaseController
 
         $this->em()->persist($message);
         $this->em()->flush();
-
-        return $this->redirect($this->generateUrl('inbox'));
+        return [];
     }
 }
