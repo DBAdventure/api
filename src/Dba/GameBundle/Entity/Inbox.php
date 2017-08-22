@@ -6,6 +6,7 @@ use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
+use JMS\Serializer\Annotation as JMS;
 
 /**
  * Inbox
@@ -362,21 +363,11 @@ class Inbox
     }
 
     /**
-     * Check if user can reply
-     *
-     * @param Player $player Player
-     *
-     * @return boolean
-     */
-    public function canReply(Player $player)
-    {
-        return $this->getRecipient()->getId() == $player->getId();
-    }
-
-    /**
      * Check if user can archive
      *
      * @param Player $player Player
+     * @JMS\VirtualProperty()
+     * @JMS\SerializedName("can_archive")
      *
      * @return boolean
      */

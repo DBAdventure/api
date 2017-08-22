@@ -52,13 +52,9 @@ class InboxController extends BaseController
 
     protected function displayList(array $messages, $directory)
     {
-        $parameters = [
+        return [
             'messages' => !empty($messages) ? $messages : [],
-            'directory' => $directory,
-            'page' => 'list'
         ];
-
-        return $parameters;
     }
 
     /**
@@ -115,18 +111,13 @@ class InboxController extends BaseController
         }
 
         return [
-            'page' => 'read',
             'message' => $message,
-            'directory' => $directory
         ];
     }
 
-    /**
-     * @ParamConverter("message", class="Dba\GameBundle\Entity\Inbox", isOptional="true", options={"id" = "messageId"})
-     */
-    public function postWriteAction(Request $request, Inbox $message = null)
+    public function postWriteAction(Request $request)
     {
-        return $this->write($request, $message);
+        return $this->write($request);
     }
 
     /**
@@ -182,7 +173,6 @@ class InboxController extends BaseController
             $message = null;
         }
 
-
         if ($originalInbox->getRecipients()->count() === 0) {
             if (!empty($player) && $player->isPlayer()) {
                 $originalInbox->addRecipient($player);
@@ -204,48 +194,39 @@ class InboxController extends BaseController
 
         $form = $this->createForm(Form\InboxMessage::class, $originalInbox);
         $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
-            $playerRepo = $this->repos()->getPlayerRepository();
-            if (!empty($message)) {
-                $originalInbox->addRecipient($message->getSender());
-            }
-
-            $originalInbox->setSender($this->getUser());
-            $recipients = [];
-            foreach ($originalInbox->getRecipients() as $recipient) {
-                $recipient = $playerRepo->findOneByName($recipient->getName());
-                if (empty($recipient) ||
-                    $recipient->getId() == $this->getUser()->getId() ||
-                    !$recipient->isPlayer()
-                ) {
-                    continue;
-                }
-
-                $inbox = clone $originalInbox;
-                $inbox->setRecipient($recipient);
-                $this->em()->detach($inbox);
-                $this->em()->persist($inbox);
-                $recipients[] = $recipient->getName();
-            }
-
-
-            if (!empty($recipients)) {
-                $this->em()->flush();
-                $this->addFlash(
-                    'success',
-                    $this->trans('inbox.message.sent', ['%names%' => implode($recipients, ', ')])
-                );
-            }
-
-            return $this->redirect($this->generateUrl('inbox'));
+        if (!$form->isSubmitted() && !$form->isValid()) {
+            return $this->badRequest($this->getErrorMessages($form));
         }
 
+        $playerRepo = $this->repos()->getPlayerRepository();
+        if (!empty($message)) {
+            $originalInbox->addRecipient($message->getSender());
+        }
 
-        return [
-            'page' => 'write',
-            'form' => $form->createView(),
-            'message' => $message
-        ];
+        $originalInbox->setSender($this->getUser());
+        $recipients = [];
+        foreach ($originalInbox->getRecipients() as $recipient) {
+            $recipient = $playerRepo->findOneByName($recipient->getName());
+            if (empty($recipient) ||
+                // $recipient->getId() == $this->getUser()->getId() ||
+                !$recipient->isPlayer()
+            ) {
+                continue;
+            }
+
+            $inbox = clone $originalInbox;
+            $inbox->setRecipient($recipient);
+            $this->em()->detach($inbox);
+            $this->em()->persist($inbox);
+            $recipients[] = $recipient->getName();
+        }
+
+        if (!empty($recipients)) {
+            $this->em()->flush();
+        }
+
+        var_dump($recipients);
+        return $this->createdRequest();
     }
     public function postClearAction($what)
     {

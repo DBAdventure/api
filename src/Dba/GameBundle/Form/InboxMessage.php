@@ -24,7 +24,7 @@ class InboxMessage extends AbstractType
                     'entry_type' => InboxRecipient::class,
                     'allow_add' => true,
                     'allow_delete' => true,
-                    'prototype' => true,
+                    'prototype' => false,
                 ]
             )
             ->add(
@@ -32,6 +32,7 @@ class InboxMessage extends AbstractType
                 Type\TextType::class,
                 [
                     'label' => 'form.subject',
+                    'required' => true,
                 ]
             )
             ->add(
