@@ -417,6 +417,7 @@ class Player implements AdvancedUserInterface, Serializable
      * @var integer
      *
      * @ORM\Column(name="nb_kill_good", type="integer", nullable=false, options={"default": 0})
+     * @JMS\Expose
      */
     private $nbKillGood = 0;
 
@@ -438,6 +439,7 @@ class Player implements AdvancedUserInterface, Serializable
      * @var integer
      *
      * @ORM\Column(name="nb_kill_bad", type="integer", nullable=false, options={"default": 0})
+     * @JMS\Expose
      */
     private $nbKillBad = 0;
 
@@ -459,6 +461,7 @@ class Player implements AdvancedUserInterface, Serializable
      * @var integer
      *
      * @ORM\Column(name="nb_kill_npc", type="integer", nullable=false, options={"default": 0})
+     * @JMS\Expose
      */
     private $nbKillNpc = 0;
 
@@ -480,6 +483,7 @@ class Player implements AdvancedUserInterface, Serializable
      * @var integer
      *
      * @ORM\Column(name="nb_kill_hq", type="integer", nullable=false, options={"default": 0})
+     * @JMS\Expose
      */
     private $nbKillHq = 0;
 
