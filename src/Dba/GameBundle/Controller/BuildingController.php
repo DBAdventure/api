@@ -98,8 +98,8 @@ class BuildingController extends BaseController
     }
 
     /**
-     * @ParamConverter("building", class="Dba\GameBundle\Entity\Building", options={"id" = "building_id"})
-     * @ParamConverter("spell", class="Dba\GameBundle\Entity\Spell", options={"id" = "spell_id"})
+     * @ParamConverter("building", class="Dba\GameBundle\Entity\Building")
+     * @ParamConverter("spell", class="Dba\GameBundle\Entity\Spell")
      */
     public function postBuySpellAction(Building $building, Spell $spell)
     {
@@ -137,8 +137,8 @@ class BuildingController extends BaseController
     /**
      * @Route("/shop/{building_id}/buy/{object_id}", name="building.shop.buy", methods="GET",
               requirements={"building_id": "\d+", "object_id": "\d+"})
-     * @ParamConverter("building", class="Dba\GameBundle\Entity\Building", options={"id" = "building_id"})
-     * @ParamConverter("object", class="Dba\GameBundle\Entity\Object", options={"id" = "object_id"})
+     * @ParamConverter("building", class="Dba\GameBundle\Entity\Building")
+     * @ParamConverter("object", class="Dba\GameBundle\Entity\Object")
      */
     public function buyAction(Building $building, Object $object)
     {
@@ -174,8 +174,8 @@ class BuildingController extends BaseController
 
 
     /**
-     * @ParamConverter("building", class="Dba\GameBundle\Entity\Building", options={"id" = "building_id"})
-     * @ParamConverter("object", class="Dba\GameBundle\Entity\Object", options={"id" = "object_id"})
+     * @ParamConverter("building", class="Dba\GameBundle\Entity\Building")
+     * @ParamConverter("object", class="Dba\GameBundle\Entity\Object")
      */
     public function postSellAction(Building $building, Object $object)
     {
@@ -212,7 +212,7 @@ class BuildingController extends BaseController
     }
 
     /**
-     * @ParamConverter("building", class="Dba\GameBundle\Entity\Building", options={"id" = "building_id"})
+     * @ParamConverter("building", class="Dba\GameBundle\Entity\Building")
      */
     public function postDepositAction(Building $building, Request $request)
     {
@@ -266,7 +266,7 @@ class BuildingController extends BaseController
     }
 
     /**
-     * @ParamConverter("building", class="Dba\GameBundle\Entity\Building", options={"id" = "building_id"})
+     * @ParamConverter("building", class="Dba\GameBundle\Entity\Building")
      * @param Request $request Request
      */
     public function postWithdrawAction(Building $building, Request $request)
@@ -315,7 +315,7 @@ class BuildingController extends BaseController
     }
 
     /**
-     * @ParamConverter("building", class="Dba\GameBundle\Entity\Building", options={"id" = "building_id"})
+     * @ParamConverter("building", class="Dba\GameBundle\Entity\Building")
      */
     public function postWantedAction(Building $building, Request $request)
     {

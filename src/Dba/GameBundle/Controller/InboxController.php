@@ -58,7 +58,7 @@ class InboxController extends BaseController
     }
 
     /**
-     * @ParamConverter("message", class="Dba\GameBundle\Entity\Inbox", options={"id" = "id"})
+     * @ParamConverter("message", class="Dba\GameBundle\Entity\Inbox")
      */
     public function postArchiveAction(Inbox $message)
     {
@@ -121,7 +121,7 @@ class InboxController extends BaseController
     }
 
     /**
-     * @ParamConverter("message", class="Dba\GameBundle\Entity\Inbox", isOptional="true", options={"id" = "messageId"})
+     * @ParamConverter("message", class="Dba\GameBundle\Entity\Inbox")
      */
     public function postWriteReplyAction(Request $request, Inbox $message = null)
     {
@@ -129,7 +129,7 @@ class InboxController extends BaseController
     }
 
     /**
-     * @ParamConverter("message", class="Dba\GameBundle\Entity\Inbox", isOptional="true", options={"id" = "messageId"})
+     * @ParamConverter("message", class="Dba\GameBundle\Entity\Inbox")
      */
     public function postWriteGuildAction(Request $request, Inbox $message = null)
     {
@@ -208,7 +208,7 @@ class InboxController extends BaseController
         foreach ($originalInbox->getRecipients() as $recipient) {
             $recipient = $playerRepo->findOneByName($recipient->getName());
             if (empty($recipient) ||
-                // $recipient->getId() == $this->getUser()->getId() ||
+                $recipient->getId() == $this->getUser()->getId() ||
                 !$recipient->isPlayer()
             ) {
                 continue;
