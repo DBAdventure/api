@@ -3,6 +3,7 @@
 namespace Dba\GameBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation as JMS;
 
 /**
  * PlayerObject
@@ -154,6 +155,9 @@ class PlayerObject
     /**
      * Can be Dropped
      *
+     * @JMS\VirtualProperty()
+     * @JMS\SerializedName("can_be_dropped")
+     *
      * @return boolean
      */
     public function canBeDropped()
@@ -163,6 +167,9 @@ class PlayerObject
 
     /**
      * Can be Dropped
+     *
+     * @JMS\VirtualProperty()
+     * @JMS\SerializedName("can_be_equipped")
      *
      * @return boolean
      */
@@ -185,6 +192,9 @@ class PlayerObject
     /**
      * Can be used
      *
+     * @JMS\VirtualProperty()
+     * @JMS\SerializedName("can_be_used")
+     *
      * @return boolean
      */
     public function canBeUsed()
@@ -194,6 +204,9 @@ class PlayerObject
 
     /**
      * Can use many of them
+     *
+     * @JMS\VirtualProperty()
+     * @JMS\SerializedName("can_use_many")
      *
      * @return boolean
      */

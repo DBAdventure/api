@@ -33,6 +33,11 @@ game_inbox:
   type:     rest
   prefix: /inbox
 
+game_inventory:
+  resource: "@DbaGameBundle/Controller/InventoryController.php"
+  type:     rest
+  prefix: /inventory
+
 game_map:
   resource: "@DbaGameBundle/Controller/MapController.php"
   type:     rest

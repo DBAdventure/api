@@ -18,11 +18,7 @@ class InventoryController extends BaseController
 {
     const TELEPORT_MOVEMENT_POINTS = 10;
 
-    /**
-     * @Route("", name="inventory", methods="GET")
-     * @Template()
-     */
-    public function indexAction()
+    public function getObjectsAction()
     {
         $objects = [];
         $playerObjects = $this->getUser()->getPlayerObjects();
@@ -34,31 +30,18 @@ class InventoryController extends BaseController
             $objects[$playerObject->getObject()->getType()][] = $playerObject;
         }
 
-        return $this->render(
-            'DbaGameBundle::inventory/index.html.twig',
-            [
-                'playerObjects' => $objects,
-                'objectClass' => new Object()
-            ]
-        );
+        return $objects;
     }
 
     /**
-     * @Route("/use/{id}", name="inventory.use", methods={"GET", "POST"}, requirements={"id": "\d+"})
      * @ParamConverter("object", class="Dba\GameBundle\Entity\Object")
-     * @Template()
      */
-    public function useAction(Request $request, Object $object)
+    public function postUseAction(Request $request, Object $object)
     {
         $player = $this->getUser();
         $playerObject = $this->repos()->getPlayerObjectRepository()->checkPlayerObject($player, $object);
         if (!$playerObject->canBeUsed()) {
-            $this->addFlash(
-                'danger',
-                $this->trans('inventory.use.cant')
-            );
-
-            return $this->redirect($this->generateUrl('inventory'));
+            return $this->forbidden($this->trans('inventory.use.cant'));
         }
 
         $nbObjectsUsed = (int) $request->request->get('nb-objects', 1);
@@ -124,36 +107,26 @@ class InventoryController extends BaseController
         $this->em()->persist($playerObject);
         $this->em()->flush();
 
-        $this->addFlash(
-            'success',
-            $this->trans(
+        return [
+            'message' => $this->trans(
                 'object.used',
                 [
                     '%number%' => $nbObjectsUsed,
                     '%name%' => $this->trans($playerObject->getObject()->getName() . '.name', [], 'objects')
                 ]
             )
-        );
-
-        return $this->redirect($this->generateUrl('inventory'));
+        ];
     }
 
     /**
-     * @Route("/drop/{id}", name="inventory.drop", methods="GET", requirements={"id": "\d+"})
      * @ParamConverter("object", class="Dba\GameBundle\Entity\Object")
-     * @Template()
      */
-    public function dropAction(Object $object)
+    public function postDropAction(Object $object)
     {
         $player = $this->getUser();
         $playerObject = $this->repos()->getPlayerObjectRepository()->checkPlayerObject($player, $object);
         if (!$playerObject->canBeDropped()) {
-            $this->addFlash(
-                'danger',
-                $this->trans('inventory.drop.cant')
-            );
-
-            return $this->redirect($this->generateUrl('inventory'));
+            return $this->forbidden($this->trans('inventory.drop.cant'));
         }
 
         $this->services()->getObjectService()->drop($playerObject);
@@ -161,58 +134,41 @@ class InventoryController extends BaseController
         $playerObject->setEquipped(false);
         $this->em()->persist($playerObject);
         $this->em()->flush();
-
-        $this->addFlash(
-            'success',
-            $this->trans(
+        return [
+            'message' => $this->trans(
                 'object.drop',
                 ['%name%' => $this->trans($playerObject->getObject()->getName() . '.name', [], 'objects')]
             )
-        );
-
-        return $this->redirect($this->generateUrl('inventory'));
+        ];
     }
 
     /**
-     * @Route("/unequip/{id}", name="inventory.unequip", methods="GET", requirements={"id": "\d+"})
      * @ParamConverter("object", class="Dba\GameBundle\Entity\Object")
-     * @Template()
      */
-    public function unequipAction(Object $object)
+    public function postUnequipAction(Object $object)
     {
         $player = $this->getUser();
         $playerObject = $this->repos()->getPlayerObjectRepository()->checkPlayerObject($player, $object);
         $playerObject->setEquipped(false);
         $this->em()->persist($playerObject);
         $this->em()->flush();
-
-        $this->addFlash(
-            'success',
-            $this->trans(
+        return [
+            'message' => $this->trans(
                 'object.unequip',
                 ['%name%' => $this->trans($playerObject->getObject()->getName() . '.name', [], 'objects')]
             )
-        );
-
-        return $this->redirect($this->generateUrl('inventory'));
+        ];
     }
 
     /**
-     * @Route("/equip/{id}", name="inventory.equip", methods="GET", requirements={"id": "\d+"})
      * @ParamConverter("object", class="Dba\GameBundle\Entity\Object")
-     * @Template()
      */
-    public function equipAction(Object $object)
+    public function postEquipAction(Object $object)
     {
         $player = $this->getUser();
         $playerObject = $this->repos()->getPlayerObjectRepository()->checkPlayerObject($player, $object);
         if (!$playerObject->canBeEquipped()) {
-            $this->addFlash(
-                'danger',
-                $this->trans('inventory.equip.cant')
-            );
-
-            return $this->redirect($this->generateUrl('inventory'));
+            return $this->forbidden($this->trans('inventory.equip.cant'));
         }
 
         $canEquip = true;
@@ -227,14 +183,12 @@ class InventoryController extends BaseController
         }
 
         if (!$canEquip) {
-            $this->addFlash(
-                'danger',
+            return $this->forbidden(
                 $this->trans(
                     'object.error.equip',
                     ['%name%' => $this->trans($playerObject->getObject()->getName() . '.name', [], 'objects')]
                 )
             );
-            return $this->redirect($this->generateUrl('inventory'));
         }
 
         $similarObject = $this->repos()->getPlayerObjectRepository()->findSimilarEquipped(
@@ -242,30 +196,31 @@ class InventoryController extends BaseController
             $object
         );
 
+        $messages = [];
         if (!empty($similarObject)) {
-            $this->addFlash(
-                'success',
+            $messages[] = [
                 $this->trans(
                     'object.unequip',
                     ['%name%' => $this->trans($similarObject->getObject()->getName() . '.name', [], 'objects')]
                 )
-            );
+            ];
             $similarObject->setEquipped(false);
             $this->em()->persist($similarObject);
         }
 
-        $this->addFlash(
-            'success',
+        $messages[] = [
             $this->trans(
                 'object.equip',
                 ['%name%' => $this->trans($object->getName() . '.name', [], 'objects')]
             )
-        );
+        ];
         $playerObject->setEquipped(true);
         $this->em()->persist($playerObject);
         $this->em()->flush();
 
-        return $this->redirect($this->generateUrl('inventory'));
+        return [
+            'messages' => $messages
+        ];
     }
 
     /**

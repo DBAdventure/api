@@ -14,7 +14,7 @@ if ($env !== 'prod') {
     $env = 'prod';
 }
 
-$kernel = new AppKernel($env, false);
+$kernel = new AppKernel($env, $env === 'dev');
 if (PHP_VERSION_ID < 70000) {
     $kernel->loadClassCache();
 }

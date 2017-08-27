@@ -228,6 +228,7 @@ class InboxController extends BaseController
         var_dump($recipients);
         return $this->createdRequest();
     }
+
     public function postClearAction($what)
     {
         $player = $this->getUser();
