@@ -152,11 +152,12 @@ class ObjectService extends BaseService
      * Drop item on the map
      *
      * @param PlayerObject $playerObject Player object
+     * @param integer $nbObjects Number of objects to drop
      * @param integer $distance Distance
      *
      * @return boolean
      */
-    public function drop(PlayerObject $playerObject, $distance = 0)
+    public function drop(PlayerObject $playerObject, $nbObjects, $distance = 0)
     {
         if (empty($distance)) {
             $newPosition = [
@@ -180,7 +181,7 @@ class ObjectService extends BaseService
         $newMapObject->setX($newPosition['x']);
         $newMapObject->setY($newPosition['y']);
         $newMapObject->setObject($playerObject->getObject());
-        $newMapObject->setNumber($playerObject->getNumber());
+        $newMapObject->setNumber($nbObjects);
         $newMapObject->setMapObjectType(
             $this->repos()->getMapObjectTypeRepository()->find(MapObjectType::BOX)
         );

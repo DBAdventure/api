@@ -44,7 +44,7 @@ class InventoryController extends BaseController
             return $this->forbidden($this->trans('inventory.use.cant'));
         }
 
-        $nbObjectsUsed = (int) $request->request->get('nb-objects', 1);
+        $nbObjectsUsed = (int) $request->request->get('nb', 1);
         if ($playerObject->getNumber() < $nbObjectsUsed || $nbObjectsUsed < 0) {
             $nbObjectsUsed = $playerObject->getNumber();
         }
@@ -129,8 +129,13 @@ class InventoryController extends BaseController
             return $this->forbidden($this->trans('inventory.drop.cant'));
         }
 
-        $this->services()->getObjectService()->drop($playerObject);
-        $playerObject->setNumber(0);
+        $nbObjectsDropped = (int) $request->request->get('nb', 1);
+        if ($playerObject->getNumber() < $nbObjectsUsed || $nbObjectsUsed < 0) {
+            $nbObjectsDropped = $playerObject->getNumber();
+        }
+
+        $this->services()->getObjectService()->drop($playerObject, $nbObjectsDropped);
+        $playerObject->setNumber($playerObject->getNumber() - $nbObjectsDropped);
         $playerObject->setEquipped(false);
         $this->em()->persist($playerObject);
         $this->em()->flush();
