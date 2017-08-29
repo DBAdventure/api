@@ -121,7 +121,7 @@ class InventoryController extends BaseController
     /**
      * @ParamConverter("object", class="Dba\GameBundle\Entity\Object")
      */
-    public function postDropAction(Object $object)
+    public function postDropAction(Request $request, Object $object)
     {
         $player = $this->getUser();
         $playerObject = $this->repos()->getPlayerObjectRepository()->checkPlayerObject($player, $object);
@@ -130,7 +130,7 @@ class InventoryController extends BaseController
         }
 
         $nbObjectsDropped = (int) $request->request->get('nb', 1);
-        if ($playerObject->getNumber() < $nbObjectsUsed || $nbObjectsUsed < 0) {
+        if ($playerObject->getNumber() < $nbObjectsDropped || $nbObjectsDropped < 0) {
             $nbObjectsDropped = $playerObject->getNumber();
         }
 

@@ -243,7 +243,7 @@ class ActionController extends BaseController
                 } else {
                     $this->em()->persist($playerObject);
                     $messages[] = $this->trans(
-                        'game.pickup.object',
+                        'action.pickup.object',
                         [
                             '%number%' => $mapObject->getNumber(),
                             '%objectName%' => $this->trans($mapObject->getObject()->getName() . '.name', [], 'objects')
@@ -261,7 +261,7 @@ class ActionController extends BaseController
                 $result = $objectService->openCapsule($mapObject);
                 if (!empty($result['damages'])) {
                     $messages[] = $this->trans(
-                        'game.pickup.damage',
+                        'action.pickup.damage',
                         ['%damages%' => $result['damages']]
                     );
                     $playerService = $this->services()->getPlayerService();
@@ -293,7 +293,7 @@ class ActionController extends BaseController
                     } else {
                         $this->em()->persist($playerObject);
                         $messages[] = $this->trans(
-                            'game.pickup.capsule.object',
+                            'action.pickup.capsule.object',
                             [
                                 '%number%' => $result['object']['quantity'],
                                 '%objectName%' => $this->trans(
