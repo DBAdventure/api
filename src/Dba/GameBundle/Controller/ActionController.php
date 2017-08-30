@@ -366,8 +366,8 @@ class ActionController extends BaseController
             $messages[] = $this->trans('action.steal.wellSuccessful');
             $eventMessage = 'event.action.steal.wellSuccessful';
         } elseif ($luck >= 1.5 && $luck < 2.5) {
-            $messages[] = $this->trans('action.steal.verywell');
-            $eventMessage = 'event.action.steal.verywell';
+            $messages[] = $this->trans('action.steal.veryWell');
+            $eventMessage = 'event.action.steal.veryWell';
         } else {
             $messages[] = $this->trans('action.steal.perfectly');
             $eventMessage = 'event.action.steal.perfectly';
@@ -701,8 +701,8 @@ class ActionController extends BaseController
             $messages[] = $this->trans('action.heal.wellSuccessful');
             $eventMessage = 'event.action.heal.wellSuccessful';
         } elseif ($luck >= 5 && $luck < 15) {
-            $messages[] = $this->trans('action.heal.verywell');
-            $eventMessage = 'event.action.heal.verywell';
+            $messages[] = $this->trans('action.heal.veryWell');
+            $eventMessage = 'event.action.heal.veryWell';
         } else {
             $messages[] = $this->trans('action.heal.perfectly');
             $eventMessage = 'event.action.heal.perfectly';

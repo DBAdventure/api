@@ -137,18 +137,18 @@ event:
   action:
     spell:
       dodge: 'cast a spell you but you dodge it'
-      really.failed: 'really failed his spell, but you lose %damages% points of life'
+      reallyFailed: 'really failed his spell, but you lose %damages% points of life'
       failed: 'failed his spell, but you lose %damages% points of life'
-      moderately.succeeded: 'moderately succeeded his spell, but you lose %damages% points of life'
+      moderatelySucceeded: 'moderately succeeded his spell, but you lose %damages% points of life'
       succeeded: 'succeeded his spell and you lose %damages% points of life'
       nice: 'made a nice hit and you lose %damages% points of life'
       critic: 'made a critical hit and you lose %damages% points of life'
       master: 'made a master stroke and you lose %damages% points of life'
     attack:
       dodge: 'attacked you but you dodge it'
-      really.failed: 'really failed his attack, but you lose %damages% points of life'
+      reallyFailed: 'really failed his attack, but you lose %damages% points of life'
       failed: 'failed his attack, but you lose %damages% points of life'
-      moderately.succeeded: 'moderately succeeded his attack, but you lose %damages% points of life'
+      moderatelySucceeded: 'moderately succeeded his attack, but you lose %damages% points of life'
       succeeded: 'succeeded his attack and you lose %damages% points of life'
       nice: 'made a nice hit and you lose %damages% points of life'
       critic: 'made a critical hit and you lose %damages% points of life'
@@ -156,7 +156,7 @@ event:
       killed: 'You die and you lose 30% of your action points!'
       npc: 'made an attack and you lose %damages% points of life'
     steal:
-      completely.missed: 'has completely missed his steal, you lose %zenisLost% Zenis'
+      completelyMissed: 'has completely missed his steal, you lose %zenisLost% Zenis'
       missed: 'has missed his steal, you lose %zenisLost% Zenis'
       moderatelySuccessful: 'has moderately successful his steal, you lose %zenisLost% Zenis'
       successful: 'has successfully his steal, you lose %zenisLost% Zenis'
@@ -165,7 +165,7 @@ event:
       perfectly: 'has perfectly steal you, you lose %zenisLost% Zenis'
     heal:
       fatigue: 'has decreased your fatigue by %fatiguePoints%'
-      completely.missed: 'has completely missed his heal, but you gain %healPoints% points of life'
+      completelyMissed: 'has completely missed his heal, but you gain %healPoints% points of life'
       missed: 'has missed his heal, but you gain %healPoints% points of life'
       moderatelySuccessful: 'has moderately successful his heal, but you gain %healPoints% points of life'
       successful: 'has successfully his heal, you gain %healPoints% points of life'
@@ -192,7 +192,7 @@ action:
   spell:
     cast: "You cast %name%"
     dodge: 'Spell dodge!'
-    really.failed: 'Spell really failed'
+    reallyFailed: 'Spell really failed'
     failed: 'Spell failed'
     mediocre: 'Mediocre spell'
     successful: 'Successful hit'
@@ -202,7 +202,7 @@ action:
     damages: 'You make him %damages% of damages.'
   attack:
     dodge: 'Hit dodge!'
-    really.failed: 'Hit really failed'
+    reallyFailed: 'Hit really failed'
     failed: 'Hit failed'
     mediocre: 'Mediocre stroke'
     successful: 'Successful hit'
@@ -215,7 +215,7 @@ action:
     killed: 'You stick him a slap! he loses his last point of life and he dies.'
     battlePoints: 'You earn 10 battle points for killing him by this way.'
   steal:
-    completely.missed: 'You completely missed'
+    completelyMissed: 'You completely missed'
     missed: 'You missed'
     moderatelySuccessful: 'You moderately succeeded'
     successful: 'You succeeded'
@@ -229,7 +229,7 @@ action:
       decrease: 'Fatigue decreased by %fatiguePoints%'
       disappear: 'Fatigue disappeared'
     restore: 'You restore %healPoints% points of life'
-    completely.missed: 'You completely missed your heal'
+    completelyMissed: 'You completely missed your heal'
     missed: 'You missed your heal'
     moderatelySuccessful: 'You moderately succeeded your heal'
     successful: 'You succeeded your heal'
@@ -253,7 +253,7 @@ action:
     ki: "Ki"
     class: "Class"
     catastrophic: "Catastrophic evaluation"
-    really.failed: "Really failed evaluation"
+    reallyFailed: "Really failed evaluation"
     failed: "Failed evaluation"
     moderatelySuccessful: "Moderately successful evaluation"
     successful: "Evaluation successful"

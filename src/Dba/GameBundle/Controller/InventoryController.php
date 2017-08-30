@@ -81,7 +81,7 @@ class InventoryController extends BaseController
                 case Object::BONUS_FATIGUE_PERCENT:
                     $player->usePoints(
                         Player::FATIGUE_POINT,
-                        ceil((($value * $nbObjectsUsed) * $player->getMaxFatigue()) / 100)
+                        ceil((($value * $nbObjectsUsed) * $player->getMaxFatiguePoints()) / 100)
                     );
                     break;
 
