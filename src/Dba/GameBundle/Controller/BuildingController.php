@@ -135,12 +135,10 @@ class BuildingController extends BaseController
     }
 
     /**
-     * @Route("/shop/{building_id}/buy/{object_id}", name="building.shop.buy", methods="GET",
-              requirements={"building_id": "\d+", "object_id": "\d+"})
      * @ParamConverter("building", class="Dba\GameBundle\Entity\Building")
      * @ParamConverter("object", class="Dba\GameBundle\Entity\Object")
      */
-    public function buyAction(Building $building, Object $object)
+    public function postBuyObjectAction(Building $building, Object $object)
     {
         $player = $this->getUser();
         if ($player->getX() != $building->getX() || $player->getY() != $building->getY() ||
@@ -152,24 +150,18 @@ class BuildingController extends BaseController
 
         $result = $this->services()->getObjectService()->addToInventory($player, $object);
         if (is_numeric($result)) {
-            $this->addFlash(
-                'danger',
-                $this->trans('building.shop.error.' . $result)
-            );
-        } else {
-            $this->em()->persist($player);
-            $this->em()->persist($result);
-            $this->em()->flush();
-            $this->addFlash(
-                'success',
-                $this->trans(
-                    'building.shop.success',
-                    ['%object%' => $this->trans($object->getName() . '.name', [], 'objects')]
-                )
-            );
+            return $this->badRequest($this->trans('building.shop.error.' . $result));
         }
 
-        return $this->redirect($this->generateUrl('building.enter', ['id' => $building->getId()]));
+        $this->em()->persist($player);
+        $this->em()->persist($result);
+        $this->em()->flush();
+        return [
+            'message' => $this->trans(
+                'building.shop.success',
+                ['%object%' => $this->trans($object->getName() . '.name', [], 'objects')]
+            )
+        ];
     }
 
 
