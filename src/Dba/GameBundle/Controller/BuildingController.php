@@ -2,21 +2,19 @@
 
 namespace Dba\GameBundle\Controller;
 
+use FOS\RestBundle\Controller\Annotations;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Dba\GameBundle\Entity\Bank;
+use Dba\GameBundle\Entity\Building;
+use Dba\GameBundle\Entity\Object;
 use Dba\GameBundle\Entity\Player;
 use Dba\GameBundle\Entity\Spell;
-use Dba\GameBundle\Entity\Object;
-use Dba\GameBundle\Entity\Building;
-use Dba\GameBundle\Entity\Bank;
 use Dba\GameBundle\Services\ObjectService;
 
-/**
- * @Route("/building")
- */
 class BuildingController extends BaseController
 {
     const MINIMAL_WANTED_AMOUNT = 50;
@@ -24,6 +22,7 @@ class BuildingController extends BaseController
 
     /**
      * @ParamConverter("building", class="Dba\GameBundle\Entity\Building")
+     * @Annotations\Post("/teleport/{building}")
      */
     public function postTeleportAction(Building $building, Request $request)
     {
@@ -52,6 +51,7 @@ class BuildingController extends BaseController
 
     /**
      * @ParamConverter("building", class="Dba\GameBundle\Entity\Building")
+     * @Annotations\Get("/enter/{building}")
      */
     public function getEnterAction(Building $building)
     {
@@ -100,6 +100,7 @@ class BuildingController extends BaseController
     /**
      * @ParamConverter("building", class="Dba\GameBundle\Entity\Building")
      * @ParamConverter("spell", class="Dba\GameBundle\Entity\Spell")
+     * @Annotations\Post("/buy/{building}/spell/{spell}")
      */
     public function postBuySpellAction(Building $building, Spell $spell)
     {
@@ -137,6 +138,7 @@ class BuildingController extends BaseController
     /**
      * @ParamConverter("building", class="Dba\GameBundle\Entity\Building")
      * @ParamConverter("object", class="Dba\GameBundle\Entity\Object")
+     * @Annotations\Post("/buy/{building}/object/{object}")
      */
     public function postBuyObjectAction(Building $building, Object $object)
     {
@@ -205,6 +207,7 @@ class BuildingController extends BaseController
 
     /**
      * @ParamConverter("building", class="Dba\GameBundle\Entity\Building")
+     * @Annotations\Post("/deposit/{building}")
      */
     public function postDepositAction(Building $building, Request $request)
     {
@@ -259,7 +262,7 @@ class BuildingController extends BaseController
 
     /**
      * @ParamConverter("building", class="Dba\GameBundle\Entity\Building")
-     * @param Request $request Request
+     * @Annotations\Post("/withdraw/{building}")
      */
     public function postWithdrawAction(Building $building, Request $request)
     {
@@ -308,6 +311,7 @@ class BuildingController extends BaseController
 
     /**
      * @ParamConverter("building", class="Dba\GameBundle\Entity\Building")
+     * @Annotations\Post("/wanted/{building}")
      */
     public function postWantedAction(Building $building, Request $request)
     {

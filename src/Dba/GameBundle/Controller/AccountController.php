@@ -2,12 +2,13 @@
 
 namespace Dba\GameBundle\Controller;
 
-use Dba\GameBundle\Form\PlayerAppearance;
-use Dba\GameBundle\Entity\Player;
+use FOS\RestBundle\Controller\Annotations;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Dba\GameBundle\Entity\Player;
+use Dba\GameBundle\Form\PlayerAppearance;
 
 class AccountController extends BaseController
 {
@@ -37,6 +38,9 @@ class AccountController extends BaseController
         self::VI,
     ];
 
+    /**
+     * @Annotations\Get("/player")
+     */
     public function getPlayerAction()
     {
         if (!$this->getUser()) {
@@ -132,6 +136,9 @@ class AccountController extends BaseController
         ];
     }
 
+    /**
+     * @Annotations\Get("/events")
+     */
     public function getEventsAction()
     {
         $repos = $this->repos()->getPlayerEventRepository();
@@ -175,10 +182,9 @@ class AccountController extends BaseController
     }
 
     /**
-     * @Route("/confirm/{id}/{token}", name="confirm", methods={"GET"})
-     * @Template()
+     * @Annotations\Post("/confirm/users/${id}/${token}")
      */
-    public function confirmAction($id, $token)
+    public function postConfirmuserToeknAction($id, $token)
     {
         $playerRepo = $this->repos()->getPlayerRepository();
         $player = $playerRepo->findOneByConfirmationToken($token);
@@ -200,6 +206,9 @@ class AccountController extends BaseController
         return $this->redirect($this->generateUrl('home'));
     }
 
+    /**
+     * @Annotations\Post("/training/${what}")
+     */
     public function postTrainAction($what)
     {
         $player = $this->getUser();

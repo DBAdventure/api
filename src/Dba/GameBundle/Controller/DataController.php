@@ -2,15 +2,19 @@
 namespace Dba\GameBundle\Controller;
 
 use DateTime;
+use FOS\RestBundle\Controller\Annotations;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Dba\GameBundle\Form\PlayerRegistration;
-use Dba\GameBundle\Entity\Player;
 use Dba\GameBundle\Entity\Object;
-use Dba\GameBundle\Entity\Side;
+use Dba\GameBundle\Entity\Player;
 use Dba\GameBundle\Entity\Race;
+use Dba\GameBundle\Entity\Side;
+use Dba\GameBundle\Form\PlayerRegistration;
 
 class DataController extends BaseController
 {
+    /**
+     * @Annotations\Get("/game")
+     */
     public function getGameAction()
     {
         $playerRepository = $this->repos()->getPlayerRepository();
@@ -35,12 +39,18 @@ class DataController extends BaseController
         ];
     }
 
-    public function getOnlineAction()
+    /**
+     * @Annotations\Get("/online/players")
+     */
+    public function getOnlinePlayerAction()
     {
         $playerRepository = $this->repos()->getPlayerRepository();
         return ['nbOnlinePlayers' => count($playerRepository->getOnlinePlayers())];
     }
 
+    /**
+     * @Annotations\Get("/news")
+     */
     public function getNewsAction()
     {
         return [
@@ -53,6 +63,7 @@ class DataController extends BaseController
 
     /**
      * @ParamConverter("player", class="Dba\GameBundle\Entity\Player")
+     * @Annotations\Get("/player/{player}", name="_player_info")
      */
     public function getPlayerInfoAction(Player $player)
     {
@@ -61,7 +72,9 @@ class DataController extends BaseController
         ];
     }
 
-
+    /**
+     * @Annotations\Get("/appearance")
+     */
     public function getAppearanceAction()
     {
         return [

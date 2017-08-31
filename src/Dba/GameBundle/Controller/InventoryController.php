@@ -2,6 +2,7 @@
 
 namespace Dba\GameBundle\Controller;
 
+use FOS\RestBundle\Controller\Annotations;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -11,13 +12,13 @@ use Dba\GameBundle\Entity\Object;
 use Dba\GameBundle\Entity\Player;
 use Dba\GameBundle\Entity\PlayerObject;
 
-/**
- * @Route("/inventory")
- */
 class InventoryController extends BaseController
 {
     const TELEPORT_MOVEMENT_POINTS = 10;
 
+    /**
+     * @Annotations\Get("/objects")
+     */
     public function getObjectsAction()
     {
         $objects = [];
@@ -35,6 +36,7 @@ class InventoryController extends BaseController
 
     /**
      * @ParamConverter("object", class="Dba\GameBundle\Entity\Object")
+     * @Annotations\Post("/use/{object}")
      */
     public function postUseAction(Request $request, Object $object)
     {
@@ -120,6 +122,7 @@ class InventoryController extends BaseController
 
     /**
      * @ParamConverter("object", class="Dba\GameBundle\Entity\Object")
+     * @Annotations\Post("/drop/{object}")
      */
     public function postDropAction(Request $request, Object $object)
     {
@@ -149,6 +152,7 @@ class InventoryController extends BaseController
 
     /**
      * @ParamConverter("object", class="Dba\GameBundle\Entity\Object")
+     * @Annotations\Post("/unequip/{object}")
      */
     public function postUnequipAction(Object $object)
     {
@@ -167,6 +171,7 @@ class InventoryController extends BaseController
 
     /**
      * @ParamConverter("object", class="Dba\GameBundle\Entity\Object")
+     * @Annotations\Post("/equip/{object}")
      */
     public function postEquipAction(Object $object)
     {

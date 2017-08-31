@@ -2,19 +2,20 @@
 
 namespace Dba\GameBundle\Controller;
 
+use FOS\RestBundle\Controller\Annotations;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Dba\GameBundle\Event\ActionEvent;
 use Dba\GameBundle\Event\DbaEvents;
+use Dba\GameBundle\Entity\MapBonus;
+use Dba\GameBundle\Entity\MapObject;
+use Dba\GameBundle\Entity\MapObjectType;
 use Dba\GameBundle\Entity\Object;
 use Dba\GameBundle\Entity\Player;
 use Dba\GameBundle\Entity\PlayerSpell;
 use Dba\GameBundle\Entity\Side;
 use Dba\GameBundle\Entity\Spell;
-use Dba\GameBundle\Entity\MapBonus;
-use Dba\GameBundle\Entity\MapObject;
-use Dba\GameBundle\Entity\MapObjectType;
 
 class ActionController extends BaseController
 {
@@ -22,6 +23,10 @@ class ActionController extends BaseController
     const DEFAULT_BATTLE_POINT_KILL_SLAP = 10;
     const DEFAULT_NPC_ZENI = 50;
 
+
+    /**
+     * @Annotations\Post("/convert")
+     */
     public function postConvertAction()
     {
         $player = $this->getUser();
@@ -37,6 +42,9 @@ class ActionController extends BaseController
         return [];
     }
 
+    /**
+     * @Annotations\Post("/move/{where}")
+     */
     public function postMoveAction($where)
     {
         $player = $this->getUser();
@@ -64,6 +72,7 @@ class ActionController extends BaseController
 
     /**
      * @ParamConverter("target", class="Dba\GameBundle\Entity\Player")
+     * @Annotations\Post("/attack/{target}")
      */
     public function postAttackAction(Player $target, $type = null)
     {
@@ -203,6 +212,7 @@ class ActionController extends BaseController
 
     /**
      * @ParamConverter("mapObject", class="Dba\GameBundle\Entity\MapObject")
+     * @Annotations\Post("/pickup/{mapObject}")
      */
     public function postPickupAction(MapObject $mapObject)
     {
@@ -321,6 +331,7 @@ class ActionController extends BaseController
 
     /**
      * @ParamConverter("target", class="Dba\GameBundle\Entity\Player")
+     * @Annotations\Post("/steal/{target}")
      */
     public function postStealAction(Player $target)
     {
@@ -407,6 +418,7 @@ class ActionController extends BaseController
 
     /**
      * @ParamConverter("target", class="Dba\GameBundle\Entity\Player")
+     * @Annotations\Post("/analysis/{target}")
      */
     public function postAnalysisAction(Player $target)
     {
@@ -466,6 +478,7 @@ class ActionController extends BaseController
 
     /**
      * @ParamConverter("target", class="Dba\GameBundle\Entity\Player")
+     * @Annotations\Post("/slap/{target}")
      */
     public function postSlapAction(Player $target)
     {
@@ -528,6 +541,7 @@ class ActionController extends BaseController
 
     /**
      * @ParamConverter("target", class="Dba\GameBundle\Entity\Player")
+     * @Annotations\Get("/give/{target}")
      */
     public function getGiveAction(Request $request, Player $target)
     {
@@ -561,6 +575,7 @@ class ActionController extends BaseController
     /**
      * @ParamConverter("target", class="Dba\GameBundle\Entity\Player")
      * @ParamConverter("object", class="Dba\GameBundle\Entity\Object", isOptional="true")
+     * @Annotations\Post("/give/{target}")
      */
     public function postGiveAction(Request $request, Player $target)
     {
@@ -666,6 +681,7 @@ class ActionController extends BaseController
 
     /**
      * @ParamConverter("target", class="Dba\GameBundle\Entity\Player")
+     * @Annotations\Post("/heal/{target}")
      */
     public function postHealAction(Player $target)
     {
@@ -761,6 +777,10 @@ class ActionController extends BaseController
         ];
     }
 
+    /**
+     * @ParamConverter("target", class="Dba\GameBundle\Entity\Player")
+     * @Annotations\Get("/spell/{target}")
+     */
     public function getSpellAction(Player $target)
     {
         $player = $this->getUser();
@@ -791,6 +811,7 @@ class ActionController extends BaseController
     /**
      * @ParamConverter("target", class="Dba\GameBundle\Entity\Player")
      * @ParamConverter("playerSpell", class="Dba\GameBundle\Entity\PlayerSpell")
+     * @Annotations\Post("/spell/{target}/{type}/{playerSpell}")
      */
     public function postSpellAction(Player $target, $type, PlayerSpell $playerSpell)
     {
