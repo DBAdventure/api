@@ -14,25 +14,27 @@ class AccountController extends BaseController
     const TRAINING_ROOM_ACTION = 5;
     const TRAINING_ROOM_SKILL = 1;
 
-    const ST = 'strength';
     const AC = 'accuracy';
-    const SK = 'skill';
     const AG = 'agility';
-    const VI = 'vision';
-    const IN = 'intellect';
-    const RE = 'resistance';
+    const AN = 'analysis';
     const HE = 'health';
+    const IN = 'intellect';
     const KI = 'ki';
+    const RE = 'resistance';
+    const SK = 'skill';
+    const ST = 'strength';
+    const VI = 'vision';
     const AVAILABLE_SKILLS = [
-        self::ST,
         self::AC,
-        self::SK,
         self::AG,
-        self::VI,
-        self::IN,
-        self::RE,
+        self::AN,
         self::HE,
-        self::KI
+        self::IN,
+        self::KI,
+        self::RE,
+        self::SK,
+        self::ST,
+        self::VI,
     ];
 
     public function getPlayerAction()
@@ -198,60 +200,46 @@ class AccountController extends BaseController
         return $this->redirect($this->generateUrl('home'));
     }
 
-    /**
-     * @Route("/training/room/{what}", name="account.training.room", methods="GET", defaults={"what" : null})
-     * @Template()
-     */
-    public function trainingRoomAction($what)
+    public function postTrainAction($what)
     {
         $player = $this->getUser();
-        if (!empty($what) && in_array($what, self::AVAILABLE_SKILLS)) {
-            if ($player->getActionPoints() < self::TRAINING_ROOM_ACTION ||
-                $player->getSkillPoints() < self::TRAINING_ROOM_SKILL
-            ) {
-                $what = null;
-            }
-
-            switch ($what) {
-                case self::HE:
-                    $player->setMaxHealth($player->getMaxHealth() + 45);
-                    $player->setHealth($player->getHealth() + 45);
-                    break;
-                case self::KI:
-                    $player->setMaxKi($player->getMaxKi() + 2);
-                    $player->setKi($player->getKi() + 2);
-                    break;
-                case self::ST:
-                case self::AC:
-                case self::SK:
-                case self::AG:
-                case self::VI:
-                case self::IN:
-                case self::RE:
-                    $currentValue = call_user_func([$player, 'get'. ucfirst($what)]);
-                    call_user_func([$player, 'set' . ucfirst($what)], $currentValue + 1);
-                    break;
-                default:
-                    $this->addFlash(
-                        'danger',
-                        $this->trans('training.error')
-                    );
-                    return $this->redirect($this->generateUrl('account.training.room'));
-            }
-
-            $player->reloadBonus();
-            $player->usePoints(Player::ACTION_POINT, self::TRAINING_ROOM_ACTION);
-            $player->usePoints(Player::SKILL_POINT, self::TRAINING_ROOM_SKILL);
-
-            $this->em()->persist($player);
-            $this->em()->flush();
-            $this->addFlash(
-                'success',
-                $this->trans('training.success')
-            );
-            return $this->redirect($this->generateUrl('account.training.room'));
+        if (empty($what) ||
+            !in_array($what, self::AVAILABLE_SKILLS) ||
+            $player->getActionPoints() < self::TRAINING_ROOM_ACTION ||
+            $player->getSkillPoints() < self::TRAINING_ROOM_SKILL
+        ) {
+            return $this->badRequest();
         }
 
-        return $this->render('DbaGameBundle::account/training.room.html.twig');
+        switch ($what) {
+            case self::HE:
+                $player->setMaxHealth($player->getMaxHealth() + 45);
+                $player->setHealth($player->getHealth() + 45);
+                break;
+            case self::KI:
+                $player->setMaxKi($player->getMaxKi() + 2);
+                $player->setKi($player->getKi() + 2);
+                break;
+            case self::AC:
+            case self::AG:
+            case self::AN:
+            case self::IN:
+            case self::RE:
+            case self::SK:
+            case self::ST:
+            case self::VI:
+                $currentValue = call_user_func([$player, 'get'. ucfirst($what)]);
+                call_user_func([$player, 'set' . ucfirst($what)], $currentValue + 1);
+                break;
+        }
+
+        $player->reloadBonus();
+        $player->usePoints(Player::ACTION_POINT, self::TRAINING_ROOM_ACTION);
+        $player->usePoints(Player::SKILL_POINT, self::TRAINING_ROOM_SKILL);
+
+        $this->em()->persist($player);
+        $this->em()->flush();
+
+        return [];
     }
 }

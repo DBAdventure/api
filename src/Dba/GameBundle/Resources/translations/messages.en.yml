@@ -129,10 +129,6 @@ inventory:
   equip.cant: "You can't equip this object."
   drop.cant: "You can't drop this object."
 
-training:
-  success: "Capacity improved!"
-  error: "Can not increase this capacity!"
-
 event:
   action:
     spell:
