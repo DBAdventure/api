@@ -3,15 +3,19 @@
 namespace Dba\GameBundle\Controller;
 
 use DateTime;
+use FOS\RestBundle\Controller\Annotations;
 use Symfony\Component\HttpFoundation\Request;
-use Dba\GameBundle\Form\PlayerRegistration;
-use Dba\GameBundle\Entity\Player;
 use Dba\GameBundle\Entity\Object;
-use Dba\GameBundle\Entity\Side;
+use Dba\GameBundle\Entity\Player;
 use Dba\GameBundle\Entity\Race;
+use Dba\GameBundle\Entity\Side;
+use Dba\GameBundle\Form\PlayerRegistration;
 
 class DefaultController extends BaseController
 {
+    /**
+     * @Annotations\Post("/register")
+     */
     public function postRegisterAction(Request $request)
     {
         if (!empty($this->getUser())) {

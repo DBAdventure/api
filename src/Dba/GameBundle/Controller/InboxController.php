@@ -24,7 +24,7 @@ class InboxController extends BaseController
             ]
         );
 
-        return $this->displayList($messages, Inbox::DIRECTORY_INBOX);
+        return $this->displayList($messages);
     }
 
     public function getOutboxAction()
@@ -38,7 +38,7 @@ class InboxController extends BaseController
                 'createdAt' => 'DESC'
             ]
         );
-        return $this->displayList($messages, Inbox::DIRECTORY_OUTBOX);
+        return $this->displayList($messages);
     }
 
     public function getArchiveAction()
@@ -47,10 +47,10 @@ class InboxController extends BaseController
                   ->findArchive(
                       $this->getUser()
                   );
-        return $this->displayList($messages, Inbox::DIRECTORY_ARCHIVE);
+        return $this->displayList($messages);
     }
 
-    protected function displayList(array $messages, $directory)
+    protected function displayList(array $messages)
     {
         return [
             'messages' => !empty($messages) ? $messages : [],

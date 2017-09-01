@@ -123,10 +123,17 @@ class BaseController extends FOSRestController
         return $this->serializer;
     }
 
-    protected function getErrorMessages(Form $form) {
+    /**
+     * Get error message from form
+     *
+     * @param Form $form Form
+     *
+     * @return Array
+     */
+    protected function getErrorMessages(Form $form)
+    {
         $errors = array();
-
-        foreach ($form->getErrors() as $key => $error) {
+        foreach ($form->getErrors() as $error) {
             if ($form->isRoot()) {
                 $errors['#'][] = $error->getMessage();
             } else {

@@ -543,7 +543,7 @@ class ActionController extends BaseController
      * @ParamConverter("target", class="Dba\GameBundle\Entity\Player")
      * @Annotations\Get("/give/{target}")
      */
-    public function getGiveAction(Request $request, Player $target)
+    public function getGiveAction(Player $target)
     {
         $player = $this->getUser();
         if ($player->getActionPoints() < Player::GIVE_ACTION ||
