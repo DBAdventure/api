@@ -2,6 +2,7 @@ game:
   resource: "@DbaGameBundle/Resources/config/routing.yml"
   prefix: /api
 
-NelmioApiDocBundle:
-  resource: "@NelmioApiDocBundle/Resources/config/routing.yml"
-  prefix:   /api/doc
+admin:
+  resource: "@DbaAdminBundle/Controller/"
+  type:     annotation
+  prefix: /admin

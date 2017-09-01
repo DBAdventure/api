@@ -2,16 +2,16 @@
 
 namespace Dba\AdminBundle\Controller;
 
-use Dba\GameBundle\Entity\News;
-use Dba\GameBundle\Controller\BaseController;
-use Dba\AdminBundle\Form;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Dba\AdminBundle\Controller\BaseController;
+use Dba\AdminBundle\Form;
+use Dba\GameBundle\Entity\News;
 
 /**
- * @Route("/admin/news")
+ * @Route("/news")
  */
 class NewsController extends BaseController
 {

@@ -9,18 +9,19 @@ class AppKernel extends Kernel
     {
         $bundles = [
             new Symfony\Bundle\FrameworkBundle\FrameworkBundle(),
-            new Symfony\Bundle\SecurityBundle\SecurityBundle(),
-            new Symfony\Bundle\TwigBundle\TwigBundle(),
             new Symfony\Bundle\MonologBundle\MonologBundle(),
+            new Symfony\Bundle\SecurityBundle\SecurityBundle(),
             new Symfony\Bundle\SwiftmailerBundle\SwiftmailerBundle(),
+            new Symfony\Bundle\TwigBundle\TwigBundle(),
+            new Symfony\Bundle\AsseticBundle\AsseticBundle(),
             new Doctrine\Bundle\DoctrineBundle\DoctrineBundle(),
+            new FOS\RestBundle\FOSRestBundle(),
+            new JMS\SerializerBundle\JMSSerializerBundle(),
+            new Nelmio\CorsBundle\NelmioCorsBundle(),
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
             new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
-            new Nelmio\ApiDocBundle\NelmioApiDocBundle(),
-            new JMS\SerializerBundle\JMSSerializerBundle(),
-            new FOS\RestBundle\FOSRestBundle(),
-            new Nelmio\CorsBundle\NelmioCorsBundle(),
             new Dba\GameBundle\DbaGameBundle(),
+            new Dba\AdminBundle\DbaAdminBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {

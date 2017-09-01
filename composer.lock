@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "b0a001b00876390b1e93dc506b058ca2",
+    "content-hash": "1c1544bb6e6d06f4645f1f843ef05194",
     "packages": [
         {
             "name": "beberlei/DoctrineExtensions",
@@ -1516,55 +1516,134 @@
             "time": "2017-05-10T10:17:17+00:00"
         },
         {
-            "name": "michelf/php-markdown",
-            "version": "1.7.0",
+            "name": "kriswallsmith/assetic",
+            "version": "v1.4.0",
             "source": {
                 "type": "git",
-                "url": "https://github.com/michelf/php-markdown.git",
-                "reference": "1f51cc520948f66cd2af8cbc45a5ee175e774220"
+                "url": "https://github.com/kriswallsmith/assetic.git",
+                "reference": "e911c437dbdf006a8f62c2f59b15b2d69a5e0aa1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/michelf/php-markdown/zipball/1f51cc520948f66cd2af8cbc45a5ee175e774220",
-                "reference": "1f51cc520948f66cd2af8cbc45a5ee175e774220",
+                "url": "https://api.github.com/repos/kriswallsmith/assetic/zipball/e911c437dbdf006a8f62c2f59b15b2d69a5e0aa1",
+                "reference": "e911c437dbdf006a8f62c2f59b15b2d69a5e0aa1",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.3.0"
+                "php": ">=5.3.1",
+                "symfony/process": "~2.1|~3.0"
+            },
+            "conflict": {
+                "twig/twig": "<1.27"
+            },
+            "require-dev": {
+                "leafo/lessphp": "^0.3.7",
+                "leafo/scssphp": "~0.1",
+                "meenie/javascript-packer": "^1.1",
+                "mrclay/minify": "<2.3",
+                "natxet/cssmin": "3.0.4",
+                "patchwork/jsqueeze": "~1.0|~2.0",
+                "phpunit/phpunit": "~4.8 || ^5.6",
+                "psr/log": "~1.0",
+                "ptachoire/cssembed": "~1.0",
+                "symfony/phpunit-bridge": "~2.7|~3.0",
+                "twig/twig": "~1.23|~2.0",
+                "yfix/packager": "dev-master"
+            },
+            "suggest": {
+                "leafo/lessphp": "Assetic provides the integration with the lessphp LESS compiler",
+                "leafo/scssphp": "Assetic provides the integration with the scssphp SCSS compiler",
+                "leafo/scssphp-compass": "Assetic provides the integration with the SCSS compass plugin",
+                "patchwork/jsqueeze": "Assetic provides the integration with the JSqueeze JavaScript compressor",
+                "ptachoire/cssembed": "Assetic provides the integration with phpcssembed to embed data uris",
+                "twig/twig": "Assetic provides the integration with the Twig templating engine"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-lib": "1.4.x-dev"
+                    "dev-master": "1.4-dev"
                 }
             },
             "autoload": {
                 "psr-0": {
-                    "Michelf": ""
+                    "Assetic": "src/"
+                },
+                "files": [
+                    "src/functions.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Kris Wallsmith",
+                    "email": "kris.wallsmith@gmail.com",
+                    "homepage": "http://kriswallsmith.net/"
+                }
+            ],
+            "description": "Asset Management for PHP",
+            "homepage": "https://github.com/kriswallsmith/assetic",
+            "keywords": [
+                "assets",
+                "compression",
+                "minification"
+            ],
+            "time": "2016-11-11T18:43:20+00:00"
+        },
+        {
+            "name": "leafo/scssphp",
+            "version": "v0.6.7",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/leafo/scssphp.git",
+                "reference": "562213cd803e42ea53b0735554794c4022d8db89"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/leafo/scssphp/zipball/562213cd803e42ea53b0735554794c4022d8db89",
+                "reference": "562213cd803e42ea53b0735554794c4022d8db89",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.4.0"
+            },
+            "require-dev": {
+                "kherge/box": "~2.5",
+                "phpunit/phpunit": "~3.7",
+                "squizlabs/php_codesniffer": "~2.5"
+            },
+            "bin": [
+                "bin/pscss"
+            ],
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Leafo\\ScssPhp\\": "src/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
-                "BSD-3-Clause"
+                "MIT"
             ],
             "authors": [
                 {
-                    "name": "Michel Fortin",
-                    "email": "michel.fortin@michelf.ca",
-                    "homepage": "https://michelf.ca/",
-                    "role": "Developer"
-                },
-                {
-                    "name": "John Gruber",
-                    "homepage": "https://daringfireball.net/"
+                    "name": "Leaf Corcoran",
+                    "email": "leafot@gmail.com",
+                    "homepage": "http://leafo.net"
                 }
             ],
-            "description": "PHP Markdown",
-            "homepage": "https://michelf.ca/projects/php-markdown/",
+            "description": "scssphp is a compiler for SCSS written in PHP.",
+            "homepage": "http://leafo.github.io/scssphp/",
             "keywords": [
-                "markdown"
+                "css",
+                "less",
+                "sass",
+                "scss",
+                "stylesheet"
             ],
-            "time": "2016-10-29T18:58:20+00:00"
+            "time": "2017-02-23T05:07:33+00:00"
         },
         {
             "name": "monolog/monolog",
@@ -1643,91 +1722,6 @@
                 "psr-3"
             ],
             "time": "2017-06-19T01:22:40+00:00"
-        },
-        {
-            "name": "nelmio/api-doc-bundle",
-            "version": "2.13.2",
-            "target-dir": "Nelmio/ApiDocBundle",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/nelmio/NelmioApiDocBundle.git",
-                "reference": "adcdd91950db72346be4a8af82cc05883b97cef3"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/nelmio/NelmioApiDocBundle/zipball/adcdd91950db72346be4a8af82cc05883b97cef3",
-                "reference": "adcdd91950db72346be4a8af82cc05883b97cef3",
-                "shasum": ""
-            },
-            "require": {
-                "michelf/php-markdown": "~1.4",
-                "php": ">=5.4",
-                "symfony/console": "~2.3|~3.0",
-                "symfony/framework-bundle": "~2.3|~3.0",
-                "symfony/twig-bundle": "~2.3|~3.0"
-            },
-            "conflict": {
-                "jms/serializer": "<0.12",
-                "jms/serializer-bundle": "<0.11",
-                "symfony/symfony": "~2.7.8",
-                "twig/twig": "<1.12"
-            },
-            "require-dev": {
-                "doctrine/doctrine-bundle": "~1.5",
-                "doctrine/orm": "~2.3",
-                "dunglas/api-bundle": "~1.0@dev",
-                "friendsofsymfony/rest-bundle": "~1.0|~2.0",
-                "jms/serializer-bundle": ">=0.11",
-                "sensio/framework-extra-bundle": "~3.0",
-                "symfony/browser-kit": "~2.3|~3.0",
-                "symfony/css-selector": "~2.3|~3.0",
-                "symfony/finder": "~2.3|~3.0",
-                "symfony/form": "~2.3|~3.0",
-                "symfony/phpunit-bridge": "~2.7|~3.0",
-                "symfony/serializer": "~2.7|~3.0",
-                "symfony/validator": "~2.3|~3.0",
-                "symfony/yaml": "~2.3|~3.0"
-            },
-            "suggest": {
-                "dunglas/api-bundle": "For making use of resources definitions of DunglasApiBundle.",
-                "friendsofsymfony/rest-bundle": "For making use of REST information in the doc.",
-                "jms/serializer": "For making use of serializer information in the doc.",
-                "symfony/form": "For using form definitions as input.",
-                "symfony/validator": "For making use of validator information in the doc."
-            },
-            "type": "symfony-bundle",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "2.13-dev"
-                }
-            },
-            "autoload": {
-                "psr-0": {
-                    "Nelmio\\ApiDocBundle": ""
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Nelmio",
-                    "homepage": "http://nelm.io"
-                },
-                {
-                    "name": "Symfony Community",
-                    "homepage": "https://github.com/nelmio/NelmioApiDocBundle/contributors"
-                }
-            ],
-            "description": "Generates documentation for your REST API from annotations",
-            "keywords": [
-                "api",
-                "doc",
-                "documentation",
-                "rest"
-            ],
-            "time": "2017-05-13T14:53:58+00:00"
         },
         {
             "name": "nelmio/cors-bundle",
@@ -2454,6 +2448,76 @@
             "time": "2017-05-01T15:54:03+00:00"
         },
         {
+            "name": "symfony/assetic-bundle",
+            "version": "v2.8.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/assetic-bundle.git",
+                "reference": "2e0a23a4874838e26de6f025e02fc63328921a4c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/assetic-bundle/zipball/2e0a23a4874838e26de6f025e02fc63328921a4c",
+                "reference": "2e0a23a4874838e26de6f025e02fc63328921a4c",
+                "shasum": ""
+            },
+            "require": {
+                "kriswallsmith/assetic": "~1.4",
+                "php": ">=5.3.0",
+                "symfony/console": "~2.3|~3.0",
+                "symfony/dependency-injection": "~2.3|~3.0",
+                "symfony/framework-bundle": "~2.3|~3.0",
+                "symfony/yaml": "~2.3|~3.0"
+            },
+            "conflict": {
+                "kriswallsmith/spork": "<=0.2",
+                "twig/twig": "<1.27"
+            },
+            "require-dev": {
+                "kriswallsmith/spork": "~0.3",
+                "patchwork/jsqueeze": "~1.0",
+                "symfony/class-loader": "~2.3|~3.0",
+                "symfony/css-selector": "~2.3|~3.0",
+                "symfony/dom-crawler": "~2.3|~3.0",
+                "symfony/phpunit-bridge": "~2.7|~3.0",
+                "symfony/twig-bundle": "~2.3|~3.0"
+            },
+            "suggest": {
+                "kriswallsmith/spork": "to be able to dump assets in parallel",
+                "symfony/twig-bundle": "to use the Twig integration"
+            },
+            "type": "symfony-bundle",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.8-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Bundle\\AsseticBundle\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Kris Wallsmith",
+                    "email": "kris.wallsmith@gmail.com",
+                    "homepage": "http://kriswallsmith.net/"
+                }
+            ],
+            "description": "Integrates Assetic into Symfony2",
+            "homepage": "https://github.com/symfony/AsseticBundle",
+            "keywords": [
+                "assets",
+                "compression",
+                "minification"
+            ],
+            "time": "2017-07-14T07:26:46+00:00"
+        },
+        {
             "name": "symfony/monolog-bundle",
             "version": "v3.1.0",
             "source": {
@@ -2911,23 +2975,23 @@
         },
         {
             "name": "symfony/symfony",
-            "version": "v3.3.6",
+            "version": "v3.3.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/symfony.git",
-                "reference": "6f80cbd2dd89c5308b14e03d806356fac72c263e"
+                "reference": "645d24a119bc7b8326bb01e7b5b696bc3be337ec"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/symfony/zipball/6f80cbd2dd89c5308b14e03d806356fac72c263e",
-                "reference": "6f80cbd2dd89c5308b14e03d806356fac72c263e",
+                "url": "https://api.github.com/repos/symfony/symfony/zipball/645d24a119bc7b8326bb01e7b5b696bc3be337ec",
+                "reference": "645d24a119bc7b8326bb01e7b5b696bc3be337ec",
                 "shasum": ""
             },
             "require": {
                 "doctrine/common": "~2.4",
                 "ext-xml": "*",
                 "fig/link-util": "^1.0",
-                "php": ">=5.5.9",
+                "php": "^5.5.9|>=7.0.8",
                 "psr/cache": "~1.0",
                 "psr/container": "^1.0",
                 "psr/link": "^1.0",
@@ -2941,7 +3005,7 @@
                 "twig/twig": "~1.34|~2.4"
             },
             "conflict": {
-                "phpdocumentor/reflection-docblock": "<3.0||>=3.2.0",
+                "phpdocumentor/reflection-docblock": "<3.0||>=3.2.0,<3.2.2",
                 "phpdocumentor/type-resolver": "<0.2.0",
                 "phpunit/phpunit": "<4.8.35|<5.4.3,>=5.0"
             },
@@ -3012,7 +3076,7 @@
                 "egulias/email-validator": "~1.2,>=1.2.8|~2.0",
                 "monolog/monolog": "~1.11",
                 "ocramius/proxy-manager": "~0.4|~1.0|~2.0",
-                "phpdocumentor/reflection-docblock": "^3.0",
+                "phpdocumentor/reflection-docblock": "^3.0|^4.0",
                 "predis/predis": "~1.0",
                 "sensio/framework-extra-bundle": "^3.0.2",
                 "symfony/phpunit-bridge": "~3.2",
@@ -3060,7 +3124,63 @@
             "keywords": [
                 "framework"
             ],
-            "time": "2017-08-01T10:26:30+00:00"
+            "time": "2017-08-28T22:35:20+00:00"
+        },
+        {
+            "name": "twig/extensions",
+            "version": "v1.5.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/twigphp/Twig-extensions.git",
+                "reference": "d188c76168b853481cc75879ea045bf93d718e9c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/twigphp/Twig-extensions/zipball/d188c76168b853481cc75879ea045bf93d718e9c",
+                "reference": "d188c76168b853481cc75879ea045bf93d718e9c",
+                "shasum": ""
+            },
+            "require": {
+                "twig/twig": "~1.27|~2.0"
+            },
+            "require-dev": {
+                "symfony/phpunit-bridge": "~3.3@dev",
+                "symfony/translation": "~2.3|~3.0"
+            },
+            "suggest": {
+                "symfony/translation": "Allow the time_diff output to be translated"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.5-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Twig_Extensions_": "lib/"
+                },
+                "psr-4": {
+                    "Twig\\Extensions\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
+                }
+            ],
+            "description": "Common additional features for Twig that do not directly belong in core",
+            "homepage": "http://twig.sensiolabs.org/doc/extensions/index.html",
+            "keywords": [
+                "i18n",
+                "text"
+            ],
+            "time": "2017-06-08T18:19:53+00:00"
         },
         {
             "name": "twig/twig",
@@ -3360,22 +3480,22 @@
         },
         {
             "name": "phpdocumentor/reflection-docblock",
-            "version": "3.1.1",
+            "version": "3.2.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpDocumentor/ReflectionDocBlock.git",
-                "reference": "8331b5efe816ae05461b7ca1e721c01b46bafb3e"
+                "reference": "86e24012a3139b42a7b71155cfaa325389f00f1f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpDocumentor/ReflectionDocBlock/zipball/8331b5efe816ae05461b7ca1e721c01b46bafb3e",
-                "reference": "8331b5efe816ae05461b7ca1e721c01b46bafb3e",
+                "url": "https://api.github.com/repos/phpDocumentor/ReflectionDocBlock/zipball/86e24012a3139b42a7b71155cfaa325389f00f1f",
+                "reference": "86e24012a3139b42a7b71155cfaa325389f00f1f",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.5",
+                "php": "^7.0",
                 "phpdocumentor/reflection-common": "^1.0@dev",
-                "phpdocumentor/type-resolver": "^0.2.0",
+                "phpdocumentor/type-resolver": "^0.4.0",
                 "webmozart/assert": "^1.0"
             },
             "require-dev": {
@@ -3401,24 +3521,24 @@
                 }
             ],
             "description": "With this component, a library can provide support for annotations via DocBlocks or otherwise retrieve information that is embedded in a DocBlock.",
-            "time": "2016-09-30T07:12:33+00:00"
+            "time": "2017-08-29T19:37:41+00:00"
         },
         {
             "name": "phpdocumentor/type-resolver",
-            "version": "0.2.1",
+            "version": "0.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpDocumentor/TypeResolver.git",
-                "reference": "e224fb2ea2fba6d3ad6fdaef91cd09a172155ccb"
+                "reference": "9c977708995954784726e25d0cd1dddf4e65b0f7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpDocumentor/TypeResolver/zipball/e224fb2ea2fba6d3ad6fdaef91cd09a172155ccb",
-                "reference": "e224fb2ea2fba6d3ad6fdaef91cd09a172155ccb",
+                "url": "https://api.github.com/repos/phpDocumentor/TypeResolver/zipball/9c977708995954784726e25d0cd1dddf4e65b0f7",
+                "reference": "9c977708995954784726e25d0cd1dddf4e65b0f7",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.5",
+                "php": "^5.5 || ^7.0",
                 "phpdocumentor/reflection-common": "^1.0"
             },
             "require-dev": {
@@ -3448,7 +3568,7 @@
                     "email": "me@mikevanriel.com"
                 }
             ],
-            "time": "2016-11-25T06:54:22+00:00"
+            "time": "2017-07-14T14:27:02+00:00"
         },
         {
             "name": "phpmd/phpmd",
@@ -4612,16 +4732,16 @@
         },
         {
             "name": "symfony/phpunit-bridge",
-            "version": "v3.3.6",
+            "version": "v3.3.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/phpunit-bridge.git",
-                "reference": "c2c124b7f9de79f4a64dc011f041a3a2c768b913"
+                "reference": "13db89f6617d512df9ba6b6416fbc2cbbb5c9784"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/phpunit-bridge/zipball/c2c124b7f9de79f4a64dc011f041a3a2c768b913",
-                "reference": "c2c124b7f9de79f4a64dc011f041a3a2c768b913",
+                "url": "https://api.github.com/repos/symfony/phpunit-bridge/zipball/13db89f6617d512df9ba6b6416fbc2cbbb5c9784",
+                "reference": "13db89f6617d512df9ba6b6416fbc2cbbb5c9784",
                 "shasum": ""
             },
             "require": {
@@ -4670,7 +4790,7 @@
             ],
             "description": "Symfony PHPUnit Bridge",
             "homepage": "https://symfony.com",
-            "time": "2017-06-12T13:35:45+00:00"
+            "time": "2017-08-28T11:33:29+00:00"
         },
         {
             "name": "webmozart/assert",

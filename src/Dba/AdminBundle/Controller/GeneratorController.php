@@ -2,20 +2,20 @@
 
 namespace Dba\AdminBundle\Controller;
 
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Finder\Finder;
+use Symfony\Component\HttpFoundation\Request;
+use Dba\AdminBundle\Controller\BaseController;
+use Dba\AdminBundle\Form;
 use Dba\GameBundle\Entity\Map;
 use Dba\GameBundle\Entity\MapBox;
 use Dba\GameBundle\Entity\MapImage;
 use Dba\GameBundle\Entity\MapImageFile;
-use Dba\GameBundle\Controller\BaseController;
-use Dba\AdminBundle\Form;
-use Symfony\Component\Finder\Finder;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @Route("/admin/generator")
+ * @Route("/generator")
  */
 class GeneratorController extends BaseController
 {

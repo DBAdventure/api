@@ -1,4 +1,13 @@
-# Twig Configuration
 twig:
-    debug: '%kernel.debug%'
-    strict_variables: '%kernel.debug%'
+  debug: "%kernel.debug%"
+  strict_variables: "%kernel.debug%"
+  globals:
+    game: '@dba.game.template'
+  form_themes:
+    - 'bootstrap_3_horizontal_layout.html.twig'
+
+services:
+  twig.extension.text:
+    class: Twig_Extensions_Extension_Text
+    tags:
+      - { name: twig.extension }

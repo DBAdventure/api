@@ -5,11 +5,12 @@ namespace Dba\AdminBundle\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Dba\AdminBundle\Controller\BaseController;
 
 /**
- * @Route("/admin")
+ * @Route("/")
  */
-class DefaultController extends Controller
+class DefaultController extends BaseController
 {
     /**
      * @Route("", name="admin")

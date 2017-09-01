@@ -2,18 +2,18 @@
 
 namespace Dba\AdminBundle\Controller;
 
-use Dba\GameBundle\Entity\Player;
-use Dba\GameBundle\Entity\Side;
-use Dba\GameBundle\Controller\BaseController;
-use Dba\AdminBundle\Form;
 use Doctrine\ORM\Tools\Pagination\Paginator;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Dba\AdminBundle\Controller\BaseController;
+use Dba\AdminBundle\Form;
+use Dba\GameBundle\Entity\Player;
+use Dba\GameBundle\Entity\Side;
 
 /**
- * @Route("/admin/player")
+ * @Route("/player")
  */
 class PlayerController extends BaseController
 {
