@@ -42,7 +42,7 @@ class NewsController extends BaseController
             $news,
             [
                 'attr' => [
-                    'asset-path' => 'bundles/dbagame/images/avatars',
+                    'asset-path' => 'bundles/dbaadmin/images/avatars',
                     'web-dir' => $this->getParameter('kernel.root_dir') . '/../web/',
                 ]
             ]
@@ -79,7 +79,7 @@ class NewsController extends BaseController
             $news,
             [
                 'attr' => [
-                    'asset-path' => 'bundles/dbagame/images/avatars',
+                    'asset-path' => 'bundles/dbaadmin/images/avatars',
                     'web-dir' => $this->getParameter('kernel.root_dir') . '/../web/',
                 ]
             ]

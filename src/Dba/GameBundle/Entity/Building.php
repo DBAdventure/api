@@ -246,6 +246,6 @@ class Building
      */
     public function getImagePath()
     {
-        return sprintf('/bundles/dbagame/images/%s', $this->getImage());
+        return sprintf('/bundles/dbaadmin/images/%s', $this->getImage());
     }
 }

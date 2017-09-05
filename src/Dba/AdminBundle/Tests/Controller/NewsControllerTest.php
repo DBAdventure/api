@@ -25,7 +25,7 @@ class NewsControllerTest extends BaseTestCase
         $form = $crawler->filter('#news-form')->form();
         // set some values
         $form['news[subject]'] = 'Subject test';
-        $form['news[image]'] = '/bundles/dbagame/images/avatars/npc_quest/6.png';
+        $form['news[image]'] = '/bundles/dbaadmin/images/avatars/npc_quest/6.png';
 
         // submit the form
         $this->client->submit($form);
@@ -43,7 +43,7 @@ class NewsControllerTest extends BaseTestCase
         // set some values
         $form['news[subject]'] = 'Test';
         $form['news[message]'] = 'Message test';
-        $form['news[image]'] = '/bundles/dbagame/images/avatars/npc_quest/6.png';
+        $form['news[image]'] = '/bundles/dbaadmin/images/avatars/npc_quest/6.png';
 
         // submit the form
         $this->client->submit($form);
@@ -76,7 +76,7 @@ class NewsControllerTest extends BaseTestCase
         // set some values
         $form['news[subject]'] = 'Test';
         $form['news[message]'] = 'New message';
-        $form['news[image]'] = '/bundles/dbagame/images/avatars/npc_quest/6.png';
+        $form['news[image]'] = '/bundles/dbaadmin/images/avatars/npc_quest/6.png';
 
         // submit the form
         $this->client->submit($form);

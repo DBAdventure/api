@@ -1,84 +1,87 @@
 #admin {
-    #main {
-        width:auto;
-        background-image:none;
-        background-color:#fff
+  #main {
+    width: auto;
+    background-image: none;
+    background-color: #fff;
+  }
+  #menu {
+    float: left;
+    width: 280px;
+    margin-top: 15px;
+    div {
+      background: none;
+      width: auto;
+      &:after {
+        background: none;
+      }
     }
-    #menu {
-        width:280px;
-        margin-top:15px;
-        div {
-            background:none;
-            width:auto;
-            &:after {
-                background:none;
-            }
-        }
+  }
+  #content {
+    margin-left: 300px;
+    width: auto;
+    background-image: none;
+    background-color: #fff;
+    margin-top: 15px;
+    .body {
+      display:table;
     }
-    #content {
-        margin-left:300px;
-        width:auto;
-        background-image:none;
-        background-color:#fff;
-        margin-top:15px;
-        .body {
-            display:table;
-        }
-        .map-generator {
-            color: white;
-            display: block;
-            height: 800px;
-            overflow: auto;
-            padding: 0;
-            text-align: center;
-            td {
-                border:1px solid black
-            }
-            img:hover {
-                border:1px solid red;
-                cursor:pointer;
-            }
-            img.selected {
-                border:1px dashed yellow;
-            }
-        }
+    .map-generator {
+      color: white;
+      display: block;
+      height: 800px;
+      overflow: auto;
+      padding: 0;
+      text-align: center;
+      td {
+        border: 1px solid black
+      }
+      img:hover {
+        border: 1px solid red;
+        cursor: pointer;
+      }
+      img.selected {
+        border: 1px dashed yellow;
+      }
     }
+  }
 }
 
-#save-map-form {position:absolute;}
+#save-map-form {
+  position: absolute;
+}
 
 .list-group {
-    &.list-group-root {
-        padding: 0;
-        overflow: hidden;
-        border-top-width: 0;
-        .list-group {
-            margin-bottom: 0;
-        }
-        .list-group-item {
-            border-radius: 0;
-            border-width: 1px 0 0 0;
-            .glyphicon {
-                margin-right: 5px;
-            }
-            .list-group {
-                margin-left: 15px;
-            }
-        }
-        > .list-group-item:first-child:first-child {
-            border-top-width: 0;
-        }
-        > .list-group {
-            > .list-group-item {
-                padding-left: 30px;
-            }
-            > .list-group > .list-group-item {
-                padding-left: 45px;
-            }
-        }
+  &.list-group-root {
+    padding: 0;
+    overflow: hidden;
+    border-top-width: 0;
+    .list-group {
+      margin-bottom: 0;
     }
+    .list-group-item {
+      border-radius: 0;
+      border-width: 1px 0 0 0;
+      .glyphicon {
+        margin-right: 5px;
+      }
+      .list-group {
+        margin-left: 15px;
+      }
+    }
+    > .list-group-item:first-child:first-child {
+      border-top-width: 0;
+    }
+    > .list-group {
+      > .list-group-item {
+        padding-left: 30px;
+      }
+      > .list-group > .list-group-item {
+        padding-left: 45px;
+      }
+    }
+  }
 }
 
 .table-clickable {
-    cursor:pointer;
+  cursor: pointer;
 }

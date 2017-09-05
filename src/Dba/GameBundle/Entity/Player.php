@@ -3550,4 +3550,15 @@ class Player implements AdvancedUserInterface, Serializable
     {
         return $this->getHealth() < $this->getTotalMaxHealth();
     }
+
+    /**
+     * Get image path
+     *
+     * @return string
+     */
+    public function getImagePath()
+    {
+        $directory = $this->isPlayer() ? 'players' : 'npc';
+        return sprintf('/bundles/dbaadmin/images/avatars/%s/%s', $directory, $this->getImage());
+    }
 }

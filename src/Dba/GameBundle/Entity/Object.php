@@ -391,6 +391,6 @@ class Object
      */
     public function getImagePath()
     {
-        return sprintf('/bundles/dbagame/images/objects/%s', $this->getImage());
+        return sprintf('/bundles/dbaadmin/images/objects/%s', $this->getImage());
     }
 }

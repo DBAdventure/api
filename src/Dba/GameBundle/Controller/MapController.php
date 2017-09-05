@@ -20,7 +20,7 @@ class MapController extends BaseController
         $map = $player->getMap();
 
         $webDirectory = $this->getParameter('kernel.root_dir') . '/../web/';
-        $imagePath = $webDirectory . 'bundles/dbagame/images/map/mini/' . $map->getId() . '.png';
+        $imagePath = $webDirectory . 'bundles/dbaadmin/images/map/mini/' . $map->getId() . '.png';
         $image = imagecreatefrompng($imagePath);
 
         $buildings = $this->repos()->getBuildingRepository()->findByMap($map);

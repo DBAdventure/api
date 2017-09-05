@@ -111,6 +111,6 @@ class MapObjectType
      */
     public function getImagePath()
     {
-        return sprintf('/bundles/dbagame/images/objects/map/%s', $this->getImage());
+        return sprintf('/bundles/dbaadmin/images/objects/map/%s', $this->getImage());
     }
 }

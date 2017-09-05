@@ -8,11 +8,11 @@
     <title>{% block title %}DBAdventure{% endblock %}</title>
 
     {% stylesheets '@DbaAdminBundle/Resources/assets/css/shared/*.scss' filter="scssphp" output="/admin/css/dbadventure.css" %}
-      <link rel="stylesheet" href="{{ asset_url }}" />
+      <link rel="stylesheet" href="{{ asset_url }}" type="text/css" />
     {% endstylesheets %}
 
     {% stylesheets '@DbaAdminBundle/Resources/assets/css/admin.scss' filter="scssphp" output="/admin/css/admin.css" %}
-      <link rel="stylesheet" href="{{ asset_url }}" />
+      <link rel="stylesheet" href="{{ asset_url }}" type="text/css" />
     {% endstylesheets %}
   </head>
   <body id="admin">

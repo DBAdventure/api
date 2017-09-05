@@ -202,6 +202,6 @@ class DragonBall
      */
     public function getImagePath()
     {
-        return sprintf('/bundles/dbagame/images/dragon-ball/%s.png', $this->getId());
+        return sprintf('/bundles/dbaadmin/images/dragon-ball/%s.png', $this->getId());
     }
 }

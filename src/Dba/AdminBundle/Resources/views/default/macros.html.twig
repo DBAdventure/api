@@ -1,0 +1,55 @@
+{% macro pagination(nbPages, currentPage, routeName, routeParams) %}
+  {% if nbPages > 1 %}
+    <nav class="text-center">
+      <ul class="pagination">
+        {% if currentPage > 1  %}
+          <li class="page-item">
+            <a class="page-link" href="{{ path(routeName, ((routeParams|default({})) | merge({"page": currentPage - 1}))) }}" aria-label="{{ 'previous' | trans }}">
+              <span aria-hidden="true">&laquo;</span>
+              <span class="sr-only">{{ 'previous' | trans }}</span>
+            </a>
+          </li>
+        {% endif %}
+
+        {% for p in range(max(currentPage - 2, 1), min(currentPage + 2, nbPages)) %}
+          <li class="page-item{% if currentPage == p %} active{% endif %}">
+            <a class="page-link" href="{{ path(routeName, ((routeParams|default({})) | merge({"page": p}))) }}">{{ p }}</a>
+          </li>
+        {% endfor %}
+
+        {% if currentPage < nbPages %}
+          <li class="page-item">
+            <a class="page-link" href="{{ path(routeName, ((routeParams|default({})) | merge({"page": currentPage + 1}))) }}" aria-label="{{ 'next' | trans }}">
+              <span aria-hidden="true">&raquo;</span>
+              <span class="sr-only">{{ 'next' | trans }}</span>
+            </a>
+          </li>
+        {% endif %}
+      </ul>
+    </nav>
+  {% endif %}
+{% endmacro %}
+
+{% macro displayBonus(object) %}
+  {% if object.bonus is not empty %}
+    <ul>
+      {% for key, value in object.bonus %}
+        <li>
+          {{ ('object.' ~ key) | trans({"%value%": value}, "objects") }}
+        </li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+{% endmacro %}
+
+{% macro displayRequirements(object) %}
+  {% if object.requirements is not empty %}
+    <ul>
+      {% for key, value in object.requirements %}
+        <li>
+          {{ ('object.' ~ key) | trans({"%value%": value}, "objects") }}
+        </li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+{% endmacro %}

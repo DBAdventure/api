@@ -45,7 +45,7 @@ class ObjectController extends BaseController
             $object,
             [
                 'attr' => [
-                    'asset-path' => 'bundles/dbagame/images/objects',
+                    'asset-path' => 'bundles/dbaadmin/images/objects',
                     'web-dir' => $this->getParameter('kernel.root_dir') . '/../web/',
                 ]
             ]
@@ -80,7 +80,7 @@ class ObjectController extends BaseController
             $object,
             [
                 'attr' => [
-                    'asset-path' => 'bundles/dbagame/images/objects',
+                    'asset-path' => 'bundles/dbaadmin/images/objects',
                     'web-dir' => $this->getParameter('kernel.root_dir') . '/../web/',
                 ]
             ]
