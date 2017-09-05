@@ -3310,7 +3310,7 @@ class Player implements AdvancedUserInterface, Serializable
         } elseif (($firstSkill == 'st' and $secondSkill == 'ag') or ($firstSkill == 'ag' and $secondSkill == 'st')) {
             $class = 'champion';
         } elseif (($firstSkill == 'st' and $secondSkill == 'vi') or ($firstSkill == 'vi' and $secondSkill == 'st')) {
-            $class = 'lord.plains';
+            $class = 'lordPlains';
         } elseif (($firstSkill == 'st' and $secondSkill == 'in') or ($firstSkill == 'in' and $secondSkill == 'st')) {
             $class = 'berserker';
         } elseif (($firstSkill == 'st' and $secondSkill == 'an') or ($firstSkill == 'an' and $secondSkill == 'st')) {
@@ -3320,7 +3320,7 @@ class Player implements AdvancedUserInterface, Serializable
         } elseif (($firstSkill == 'st' and $secondSkill == 're') or ($firstSkill == 're' and $secondSkill == 'st')) {
             $class = 'gladiator';
         } elseif (($firstSkill == 'st' and $secondSkill == 'mh') or ($firstSkill == 'mh' and $secondSkill == 'st')) {
-            $class = 'imperial.guard';
+            $class = 'imperialGuard';
 
             // intellect
         } elseif (($firstSkill == 'in' and $secondSkill == 'mk') or ($firstSkill == 'mk' and $secondSkill == 'in')) {
@@ -3330,23 +3330,23 @@ class Player implements AdvancedUserInterface, Serializable
         } elseif (($firstSkill == 'in' and $secondSkill == 'ag') or ($firstSkill == 'in' and $secondSkill == 'ag')) {
             $class = 'illusionist';
         } elseif (($firstSkill == 'in' and $secondSkill == 'mh') or ($firstSkill == 'mh' and $secondSkill == 'in')) {
-            $class = 'imperial.magus';
+            $class = 'imperialMagus';
         } elseif (($firstSkill == 'in' and $secondSkill == 'an') or ($firstSkill == 'an' and $secondSkill == 'in')) {
             $class = 'sage';
         } elseif (($firstSkill == 'in' and $secondSkill == 're') or ($firstSkill == 're' and $secondSkill == 'in')) {
-            $class = 'war.magus';
+            $class = 'warMagus';
         } elseif (($firstSkill == 'in' and $secondSkill == 'sk') or ($firstSkill == 'sk' and $secondSkill == 'in')) {
             $class = 'healer';
         } elseif (($firstSkill == 'in' and $secondSkill == 'ac') or ($firstSkill == 'ac' and $secondSkill == 'in')) {
-            $class = 'black.magus';
+            $class = 'blackMagus';
 
             // Agility
         } elseif (($firstSkill == 'ag' and $secondSkill == 'ac') or ($firstSkill == 'ac' and $secondSkill == 'ag')) {
             $class = 'thief';
         } elseif (($firstSkill == 'ag' and $secondSkill == 'mh') or ($firstSkill == 'mh' and $secondSkill == 'ag')) {
-            $class = 'imperial.ninja';
+            $class = 'imperialNinja';
         } elseif (($firstSkill == 'ag' and $secondSkill == 'sk') or ($firstSkill == 'sk' and $secondSkill == 'ag')) {
-            $class = 'medical.ninja';
+            $class = 'medicalNinja';
         } elseif (($firstSkill == 'ag' and $secondSkill == 'vi') or ($firstSkill == 'vi' and $secondSkill == 'ag')) {
             $class = 'scout';
         } elseif (($firstSkill == 'ag' and $secondSkill == 'an') or ($firstSkill == 'an' and $secondSkill == 'ag')) {
@@ -3354,15 +3354,15 @@ class Player implements AdvancedUserInterface, Serializable
 
             // Skill
         } elseif (($firstSkill == 'sk' and $secondSkill == 're') or ($firstSkill == 're' and $secondSkill == 'sk')) {
-            $class = 'soldier.stone';
+            $class = 'soldierStone';
         } elseif (($firstSkill == 'sk' and $secondSkill == 'mh') or ($firstSkill == 'mh' and $secondSkill == 'sk')) {
-            $class = 'imperial.healer';
+            $class = 'imperialHealer';
         } elseif (($firstSkill == 'sk' and $secondSkill == 'an') or ($firstSkill == 'an' and $secondSkill == 'sk')) {
             $class = 'priest';
         } elseif (($firstSkill == 'vi' and $secondSkill == 'sk') or ($firstSkill == 'sk' and $secondSkill == 'vi')) {
-            $class = 'plains.healer';
+            $class = 'plainsHealer';
         } elseif (($firstSkill == 'ac' and $secondSkill == 'sk') or ($firstSkill == 'sk' and $secondSkill == 'ac')) {
-            $class = 'high.healer';
+            $class = 'highHealer';
         } elseif (($firstSkill == 'mk' and $secondSkill == 'sk') or ($firstSkill == 'mk' and $secondSkill == 'sk')) {
             $class = 'bishop';
 
@@ -3370,7 +3370,7 @@ class Player implements AdvancedUserInterface, Serializable
         } elseif (($firstSkill == 'an' and $secondSkill == 'vi') or ($firstSkill == 'vi' and $secondSkill == 'an')) {
             $class = 'scout';
         } elseif (($firstSkill == 'an' and $secondSkill == 'mh') or ($firstSkill == 'mh' and $secondSkill == 'an')) {
-            $class = 'high.researcher';
+            $class = 'highResearcher';
 
             // Ki
         } elseif (($firstSkill == 'mk' and $secondSkill == 'in') or ($firstSkill == 'in' and $secondSkill == 'mk')) {
