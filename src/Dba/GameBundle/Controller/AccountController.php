@@ -103,6 +103,7 @@ class AccountController extends BaseController
             'map' => $player->getMap(),
             'rank' => $player->getRank(),
             'side' => $player->getSide(),
+            'race' => $player->getRace(),
             'target' => $player->getTarget(),
             'stats' => [
                 'death_count' => $player->getDeathCount(),
@@ -156,29 +157,21 @@ class AccountController extends BaseController
         ];
     }
 
+    /**
+     * @Annotations\Post("/appearance")
+     */
     public function appearanceAction(Request $request)
     {
         $player = $this->getUser();
         $form = $this->createForm(PlayerAppearance::class, $player);
         $form->handleRequest($request);
-        if ($form->isSubmitted()) {
-            if ($form->isValid()) {
-                $this->em()->persist($player);
-                $this->em()->flush();
-            } else {
-                $this->addFlash(
-                    'danger',
-                    $this->trans('account.appearance.failed')
-                );
-            }
-
-            return $this->redirect($this->generateUrl('account.appearance'));
+        if (!$form->isSubmitted() || !$form->isValid()) {
+            return $this->badRequest();
         }
 
-        return $this->render(
-            'DbaGameBundle::account/appearance.html.twig',
-            ['form' => $form->createView()]
-        );
+        $this->em()->persist($player);
+        $this->em()->flush();
+        return [];
     }
 
     /**
