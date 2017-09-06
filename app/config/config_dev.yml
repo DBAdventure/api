@@ -21,6 +21,3 @@ monolog:
     console:
       type: console
       channels: ['!event', '!doctrine']
-
-#swiftmailer:
-#    delivery_addresses: ['me@example.com']

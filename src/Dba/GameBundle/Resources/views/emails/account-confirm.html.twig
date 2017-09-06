@@ -9,7 +9,7 @@ Hi <strong>{{ player.name }}!</strong>
 </p>
 
 <p>
-  To validate your account, go to: <a href="{{ url('confirm', {"id": player.id, "token": player.confirmationToken}) }}">{{ url('confirm', {"id": player.id, "token": player.confirmationToken}) }}</a>.
+  To validate your account, go to: <a href="{{ front_url }}/{{ player.id }}/{{ player.confirmationToken }}">{{ front_url }}/{{ player.id }}/{{ player.confirmationToken }}</a>.
 </p>
 
 <p>

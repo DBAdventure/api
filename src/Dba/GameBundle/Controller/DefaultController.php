@@ -70,10 +70,14 @@ class DefaultController extends BaseController
 
         $this->em()->persist($player);
         $this->em()->flush();
-        $this->services()->getMailService()->send(
+
+        $this->services()->getMailService()->save(
             $player,
             $this->trans('account.registered'),
-            'account-confirm'
+            'account-confirm',
+            [
+                'front_url' => $this->getParameter('front_url')
+            ]
         );
 
         return [];
