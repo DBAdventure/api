@@ -48,6 +48,7 @@ class AccountController extends BaseController
         }
 
         $player = $this->getUser();
+        $roleService = $this->get('dba.admin.role');
         return [
             'id' => $player->getId(),
             'username' => $player->getUsername(),
@@ -148,6 +149,7 @@ class AccountController extends BaseController
             'head_price' => $player->getHeadPrice(),
             'inventory_max_weight' => $player->getInventoryMaxWeight(),
             'inventory_weight' => $player->getInventoryWeight(),
+            'is_admin' => $roleService->isGranted(Player::ROLE_MODO, $player),
         ];
     }
 
