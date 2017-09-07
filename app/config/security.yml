@@ -28,6 +28,7 @@ security:
     Dba\GameBundle\Entity\Player: sha512
 
   access_control:
+    - { path: ^/api/account/confirm, roles: IS_AUTHENTICATED_ANONYMOUSLY }
     - { path: ^/api/account, roles: ROLE_PLAYER }
     - { path: ^/api/action, roles: ROLE_PLAYER }
     - { path: ^/api/building, roles: ROLE_PLAYER }

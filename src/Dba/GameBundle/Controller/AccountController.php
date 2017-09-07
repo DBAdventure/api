@@ -193,15 +193,15 @@ class AccountController extends BaseController
     }
 
     /**
-     * @Annotations\Post("/confirm/users/${id}/${token}")
+     * @Annotations\Post("/confirm/{id}/{token}")
      */
-    public function postConfirmuserToeknAction($id, $token)
+    public function postConfirmUserTokenAction($id, $token)
     {
         $playerRepo = $this->repos()->getPlayerRepository();
         $player = $playerRepo->findOneByConfirmationToken($token);
 
         if (null === $player || $player->getId() != $id) {
-            throw new NotFoundHttpException(sprintf('The player with confirmation token "%s" does not exist', $token));
+            return $this->badRequest();
         }
 
         $player->setConfirmationToken(null);
@@ -209,16 +209,11 @@ class AccountController extends BaseController
         $this->em()->persist($player);
         $this->em()->flush();
 
-        $this->addFlash(
-            'success',
-            $this->trans('account.enabled')
-        );
-
-        return $this->redirect($this->generateUrl('home'));
+        return [];
     }
 
     /**
-     * @Annotations\Post("/training/${what}")
+     * @Annotations\Post("/training/{what}")
      */
     public function postTrainAction($what)
     {
