@@ -66,7 +66,9 @@ class AccountController extends BaseController
             'max_movement_points' => $player->getMaxMovementPoints(),
             'battle_points' => $player->getBattlePoints(),
             'battle_points_remaining_start' => $player->getBattlePointsRemaining($player->getLevel() - 1),
-            'battle_points_remaining_end' => $player->getBattlePointsRemaining() - $player->getBattlePointsRemaining($player->getLevel() - 1),
+            'battle_points_remaining_end' => (
+                $player->getBattlePointsRemaining() - $player->getBattlePointsRemaining($player->getLevel() - 1)
+            ),
             'skill_points' => $player->getSkillPoints(),
             'created_at' => $player->getCreatedAt(),
             'updated_at' => $player->getUpdatedAt(),

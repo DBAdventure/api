@@ -33,9 +33,9 @@ class Mail
     /**
      * @var string
      *
-     * @ORM\Column(name="template", type="string", nullable=false)
+     * @ORM\Column(name="template_name", type="string", nullable=false)
      */
-    private $template;
+    private $templateName;
 
     /**
      * @var array
@@ -72,9 +72,9 @@ class Mail
     /**
      * @var string
      *
-     * @ORM\Column(name="result", type="text", nullable=true)
+     * @ORM\Column(name="message_sent", type="text", nullable=true)
      */
-    private $result;
+    private $messageSent;
 
 
     /**
@@ -136,27 +136,27 @@ class Mail
     }
 
     /**
-     * Set template
+     * Set template name
      *
-     * @param string $template
+     * @param string $templateName
      *
      * @return Mail
      */
-    public function setTemplate($template)
+    public function setTemplateName($templateName)
     {
-        $this->template = $template;
+        $this->templateName = $templateName;
 
         return $this;
     }
 
     /**
-     * Get template
+     * Get template name
      *
      * @return string
      */
-    public function getTemplate()
+    public function getTemplateName()
     {
-        return $this->template;
+        return $this->templateName;
     }
 
     /**
@@ -230,26 +230,26 @@ class Mail
     }
 
     /**
-     * Set result
+     * Set message sent
      *
-     * @param string $result
+     * @param string $messageSent
      *
      * @return Mail
      */
-    public function setResult($result)
+    public function setMessageSent($messageSent)
     {
-        $this->result = $result;
+        $this->messageSent = $messageSent;
 
         return $this;
     }
 
     /**
-     * Get result
+     * Get message sent
      *
      * @return string
      */
-    public function getResult()
+    public function getMessageSent()
     {
-        return $this->result;
+        return $this->messageSent;
     }
 }

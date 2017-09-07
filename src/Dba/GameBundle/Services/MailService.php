@@ -2,6 +2,7 @@
 
 namespace Dba\GameBundle\Services;
 
+use DateTime;
 use Swift_Message;
 use Dba\GameBundle\Entity\Mail;
 use Dba\GameBundle\Entity\Player;
@@ -13,30 +14,35 @@ class MailService extends BaseService
     /*
      * Send and email to a player
      *
-     * @param Player $player Player who buy
-     * @param string $subject Subject of the mail
-     * @param string $template Template to use
-     * @param array $parameters Template parameters
+     * @param Mail $mail Mail
      *
      * @return boolean
      */
-    public function send()
+    public function send(Mail $mail)
     {
-        return;
+        $content = $this->container->get('templating')->render(
+            'DbaGameBundle::emails/' . $mail->getTemplateName() . '.html.twig',
+            array_merge(
+                $mail->getParameters(),
+                ['player' => $mail->getPlayer()]
+            )
+        );
 
         $message = Swift_Message::newInstance()
-                 ->setSubject($subject)
+                 ->setSubject($mail->getSubject())
                  ->setFrom(self::EMAIL_NO_REPLY)
-                 ->setTo($player->getEmail())
+                 ->setTo($mail->getPlayer()->getEmail())
                  ->setBody(
-                     $this->container->get('templating')->render(
-                         'DbaGameBundle::emails/' . $template . '.html.twig',
-                         array_merge($parameters, ['player' => $player])
-                     ),
+                     $content,
                      'text/html'
                  );
 
-        return $this->container->get('mailer')->send($message);
+        if ($this->container->get('mailer')->send($message)) {
+            $mail->setSentAt(new DateTime);
+            $mail->setMessageSent($content);
+            $this->em()->persist($mail);
+            $this->em()->flush();
+        }
     }
 
     /*

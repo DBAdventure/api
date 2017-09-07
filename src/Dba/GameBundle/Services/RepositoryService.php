@@ -189,4 +189,12 @@ class RepositoryService extends BaseService
     {
         return $this->em()->getRepository('DbaGameBundle:PlayerSpell');
     }
+
+    /**
+     * @return Repository\MailRepository
+     */
+    public function getMailRepository()
+    {
+        return $this->em()->getRepository('DbaGameBundle:Mail');
+    }
 }

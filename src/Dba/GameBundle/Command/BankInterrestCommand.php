@@ -26,9 +26,9 @@ class BankInterrestCommand extends BaseCommand
             ->setName('dba:bank')
             ->setDescription('Calculate bank interrest.')
             ->setHelp(<<<'EOT'
-The <info>%command.name%</info> command let a group of npc play:
+The <info>%command.name%</info> command calculate and distribute bank interrest:
 
-  <info>php %command.full_name% 500</info>
+  <info>php %command.full_name%</info>
 EOT
             );
     }
