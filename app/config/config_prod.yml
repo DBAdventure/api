@@ -1,9 +1,6 @@
 imports:
   - { resource: config.yml }
 
-
-front_url: 'http://rpg-dbadventure.com'
-
 monolog:
   handlers:
     main:
