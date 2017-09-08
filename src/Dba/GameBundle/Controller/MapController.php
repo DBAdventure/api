@@ -2,17 +2,21 @@
 
 namespace Dba\GameBundle\Controller;
 
-use Dba\GameBundle\Entity\MapBox;
-use Dba\GameBundle\Repository\MapRepository;
+use FOS\RestBundle\Controller\Annotations;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Dba\GameBundle\Entity\MapBox;
+use Dba\GameBundle\Repository\MapRepository;
 
 class MapController extends BaseController
 {
+    /**
+     * @Annotations\Get("/mini.png")
+     */
     public function renderMinimapAction()
     {
         // @TODO Minimap: Check for map in inventory
@@ -83,6 +87,7 @@ class MapController extends BaseController
     /**
      * Mini map
      *
+     * @Annotations\Get("/mini")
      * @return array
      */
     public function miniAction()
@@ -107,22 +112,20 @@ class MapController extends BaseController
             }
         }
 
-        return $this->render(
-            'DbaGameBundle::map/mini.html.twig',
-            [
-                'map' => $map,
-                'dot' => MapBox::MINIMAP_SIZE,
-                'items' => [
-                    'buildings' => $buildings,
-                    'players' => $guildPlayers,
-                ]
+        return [
+            'map' => $map,
+            'dot' => MapBox::MINIMAP_SIZE,
+            'items' => [
+                'buildings' => $buildings,
+                'players' => $guildPlayers,
             ]
-        );
+        ];
     }
 
     /**
      * Get map
      *
+     * @Annotations\Get("")
      * @return array
      */
     public function getAction()
@@ -140,6 +143,7 @@ class MapController extends BaseController
     /**
      * Get map data
      *
+     * @Annotations\Get("/player")
      * @param MapRepository $mapRepo Map repository
      *
      * @return array
