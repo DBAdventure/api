@@ -413,11 +413,6 @@ class PlayerService extends BaseService
      */
     public function steal(Player $player, Player $target)
     {
-        if ($target->getZeni() <= 0) {
-            // @TODO Steal: use constant
-            return 'NO_MONEY';
-        }
-
         $fatigue = ($target->getFatiguePoints() - $player->getFatiguePoints()) * (8/100);
         $luck = rand(-12, 12) / 4;
         $ratio = (225/7942) * (
