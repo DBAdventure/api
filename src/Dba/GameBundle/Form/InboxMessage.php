@@ -22,9 +22,7 @@ class InboxMessage extends AbstractType
                 Type\CollectionType::class,
                 [
                     'entry_type' => InboxRecipient::class,
-                    'allow_add' => true,
-                    'allow_delete' => true,
-                    'prototype' => false,
+                    'required' => true,
                 ]
             )
             ->add(
@@ -40,6 +38,7 @@ class InboxMessage extends AbstractType
                 Type\TextareaType::class,
                 [
                     'label' => 'form.message',
+                    'required' => true,
                 ]
             )
         ;

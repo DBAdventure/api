@@ -78,7 +78,7 @@ class BaseController extends FOSRestController
     /**
      * Get created response
      *
-     * @param string $message Optional error message
+     * @param string $message Optional data message
      *
      * @return Response
      */
@@ -86,7 +86,7 @@ class BaseController extends FOSRestController
     {
         $response = new JsonResponse([]);
         if (!empty($message)) {
-            $response->setData(['error' => $message]);
+            $response->setData($message);
         }
         $response->setStatusCode(JsonResponse::HTTP_CREATED);
         return $response;
