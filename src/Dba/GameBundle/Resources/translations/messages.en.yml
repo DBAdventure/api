@@ -129,51 +129,6 @@ inventory:
   equip.cant: "You can't equip this object."
   drop.cant: "You can't drop this object."
 
-event:
-  action:
-    spell:
-      dodge: 'cast a spell you but you dodge it'
-      reallyFailed: 'really failed his spell, but you lose %damages% points of life'
-      failed: 'failed his spell, but you lose %damages% points of life'
-      moderatelySucceeded: 'moderately succeeded his spell, but you lose %damages% points of life'
-      succeeded: 'succeeded his spell and you lose %damages% points of life'
-      nice: 'made a nice hit and you lose %damages% points of life'
-      critic: 'made a critical hit and you lose %damages% points of life'
-      master: 'made a master stroke and you lose %damages% points of life'
-    attack:
-      dodge: 'attacked you but you dodge it'
-      reallyFailed: 'really failed his attack, but you lose %damages% points of life'
-      failed: 'failed his attack, but you lose %damages% points of life'
-      moderatelySucceeded: 'moderately succeeded his attack, but you lose %damages% points of life'
-      succeeded: 'succeeded his attack and you lose %damages% points of life'
-      nice: 'made a nice hit and you lose %damages% points of life'
-      critic: 'made a critical hit and you lose %damages% points of life'
-      master: 'made a master stroke and you lose %damages% points of life'
-      killed: 'You die and you lose 30% of your action points!'
-      npc: 'made an attack and you lose %damages% points of life'
-    steal:
-      completelyMissed: 'has completely missed his steal, you lose %zenisLost% Zenis'
-      missed: 'has missed his steal, you lose %zenisLost% Zenis'
-      moderatelySuccessful: 'has moderately successful his steal, you lose %zenisLost% Zenis'
-      successful: 'has successfully his steal, you lose %zenisLost% Zenis'
-      wellSuccessful: 'has did well his steal, you lose %zenisLost% Zenis'
-      veryWell: 'has very well steal you, you lose %zenisLost% Zenis'
-      perfectly: 'has perfectly steal you, you lose %zenisLost% Zenis'
-    heal:
-      fatigue: 'has decreased your fatigue by %fatiguePoints%'
-      completelyMissed: 'has completely missed his heal, but you gain %healPoints% points of life'
-      missed: 'has missed his heal, but you gain %healPoints% points of life'
-      moderatelySuccessful: 'has moderately successful his heal, but you gain %healPoints% points of life'
-      successful: 'has successfully his heal, you gain %healPoints% points of life'
-      wellSuccessful: 'has did well his heal, you gain %healPoints% points of life'
-      veryWell: 'has very well heal you, you gain %healPoints% points of life'
-      perfectly: 'has perfectly heal you, you gain %healPoints% points of life'
-    slap:
-      damages: 'gives you a slap!! You lose 1 point of life and 1 point of betrayal.'
-      killed: "gives you a masterful slap!! You die and you loose 30% of your action points!"
-    give:
-      zeni: "gives you %zeni% zeni!"
-      item: "gives you %quantity% %objectName%!"
 action:
   head.price: "You've just killed someone whose head was prices, you won %headPrice% Zenis"
   betray: 'You betray your camp. You risk losing all your side points.'
@@ -352,86 +307,11 @@ guild:
       good: "Good killed"
       bad: "Bad killed"
       npc: "Npc killed"
-miscellaneous:
-  title: "Player information"
-  side: "Side:"
-  name: "Name:"
-  race: "Race:"
-  level: "Level:"
-  search: "Searching for player:"
-  killed:
-    all: "All players killed"
-    good: "Good killed:"
-    bad: "Bad killed:"
-    npc: "Npc killed:"
-  last.connection: "Last connection"
-inbox:
-  title: "Inbox"
-  write: "Write"
-  inbox: "Inbox"
-  outbox: "Outbox"
-  archive: "Archive"
-  archivebox: "Archive box"
-  status: "Status"
-  date: "Date"
-  sender: "Sender"
-  recipient: "Recipient"
-  subject: "Subject"
-  actions: "Actions"
-  read: "Read"
-  back: "Back to parent box"
-  reply: "Reply"
-  delete: "Delete"
-  info:
-    read: ": Read"
-    unread: ": Unread"
-    deleted: ": Deleted"
-    from: "From: "
-    to: "To: "
-    date: "Created at: "
-    subject: "Subject: "
-    message: "Message: "
-  clear:
-    inbox: "Clear inbox messages"
-    outbox: "Clear outbox messages"
-    archive: "Clear archive"
-    read: "Only clear messages read"
-    guild:
-      outbox: "Clear messages sent to the guild"
-  guild:
-    write: "Write to guild's members"
-    outbox: "Message sent to the guild"
-  message:
-    sent: 'Message sent to %names%'
 
 choice:
   character: '-> Choice your character'
   group: '-> Choice group'
   clothes: '-> Choice his clothes'
-
-profile:
-  you: "You are:"
-  level: "Your level is:"
-  position: "You are in:"
-  side: "Side:"
-  race: "Race:"
-  rank: "Rank:"
-  class: "Class:"
-  target: "You target is:"
-  head.price: "Your head is priced to:"
-  player:
-    health: "Health: %h% / %max_h%"
-    ap: "Action points: %ap% / %max_ap%"
-    ki: "Ki points: %ki% / %max_ki%"
-    mp: "Movement points: %mp% / %max_mp%"
-    fp: "Fatigue points: %fp% / %max_fp%"
-    bp: "Battle points: %bp% / %max_bp%"
-events:
-  target: "You have suffered"
-  player: "Of which you are the author"
-
-"Bad credentials.": "Your username or password are incorrect."
-"User account is disabled.": "Player account is disabled."
 
 bonus:
   percent:

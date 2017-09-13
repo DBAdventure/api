@@ -230,7 +230,6 @@ class InboxController extends BaseController
     {
         $player = $this->getUser();
         $inboxRepo = $this->repos()->getInboxRepository();
-        $route = 'inbox';
         switch ($what) {
             case Inbox::DIRECTORY_INBOX:
                 $messages = $inboxRepo->findBy(
@@ -241,7 +240,6 @@ class InboxController extends BaseController
                 );
                 break;
             case Inbox::DIRECTORY_OUTBOX:
-                $route = 'inbox.' . $what;
                 $messages = $inboxRepo->findBy(
                     [
                         'sender' => $player,
@@ -250,7 +248,6 @@ class InboxController extends BaseController
                 );
                 break;
             case Inbox::DIRECTORY_ARCHIVE:
-                $route = 'inbox.' . $what;
                 $messages = $inboxRepo->findArchive(
                     $player
                 );
