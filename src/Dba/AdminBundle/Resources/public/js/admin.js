@@ -9,6 +9,7 @@ var DbaAdmin = function($)
 
     var $document = $(document),
         $selectedBoxes = {},
+        $changesBoxes = {},
         $blockBeginX = 0,
         $blockBeginY = 0,
         $blockEndX = 0,
@@ -72,9 +73,15 @@ var DbaAdmin = function($)
 
             $box.addClass('selected');
             $box.attr('src', this.getOption('assetPath') + $selectedImage.data('image'));
+            $box.data('image', $selectedImage.data('image'));
             $box.data('bonus', $selectedBonus.val());
 
             $selectedBoxes[$box.prop('id')] = {
+                'image_id': $selectedImage.val(),
+                'bonus_id': $selectedBonus.val()
+            };
+
+            $changesBoxes[$box.prop('id')] = {
                 'image_id': $selectedImage.val(),
                 'bonus_id': $selectedBonus.val()
             };
@@ -94,58 +101,58 @@ var DbaAdmin = function($)
                 var $y = $(this).data('y');
 
                 switch ($this.getOption('mode')) {
-                case MODE_SELECT:
-                    $this.emptySelection();
-                    $this.selectBox($(this));
-                    break;
-                case MODE_BOX:
-                    $this.emptySelection();
-                    $this.selectBoxAndSwap($(this));
-                    break;
-                case MODE_MULTI:
-                    if ($(this).hasClass('selected')) {
-                        $this.deselectBox($(this));
-                    } else {
-                        $this.selectBoxAndSwap($(this));
-                    }
-                    break;
-                case MODE_BLOCK:
-                    if ($blockBeginX !== 0 && $blockEndX !== 0) {
+                    case MODE_SELECT:
                         $this.emptySelection();
-                        $blockBeginX = 0;
-                        $blockBeginY = 0;
-                        $blockEndX = 0;
-                        $blockEndY = 0;
-                    }
-
-                    if ($blockBeginX === 0 && $blockEndX === 0) {
-                        $blockBeginX = $x;
-                        $blockBeginY = $y;
+                        $this.selectBox($(this));
+                        break;
+                    case MODE_BOX:
+                        $this.emptySelection();
                         $this.selectBoxAndSwap($(this));
-                    } else if ($blockBeginX !== 0 && $blockEndX === 0) {
-                        if ($y < $blockBeginY) {
-                            $blockEndY = $blockBeginY;
-                            $blockBeginY = $y;
+                        break;
+                    case MODE_MULTI:
+                        if ($(this).hasClass('selected')) {
+                            $this.deselectBox($(this));
                         } else {
-                            $blockEndY = $y;
+                            $this.selectBoxAndSwap($(this));
+                        }
+                        break;
+                    case MODE_BLOCK:
+                        if ($blockBeginX !== 0 && $blockEndX !== 0) {
+                            $this.emptySelection();
+                            $blockBeginX = 0;
+                            $blockBeginY = 0;
+                            $blockEndX = 0;
+                            $blockEndY = 0;
                         }
 
-                        if($x < $blockBeginX) {
-                            $blockEndX = $blockBeginX;
+                        if ($blockBeginX === 0 && $blockEndX === 0) {
                             $blockBeginX = $x;
-                        } else {
-                            $blockEndX = $x;
-                        }
-                        $nbSelectedBoxes -= 1;
+                            $blockBeginY = $y;
+                            $this.selectBoxAndSwap($(this));
+                        } else if ($blockBeginX !== 0 && $blockEndX === 0) {
+                            if ($y < $blockBeginY) {
+                                $blockEndY = $blockBeginY;
+                                $blockBeginY = $y;
+                            } else {
+                                $blockEndY = $y;
+                            }
 
-                        for (var $h = $blockBeginY; $h <= $blockEndY; $h++) {
-                            for (var $w = $blockBeginX; $w <= $blockEndX; $w++) {
-                                $this.selectBoxAndSwap($('.map-generator img[data-x="' + $w + '"][data-y="' + $h + '"]'));
+                            if($x < $blockBeginX) {
+                                $blockEndX = $blockBeginX;
+                                $blockBeginX = $x;
+                            } else {
+                                $blockEndX = $x;
+                            }
+                            $nbSelectedBoxes -= 1;
+
+                            for (var $h = $blockBeginY; $h <= $blockEndY; $h++) {
+                                for (var $w = $blockBeginX; $w <= $blockEndX; $w++) {
+                                    $this.selectBoxAndSwap($('.map-generator img[data-x="' + $w + '"][data-y="' + $h + '"]'));
+                                }
                             }
                         }
-                    }
 
-                    break;
+                        break;
                 }
             });
 
@@ -173,7 +180,7 @@ var DbaAdmin = function($)
             });
 
             $('#save-map-form').on('submit', function() {
-                $('#serialized-data').val(JSON.stringify($selectedBoxes));
+                $('#serialized-data').val(JSON.stringify($changesBoxes));
             });
 
             $('#save-map-form button[name="clear-selected-boxes"]').on('click', function() {
