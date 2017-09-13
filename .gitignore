@@ -3,6 +3,7 @@
 /build/
 /phpunit.xml
 /var/*
+!/var/sql
 !/var/cache
 /var/cache/*
 !var/cache/.gitkeep
