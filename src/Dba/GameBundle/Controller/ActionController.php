@@ -156,7 +156,7 @@ class ActionController extends BaseController
             $target,
             $eventMessage,
             [
-                '%damages%' => $damages
+                'damages' => $damages
             ]
         );
 
@@ -390,7 +390,7 @@ class ActionController extends BaseController
             $target,
             $eventMessage,
             [
-                '%zenisLost%' => $zenisAdded
+                'zenisLost' => $zenisAdded
             ]
         );
 
@@ -606,7 +606,7 @@ class ActionController extends BaseController
                     $target,
                     'event.action.give.zeni',
                     [
-                        '%zeni%' => $zeni
+                        'zeni' => $zeni
                     ]
                 );
             }
@@ -651,12 +651,12 @@ class ActionController extends BaseController
                     $target,
                     'event.action.give.item',
                     [
-                        '%objectName%' => $this->trans(
+                        'objectName' => $this->trans(
                             $playerObject->getObject()->getName() . '.name',
                             [],
                             'objects'
                         ),
-                        '%quantity%' => $quantity
+                        'quantity' => $quantity
                     ]
                 );
             }
@@ -730,7 +730,7 @@ class ActionController extends BaseController
             $target,
             $eventMessage,
             [
-                '%healPoints%' => $healPoints
+                'healPoints' => $healPoints
             ]
         );
 
@@ -747,7 +747,7 @@ class ActionController extends BaseController
                 $target,
                 $eventMessage,
                 [
-                    '%fatiguePoints%' => $fatiguePoints,
+                    'fatiguePoints' => $fatiguePoints,
                 ]
             );
         }
@@ -919,7 +919,7 @@ class ActionController extends BaseController
                 $target,
                 $eventMessage,
                 [
-                    '%damages%' => $damages
+                    'damages' => $damages
                 ]
             );
         }

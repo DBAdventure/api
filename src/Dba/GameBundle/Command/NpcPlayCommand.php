@@ -164,7 +164,7 @@ EOT
                     $target,
                     $eventMessage,
                     [
-                        '%damages%' => $damages
+                        'damages' => $damages
                     ]
                 );
 

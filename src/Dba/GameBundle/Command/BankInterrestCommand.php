@@ -77,7 +77,7 @@ EOT
                     new Player(),
                     $target,
                     'game.bank.interest',
-                    ['%goldBar%' => $updatedValue],
+                    ['goldBar' => $updatedValue],
                     EventType::BANK
                 );
             } catch (Exception $e) {
