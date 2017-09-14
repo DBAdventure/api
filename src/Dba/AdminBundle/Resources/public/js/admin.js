@@ -160,7 +160,7 @@ var DbaAdmin = function($)
                 $this.setOption('mode', $(this).val());
             }).trigger('change');
 
-            $('#available-images').on('change keyup', function() {
+            $('#available-bonus, #available-images').on('change keyup', function() {
                 $.each($('.map-generator img.selected'), function() {
                     $this.swapImage($(this));
                 });
