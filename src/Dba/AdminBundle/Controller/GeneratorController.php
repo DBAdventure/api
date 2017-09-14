@@ -19,7 +19,7 @@ use Dba\GameBundle\Entity\MapImageFile;
  */
 class GeneratorController extends BaseController
 {
-    const MAP_DIVISOR = 30;
+    const MAP_DIVISOR = 50;
     /**
      * Little cache for image loaded with gd lib
      *
