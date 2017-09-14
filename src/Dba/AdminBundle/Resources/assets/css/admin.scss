@@ -47,7 +47,10 @@
 }
 
 #save-map-form {
-  position: absolute;
+  position: fixed;
+  background: white;
+  z-index: 999;
+  width: 300px;
 }
 
 .list-group {
