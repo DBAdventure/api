@@ -47,3 +47,8 @@ game_building:
   resource: "@DbaGameBundle/Controller/BuildingController.php"
   type:     rest
   prefix: /building
+
+game_guild:
+  resource: "@DbaGameBundle/Controller/GuildController.php"
+  type:     rest
+  prefix: /guild

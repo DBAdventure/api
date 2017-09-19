@@ -117,6 +117,7 @@ class AccountController extends BaseController
             'last_login' => $player->getLastLogin(),
             'roles' => $player->getRoles(),
             'class' => $player->getClass(),
+            'guild_player' => $player->getGuildPlayer(),
             'map' => $player->getMap(),
             'rank' => $player->getRank(),
             'side' => $player->getSide(),

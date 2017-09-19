@@ -2,64 +2,44 @@
 
 namespace Dba\GameBundle\Controller;
 
-use Dba\GameBundle\Entity\Player;
-use Dba\GameBundle\Entity\Guild;
-use Dba\GameBundle\Entity\GuildPlayer;
-use Dba\GameBundle\Entity\GuildRank;
-use Dba\GameBundle\Form;
+use FOS\RestBundle\Controller\Annotations;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Dba\GameBundle\Entity\Guild;
+use Dba\GameBundle\Entity\GuildPlayer;
+use Dba\GameBundle\Entity\GuildRank;
+use Dba\GameBundle\Entity\Player;
+use Dba\GameBundle\Form;
 
-/**
- * @Route("/guild")
- */
+
 class GuildController extends BaseController
 {
     const CREATE_GUILD_AMOUNT = 200;
 
     /**
-     * @Route("", name="guild", methods="GET")
-     * @Template()
+     * @Annotations\Get("/view/{id}")
      */
-    public function indexAction()
-    {
-        $guild = $this->getUser()->getGuildPlayer();
-        if (empty($guild)) {
-            return $this->render('DbaGameBundle::guild/no-guild.html.twig');
-        }
-
-        return $this->render('DbaGameBundle::guild/index.html.twig');
-    }
-
-    /**
-     * @Route("/view/{id}", name="guild.view", methods="GET", requirements={"id": "\d+"}, defaults={"id" : null})
-     * @Template()
-     */
-    public function viewAction($id)
+    public function getViewAction($id)
     {
         $guildRepo = $this->repos()->getGuildRepository();
-        return $this->render(
-            'DbaGameBundle::guild/view.html.twig',
-            [
-                'guilds' => $guildRepo->findByEnabled(true),
-                'selectedGuild' => !empty($id) ? $guildRepo->findOneBy(
-                    [
-                        'id' => $id,
-                        'enabled' => true
-                    ]
-                ) : null
-            ]
-        );
+        return [
+            'guilds' => $guildRepo->findByEnabled(true),
+            'guild' => !empty($id) ? $guildRepo->findOneBy(
+                [
+                    'id' => $id,
+                    'enabled' => true
+                ]
+            ) : null
+        ];
     }
 
     /**
-     * @Route("/create", name="guild.create", methods={"GET", "POST"})
-     * @Template()
+     * @Annotations\Post("/create")
      */
-    public function createAction(Request $request)
+    public function postCreateAction(Request $request)
     {
         $player = $this->getUser();
         if (!empty($player->getGuildPlayer()) || $player->getZeni() < self::CREATE_GUILD_AMOUNT) {
@@ -69,61 +49,52 @@ class GuildController extends BaseController
         $guild = new Guild();
         $form = $this->createForm(Form\GuildCreate::class, $guild);
         $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
-            $guildRank = new GuildRank();
-            $guildRank->setName('member');
-            $guildRank->setGuild($guild);
-            $guildRank->setRole(GuildRank::ROLE_PLAYER);
-            $this->em()->persist($guildRank);
-
-            $guildRank = new GuildRank();
-            $guildRank->setName('moderator');
-            $guildRank->setGuild($guild);
-            $guildRank->setRole(GuildRank::ROLE_MODO);
-            $this->em()->persist($guildRank);
-
-            $guildRank = new GuildRank();
-            $guildRank->setName('administrator');
-            $guildRank->setGuild($guild);
-            $guildRank->setRole(GuildRank::ROLE_ADMIN);
-            $this->em()->persist($guildRank);
-
-            $guildPlayer = new GuildPlayer();
-            $guildPlayer->setPlayer($player);
-            $guildPlayer->setGuild($guild);
-            $guildPlayer->setEnabled(true);
-            $guildPlayer->setZeni(0);
-            $guildPlayer->setRank($guildRank);
-
-            $player->setZeni($player->getZeni() - self::CREATE_GUILD_AMOUNT);
-
-            $guild->setCreatedBy($player);
-            $guild->setEnabled(false);
-
-            $this->em()->persist($player);
-            $this->em()->persist($guildPlayer);
-            $this->em()->persist($guild);
-            $this->em()->flush();
-
-            $this->addFlash(
-                'success',
-                $this->trans('guild.created')
-            );
-
-            return $this->redirect($this->generateUrl('guild'));
+        if (!$form->isSubmitted() ||! $form->isValid()) {
+            return $this->badRequest($this->getErrorMessages($form));
         }
 
-        return $this->render(
-            'DbaGameBundle::guild/create.html.twig',
-            ['form' => $form->createView()]
-        );
+        $guildRank = new GuildRank();
+        $guildRank->setName('member');
+        $guildRank->setGuild($guild);
+        $guildRank->setRole(GuildRank::ROLE_PLAYER);
+        $this->em()->persist($guildRank);
+
+        $guildRank = new GuildRank();
+        $guildRank->setName('moderator');
+        $guildRank->setGuild($guild);
+        $guildRank->setRole(GuildRank::ROLE_MODO);
+        $this->em()->persist($guildRank);
+
+        $guildRank = new GuildRank();
+        $guildRank->setName('administrator');
+        $guildRank->setGuild($guild);
+        $guildRank->setRole(GuildRank::ROLE_ADMIN);
+        $this->em()->persist($guildRank);
+
+        $guildPlayer = new GuildPlayer();
+        $guildPlayer->setPlayer($player);
+        $guildPlayer->setGuild($guild);
+        $guildPlayer->setEnabled(true);
+        $guildPlayer->setZeni(0);
+        $guildPlayer->setRank($guildRank);
+
+        $player->setZeni($player->getZeni() - self::CREATE_GUILD_AMOUNT);
+
+        $guild->setCreatedBy($player);
+        $guild->setEnabled(false);
+
+        $this->em()->persist($player);
+        $this->em()->persist($guildPlayer);
+        $this->em()->persist($guild);
+        $this->em()->flush();
+
+        return [];
     }
 
     /**
-     * @Route("/members/{type}", name="guild.members", methods="GET", defaults={"type" : null})
-     * @Template()
+     * @Annotations\Post("/members/{type}")
      */
-    public function membersAction($type)
+    public function getMembersAction($type)
     {
         $guildPlayer = $this->getUser()->getGuildPlayer();
         if (empty($guildPlayer) or !$guildPlayer->isEnabled()) {
@@ -139,45 +110,33 @@ class GuildController extends BaseController
             $guildPlayers[] = $player;
         }
 
-        return $this->render(
-            'DbaGameBundle::guild/members.html.twig',
-            [
-                'guildPlayers' => $guildPlayers
-            ]
-        );
+        return [
+            'players' => $guildPlayers
+        ];
     }
 
     /**
-     * @Route("/events", name="guild.events", methods="GET")
-     * @Template()
+     * @Annotations\Get("/events")
      */
-    public function eventsAction()
+    public function getEventsAction()
     {
         $guildPlayer = $this->getUser()->getGuildPlayer();
         if (empty($guildPlayer) or !$guildPlayer->isEnabled()) {
             return $this->forbidden();
         }
 
-        return $this->render(
-            'DbaGameBundle::guild/events.html.twig'
-        );
+        return [];
     }
 
     /**
-     * @Route("/join/{id}", name="guild.join", methods="GET", requirements={"id": "\d+"})
+     * @Annotations\Post("/join/{id}")
      * @ParamConverter("guild", class="Dba\GameBundle\Entity\Guild")
-     * @Template()
      */
-    public function joinAction(Guild $guild)
+    public function postJoinAction(Guild $guild)
     {
         $player = $this->getUser();
-        if (!empty($player->getGuildPlayer())) {
-            $this->addFlash(
-                'danger',
-                $this->trans('guild.already.have')
-            );
-
-            return $this->redirect($this->generateUrl('guild'));
+        if (!empty($player->getGuildPlayer()) || count($guild->getPlayers()) >= Guild::MAX_MEMBERS) {
+            return $this->forbidden();
         }
 
         $guildRank = $this->repos()->getGuildRankRepository()
@@ -191,13 +150,8 @@ class GuildController extends BaseController
         $guildPlayer->setRank($guildRank);
 
         $this->em()->persist($guildPlayer);
-
         $this->em()->flush();
-        $this->addFlash(
-            'danger',
-            $this->trans('guild.joined')
-        );
 
-        return $this->redirect($this->generateUrl('guild'));
+        return [];
     }
 }

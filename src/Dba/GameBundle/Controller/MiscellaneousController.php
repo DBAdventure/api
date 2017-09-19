@@ -2,85 +2,28 @@
 
 namespace Dba\GameBundle\Controller;
 
+use FOS\RestBundle\Controller\Annotations;
+use Doctrine\ORM\Query\ResultSetMapping;
+use Doctrine\ORM\Tools\Pagination\Paginator;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
-use Doctrine\ORM\Query\ResultSetMapping;
-use Doctrine\ORM\Tools\Pagination\Paginator;
 use Dba\GameBundle\Entity\Side;
-use Dba\GameBundle\Entity\Player;
 
 class MiscellaneousController extends BaseController
 {
     /**
-     * @Route("/faq", name="faq", methods="GET")
-     * @Template()
-     */
-    public function faqAction()
-    {
-        return $this->render('DbaGameBundle::miscellaneous/faq.html.twig');
-    }
-
-    /**
-     * @Route("/contact", name="contact", methods="GET")
-     * @Template()
+     * @Annotations\Post("/contact")
      */
     public function contactAction()
     {
-        return $this->render('DbaGameBundle::miscellaneous/contact.html.twig');
+        return $this->badRequest('Not Implemented yet');
     }
 
     /**
-     * @Route("/team", name="team", methods="GET")
-     * @Template()
-     */
-    public function teamAction()
-    {
-        return $this->render('DbaGameBundle::miscellaneous/team.html.twig');
-    }
-
-    /**
-     * @Route("/rules", name="rules", methods="GET")
-     * @Template()
-     */
-    public function rulesAction()
-    {
-        return $this->render('DbaGameBundle::miscellaneous/rules.html.twig');
-    }
-
-    /**
-     * @Route("/history", name="history", methods="GET")
-     * @Template()
-     */
-    public function historyAction()
-    {
-        return $this->render('DbaGameBundle::miscellaneous/history.html.twig');
-    }
-
-    /**
-     * @Route("/player/{id}", name="player.info", methods="GET", requirements={"id": "\d+"})
-     * @ParamConverter("target", class="Dba\GameBundle\Entity\Player")
-     * @Template()
-     */
-    public function playerInfoAction(Player $target)
-    {
-        if (!$target->isPlayer()) {
-            return $this->redirect($this->generateUrl('home'));
-        }
-
-        return $this->render(
-            'DbaGameBundle::miscellaneous/player-info.html.twig',
-            [
-                'target' => $target
-            ]
-        );
-    }
-
-    /**
-     * @Route("/ranking/{what}", name="ranking", methods="GET", defaults={"what": null})
-     * @Template()
+     * @Annotations\Get("/ranking/{what}")
      */
     public function rankingAction(Request $request, $what)
     {
@@ -208,18 +151,17 @@ EOF;
             ->addOrderBy($rankingList[$what]['field'], 'DESC');
         $ranking = new Paginator($qb, false);
 
-        return $this->render(
-            'DbaGameBundle::miscellaneous/ranking.html.twig',
-            [
+        return [
+            'count' => count($ranking),
+            'current' => $page,
+            'limit' => $limitPerPage,
+            'what' => $what,
+            'type' => $type,
+            'who' => !empty($playerSearched) ? $playerSearched->getName() : null,
+            'result' => [
                 'ranking' => $ranking,
                 'rankingList' => $rankingList,
-                'currentWhat' => $what,
-                'currentType' => $type,
-                'limitPerPage' => $limitPerPage,
-                'nbPages' => ceil(count($ranking) / $limitPerPage),
-                'page' => $page,
-                'who' => !empty($playerSearched) ? $playerSearched->getName() : null
             ]
-        );
+        ];
     }
 }
