@@ -36,9 +36,10 @@ news:
   createdAt: "Created at"
 
 guild:
+  saved: "You save this guild!"
   list:
-    enabled: "Guilds disabled"
-    disabled: "Guilds enabled"
+    enabled: "Guilds enabled"
+    disabled: "Guilds disabled"
     empty: "No guild"
   createdBy: "Created by"
   nb.members: "Nb of members"
