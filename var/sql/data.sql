@@ -318,13 +318,39 @@ INSERT INTO building VALUES (48, 3, 'shop.head.southwest', 'buildings/head.png',
 INSERT INTO building VALUES (49, 3, 'shop.head.northwest', 'buildings/head.png', 51, 29, 9, true);
 INSERT INTO building VALUES (50, 3, 'bear.enter', 'buildings/cave.png', 69, 19, 13, true);
 INSERT INTO building VALUES (51, 4, 'bear.exit', 'buildings/cave.png', 3, 6, 14, true);
+INSERT INTO building VALUES (52, 6, 'magic.temple.northwest', 'buildings/magic.png', 5, 4, 13, true);
+INSERT INTO building VALUES (53, 6, 'restaurant.bebert', 'buildings/restaurant.png', 14, 11, 4, true);
+INSERT INTO building VALUES (54, 6, 'shop.weapon.northwest', 'buildings/weapon.png', 12, 2, 6, true);
+INSERT INTO building VALUES (55, 6, 'shop.vision.laboratory', 'buildings/vision.png', 28, 4, 5, true);
+INSERT INTO building VALUES (56, 6, 'shop.cloth.northwest', 'buildings/clothing.png', 6, 7, 11, true);
+INSERT INTO building VALUES (57, 6, 'shop.miscellaneous.northwest', 'buildings/miscellaneous.png', 6, 8, 2, true);
+INSERT INTO building VALUES (58, 6, 'shop.amulet.southeast', 'buildings/amulet.png', 149, 90, 8, true);
+INSERT INTO building VALUES (59, 6, 'shop.amulet.northwest', 'buildings/amulet.png', 20, 9, 8, true);
+INSERT INTO building VALUES (60, 6, 'magic.temple.northeast', 'buildings/magic.png', 47, 5, 13, true);
+INSERT INTO building VALUES (61, 6, 'shop.miscellaneous.northeast', 'buildings/miscellaneous.png', 40, 11, 2, true);
+INSERT INTO building VALUES (62, 6, 'shop.cloth.northeast', 'buildings/clothing.png', 41, 11, true);
+INSERT INTO building VALUES (63, 6, 'shop.weapon.northeast', 'buildings/weapon.png', 40, 18, 6, true);
+INSERT INTO building VALUES (64, 6, 'wanted.face', 'buildings/face.png', 27, 25, 3, true);
+INSERT INTO building VALUES (65, 6, 'shop.cloth.centerwest', 'buildings/clothing.png', 13, 28, 11, true);
+INSERT INTO building VALUES (66, 6, 'shop.miscellaneous.centerwest', 'buildings/miscellaneous.png', 5, 27, 2, true);
+INSERT INTO building VALUES (67, 6, 'shop.vision.centerwest', 'buildings/vision.png', 11, 24, 5, true);
+INSERT INTO building VALUES (68, 6, 'magic.temple.centerwest', 'buildings/magic.png', 20, 24, 13, true);
+INSERT INTO building VALUES (69, 6, 'shop.weapon.centerwest', 'buildings/weapon.png', 32, 23, 6, true);
+INSERT INTO building VALUES (70, 6, 'restaurant.roger', 'buildings/restaurant.png', 32, 24, 4, true);
+INSERT INTO building VALUES (71, 6, 'bank.central.south', 'buildings/bank.png', 38, 43, 12, true);
+INSERT INTO building VALUES (72, 6, 'bank.central.north', 'buildings/bank.png', 23, 5, 12, true);
+INSERT INTO building VALUES (73, 6, 'restaurant.doudou', 'buildings/restaurant.png', 24, 41, 4, true);
+INSERT INTO building VALUES (74, 6, 'shop.vision.southeast', 'buildings/vision.png', 44, 33, 5, true);
+INSERT INTO building VALUES (75, 6, 'shop.shoes.southwest', 'buildings/shoes.png', 9, 40, 10, true);
+INSERT INTO building VALUES (76, 6, 'shop.head.southwest', 'buildings/head.png', 11, 36, 9, true);
+
 
 
 --
 -- Name: building_id_seq; Type: SEQUENCE SET; Schema: public
 --
 
-SELECT pg_catalog.setval('building_id_seq', 52, true);
+SELECT pg_catalog.setval('building_id_seq', 77, true);
 
 
 --

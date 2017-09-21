@@ -9,8 +9,7 @@ use JMS\Serializer\Annotation as JMS;
 /**
  * Building
  *
- * @ORM\Table(name="building", uniqueConstraints={@ORM\UniqueConstraint(name="building_name", columns={"name"})},
-              indexes={@ORM\Index(name="building_map_id", columns={"map_id"})})
+ * @ORM\Table(name="building", indexes={@ORM\Index(name="building_map_id", columns={"map_id"})})
  * @ORM\Entity(repositoryClass="Dba\GameBundle\Repository\BuildingRepository")
  * @JMS\ExclusionPolicy("all")
  */
