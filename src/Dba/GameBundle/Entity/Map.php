@@ -14,7 +14,7 @@ class Map
 {
     const HELL = 1;
     const HEAVEN = 2;
-    const ISLAND = 3;
+    const ISLAND = 6;
 
     /**
      * @var string
