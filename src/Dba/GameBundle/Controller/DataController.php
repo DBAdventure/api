@@ -557,8 +557,8 @@ class DataController extends BaseController
 
 
     /**
-     * @Annotations\Get("/ranking", name="ranking_what")
-     * @Annotations\Get("/ranking/{what}", name="ranking")
+     * @Annotations\Get("/ranking", name="")
+     * @Annotations\Get("/ranking/{what}", name="_what")
      */
     public function rankingAction(Request $request, $what = null)
     {
