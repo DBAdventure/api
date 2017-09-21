@@ -116,7 +116,7 @@ class GuildController extends BaseController
     }
 
     /**
-     * @Annotations\Get("/events")
+     * @Annotations\Get("/events", name="_guild")
      */
     public function getEventsAction()
     {

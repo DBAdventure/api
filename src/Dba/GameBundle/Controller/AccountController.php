@@ -157,7 +157,7 @@ class AccountController extends BaseController
     }
 
     /**
-     * @Annotations\Get("/events")
+     * @Annotations\Get("/events", name="_account")
      */
     public function getEventsAction()
     {
