@@ -74,6 +74,13 @@ class News
      */
     private $createdBy;
 
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="enabled", type="boolean", options={"default": false})
+     */
+    private $enabled = false;
+
 
     /**
      * Set createdAt
@@ -227,5 +234,39 @@ class News
     public function getCreatedBy()
     {
         return $this->createdBy;
+    }
+
+    /**
+     * Is enabled
+     *
+     * @return boolean
+     */
+    public function isEnabled()
+    {
+        return $this->getEnabled();
+    }
+
+    /**
+     * Get enabled
+     *
+     * @return boolean
+     */
+    public function getEnabled()
+    {
+        return $this->enabled;
+    }
+
+    /**
+     * Set enabled
+     *
+     * @param boolean $enabled
+     *
+     * @return Guild
+     */
+    public function setEnabled($enabled)
+    {
+        $this->enabled = (bool) $enabled;
+
+        return $this;
     }
 }

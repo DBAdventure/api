@@ -62,7 +62,7 @@ class DataController extends BaseController
     {
         return [
             'news' => $this->repos()->getNewsRepository()->findBy(
-                [],
+                ['enabled' => true],
                 ['createdAt' => 'DESC']
             ),
         ];

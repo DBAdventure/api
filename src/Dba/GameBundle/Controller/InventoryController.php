@@ -24,7 +24,7 @@ class InventoryController extends BaseController
         $objects = [];
         $playerObjects = $this->getUser()->getPlayerObjects();
         foreach ($playerObjects as $playerObject) {
-            if (empty($playerObject->getNumber())) {
+            if (empty($playerObject->getNumber()) || !$playerObject->getObject()->isEnabled()) {
                 continue;
             }
 
@@ -40,6 +40,10 @@ class InventoryController extends BaseController
      */
     public function postUseAction(Request $request, Object $object)
     {
+        if (!$object->isEnabled()) {
+            return $this->forbidden();
+        }
+
         $player = $this->getUser();
         $playerObject = $this->repos()->getPlayerObjectRepository()->checkPlayerObject($player, $object);
         if (!$playerObject->canBeUsed()) {
@@ -156,6 +160,10 @@ class InventoryController extends BaseController
      */
     public function postUnequipAction(Object $object)
     {
+        if (!$object->isEnabled()) {
+            return $this->forbidden();
+        }
+
         $player = $this->getUser();
         $playerObject = $this->repos()->getPlayerObjectRepository()->checkPlayerObject($player, $object);
         $playerObject->setEquipped(false);
@@ -175,6 +183,10 @@ class InventoryController extends BaseController
      */
     public function postEquipAction(Object $object)
     {
+        if (!$object->isEnabled()) {
+            return $this->forbidden();
+        }
+
         $player = $this->getUser();
         $playerObject = $this->repos()->getPlayerObjectRepository()->checkPlayerObject($player, $object);
         if (!$playerObject->canBeEquipped()) {

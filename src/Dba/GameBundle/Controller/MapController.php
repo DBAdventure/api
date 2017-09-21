@@ -27,7 +27,9 @@ class MapController extends BaseController
         $imagePath = $webDirectory . 'bundles/dbaadmin/images/map/mini/' . $map->getId() . '.png';
         $image = imagecreatefrompng($imagePath);
 
-        $buildings = $this->repos()->getBuildingRepository()->findByMap($map);
+        $buildings = $this->repos()->getBuildingRepository()->findBy(
+            ['map' => $map, 'enabled' => true]
+        );
         foreach ($buildings as $building) {
             $this->drawEllipse($image, $building, imagecolorallocate($image, 0, 0, 255));
         }
@@ -96,7 +98,7 @@ class MapController extends BaseController
         $player = $this->getUser();
         $map = $player->getMap();
         $buildings = $this->repos()->getBuildingRepository()->findBy(
-            [ 'map' => $map ]
+            ['map' => $map, 'enabled' => true]
         );
 
         $guildPlayers = [];

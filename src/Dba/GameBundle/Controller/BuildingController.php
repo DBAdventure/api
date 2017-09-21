@@ -20,6 +20,14 @@ class BuildingController extends BaseController
     const MINIMAL_WANTED_AMOUNT = 50;
     const TELEPORT_ACTION = 5;
 
+    protected function checkPosition($player, $building)
+    {
+        return $player->getX() != $building->getX() ||
+            $player->getY() != $building->getY() ||
+            $player->getMap()->getId() != $building->getMap()->getId() ||
+            !$building->isEnabled();
+    }
+
     /**
      * @ParamConverter("building", class="Dba\GameBundle\Entity\Building")
      * @Annotations\Post("/teleport/{building}")
@@ -28,8 +36,7 @@ class BuildingController extends BaseController
     {
         $where = $request->request->get('where');
         $player = $this->getUser();
-        if ($player->getX() != $building->getX() || $player->getY() != $building->getY() ||
-            $player->getMap()->getId() != $building->getMap()->getId() ||
+        if ($this->checkPosition($player, $building) ||
             $player->getActionPoints() < self::TELEPORT_ACTION ||
             !in_array($where, Player::AVAILABLE_MOVE) ||
             $player->getForbiddenTeleport() == $where
@@ -56,9 +63,7 @@ class BuildingController extends BaseController
     public function getEnterAction(Building $building)
     {
         $player = $this->getUser();
-        if ($player->getX() != $building->getX() || $player->getY() != $building->getY() ||
-            $player->getMap()->getId() != $building->getMap()->getId()
-        ) {
+        if ($this->checkPosition($player, $building)) {
             return $this->forbidden();
         }
 
@@ -85,7 +90,10 @@ class BuildingController extends BaseController
                 break;
 
             default:
-                $objects = $this->repos()->getObjectRepository()->findByType($building->getType(), ['price' => 'ASC']);
+                $objects = $this->repos()->getObjectRepository()->findBy(
+                    ['type' => $building->getType(), 'enabled' => true],
+                    ['price' => 'ASC']
+                );
                 $type = 'shop';
                 break;
         }
@@ -105,8 +113,7 @@ class BuildingController extends BaseController
     public function postBuySpellAction(Building $building, Spell $spell)
     {
         $player = $this->getUser();
-        if ($player->getX() != $building->getX() || $player->getY() != $building->getY() ||
-            $player->getMap()->getId() != $building->getMap()->getId() ||
+        if ($this->checkPosition($player, $building) ||
             $spell->getRace()->getId() != $player->getRace()->getId() ||
             $spell->getPrice() > $player->getZeni()
         ) {
@@ -143,9 +150,9 @@ class BuildingController extends BaseController
     public function postBuyObjectAction(Building $building, Object $object)
     {
         $player = $this->getUser();
-        if ($player->getX() != $building->getX() || $player->getY() != $building->getY() ||
-            $player->getMap()->getId() != $building->getMap()->getId() ||
-            $object->getType() != $building->getType()
+        if ($this->checkPosition($player, $building) ||
+            $object->getType() != $building->getType() ||
+            !$object->isEnabled()
         ) {
             return $this->forbidden();
         }
@@ -174,9 +181,7 @@ class BuildingController extends BaseController
     public function postSellAction(Building $building, Object $object)
     {
         $player = $this->getUser();
-        if ($player->getX() != $building->getX() || $player->getY() != $building->getY() ||
-            $player->getMap()->getId() != $building->getMap()->getId()
-        ) {
+        if ($this->checkPosition($player, $building)) {
             return $this->forbidden();
         }
 
@@ -212,8 +217,7 @@ class BuildingController extends BaseController
     public function postDepositAction(Building $building, Request $request)
     {
         $player = $this->getUser();
-        if ($player->getX() != $building->getX() || $player->getY() != $building->getY() ||
-            $player->getMap()->getId() != $building->getMap()->getId() ||
+        if ($this->checkPosition($player, $building) ||
             $building->getType() != Building::TYPE_BANK
         ) {
             return $this->forbidden();
@@ -267,8 +271,7 @@ class BuildingController extends BaseController
     public function postWithdrawAction(Building $building, Request $request)
     {
         $player = $this->getUser();
-        if ($player->getX() != $building->getX() || $player->getY() != $building->getY() ||
-            $player->getMap()->getId() != $building->getMap()->getId() ||
+        if ($this->checkPosition($player, $building) ||
             $building->getType() != Building::TYPE_BANK
         ) {
             return $this->forbidden();
@@ -316,8 +319,7 @@ class BuildingController extends BaseController
     public function postWantedAction(Building $building, Request $request)
     {
         $player = $this->getUser();
-        if ($player->getX() != $building->getX() || $player->getY() != $building->getY() ||
-            $player->getMap()->getId() != $building->getMap()->getId() ||
+        if ($this->checkPosition($player, $building) ||
             $building->getType() != Building::TYPE_WANTED
         ) {
             return $this->forbidden();

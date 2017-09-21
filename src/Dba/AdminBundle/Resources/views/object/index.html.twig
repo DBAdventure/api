@@ -8,6 +8,7 @@
         <th>{{ 'object.type' | trans }}</th>
         <th>{{ 'object.price' | trans }}</th>
         <th>{{ 'object.weight' | trans }}</th>
+        <th>{{ 'object.enabled' | trans }}</th>
         <th>{{ 'object.actions' | trans }}</th>
       </tr>
     </thead>
@@ -25,6 +26,9 @@
           </td>
           <td>
             {{ object.weight }}
+          </td>
+          <td>
+            {{ object.enabled }}
           </td>
           <td>
             <a href="{{ path('admin.object.edit', {"id": object.id}) }}">

@@ -8,6 +8,7 @@
         <th>{{ 'news.message' | trans }}</th>
         <th>{{ 'news.createdBy' | trans }}</th>
         <th>{{ 'news.createdAt' | trans }}</th>
+        <th>{{ 'news.enabled' | trans }}</th>
         <th>{{ 'news.actions' | trans }}</th>
       </tr>
     </thead>
@@ -25,6 +26,9 @@
           </td>
           <td>
             {{ news.createdAt | date }}
+          </td>
+          <td>
+            {{ news.enabled }}
           </td>
           <td>
             <a href="{{ path('admin.news.edit', {"id": news.id}) }}">

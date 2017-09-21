@@ -34,6 +34,7 @@ news:
   createdBy: "Created by"
   actions: "Actions"
   createdAt: "Created at"
+  enabled: "Enabled"
 
 guild:
   saved: "You save this guild!"
@@ -83,6 +84,7 @@ object:
   price: "Price"
   weight: "Weight"
   actions: "Actions"
+  enabled: "Enabled"
 
 locust: "Locust"
 crocodile: "Crocodile"

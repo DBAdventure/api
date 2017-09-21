@@ -3429,7 +3429,7 @@ class Player implements AdvancedUserInterface, Serializable
         ];
 
         foreach ($this->getPlayerObjects() as $playerObject) {
-            if (empty($playerObject->getNumber())) {
+            if (empty($playerObject->getNumber()) || !$playerObject->getObject()->isEnabled()) {
                 continue;
             }
 

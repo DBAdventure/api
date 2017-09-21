@@ -559,7 +559,7 @@ class ActionController extends BaseController
         $objects = [];
         $playerObjects = $player->getPlayerObjects();
         foreach ($playerObjects as $playerObject) {
-            if (empty($playerObject->getNumber())) {
+            if (empty($playerObject->getNumber()) || !$playerObject->getObject()->isEnabled()) {
                 continue;
             }
 
@@ -665,7 +665,7 @@ class ActionController extends BaseController
         $objects = [];
         $playerObjects = $player->getPlayerObjects();
         foreach ($playerObjects as $playerObject) {
-            if (empty($playerObject->getNumber())) {
+            if (empty($playerObject->getNumber()) || !$playerObject->getObject()->isEnabled()) {
                 continue;
             }
 

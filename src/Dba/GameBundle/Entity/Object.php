@@ -172,6 +172,13 @@ class Object
     private $playerObjects;
 
     /**
+     * @var boolean
+     *
+     * @ORM\Column(name="enabled", type="boolean", options={"default": false})
+     */
+    private $enabled = false;
+
+    /**
      * Constructor
      */
     public function __construct()
@@ -392,5 +399,39 @@ class Object
     public function getImagePath()
     {
         return sprintf('/bundles/dbaadmin/images/objects/%s', $this->getImage());
+    }
+
+    /**
+     * Is enabled
+     *
+     * @return boolean
+     */
+    public function isEnabled()
+    {
+        return $this->getEnabled();
+    }
+
+    /**
+     * Get enabled
+     *
+     * @return boolean
+     */
+    public function getEnabled()
+    {
+        return $this->enabled;
+    }
+
+    /**
+     * Set enabled
+     *
+     * @param boolean $enabled
+     *
+     * @return Guild
+     */
+    public function setEnabled($enabled)
+    {
+        $this->enabled = (bool) $enabled;
+
+        return $this;
     }
 }

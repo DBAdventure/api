@@ -96,6 +96,14 @@ class Object extends AbstractType
                     ]
                 ]
             )
+            ->add(
+                'enabled',
+                Type\CheckboxType::class,
+                [
+                    'label' => 'form.enabled',
+                    'required' => false,
+                ]
+            )
         ;
 
         $builder->get('bonus')

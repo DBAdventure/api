@@ -84,6 +84,13 @@ class Building
      */
     private $map;
 
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="enabled", type="boolean", options={"default": false})
+     */
+    private $enabled = false;
+
 
     /**
      * Set name
@@ -247,5 +254,39 @@ class Building
     public function getImagePath()
     {
         return sprintf('/bundles/dbaadmin/images/%s', $this->getImage());
+    }
+
+    /**
+     * Is enabled
+     *
+     * @return boolean
+     */
+    public function isEnabled()
+    {
+        return $this->getEnabled();
+    }
+
+    /**
+     * Get enabled
+     *
+     * @return boolean
+     */
+    public function getEnabled()
+    {
+        return $this->enabled;
+    }
+
+    /**
+     * Set enabled
+     *
+     * @param boolean $enabled
+     *
+     * @return Guild
+     */
+    public function setEnabled($enabled)
+    {
+        $this->enabled = (bool) $enabled;
+
+        return $this;
     }
 }

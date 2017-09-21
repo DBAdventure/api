@@ -178,7 +178,8 @@ CREATE TABLE object (
     weight numeric NOT NULL,
     bonus json NOT NULL,
     requirements json NOT NULL,
-    type integer NOT NULL
+    type integer NOT NULL,
+    enabled boolean DEFAULT false NOT NULL
 );
 
 
@@ -304,7 +305,8 @@ CREATE TABLE building (
     image character varying(50) NOT NULL,
     x integer NOT NULL,
     y integer NOT NULL,
-    type integer NOT NULL
+    type integer NOT NULL,
+    enabled boolean DEFAULT false NOT NULL
 );
 
 
@@ -765,7 +767,8 @@ CREATE TABLE news (
     message text NOT NULL,
     image character varying(80) NOT NULL,
     created_at timestamp(0) without time zone NOT NULL,
-    updated_at timestamp(0) without time zone NOT NULL
+    updated_at timestamp(0) without time zone NOT NULL,
+    enabled boolean DEFAULT false NOT NULL
 );
 
 

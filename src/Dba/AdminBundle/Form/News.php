@@ -55,6 +55,14 @@ class News extends AbstractType
                     'choice_translation_domain' => false
                 ]
             )
+            ->add(
+                'enabled',
+                Type\CheckboxType::class,
+                [
+                    'label' => 'form.enabled',
+                    'required' => false,
+                ]
+            )
         ;
     }
 
