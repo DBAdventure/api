@@ -7,6 +7,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Dba\GameBundle\Entity\Object;
 use Dba\GameBundle\Entity\Player;
 use Dba\GameBundle\Form\PlayerAppearance;
 
@@ -49,6 +50,19 @@ class AccountController extends BaseController
 
         $player = $this->getUser();
         $roleService = $this->get('dba.admin.role');
+
+        $miniMapObject = $this->repos()->getPlayerObjectRepository()->findOneBy(
+            [
+                'player' => $this->getUser(),
+                'object' => $this->repos()->getObjectRepository()->findOneBy(
+                    [
+                        'id' => Object::DEFAULT_MAP,
+                        'enabled' => true,
+                    ]
+                ),
+            ]
+        );
+
         return [
             'id' => $player->getId(),
             'username' => $player->getUsername(),
@@ -152,6 +166,7 @@ class AccountController extends BaseController
             'head_price' => $player->getHeadPrice(),
             'inventory_max_weight' => $player->getInventoryMaxWeight(),
             'inventory_weight' => $player->getInventoryWeight(),
+            'has_mini_map' => !empty($miniMapObject) && $miniMapObject->getNumber() == 1,
             'is_admin' => $roleService->isGranted(Player::ROLE_MODO, $player),
         ];
     }

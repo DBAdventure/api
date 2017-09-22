@@ -14,6 +14,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class Object
 {
+    const DEFAULT_MAP = 1;
     const DEFAULT_SENZU = 2;
     const DEFAULT_POTION_OF_LIFE = 3;
     const DEFAULT_POTION_OF_FATIGUE = 13;

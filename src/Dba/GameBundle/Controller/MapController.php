@@ -10,19 +10,38 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Dba\GameBundle\Entity\MapBox;
+use Dba\GameBundle\Entity\Object;
 use Dba\GameBundle\Repository\MapRepository;
 
 class MapController extends BaseController
 {
+    protected function checkForMiniMap()
+    {
+        $playerObject = $this->repos()->getPlayerObjectRepository()->findOneBy(
+            [
+                'player' => $this->getUser(),
+                'object' => $this->repos()->getObjectRepository()->findOneBy(
+                    [
+                        'id' => Object::DEFAULT_MAP,
+                        'enabled' => true,
+                    ]
+                ),
+            ]
+        );
+        return !empty($playerObject) && $playerObject->getNumber() == 1;
+    }
+
     /**
      * @Annotations\Get("/mini.png")
      */
     public function renderMinimapAction()
     {
-        // @TODO Minimap: Check for map in inventory
+        if (!$this->checkForMinimap()) {
+            return $this->forbidden();
+        }
+
         $player = $this->getUser();
         $map = $player->getMap();
-
         $webDirectory = $this->getParameter('kernel.root_dir') . '/../web/';
         $imagePath = $webDirectory . 'bundles/dbaadmin/images/map/mini/' . $map->getId() . '.png';
         $image = imagecreatefrompng($imagePath);
@@ -94,7 +113,10 @@ class MapController extends BaseController
      */
     public function miniAction()
     {
-        // @TODO Minimap: Check for map in inventory
+        if (!$this->checkForMinimap()) {
+            return $this->forbidden();
+        }
+
         $player = $this->getUser();
         $map = $player->getMap();
         $buildings = $this->repos()->getBuildingRepository()->findBy(
