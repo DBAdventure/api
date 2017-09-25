@@ -325,7 +325,8 @@ class ActionController extends BaseController
         $this->em()->flush();
 
         return [
-            'messages' => $messages
+            'messages' => $messages,
+            'target' => $target,
         ];
     }
 
@@ -354,7 +355,7 @@ class ActionController extends BaseController
 
             return [
                 'messages' => $return,
-                'target' => $target
+                'target' => $target,
             ];
         }
 
@@ -412,7 +413,7 @@ class ActionController extends BaseController
 
         return [
             'messages' => $messages,
-            'target' => $target
+            'target' => $target,
         ];
     }
 
@@ -472,7 +473,7 @@ class ActionController extends BaseController
 
         return [
             'messages' => $messages,
-            'competences' => $competences
+            'competences' => $competences,
         ];
     }
 
@@ -524,7 +525,7 @@ class ActionController extends BaseController
             $target,
             [
                 'messages' => &$messages,
-                'isDead' => $isDead
+                'isDead' => $isDead,
             ]
         );
 
@@ -535,7 +536,7 @@ class ActionController extends BaseController
         return [
             'messages' => $messages,
             'target' => $target,
-            'isDead' => $isDead
+            'isDead' => $isDead,
         ];
     }
 
@@ -568,7 +569,7 @@ class ActionController extends BaseController
 
         return [
             'target' => $target,
-            'playerObjects' => $objects
+            'playerObjects' => $objects,
         ];
     }
 
@@ -675,7 +676,7 @@ class ActionController extends BaseController
         return [
             'messages' => $messages,
             'target' => $target,
-            'playerObjects' => $objects
+            'playerObjects' => $objects,
         ];
     }
 
