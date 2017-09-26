@@ -41,15 +41,15 @@
         {% if form.appearance is defined %}
           <table class="table-apparence">
             <tr>
-              <td align="center" width="75" height="75" background="{{ asset('/bundles/dbaadmin/images/map/day/grass_0.png') }}" >
+              <td align="center" width="75" height="75" background="{{ asset('/media/map/day/grass_0.png') }}" >
                 <img class="perso-images" type="image" src="{{ asset(player.imagePath) }}" border="0">
               </td>
               <td align="center" width="10" height="75"></td>
-              <td align="center" width="75" height="75" background="{{ asset('/bundles/dbaadmin/images/map/day/sand_0.png') }}" >
+              <td align="center" width="75" height="75" background="{{ asset('/media/map/day/sand_0.png') }}" >
                 <img class="perso-images" type="image" src="{{ asset(player.imagePath) }}" border="0">
               </td>
               <td align="center" width="10" height="75"></td>
-              <td align="center" width="75" height="75" background="{{ asset('/bundles/dbaadmin/images/map/day/ground_0.png') }}" >
+              <td align="center" width="75" height="75" background="{{ asset('/media/map/day/ground_0.png') }}" >
                 <img class="perso-images" type="image" src="{{ asset(player.imagePath) }}" border="0">
               </td>
             </tr>
@@ -94,6 +94,6 @@
 
 {% block javascripts %}
   <script type="text/javascript">
-    DbaAdmin.players('/bundles/dbaadmin/images/avatars/players', '{{ 'form.choice.appearance' | trans | e('js') }}', '{{ player.image | e('js') }}');
+    DbaAdmin.players('/media/avatars/players', '{{ 'form.choice.appearance' | trans | e('js') }}', '{{ player.image | e('js') }}');
   </script>
 {% endblock %}

@@ -16,7 +16,7 @@
         <tr>
           {% for x in range(minX, maxX) %}
             <td>
-              <img id="{{ x }}-{{ y }}" data-y="{{ y }}" data-x="{{ x }}" width="100" height="100" {% if mapData[x][y] is defined %}data-image="{{ mapData[x][y]['image'] }}" data-bonus="{{ mapData[x][y]['bonus'] }}" src="{{ '/bundles/dbaadmin/images/' ~ mapData[x][y]['image'] }}" {% else %}src="" {% endif %}/>
+              <img id="{{ x }}-{{ y }}" data-y="{{ y }}" data-x="{{ x }}" width="100" height="100" {% if mapData[x][y] is defined %}data-image="{{ mapData[x][y]['image'] }}" data-bonus="{{ mapData[x][y]['bonus'] }}" src="{{ '/media/' ~ mapData[x][y]['image'] }}" {% else %}src="" {% endif %}/>
             </td>
             {% endfor %}
         </tr>

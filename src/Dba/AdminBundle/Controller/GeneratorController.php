@@ -42,7 +42,7 @@ class GeneratorController extends BaseController
         );
 
         $webDirectory = $this->getParameter('kernel.root_dir') . '/../web/';
-        $bundlePath = 'bundles/dbaadmin/images/';
+        $bundlePath = 'media/';
         $imagePath = $webDirectory . $bundlePath;
 
         foreach ($mapData as $x => $images) {
@@ -208,7 +208,7 @@ class GeneratorController extends BaseController
     {
         if ($request->isMethod('POST')) {
             $webDirectory = $this->getParameter('kernel.root_dir') . '/../web/';
-            $boxesPath = $webDirectory . 'bundles/dbaadmin/images/';
+            $boxesPath = $webDirectory . 'media/';
             $name = $request->request->get('name');
             $images = $request->request->get('images');
             $replace = $request->request->get('replace');

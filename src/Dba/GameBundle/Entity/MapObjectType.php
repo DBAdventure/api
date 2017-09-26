@@ -103,14 +103,4 @@ class MapObjectType
     {
         return $this->image;
     }
-
-    /**
-     * Get image path
-     *
-     * @return string
-     */
-    public function getImagePath()
-    {
-        return sprintf('/bundles/dbaadmin/images/objects/map/%s', $this->getImage());
-    }
 }
