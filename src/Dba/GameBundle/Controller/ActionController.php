@@ -72,7 +72,8 @@ class ActionController extends BaseController
 
     /**
      * @ParamConverter("target", class="Dba\GameBundle\Entity\Player")
-     * @Annotations\Post("/attack/{target}")
+     * @Annotations\Post("/attack/{target}", name="_normal")
+     * @Annotations\Post("/attack/{target}/{type}", name="_type"))
      */
     public function postAttackAction(Player $target, $type = null)
     {
@@ -575,7 +576,6 @@ class ActionController extends BaseController
 
     /**
      * @ParamConverter("target", class="Dba\GameBundle\Entity\Player")
-     * @ParamConverter("object", class="Dba\GameBundle\Entity\Object", isOptional="true")
      * @Annotations\Post("/give/{target}")
      */
     public function postGiveAction(Request $request, Player $target)
@@ -593,11 +593,11 @@ class ActionController extends BaseController
 
         $messages = [];
         if (empty($object)) {
-            $zeni = $request->request->get('zeni');
-            if (!empty($zeni)) {
-                $zeni = $zeni > $player->getZeni()  ? $player->getZeni() : $zeni;
-                $player->setZeni($player->getZeni() - $zeni);
-                $target->setZeni($target->getZeni() + $zeni);
+            $zenis = $request->request->get('zenis');
+            if (!empty($zenis)) {
+                $zenis = $zenis > $player->getZeni()  ? $player->getZeni() : $zenis;
+                $player->setZeni($player->getZeni() - $zenis);
+                $target->setZeni($target->getZeni() + $zenis);
                 $player->usePoints(Player::ACTION_POINT, Player::GIVE_ACTION);
                 $this->em()->persist($target);
                 $this->em()->persist($player);
@@ -607,7 +607,7 @@ class ActionController extends BaseController
                     $target,
                     'event.action.give.zeni',
                     [
-                        'zeni' => $zeni
+                        'zenis' => $zenis
                     ]
                 );
             }
