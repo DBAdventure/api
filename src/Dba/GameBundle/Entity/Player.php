@@ -187,6 +187,14 @@ class Player implements AdvancedUserInterface, Serializable
     /**
      * @var string
      *
+     * @ORM\Column(name="history", type="text", nullable=true)
+     * @JMS\Expose
+     */
+    private $history;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="image", type="string", length=10, nullable=false)
      * @Assert\NotBlank()
      * @JMS\Expose
@@ -671,6 +679,29 @@ class Player implements AdvancedUserInterface, Serializable
     public function getName()
     {
         return $this->name;
+    }
+
+    /**
+     * Set history
+     *
+     * @param string $history
+     *
+     * @return Player
+     */
+    public function setHistory($history)
+    {
+        $this->history = $history;
+        return $this;
+    }
+
+    /**
+     * Get history
+     *
+     * @return string
+     */
+    public function getHistory()
+    {
+        return $this->history;
     }
 
     /**

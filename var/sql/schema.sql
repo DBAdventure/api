@@ -552,6 +552,7 @@ CREATE TABLE player (
     password_requested_at timestamp(0) without time zone DEFAULT NULL::timestamp without time zone,
     roles json NOT NULL,
     name character varying(50) NOT NULL,
+    history text DEFAULT NULL,
     image character varying(10) NOT NULL,
     zeni integer NOT NULL,
     level integer NOT NULL,

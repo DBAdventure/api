@@ -216,7 +216,6 @@ action:
   level:
     up: 'You gain a level, you are now level %level%'
   give:
-    text: "Give him"
     error:
       1: "Inventory is full, can't hold more objects!"
       3: "He already have this item!"

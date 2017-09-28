@@ -576,9 +576,11 @@ class ActionController extends BaseController
 
     /**
      * @ParamConverter("target", class="Dba\GameBundle\Entity\Player")
-     * @Annotations\Post("/give/{target}")
+     * @ParamConverter("object", class="Dba\GameBundle\Entity\Object", isOptional="true")
+     * @Annotations\Post("/give/{target}", name="_target")
+     * @Annotations\Post("/give/{target}/{object}", name="_object")
      */
-    public function postGiveAction(Request $request, Player $target)
+    public function postGiveAction(Request $request, Player $target, Object $object = null)
     {
         $player = $this->getUser();
         if ($player->getActionPoints() < Player::GIVE_ACTION ||
