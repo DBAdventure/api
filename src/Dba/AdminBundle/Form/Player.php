@@ -43,6 +43,13 @@ class Player extends AbstractType
                 ]
             )
             ->add(
+                'history',
+                Type\TextareaType::class,
+                [
+                    'label' => 'form.history',
+                ]
+            )
+            ->add(
                 'username',
                 Type\TextType::class,
                 [

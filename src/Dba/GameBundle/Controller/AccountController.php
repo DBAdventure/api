@@ -68,6 +68,7 @@ class AccountController extends BaseController
             'username' => $player->getUsername(),
             'email' => $player->getEmail(),
             'name' => $player->getName(),
+            'history' => $player->getHistory(),
             'image' => $player->getImage(),
             'x' => $player->getX(),
             'y' => $player->getY(),
