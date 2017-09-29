@@ -32,7 +32,6 @@ use JMS\Serializer\Annotation as JMS;
  * @UniqueEntity("email")
  * @UniqueEntity("username")
  * @ORM\HasLifecycleCallbacks
- * @JMS\ExclusionPolicy("all")
  */
 class Player implements AdvancedUserInterface, Serializable
 {
@@ -95,6 +94,7 @@ class Player implements AdvancedUserInterface, Serializable
      * @var string
      *
      * @ORM\Column(name="username_canonical", type="string", length=180, nullable=false, unique=true)
+     * @JMS\Exclude
      */
     private $usernameCanonical;
 
@@ -103,6 +103,7 @@ class Player implements AdvancedUserInterface, Serializable
      *
      * @ORM\Column(name="username", type="string", length=180, nullable=false, unique=true)
      * @Assert\NotBlank()
+     * @JMS\Exclude
      */
     private $username;
 
@@ -110,6 +111,7 @@ class Player implements AdvancedUserInterface, Serializable
      * @var string
      *
      * @ORM\Column(name="email_canonical", type="string", length=180, nullable=false, unique=true)
+     * @JMS\Exclude
      */
     private $emailCanonical;
 
@@ -118,6 +120,7 @@ class Player implements AdvancedUserInterface, Serializable
      *
      * @ORM\Column(name="email", type="string", length=180, nullable=false, unique=true)
      * @Assert\NotBlank()
+     * @JMS\Exclude
      */
     private $email;
 
@@ -125,6 +128,7 @@ class Player implements AdvancedUserInterface, Serializable
      * @var string
      *
      * @ORM\Column(name="enabled", type="boolean", options={"default": false})
+     * @JMS\Exclude
      */
     private $enabled = false;
 
@@ -132,6 +136,7 @@ class Player implements AdvancedUserInterface, Serializable
      * @var string
      *
      * @ORM\Column(name="salt", type="string", nullable=true)
+     * @JMS\Exclude
      */
     private $salt;
 
@@ -139,6 +144,7 @@ class Player implements AdvancedUserInterface, Serializable
      * @var string
      *
      * @ORM\Column(name="password", type="string")
+     * @JMS\Exclude
      */
     private $password;
 
@@ -154,6 +160,7 @@ class Player implements AdvancedUserInterface, Serializable
      * @var string
      *
      * @ORM\Column(name="confirmation_token", type="string", length=180, nullable=true, unique=true)
+     * @JMS\Exclude
      */
     private $confirmationToken;
 
@@ -161,6 +168,7 @@ class Player implements AdvancedUserInterface, Serializable
      * @var DateTime
      *
      * @ORM\Column(name="password_requested_at", type="datetime", nullable=true)
+     * @JMS\Exclude
      */
     private $passwordRequestedAt;
 
@@ -168,6 +176,7 @@ class Player implements AdvancedUserInterface, Serializable
      * @var array
      *
      * @ORM\Column(name="roles", type="json_array")
+     * @JMS\Exclude
      */
     private $roles = [];
 
@@ -175,12 +184,12 @@ class Player implements AdvancedUserInterface, Serializable
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=50, nullable=false, unique=true)
-     * @JMS\Expose
      * @Assert\NotBlank()
      * @Assert\Length(
      *      min = 3,
      *      max = 50
      * )
+     * @JMS\Expose
      */
     private $name;
 
@@ -205,6 +214,7 @@ class Player implements AdvancedUserInterface, Serializable
      * @var integer
      *
      * @ORM\Column(name="zeni", type="integer", nullable=false)
+     * @JMS\Exclude
      */
     private $zeni = 0;
 
@@ -220,6 +230,7 @@ class Player implements AdvancedUserInterface, Serializable
      * @var integer
      *
      * @ORM\Column(name="accuracy", type="integer", nullable=false)
+     * @JMS\Exclude
      */
     private $accuracy;
 
@@ -227,6 +238,7 @@ class Player implements AdvancedUserInterface, Serializable
      * @var integer
      *
      * @ORM\Column(name="agility", type="integer", nullable=false)
+     * @JMS\Exclude
      */
     private $agility;
 
@@ -234,6 +246,7 @@ class Player implements AdvancedUserInterface, Serializable
      * @var integer
      *
      * @ORM\Column(name="strength", type="integer", nullable=false)
+     * @JMS\Exclude
      */
     private $strength;
 
@@ -241,6 +254,7 @@ class Player implements AdvancedUserInterface, Serializable
      * @var integer
      *
      * @ORM\Column(name="resistance", type="integer", nullable=false)
+     * @JMS\Exclude
      */
     private $resistance;
 
@@ -248,6 +262,7 @@ class Player implements AdvancedUserInterface, Serializable
      * @var integer
      *
      * @ORM\Column(name="skill", type="integer", nullable=false)
+     * @JMS\Exclude
      */
     private $skill;
 
@@ -255,6 +270,7 @@ class Player implements AdvancedUserInterface, Serializable
      * @var integer
      *
      * @ORM\Column(name="vision", type="integer", nullable=false)
+     * @JMS\Exclude
      */
     private $vision;
 
@@ -262,6 +278,7 @@ class Player implements AdvancedUserInterface, Serializable
      * @var integer
      *
      * @ORM\Column(name="analysis", type="integer", nullable=false)
+     * @JMS\Exclude
      */
     private $analysis;
 
@@ -269,6 +286,7 @@ class Player implements AdvancedUserInterface, Serializable
      * @var integer
      *
      * @ORM\Column(name="intellect", type="integer", nullable=false)
+     * @JMS\Exclude
      */
     private $intellect;
 
@@ -276,6 +294,7 @@ class Player implements AdvancedUserInterface, Serializable
      * @var integer
      *
      * @ORM\Column(name="ki", type="integer", nullable=false)
+     * @JMS\Exclude
      */
     private $ki;
 
@@ -283,6 +302,7 @@ class Player implements AdvancedUserInterface, Serializable
      * @var integer
      *
      * @ORM\Column(name="max_ki", type="integer", nullable=false)
+     * @JMS\Exclude
      */
     private $maxKi;
 
@@ -290,6 +310,7 @@ class Player implements AdvancedUserInterface, Serializable
      * @var integer
      *
      * @ORM\Column(name="health", type="integer", nullable=false)
+     * @JMS\Exclude
      */
     private $health;
 
@@ -297,6 +318,7 @@ class Player implements AdvancedUserInterface, Serializable
      * @var integer
      *
      * @ORM\Column(name="max_health", type="integer", nullable=false)
+     * @JMS\Exclude
      */
     private $maxHealth;
 
@@ -304,6 +326,7 @@ class Player implements AdvancedUserInterface, Serializable
      * @var integer
      *
      * @ORM\Column(name="side_points", type="integer", nullable=false, options={"default": 0})
+     * @JMS\Exclude
      */
     private $sidePoints;
 
@@ -311,6 +334,7 @@ class Player implements AdvancedUserInterface, Serializable
      * @var integer
      *
      * @ORM\Column(name="action_points", type="integer", nullable=false)
+     * @JMS\Exclude
      */
     private $actionPoints;
 
@@ -318,6 +342,7 @@ class Player implements AdvancedUserInterface, Serializable
      * @var integer
      *
      * @ORM\Column(name="fatigue_points", type="integer", nullable=false)
+     * @JMS\Exclude
      */
     private $fatiguePoints;
 
@@ -325,6 +350,7 @@ class Player implements AdvancedUserInterface, Serializable
      * @var integer
      *
      * @ORM\Column(name="movement_points", type="integer", nullable=false)
+     * @JMS\Exclude
      */
     private $movementPoints;
 
@@ -332,6 +358,7 @@ class Player implements AdvancedUserInterface, Serializable
      * @var integer
      *
      * @ORM\Column(name="battle_points", type="integer", nullable=false)
+     * @JMS\Exclude
      */
     private $battlePoints;
 
@@ -339,6 +366,7 @@ class Player implements AdvancedUserInterface, Serializable
      * @var integer
      *
      * @ORM\Column(name="skill_points", type="integer", nullable=false, options={"default": 0})
+     * @JMS\Exclude
      */
     private $skillPoints = 0;
 
@@ -346,6 +374,7 @@ class Player implements AdvancedUserInterface, Serializable
      * @var string
      *
      * @ORM\Column(name="ip", type="string", length=15, nullable=false)
+     * @JMS\Exclude
      */
     private $ip;
 
@@ -354,6 +383,7 @@ class Player implements AdvancedUserInterface, Serializable
      *
      * @Gedmo\Timestampable(on="create")
      * @ORM\Column(name="created_at", type="datetime", nullable=false)
+     * @JMS\Exclude
      */
     private $createdAt;
 
@@ -362,6 +392,7 @@ class Player implements AdvancedUserInterface, Serializable
      *
      * @Gedmo\Timestampable(on="update")
      * @ORM\Column(name="updated_at", type="datetime", nullable=false)
+     * @JMS\Exclude
      */
     private $updatedAt;
 
@@ -369,6 +400,7 @@ class Player implements AdvancedUserInterface, Serializable
      * @var DateTime
      *
      * @ORM\Column(name="action_updated_at", type="datetime", nullable=false)
+     * @JMS\Exclude
      */
     private $actionUpdatedAt;
 
@@ -376,6 +408,7 @@ class Player implements AdvancedUserInterface, Serializable
      * @var DateTime
      *
      * @ORM\Column(name="movement_updated_at", type="datetime", nullable=false)
+     * @JMS\Exclude
      */
     private $movementUpdatedAt;
 
@@ -383,6 +416,7 @@ class Player implements AdvancedUserInterface, Serializable
      * @var DateTime
      *
      * @ORM\Column(name="ki_updated_at", type="datetime", nullable=false)
+     * @JMS\Exclude
      */
     private $kiUpdatedAt;
 
@@ -390,6 +424,7 @@ class Player implements AdvancedUserInterface, Serializable
      * @var DateTime
      *
      * @ORM\Column(name="fatigue_updated_at", type="datetime", nullable=false)
+     * @JMS\Exclude
      */
     private $fatigueUpdatedAt;
 
@@ -397,6 +432,7 @@ class Player implements AdvancedUserInterface, Serializable
      * @var integer
      *
      * @ORM\Column(name="x", type="integer", nullable=false)
+     * @JMS\Groups("Guild")
      */
     private $x;
 
@@ -404,6 +440,7 @@ class Player implements AdvancedUserInterface, Serializable
      * @var integer
      *
      * @ORM\Column(name="y", type="integer", nullable=false)
+     * @JMS\Groups("Guild")
      */
     private $y;
 
@@ -411,6 +448,7 @@ class Player implements AdvancedUserInterface, Serializable
      * @var string
      *
      * @ORM\Column(name="forbidden_teleport", type="string", length=2, nullable=true)
+     * @JMS\Exclude
      */
     private $forbiddenTeleport;
 
@@ -418,6 +456,7 @@ class Player implements AdvancedUserInterface, Serializable
      * @var integer
      *
      * @ORM\Column(name="death_count", type="integer", nullable=false, options={"default": 0})
+     * @JMS\Exclude
      */
     private $deathCount = 0;
 
@@ -433,6 +472,7 @@ class Player implements AdvancedUserInterface, Serializable
      * @var integer
      *
      * @ORM\Column(name="nb_hit_good", type="integer", nullable=false, options={"default": 0})
+     * @JMS\Exclude
      */
     private $nbHitGood = 0;
 
@@ -440,6 +480,7 @@ class Player implements AdvancedUserInterface, Serializable
      * @var integer
      *
      * @ORM\Column(name="nb_damage_good", type="integer", nullable=false, options={"default": 0})
+     * @JMS\Exclude
      */
     private $nbDamageGood = 0;
 
@@ -455,6 +496,7 @@ class Player implements AdvancedUserInterface, Serializable
      * @var integer
      *
      * @ORM\Column(name="nb_hit_bad", type="integer", nullable=false, options={"default": 0})
+     * @JMS\Exclude
      */
     private $nbHitBad = 0;
 
@@ -462,6 +504,7 @@ class Player implements AdvancedUserInterface, Serializable
      * @var integer
      *
      * @ORM\Column(name="nb_damage_bad", type="integer", nullable=false, options={"default": 0})
+     * @JMS\Exclude
      */
     private $nbDamageBad = 0;
 
@@ -477,6 +520,7 @@ class Player implements AdvancedUserInterface, Serializable
      * @var integer
      *
      * @ORM\Column(name="nb_hit_npc", type="integer", nullable=false, options={"default": 0})
+     * @JMS\Exclude
      */
     private $nbHitNpc = 0;
 
@@ -484,6 +528,7 @@ class Player implements AdvancedUserInterface, Serializable
      * @var integer
      *
      * @ORM\Column(name="nb_damage_npc", type="integer", nullable=false, options={"default": 0})
+     * @JMS\Exclude
      */
     private $nbDamageNpc = 0;
 
@@ -499,6 +544,7 @@ class Player implements AdvancedUserInterface, Serializable
      * @var integer
      *
      * @ORM\Column(name="nb_hit_hq", type="integer", nullable=false, options={"default": 0})
+     * @JMS\Exclude
      */
     private $nbHitHq = 0;
 
@@ -506,6 +552,7 @@ class Player implements AdvancedUserInterface, Serializable
      * @var integer
      *
      * @ORM\Column(name="nb_damage_hq", type="integer", nullable=false, options={"default": 0})
+     * @JMS\Exclude
      */
     private $nbDamageHq = 0;
 
@@ -513,6 +560,7 @@ class Player implements AdvancedUserInterface, Serializable
      * @var integer
      *
      * @ORM\Column(name="nb_stolen_zeni", type="integer", nullable=false, options={"default": 0})
+     * @JMS\Exclude
      */
     private $nbStolenZeni = 0;
 
@@ -520,6 +568,7 @@ class Player implements AdvancedUserInterface, Serializable
      * @var integer
      *
      * @ORM\Column(name="nb_action_stolen_zeni", type="integer", nullable=false, options={"default": 0})
+     * @JMS\Exclude
      */
     private $nbActionStolenZeni = 0;
 
@@ -527,6 +576,7 @@ class Player implements AdvancedUserInterface, Serializable
      * @var integer
      *
      * @ORM\Column(name="nb_dodge", type="integer", nullable=false, options={"default": 0})
+     * @JMS\Exclude
      */
     private $nbDodge = 0;
 
@@ -534,6 +584,7 @@ class Player implements AdvancedUserInterface, Serializable
      * @var integer
      *
      * @ORM\Column(name="nb_wanted", type="integer", nullable=false, options={"default": 0})
+     * @JMS\Exclude
      */
     private $nbWanted = 0;
 
@@ -541,6 +592,7 @@ class Player implements AdvancedUserInterface, Serializable
      * @var integer
      *
      * @ORM\Column(name="nb_analysis", type="integer", nullable=false, options={"default": 0})
+     * @JMS\Exclude
      */
     private $nbAnalysis = 0;
 
@@ -548,6 +600,7 @@ class Player implements AdvancedUserInterface, Serializable
      * @var integer
      *
      * @ORM\Column(name="nb_spell", type="integer", nullable=false, options={"default": 0})
+     * @JMS\Exclude
      */
     private $nbSpell = 0;
 
@@ -555,6 +608,7 @@ class Player implements AdvancedUserInterface, Serializable
      * @var integer
      *
      * @ORM\Column(name="nb_health_given", type="integer", nullable=false, options={"default": 0})
+     * @JMS\Exclude
      */
     private $nbHealthGiven = 0;
 
@@ -562,6 +616,7 @@ class Player implements AdvancedUserInterface, Serializable
      * @var integer
      *
      * @ORM\Column(name="nb_total_health_given", type="integer", nullable=false, options={"default": 0})
+     * @JMS\Exclude
      */
     private $nbTotalHealthGiven = 0;
 
@@ -569,6 +624,7 @@ class Player implements AdvancedUserInterface, Serializable
      * @var integer
      *
      * @ORM\Column(name="nb_slap_taken", type="integer", nullable=false, options={"default": 0})
+     * @JMS\Exclude
      */
     private $nbSlapTaken = 0;
 
@@ -576,6 +632,7 @@ class Player implements AdvancedUserInterface, Serializable
      * @var integer
      *
      * @ORM\Column(name="nb_slap_given", type="integer", nullable=false, options={"default": 0})
+     * @JMS\Exclude
      */
     private $nbSlapGiven = 0;
 
@@ -583,6 +640,7 @@ class Player implements AdvancedUserInterface, Serializable
      * @var integer
      *
      * @ORM\Column(name="betrayals", type="integer", nullable=false, options={"default": 0})
+     * @JMS\Exclude
      */
     private $betrayals = 0;
 
@@ -590,6 +648,7 @@ class Player implements AdvancedUserInterface, Serializable
      * @var integer
      *
      * @ORM\Column(name="head_price", type="integer", nullable=false, options={"default": 0})
+     * @JMS\Exclude
      */
     private $headPrice = 0;
 
@@ -598,6 +657,7 @@ class Player implements AdvancedUserInterface, Serializable
      *
      * @ORM\ManyToOne(targetEntity="Player", fetch="EAGER")
      * @ORM\JoinColumn(name="target_id", referencedColumnName="id", nullable=true, onDelete="SET NULL")
+     * @JMS\Exclude
      */
     private $target;
 
@@ -633,6 +693,7 @@ class Player implements AdvancedUserInterface, Serializable
      *
      * @ORM\ManyToOne(targetEntity="Map", fetch="EAGER")
      * @ORM\JoinColumn(name="map_id", referencedColumnName="id", nullable=false)
+     * @JMS\Groups("Guild")
      */
     private $map;
 
@@ -640,6 +701,7 @@ class Player implements AdvancedUserInterface, Serializable
      * @var ArrayCollection
      *
      * @ORM\OneToMany(targetEntity="PlayerObject", mappedBy="player", cascade={"persist"})
+     * @JMS\Exclude
      */
     private $playerObjects = [];
 
@@ -647,6 +709,7 @@ class Player implements AdvancedUserInterface, Serializable
      * @var ArrayCollection
      *
      * @ORM\OneToMany(targetEntity="PlayerSpell", mappedBy="player", cascade={"persist"})
+     * @JMS\Exclude
      */
     private $playerSpells = [];
 
@@ -3576,6 +3639,7 @@ class Player implements AdvancedUserInterface, Serializable
     /**
      * @JMS\VirtualProperty()
      * @JMS\SerializedName("can_be_healed")
+     * @JMS\Exclude
      */
     public function canBeHealed()
     {

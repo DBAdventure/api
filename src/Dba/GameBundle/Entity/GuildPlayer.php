@@ -5,6 +5,7 @@ namespace Dba\GameBundle\Entity;
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
+use JMS\Serializer\Annotation as JMS;
 
 /**
  * GuildPlayer
@@ -32,6 +33,7 @@ class GuildPlayer
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="player_id", referencedColumnName="id", nullable=false, onDelete="CASCADE")
      * })
+     * @JMS\Groups("Guild")
      */
     private $player;
 

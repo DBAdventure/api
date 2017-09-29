@@ -92,9 +92,11 @@ class GuildController extends BaseController
     }
 
     /**
-     * @Annotations\Post("/members/{type}")
+     * @Annotations\View(serializerGroups={"Default", "Guild"})
+     * @Annotations\Get("/members")
+     * @Annotations\Get("/members/{type}", name="_requester")
      */
-    public function getMembersAction($type)
+    public function getMembersAction($type = null)
     {
         $guildPlayer = $this->getUser()->getGuildPlayer();
         if (empty($guildPlayer) or !$guildPlayer->isEnabled()) {
