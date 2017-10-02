@@ -3,6 +3,7 @@
 namespace Dba\GameBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation as JMS;
 
 /**
  * Guild
@@ -38,6 +39,7 @@ class GuildRank
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="guild_id", referencedColumnName="id", nullable=false, onDelete="CASCADE")
      * })
+     * @JMS\Exclude
      */
     private $guild;
 
