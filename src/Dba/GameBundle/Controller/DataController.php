@@ -439,116 +439,116 @@ class DataController extends BaseController
                         'Saibaimen' => 'A43.png'
                     ],
                 ],
-                Race::CYBORG => [
-                    'C1' => [
-                        'label' => 'Les C',
-                        'value' => [
-                            'C-13' => 'C11.png',
-                            'C-13 Ultime' => 'C10.png',
-                            'C-14' => 'C17.png',
-                            'C-15' => 'C12.png',
-                            'C-16' => 'C.png',
-                            'C-17' => 'C2.png',
-                            'Super C-17' => 'C13.png',
-                            'Super C-17 Altern' => 'C18.png',
-                            'C-18' => 'C3.png',
-                            'C-19' => 'C8.png',
-                            'C-20' => 'C4.png',
-                            'C-20 sans chapeau' => 'C9.png'
-                        ],
-                    ],
-                    'C2' => [
-                        'label' => 'Cell',
-                        'value' => [
-                            'Cell première transformation' => 'C15.png',
-                            'Cell deuxième transformation' => 'C7.png',
-                            'Perfect Cell' => 'C1.png',
-                            'Reborn Cell' => 'C14.png',
-                            'Mini cell' => 'C6.png'
-                        ],
-                    ],
-                    'C3' => [
-                        'label' => 'Autres cyborgs',
-                        'value' => [
-                            'Taopaïppaï' => 'C5.png',
-                            'Gil' => 'C16.png'
-                        ],
+            ],
+            Race::CYBORG => [
+                'C1' => [
+                    'label' => 'Les C',
+                    'value' => [
+                        'C-13' => 'C11.png',
+                        'C-13 Ultime' => 'C10.png',
+                        'C-14' => 'C17.png',
+                        'C-15' => 'C12.png',
+                        'C-16' => 'C.png',
+                        'C-17' => 'C2.png',
+                        'Super C-17' => 'C13.png',
+                        'Super C-17 Altern' => 'C18.png',
+                        'C-18' => 'C3.png',
+                        'C-19' => 'C8.png',
+                        'C-20' => 'C4.png',
+                        'C-20 sans chapeau' => 'C9.png'
                     ],
                 ],
-                Race::MAJIN => [
-                    'M1' => [
-                        'label' => 'Boubou',
-                        'value' => [
-                            'choice.shape' => '',
-                            'Boubou' => 'M.png',
-                            'Bou Mal incarné' => 'M9.png',
-                            'Majin Bou' => 'M8.png',
-                            'Majin Bou + Gotrunks' => 'M12.png',
-                            'Majin Bou + Piccolo' => 'M11',
-                            'Majin Bou + San Gohan' => 'M10.png',
-                            'Bou Ultime' => 'M1.png',
-                            'Super Oub' => 'M13.png'
-                        ],
-                    ],
-                    'M2' => [
-                        'label' => 'Babidi',
-                        'value' => [
-                            'choice.shape' => '',
-                            'Babidi' => 'M2.png'
-                        ],
-                    ],
-                    'M3' => [
-                        'label' => 'Serviteurs',
-                        'value' => [
-                            'choice.shape' => '',
-                            'Buïbuï' => 'M3.png',
-                            'Sporovich' => 'M7.png',
-                            'Yamu' => 'M5.png',
-                            'Simple guerrier' => 'M4.png',
-                            'Yakon' => 'M6.png'
-                        ],
+                'C2' => [
+                    'label' => 'Cell',
+                    'value' => [
+                        'Cell première transformation' => 'C15.png',
+                        'Cell deuxième transformation' => 'C7.png',
+                        'Perfect Cell' => 'C1.png',
+                        'Reborn Cell' => 'C14.png',
+                        'Mini cell' => 'C6.png'
                     ],
                 ],
-                Race::DRAGON => [
-                    'D1' => [
-                        'label' => 'Dragon de couleur',
-                        'value' => [
-                            'choice.shape' => '',
-                            'Dragon bleu' => 'D.png',
-                            'Dragon gris' => 'D1.png',
-                            'Dragon noir' => 'D2.png',
-                            'Dragon rouge' => 'D3.png',
-                            'Dragon violet' => 'D4.png',
-                            'Dragon bleu très clair' => 'D5.png',
-                            'Dragon jaune' => 'D6.png',
-                            'Dragon marron foncé' => 'D7.png',
-                            'Dragon vert' => 'D8.png',
-                            'Dragon blanc' => 'D9.png',
-                            'Dragon rouge foncé' => 'D10.png',
-                            'Dragon marron clair' => 'D11.png'
-                        ],
+                'C3' => [
+                    'label' => 'Autres cyborgs',
+                    'value' => [
+                        'Taopaïppaï' => 'C5.png',
+                        'Gil' => 'C16.png'
                     ],
-                    'D2' => [
-                        'label' => 'Li Sheron',
-                        'value' => [
-                            'choice.shape' => '',
-                            'Première transformation' => 'D12.png',
-                            'Première transformation Altern' => 'D21.png',
-                            'Deuxième transformation' => 'D13.png',
-                        ],
+                ],
+            ],
+            Race::MAJIN => [
+                'M1' => [
+                    'label' => 'Boubou',
+                    'value' => [
+                        'choice.shape' => '',
+                        'Boubou' => 'M.png',
+                        'Bou Mal incarné' => 'M9.png',
+                        'Majin Bou' => 'M8.png',
+                        'Majin Bou + Gotrunks' => 'M12.png',
+                        'Majin Bou + Piccolo' => 'M11',
+                        'Majin Bou + San Gohan' => 'M10.png',
+                        'Bou Ultime' => 'M1.png',
+                        'Super Oub' => 'M13.png'
                     ],
-                    'D3' => [
-                        'label' => 'Autres personnages',
-                        'value' => [
-                            'choice.character' => '',
-                            'Nova Shenron' => 'D14.png',
-                            'Nova Shenron Altern' => 'D20.png',
-                            'Uu Shenron' => 'D15.png',
-                            'Chii Shenron' => 'D16.png',
-                            'Otamine' => 'D17.png',
-                            'Haze Shenron' => 'D18.png',
-                            '??? Shenron' => 'D19.png'
-                        ],
+                ],
+                'M2' => [
+                    'label' => 'Babidi',
+                    'value' => [
+                        'choice.shape' => '',
+                        'Babidi' => 'M2.png'
+                    ],
+                ],
+                'M3' => [
+                    'label' => 'Serviteurs',
+                    'value' => [
+                        'choice.shape' => '',
+                        'Buïbuï' => 'M3.png',
+                        'Sporovich' => 'M7.png',
+                        'Yamu' => 'M5.png',
+                        'Simple guerrier' => 'M4.png',
+                        'Yakon' => 'M6.png'
+                    ],
+                ],
+            ],
+            Race::DRAGON => [
+                'D1' => [
+                    'label' => 'Dragon de couleur',
+                    'value' => [
+                        'choice.shape' => '',
+                        'Dragon bleu' => 'D.png',
+                        'Dragon gris' => 'D1.png',
+                        'Dragon noir' => 'D2.png',
+                        'Dragon rouge' => 'D3.png',
+                        'Dragon violet' => 'D4.png',
+                        'Dragon bleu très clair' => 'D5.png',
+                        'Dragon jaune' => 'D6.png',
+                        'Dragon marron foncé' => 'D7.png',
+                        'Dragon vert' => 'D8.png',
+                        'Dragon blanc' => 'D9.png',
+                        'Dragon rouge foncé' => 'D10.png',
+                        'Dragon marron clair' => 'D11.png'
+                    ],
+                ],
+                'D2' => [
+                    'label' => 'Li Sheron',
+                    'value' => [
+                        'choice.shape' => '',
+                        'Première transformation' => 'D12.png',
+                        'Première transformation Altern' => 'D21.png',
+                        'Deuxième transformation' => 'D13.png',
+                    ],
+                ],
+                'D3' => [
+                    'label' => 'Autres personnages',
+                    'value' => [
+                        'choice.character' => '',
+                        'Nova Shenron' => 'D14.png',
+                        'Nova Shenron Altern' => 'D20.png',
+                        'Uu Shenron' => 'D15.png',
+                        'Chii Shenron' => 'D16.png',
+                        'Otamine' => 'D17.png',
+                        'Haze Shenron' => 'D18.png',
+                        '??? Shenron' => 'D19.png'
                     ],
                 ],
             ],
