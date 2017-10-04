@@ -59,7 +59,7 @@ class MailService extends BaseService
     {
         $mail = new Mail();
         $mail->setSubject($subject);
-        $mail->setTemplate($template);
+        $mail->setTemplateName($template);
         $mail->setParameters($parameters);
         $mail->setPlayer($player);
 
