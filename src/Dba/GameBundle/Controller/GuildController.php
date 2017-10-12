@@ -20,19 +20,12 @@ class GuildController extends BaseController
     const CREATE_GUILD_AMOUNT = 200;
 
     /**
-     * @Annotations\Get("/view/{id}")
+     * @Annotations\Get("/list")
      */
-    public function getViewAction($id)
+    public function getListAction()
     {
-        $guildRepo = $this->repos()->getGuildRepository();
         return [
-            'guilds' => $guildRepo->findByEnabled(true),
-            'guild' => !empty($id) ? $guildRepo->findOneBy(
-                [
-                    'id' => $id,
-                    'enabled' => true
-                ]
-            ) : null
+            'guilds' => $this->repos()->getGuildRepository()->findByEnabled(true),
         ];
     }
 
