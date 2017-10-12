@@ -86,7 +86,7 @@ class Guild
      * @var ArrayCollection
      *
      * @ORM\OneToMany(targetEntity="Dba\GameBundle\Entity\GuildPlayer", mappedBy="guild", cascade={"all"})
-     * @JMS\Exclude
+     * @JMS\Groups("GuildView")
      */
     private $players;
 

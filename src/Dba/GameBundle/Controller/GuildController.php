@@ -20,6 +20,7 @@ class GuildController extends BaseController
     const CREATE_GUILD_AMOUNT = 200;
 
     /**
+     * @Annotations\View(serializerGroups={"Default", "GuildView"})
      * @Annotations\Get("/list")
      */
     public function getListAction()

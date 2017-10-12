@@ -77,6 +77,7 @@ class Player implements AdvancedUserInterface, Serializable
      * resistance, and others bonus
      *
      * @var array
+     * @JMS\Exclude
      */
     protected $specifications = [];
 

@@ -33,7 +33,7 @@ class GuildPlayer
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="player_id", referencedColumnName="id", nullable=false, onDelete="CASCADE")
      * })
-     * @JMS\Groups("Guild")
+     * @JMS\Groups({"Guild", "GuildView"})
      */
     private $player;
 
