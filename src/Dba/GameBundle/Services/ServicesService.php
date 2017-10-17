@@ -6,6 +6,15 @@ class ServicesService extends BaseService
 {
     /**
      *
+     * @return GuildService
+     */
+    public function getGuildService()
+    {
+        return $this->container->get('dba.game.guild');
+    }
+
+    /**
+     *
      * @return PlayerService
      */
     public function getPlayerService()

@@ -15,6 +15,10 @@ services:
     class: Dba\GameBundle\Services\PlayerService
     calls:
       - [setContainer, ['@service_container']]
+  dba.game.guild:
+    class: Dba\GameBundle\Services\GuildService
+    calls:
+      - [setContainer, ['@service_container']]
   dba.game.object:
     class: Dba\GameBundle\Services\ObjectService
     calls:

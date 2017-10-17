@@ -14,7 +14,6 @@ use Dba\GameBundle\Entity\GuildRank;
 use Dba\GameBundle\Entity\Player;
 use Dba\GameBundle\Form;
 
-
 class GuildController extends BaseController
 {
     const CREATE_GUILD_AMOUNT = 200;
@@ -149,5 +148,62 @@ class GuildController extends BaseController
         $this->em()->flush();
 
         return [];
+    }
+
+    /**
+     * @Annotations\Post("/leave")
+     */
+    public function postLeaveAction()
+    {
+        $player = $this->getUser();
+        if (empty($player->getGuildPlayer())) {
+            return $this->forbidden();
+        }
+
+        $guildPlayer = $player->getGuildPlayer();
+        $playerRole = $guildPlayer->getRank()->getRole();
+        $messages = [];
+        if (!$guildPlayer->isEnabled()) {
+            $messages[] = 'guild.request.deleted';
+        } else {
+            if ($playerRole === GuildRank::ROLE_ADMIN) {
+                if (!$guildPlayer->getGuild()->isEnabled()) {
+                    /**
+                     * Guild not validated yet, get back the money!
+                     */
+                    $player->setZeni($player->getZeni() - self::CREATE_GUILD_AMOUNT);
+                    $this->em()->remove($guildPlayer->getGuild());
+                    $messages[] = 'guild.create.deleted';
+                } else {
+                    /**
+                     * Is it the last administrator
+                     */
+                    $admins = $this->repos()->getGuildRepository()->findOtherAdmins($player);
+                    if (empty($admins)) {
+                        $this->em()->remove($guildPlayer->getGuild());
+                        $messages[] = 'guild.deleted';
+                    }
+                }
+            }
+
+            if (empty($messages)) {
+                $this->services()->getGuildService()->addEvent(
+                    $player,
+                    $guildPlayer->getGuild(),
+                    'event.guild.leave',
+                    [
+                        'name' => $player->getName(),
+                    ]
+                );
+
+                $messages[] = 'guild.left';
+            }
+        }
+
+        $this->em()->remove($guildPlayer);
+        $this->em()->remove($guildPlayer->getRank());
+        $this->em()->flush();
+
+        return ['messages' => $messages];
     }
 }

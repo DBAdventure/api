@@ -14,7 +14,6 @@ use Dba\GameBundle\Entity\Race;
 use Dba\GameBundle\Entity\Side;
 use Dba\GameBundle\Form\PlayerRegistration;
 
-
 class DataController extends BaseController
 {
     const LIMIT_PER_PAGE = 60;

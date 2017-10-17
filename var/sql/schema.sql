@@ -250,6 +250,40 @@ ALTER SEQUENCE player_event_id_seq OWNED BY player_event.id;
 
 
 --
+-- Name: guild_event; Type: TABLE; Schema: public; Tablespace:
+--
+
+CREATE TABLE guild_event (
+    id integer NOT NULL,
+    player_id integer,
+    guild_id integer NOT NULL,
+    message character varying(80) NOT NULL,
+    parameters json NOT NULL,
+    created_at timestamp(0) without time zone NOT NULL,
+    event_type_id integer NOT NULL
+);
+
+
+--
+-- Name: guild_event_id_seq; Type: SEQUENCE; Schema: public
+--
+
+CREATE SEQUENCE guild_event_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: guild_event_id_seq; Type: SEQUENCE OWNED BY; Schema: public
+--
+
+ALTER SEQUENCE guild_event_id_seq OWNED BY guild_event.id;
+
+
+--
 -- Name: bank; Type: TABLE; Schema: public; Tablespace:
 --
 
@@ -1004,6 +1038,13 @@ ALTER TABLE ONLY player_event ALTER COLUMN id SET DEFAULT nextval('player_event_
 -- Name: id; Type: DEFAULT
 --
 
+ALTER TABLE ONLY guild_event ALTER COLUMN id SET DEFAULT nextval('guild_event_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT
+--
+
 ALTER TABLE ONLY race ALTER COLUMN id SET DEFAULT nextval('race_id_seq'::regclass);
 
 
@@ -1177,6 +1218,14 @@ ALTER TABLE ONLY object
 
 ALTER TABLE ONLY player_event
     ADD CONSTRAINT player_event_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: guild_event_pkey; Type: CONSTRAINT; Tablespace:
+--
+
+ALTER TABLE ONLY guild_event
+    ADD CONSTRAINT guild_event_pkey PRIMARY KEY (id);
 
 
 --
@@ -1532,6 +1581,19 @@ CREATE INDEX player_event_target ON player_event USING btree (target_id);
 
 CREATE INDEX player_event_player ON player_event USING btree (player_id);
 
+--
+-- Name: guild_event_guild
+--
+
+CREATE INDEX guild_event_guild ON guild_event USING btree (guild_id);
+
+
+--
+-- Name: guild_event_player
+--
+
+CREATE INDEX guild_event_player ON guild_event USING btree (player_id);
+
 
 --
 -- Name: spell_name_race_id; Type: INDEX; Schema: public; Tablespace:
@@ -1694,7 +1756,29 @@ ALTER TABLE ONLY player_event
 --
 
 ALTER TABLE ONLY player_event
-    ADD CONSTRAINT FK_84DC71E1401B253C FOREIGN KEY (event_type_id) REFERENCES event_type (id) ON DELETE CASCADE NOT DEFERRABLE INITIALLY IMMEDIATE;
+    ADD CONSTRAINT fk_84dc71e1401b253c FOREIGN KEY (event_type_id) REFERENCES event_type (id) ON DELETE CASCADE NOT DEFERRABLE INITIALLY IMMEDIATE;
+
+
+--
+-- Name: fk_a21d1ee99e6f5df;
+--
+
+ALTER TABLE ONLY guild_event
+    ADD CONSTRAINT fk_a21d1ee99e6f5df FOREIGN KEY (player_id) REFERENCES player (id) ON DELETE CASCADE NOT DEFERRABLE INITIALLY IMMEDIATE;
+
+--
+-- Name: fk_a21d1ee5f2131ef;
+--
+
+ALTER TABLE ONLY guild_event
+    ADD CONSTRAINT fk_a21d1ee5f2131ef FOREIGN KEY (guild_id) REFERENCES guild (id) ON DELETE CASCADE NOT DEFERRABLE INITIALLY IMMEDIATE;
+
+--
+-- Name: fk_a21d1ee401b253c;
+--
+
+ALTER TABLE ONLY guild_event
+    ADD CONSTRAINT fk_a21d1ee401b253c FOREIGN KEY (event_type_id) REFERENCES event_type (id) ON DELETE CASCADE NOT DEFERRABLE INITIALLY IMMEDIATE;
 
 
 --

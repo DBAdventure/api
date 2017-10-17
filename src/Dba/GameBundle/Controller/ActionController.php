@@ -327,7 +327,6 @@ class ActionController extends BaseController
 
         return [
             'messages' => $messages,
-            'target' => $target,
         ];
     }
 
