@@ -105,7 +105,7 @@ INSERT INTO "spell" VALUES (102, 'super.saiyajin.1', '{"level": 15, "ki": 8, "in
 INSERT INTO "spell" VALUES (103, 'powerball.sakura', '{"level": 25, "ki": 10, "intellect": 0}', '{"times_used": 7, "lifetime":  43200}', 32767, 0, 0, 2, 4);
 INSERT INTO "spell" VALUES (104, 'majin.boo', '{"level": 25, "ki": 10, "intellect": 0}', '{"times_used": 7}', 32767, 0, 0, 2, 7);
 INSERT INTO "spell" VALUES (105, 'technology.capsule.corp.training.capsule', '{"level": 25, "ki": 10, "intellect": 0}', '{"times_used": 7}', 32767, 0, 0, 2, 1);
-INSERT INTO "spell" VALUES (106, 'giant.gorrila', '{"level": 25, "ki": 10, "intellect": 0}', '{"times_used": 7}', 32767, 0, 0, 2, 2);
+INSERT INTO "spell" VALUES (106, 'giant.gorila', '{"level": 25, "ki": 10, "intellect": 0}', '{"times_used": 7}', 32767, 0, 0, 2, 2);
 INSERT INTO "spell" VALUES (107, 'war.namekian', '{"level": 25, "ki": 10, "intellect": 0}', '{"times_used": 7}', 32767, 0, 0, 2, 3);
 INSERT INTO "spell" VALUES (108, 'genetic.mutation', '{"level": 25, "ki": 10, "intellect": 0}', '{"times_used": 7}', 32767, 0, 0, 2, 5);
 INSERT INTO "spell" VALUES (109, 'neo.cyborg', '{"level": 25, "ki": 10, "intellect": 0}', '{"times_used": 7}', 32767, 0, 0, 2, 6);

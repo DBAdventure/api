@@ -121,14 +121,16 @@ class BuildingController extends BaseController
 
         $result = $this->services()->getSpellService()->addSpell($player, $spell);
         if (is_numeric($result)) {
-            return $this->badRequest($this->trans('building.magic.error.' . $result));
+            return $this->badRequest('building.magic.error.' . $result);
         }
         $this->em()->persist($player);
         $this->em()->persist($result);
         $this->em()->flush();
         return [
             'message' => 'building.magic.success',
-            'spell' => sprintf('spells.%s.name', $spell->getName()),
+            'parameters' => [
+                'spell' => sprintf('spells.%s.name', $spell->getName()),
+            ]
         ];
     }
 
@@ -149,7 +151,7 @@ class BuildingController extends BaseController
 
         $result = $this->services()->getObjectService()->addToInventory($player, $object);
         if (is_numeric($result)) {
-            return $this->badRequest($this->trans('building.shop.error.' . $result));
+            return $this->badRequest('building.shop.error.' . $result);
         }
 
         $this->em()->persist($player);
@@ -157,7 +159,9 @@ class BuildingController extends BaseController
         $this->em()->flush();
         return [
             'message' => 'building.shop.success',
-            'object' => sprintf('spells.%s.name', $spell->getName()),
+            'parameters' => [
+                'object' => sprintf('spells.%s.name', $spell->getName()),
+            ]
         ];
     }
 
@@ -178,10 +182,7 @@ class BuildingController extends BaseController
         $number = 1;
         $result = $this->services()->getObjectService()->sell($playerObject, $number);
         if (is_numeric($result)) {
-            $this->addFlash(
-                'danger',
-                $this->trans('building.shop.sell.error.' . $result)
-            );
+            return $this->badRequest('building.shop.sell.error.' . $result);
         } else {
             $this->em()->persist($playerObject);
             $this->em()->persist($player);
