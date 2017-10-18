@@ -123,6 +123,7 @@ class BuildingController extends BaseController
         if (is_numeric($result)) {
             return $this->badRequest('building.magic.error.' . $result);
         }
+
         $this->em()->persist($player);
         $this->em()->persist($result);
         $this->em()->flush();
