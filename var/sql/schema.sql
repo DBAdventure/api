@@ -1383,7 +1383,7 @@ CREATE INDEX building_map_id ON building USING btree (map_id);
 -- Name: building_name;
 --
 
-CREATE UNIQUE INDEX building_name ON building USING btree (name);
+CREATE INDEX building_name ON building USING btree (name);
 
 
 --

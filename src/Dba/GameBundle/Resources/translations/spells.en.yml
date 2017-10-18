@@ -336,7 +336,6 @@ demoniac.torture:
   name: "Torture Démoniaque"
   description: "Votre force et votre esprit sont affaiblis. Les effets des objets concernant ces compétences sont annulés."
   description_rp: "Permet d'handicaper l'adversaire en diminuant une partie de sa force et de son esprit. Les effets des objets pour ces compétences sont annulés. Le démon Piccolo utilisa cette technique contre Sangoku enfant l'empêchant ainsi de se déplacer. "
-"Chant de Tapion":
 song:
   tapion:
     name: "Chant de Tapion"
