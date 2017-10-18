@@ -8,7 +8,10 @@ use Dba\GameBundle\Entity\Player;
 
 class SpellService extends BaseService
 {
-    const SPELL_ALREADY_PURCHASED = 1;
+    const ERROR_NOT_ENOUGH_ZENI = 1;
+    const ERROR_ALREADY_PURCHASED = 2;
+    const ERROR_NOT_RACE = 3;
+
     /*
      * Add spell into player
      *
@@ -19,8 +22,17 @@ class SpellService extends BaseService
      */
     public function addSpell(Player $player, Spell $spell)
     {
-        $objectRepo = $this->repos()->getPlayerSpellRepository();
-        $playerSpell = $objectRepo->findOneBy(
+        if ($spell->getRace()->getId() != $player->getRace()->getId()) {
+            return self::ERROR_NOT_RACE;
+        }
+
+        if ($player->getZeni() < $spell->getPrice()) {
+            // No such money
+            return self::ERROR_NOT_ENOUGH_ZENI;
+        }
+
+        $spellRepo = $this->repos()->getPlayerSpellRepository();
+        $playerSpell = $spellRepo->findOneBy(
             [
                 'spell' => $spell,
                 'player' => $player
@@ -28,7 +40,7 @@ class SpellService extends BaseService
         );
 
         if (!empty($playerSpell)) {
-            return self::SPELL_ALREADY_PURCHASED;
+            return self::ERROR_ALREADY_PURCHASED;
         }
 
         $playerSpell = new PlayerSpell();

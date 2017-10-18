@@ -114,32 +114,22 @@ class BuildingController extends BaseController
     {
         $player = $this->getUser();
         if ($this->checkPosition($player, $building) ||
-            $spell->getRace()->getId() != $player->getRace()->getId() ||
-            $spell->getPrice() > $player->getZeni()
+            $building->getType() !== Building::TYPE_MAGIC
         ) {
             return $this->forbidden();
         }
 
         $result = $this->services()->getSpellService()->addSpell($player, $spell);
         if (is_numeric($result)) {
-            $this->addFlash(
-                'danger',
-                $this->trans('building.magic.error.' . $result)
-            );
-        } else {
-            $this->em()->persist($player);
-            $this->em()->persist($result);
-            $this->em()->flush();
-            $this->addFlash(
-                'success',
-                $this->trans(
-                    'building.magic.success',
-                    ['%object%' => $this->trans($spell->getName() . '.name', [], 'objects')]
-                )
-            );
+            return $this->badRequest($this->trans('building.magic.error.' . $result));
         }
-
-        return $this->redirect($this->generateUrl('building.enter', ['id' => $building->getId()]));
+        $this->em()->persist($player);
+        $this->em()->persist($result);
+        $this->em()->flush();
+        return [
+            'message' => 'building.magic.success',
+            'spell' => sprintf('spells.%s.name', $spell->getName()),
+        ];
     }
 
     /**
@@ -166,10 +156,8 @@ class BuildingController extends BaseController
         $this->em()->persist($result);
         $this->em()->flush();
         return [
-            'message' => $this->trans(
-                'building.shop.success',
-                ['%object%' => $this->trans($object->getName() . '.name', [], 'objects')]
-            )
+            'message' => 'building.shop.success',
+            'object' => sprintf('spells.%s.name', $spell->getName()),
         ];
     }
 

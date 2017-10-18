@@ -109,26 +109,6 @@ game:
 
   bank:
     interest: 'You won %goldBar% gold bar with weekly interest'
-building:
-  shop:
-    error:
-      1: "Inventory is full, can't hold more objects!"
-      2: "Not enough zeni!"
-      3: "You already purchased this item!"
-    success: "You successfully purchased this %object%!"
-    no.zeni: "You don't have enought zeni."
-    already.purchased:
-      spell: "You already purchased this spell."
-  bank:
-    deposit:
-      zeni: "You just have deposited %goldBar% gold bar, you now have %goldBank% in bank."
-    withdraw:
-      zeni: "You just have removed %goldBar% gold bar, you now have %goldBank% in bank."
-
-inventory:
-  use.cant: "You can't use this object."
-  equip.cant: "You can't equip this object."
-  drop.cant: "You can't drop this object."
 
 action:
   head.price: "You've just killed someone whose head was prices, you won %headPrice% Zenis"

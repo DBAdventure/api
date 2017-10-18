@@ -47,7 +47,7 @@ class InventoryController extends BaseController
         $player = $this->getUser();
         $playerObject = $this->repos()->getPlayerObjectRepository()->checkPlayerObject($player, $object);
         if (!$playerObject->canBeUsed()) {
-            return $this->forbidden($this->trans('inventory.use.cant'));
+            return $this->forbidden('inventory.use.cant');
         }
 
         $nbObjectsUsed = (int) $request->request->get('nb', 1);
@@ -93,12 +93,7 @@ class InventoryController extends BaseController
 
                 case Object::BONUS_TELEPORT:
                     if ($player->getMovementPoints() < self::TELEPORT_MOVEMENT_POINTS) {
-                        $this->addFlash(
-                            'danger',
-                            $this->trans('object.error.teleport')
-                        );
-
-                        return $this->redirect($this->generateUrl('inventory'));
+                        return $this->forbidden('object.error.teleport');
                     }
 
                     $player->usePoints(Player::MOVEMENT_POINT, self::TELEPORT_MOVEMENT_POINTS);
@@ -114,13 +109,11 @@ class InventoryController extends BaseController
         $this->em()->flush();
 
         return [
-            'message' => $this->trans(
-                'object.used',
-                [
-                    '%number%' => $nbObjectsUsed,
-                    '%name%' => $this->trans($playerObject->getObject()->getName() . '.name', [], 'objects')
-                ]
-            )
+            'message' => 'object.used',
+            'parameters' => [
+                'number' => $nbObjectsUsed,
+                'name' => sprintf('objects.%s.name', $playerObject->getObject()->getName()),
+            ],
         ];
     }
 
@@ -133,7 +126,7 @@ class InventoryController extends BaseController
         $player = $this->getUser();
         $playerObject = $this->repos()->getPlayerObjectRepository()->checkPlayerObject($player, $object);
         if (!$playerObject->canBeDropped()) {
-            return $this->forbidden($this->trans('inventory.drop.cant'));
+            return $this->forbidden('inventory.drop.cant');
         }
 
         $nbObjectsDropped = (int) $request->request->get('nb', 1);
@@ -147,10 +140,10 @@ class InventoryController extends BaseController
         $this->em()->persist($playerObject);
         $this->em()->flush();
         return [
-            'message' => $this->trans(
-                'object.drop',
-                ['%name%' => $this->trans($playerObject->getObject()->getName() . '.name', [], 'objects')]
-            )
+            'message' => 'object.drop',
+            'parameters' => [
+                'name' => sprintf('objects.%s.name', $playerObject->getObject()->getName()),
+            ]
         ];
     }
 
@@ -170,10 +163,10 @@ class InventoryController extends BaseController
         $this->em()->persist($playerObject);
         $this->em()->flush();
         return [
-            'message' => $this->trans(
-                'object.unequip',
-                ['%name%' => $this->trans($playerObject->getObject()->getName() . '.name', [], 'objects')]
-            )
+            'message' => 'object.unequip',
+            'parameters' => [
+                'name' => sprintf('objects.%s.name', $playerObject->getObject()->getName()),
+            ]
         ];
     }
 
@@ -190,7 +183,7 @@ class InventoryController extends BaseController
         $player = $this->getUser();
         $playerObject = $this->repos()->getPlayerObjectRepository()->checkPlayerObject($player, $object);
         if (!$playerObject->canBeEquipped()) {
-            return $this->forbidden($this->trans('inventory.equip.cant'));
+            return $this->forbidden('inventory.equip.cant');
         }
 
         $canEquip = true;
@@ -205,12 +198,12 @@ class InventoryController extends BaseController
         }
 
         if (!$canEquip) {
-            return $this->forbidden(
-                $this->trans(
-                    'object.error.equip',
-                    ['%name%' => $this->trans($playerObject->getObject()->getName() . '.name', [], 'objects')]
-                )
-            );
+            return $this->forbidden([
+                'message' => 'object.error.equip',
+                'parameters' => [
+                    'name' => sprintf('objects.%s.name', $playerObject->getObject()->getName()),
+                ]
+            ]);
         }
 
         $similarObject = $this->repos()->getPlayerObjectRepository()->findSimilarEquipped(
@@ -221,20 +214,20 @@ class InventoryController extends BaseController
         $messages = [];
         if (!empty($similarObject)) {
             $messages[] = [
-                $this->trans(
-                    'object.unequip',
-                    ['%name%' => $this->trans($similarObject->getObject()->getName() . '.name', [], 'objects')]
-                )
+                'message' => 'object.unequip',
+                'parameters' => [
+                    'name' => sprintf('objects.%s.name', $similarObject->getObject()->getName()),
+                ]
             ];
             $similarObject->setEquipped(false);
             $this->em()->persist($similarObject);
         }
 
         $messages[] = [
-            $this->trans(
-                'object.equip',
-                ['%name%' => $this->trans($object->getName() . '.name', [], 'objects')]
-            )
+            'message' => 'object.equip',
+            'parameters' => [
+                'name' => sprintf('objects.%s.name', $playerObject->getObject()->getName()),
+            ]
         ];
         $playerObject->setEquipped(true);
         $this->em()->persist($playerObject);
