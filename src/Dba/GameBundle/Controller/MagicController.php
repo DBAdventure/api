@@ -2,23 +2,23 @@
 
 namespace Dba\GameBundle\Controller;
 
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use FOS\RestBundle\Controller\Annotations;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @Route("/magic")
+ * @Annotations\NamePrefix("magic_")
  */
 class MagicController extends BaseController
 {
     /**
-     * @Route("", name="magic", methods="GET")
-     * @Template()
+     * @Annotations\Get("/spells")
      */
-    public function indexAction()
+    public function getSpellsAction()
     {
-        return $this->render(
-            'DbaGameBundle::magic/index.html.twig'
-        );
+        if (!$this->getUser()) {
+            return $this->forbidden();
+        }
+
+        return $this->getUser()->getPlayerSpells();
     }
 }

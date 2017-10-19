@@ -4,14 +4,14 @@ namespace Dba\GameBundle\Controller;
 
 use FOS\RestBundle\Controller\Annotations;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Dba\GameBundle\Entity\Object;
 use Dba\GameBundle\Entity\Player;
 use Dba\GameBundle\Entity\PlayerObject;
 
+/**
+ * @Annotations\NamePrefix("inventory_")
+ */
 class InventoryController extends BaseController
 {
     const TELEPORT_MOVEMENT_POINTS = 10;

@@ -4,7 +4,6 @@ namespace Dba\GameBundle\Controller;
 
 use FOS\RestBundle\Controller\Annotations;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Dba\GameBundle\Event\ActionEvent;
 use Dba\GameBundle\Event\DbaEvents;
@@ -17,6 +16,9 @@ use Dba\GameBundle\Entity\PlayerSpell;
 use Dba\GameBundle\Entity\Side;
 use Dba\GameBundle\Entity\Spell;
 
+/**
+ * @Annotations\NamePrefix("action_")
+ */
 class ActionController extends BaseController
 {
     const DEFAULT_BATTLE_POINT_KILL = 20;

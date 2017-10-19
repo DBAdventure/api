@@ -4,13 +4,15 @@ namespace Dba\GameBundle\Controller;
 
 use FOS\RestBundle\Controller\Annotations;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Dba\GameBundle\Entity\Inbox;
 use Dba\GameBundle\Entity\Player;
 use Dba\GameBundle\Entity\Side;
 use Dba\GameBundle\Form;
 
+/**
+ * @Annotations\NamePrefix("inbox_")
+ */
 class InboxController extends BaseController
 {
     /**

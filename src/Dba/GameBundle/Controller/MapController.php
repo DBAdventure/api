@@ -3,16 +3,15 @@
 namespace Dba\GameBundle\Controller;
 
 use FOS\RestBundle\Controller\Annotations;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Dba\GameBundle\Entity\MapBox;
 use Dba\GameBundle\Entity\Object;
 use Dba\GameBundle\Repository\MapRepository;
 
+/**
+ * @Annotations\NamePrefix("map_")
+ */
 class MapController extends BaseController
 {
     protected function checkForMiniMap()

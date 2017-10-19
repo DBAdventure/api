@@ -6,7 +6,6 @@ use FOS\RestBundle\Controller\Annotations;
 use Doctrine\ORM\Query\ResultSetMapping;
 use Doctrine\ORM\Tools\Pagination\Paginator;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Dba\GameBundle\Entity\Object;
 use Dba\GameBundle\Entity\Player;
@@ -14,6 +13,9 @@ use Dba\GameBundle\Entity\Race;
 use Dba\GameBundle\Entity\Side;
 use Dba\GameBundle\Form\PlayerRegistration;
 
+/**
+ * @Annotations\NamePrefix("data_")
+ */
 class DataController extends BaseController
 {
     const LIMIT_PER_PAGE = 60;
