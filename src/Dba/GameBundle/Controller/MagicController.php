@@ -15,10 +15,6 @@ class MagicController extends BaseController
      */
     public function getSpellsAction()
     {
-        if (!$this->getUser()) {
-            return $this->forbidden();
-        }
-
         return $this->getUser()->getPlayerSpells();
     }
 }

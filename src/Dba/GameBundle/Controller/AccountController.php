@@ -44,10 +44,6 @@ class AccountController extends BaseController
      */
     public function getPlayerAction()
     {
-        if (!$this->getUser()) {
-            return $this->forbidden();
-        }
-
         $player = $this->getUser();
         $roleService = $this->get('dba.admin.role');
 
