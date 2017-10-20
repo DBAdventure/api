@@ -25,7 +25,6 @@ class ActionController extends BaseController
     const DEFAULT_BATTLE_POINT_KILL_SLAP = 10;
     const DEFAULT_NPC_ZENI = 50;
 
-
     /**
      * @Annotations\Post("/convert")
      */
@@ -80,10 +79,7 @@ class ActionController extends BaseController
     public function postAttackAction(Player $target, $type = null)
     {
         $player = $this->getUser();
-        if ($player->getActionPoints() < Player::ATTACK_ACTION ||
-            $player->getX() != $target->getX() ||
-            $player->getY() != $target->getY() ||
-            $player->getMap()->getId() != $target->getMap()->getId() ||
+        if ($this->checkPosition($player, $target, Player::ATTACK_ACTION) ||
             $player->getId() == $target->getId() ||
             !$this->canMakeAction($player, $target)
         ) {
@@ -220,11 +216,7 @@ class ActionController extends BaseController
     public function postPickupAction(MapObject $mapObject)
     {
         $player = $this->getUser();
-        if ($player->getActionPoints() < Player::PICKUP_ACTION ||
-            $player->getX() != $mapObject->getX() ||
-            $player->getY() != $mapObject->getY() ||
-            $player->getMap()->getId() != $mapObject->getMap()->getId()
-        ) {
+        if ($this->checkPosition($player, $mapObject, Player::PICKUP_ACTION)) {
             // failed to pickup
             return $this->forbidden();
         }
@@ -339,10 +331,7 @@ class ActionController extends BaseController
     public function postStealAction(Player $target)
     {
         $player = $this->getUser();
-        if ($player->getActionPoints() < Player::STEAL_ACTION ||
-            $player->getX() != $target->getX() ||
-            $player->getY() != $target->getY() ||
-            $player->getMap()->getId() != $target->getMap()->getId() ||
+        if ($this->checkPosition($player, $target, Player::STEAL_ACTION) ||
             $player->getId() == $target->getId() ||
             !$this->canMakeAction($player, $target)
         ) {
@@ -426,10 +415,7 @@ class ActionController extends BaseController
     public function postAnalysisAction(Player $target)
     {
         $player = $this->getUser();
-        if ($player->getActionPoints() < Player::ANALYSIS_ACTION ||
-            $player->getX() != $target->getX() ||
-            $player->getY() != $target->getY() ||
-            $player->getMap()->getId() != $target->getMap()->getId() ||
+        if ($this->checkPosition($player, $target, Player::ANALYSIS_ACTION) ||
             $player->getId() == $target->getId()
         ) {
             // failed to analysis
@@ -486,10 +472,7 @@ class ActionController extends BaseController
     public function postSlapAction(Player $target)
     {
         $player = $this->getUser();
-        if ($player->getActionPoints() < Player::SLAP_ACTION ||
-            $player->getX() != $target->getX() ||
-            $player->getY() != $target->getY() ||
-            $player->getMap()->getId() != $target->getMap()->getId() ||
+        if ($this->checkPosition($player, $target, Player::SLAP_ACTION) ||
             $target->getBetrayals() <= 0 ||
             $player->getId() == $target->getId()
         ) {
@@ -549,10 +532,7 @@ class ActionController extends BaseController
     public function getGiveAction(Player $target)
     {
         $player = $this->getUser();
-        if ($player->getActionPoints() < Player::GIVE_ACTION ||
-            $player->getX() != $target->getX() ||
-            $player->getY() != $target->getY() ||
-            $player->getMap()->getId() != $target->getMap()->getId() ||
+        if ($this->checkPosition($player, $target, Player::GIVE_ACTION) ||
             $player->getId() == $target->getId()
         ) {
             // failed to give
@@ -584,10 +564,7 @@ class ActionController extends BaseController
     public function postGiveAction(Request $request, Player $target, Object $object = null)
     {
         $player = $this->getUser();
-        if ($player->getActionPoints() < Player::GIVE_ACTION ||
-            $player->getX() != $target->getX() ||
-            $player->getY() != $target->getY() ||
-            $player->getMap()->getId() != $target->getMap()->getId() ||
+        if ($this->checkPosition($player, $target, Player::GIVE_ACTION) ||
             $player->getId() == $target->getId()
         ) {
             // failed to give
@@ -690,10 +667,7 @@ class ActionController extends BaseController
     public function postHealAction(Player $target)
     {
         $player = $this->getUser();
-        if ($player->getActionPoints() < Player::HEAL_ACTION ||
-            $player->getX() != $target->getX() ||
-            $player->getY() != $target->getY() ||
-            $player->getMap()->getId() != $target->getMap()->getId() ||
+        if ($this->checkPosition($player, $target, Player::HEAL_ACTION) ||
             $target->getHealth() == $target->getTotalMaxHealth()
         ) {
             // failed to heal
@@ -789,8 +763,6 @@ class ActionController extends BaseController
     {
         $player = $this->getUser();
         if ($player->getActionPoints() < Player::SPELL_ACTION ||
-            $player->getX() != $target->getX() ||
-            $player->getY() != $target->getY() ||
             $player->getMap()->getId() != $target->getMap()->getId() ||
             $player->getId() == $target->getId() ||
             (!empty($playerSpell) && !$this->canMakeAction($player, $target, $playerSpell))
@@ -820,10 +792,7 @@ class ActionController extends BaseController
     public function postSpellAction(Player $target, $type, PlayerSpell $playerSpell)
     {
         $player = $this->getUser();
-        if ($player->getActionPoints() < Player::SPELL_ACTION ||
-            $player->getX() != $target->getX() ||
-            $player->getY() != $target->getY() ||
-            $player->getMap()->getId() != $target->getMap()->getId() ||
+        if ($this->checkPosition($player, $target, Player::SPELL_ACTION) ||
             $player->getId() == $target->getId() ||
             (!empty($playerSpell) && !$this->canMakeAction($player, $target, $playerSpell))
         ) {
@@ -1056,5 +1025,20 @@ class ActionController extends BaseController
             $eventName,
             $event
         );
+    }
+
+    /**
+     * Check player and target prosition
+     *
+     * @param Player  $player Player
+     * @param mixed  $target Player or MapObject
+     * @param integer $actionPoints Action points
+     */
+    protected function checkPosition(Player $player, $target, $actionPoints)
+    {
+        return $player->getActionPoints() < $actionPoints ||
+            $player->getX() != $target->getX() ||
+            $player->getY() != $target->getY() ||
+            $player->getMap()->getId() != $target->getMap()->getId();
     }
 }
