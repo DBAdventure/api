@@ -19,7 +19,7 @@ class ActionControllerTest extends BaseTestCase
         $this->em()->persist($player);
         $this->em()->flush();
 
-        $this->client->request('GET', '/action/convert');
+        $this->client->request('POST', '/api/action/convert');
         $this->assertJsonResponse($this->client->getResponse(), 403);
     }
 
@@ -30,7 +30,7 @@ class ActionControllerTest extends BaseTestCase
         $this->em()->persist($player);
         $this->em()->flush();
 
-        $this->client->request('GET', '/action/convert');
+        $this->client->request('POST', '/api/action/convert');
         $this->assertJsonResponse($this->client->getResponse(), 403);
     }
 
@@ -42,7 +42,7 @@ class ActionControllerTest extends BaseTestCase
         $this->em()->persist($player);
         $this->em()->flush();
 
-        $this->client->request('GET', '/action/convert');
+        $this->client->request('POST', '/api/action/convert');
         $this->assertJsonResponse($this->client->getResponse(), 200);
         $this->em()->refresh($player);
         $this->assertEquals(0, $player->getActionPoints());
@@ -52,7 +52,7 @@ class ActionControllerTest extends BaseTestCase
     public function testMoveWrongPosition()
     {
         $this->login();
-        $this->client->request('GET', '/action/move/nowhere');
+        $this->client->request('POST', '/api/action/move/nowhere');
         $this->assertJsonResponse($this->client->getResponse(), 403);
     }
 
@@ -63,19 +63,19 @@ class ActionControllerTest extends BaseTestCase
         $this->em()->persist($player);
         $this->em()->flush();
 
-        $this->client->request('GET', '/action/move/n');
+        $this->client->request('POST', '/api/action/move/n');
         $this->assertJsonResponse($this->client->getResponse(), 403);
     }
 
     public function testMoveWithInvalidPosition()
     {
         $player = $this->login();
-        $player->setX(100);
-        $player->setY(100);
+        $player->setX(1);
+        $player->setY(1);
         $this->em()->persist($player);
         $this->em()->flush();
 
-        $this->client->request('GET', '/action/move/n');
+        $this->client->request('POST', '/api/action/move/n');
         $this->assertJsonResponse($this->client->getResponse(), 403);
     }
 
@@ -122,14 +122,14 @@ class ActionControllerTest extends BaseTestCase
     public function testPickupWrongXPosition()
     {
         $player = $this->login();
-        $player->setX(100);
-        $player->setY(100);
+        $player->setX(5);
+        $player->setY(5);
         $player->setMap($this->repos()->getMapRepository()->getDefaultMap());
         $mapObject = $this->createMapObject();
         $this->em()->persist($player);
         $this->em()->flush();
 
-        $this->client->request('GET', '/action/pickup/' . $mapObject->getId());
+        $this->client->request('POST', '/api/action/pickup/' . $mapObject->getId());
         $this->assertJsonResponse($this->client->getResponse(), 403);
     }
 
@@ -137,13 +137,13 @@ class ActionControllerTest extends BaseTestCase
     {
         $player = $this->login();
         $player->setX(50);
-        $player->setY(100);
+        $player->setY(5);
         $player->setMap($this->repos()->getMapRepository()->getDefaultMap());
         $mapObject = $this->createMapObject();
         $this->em()->persist($player);
         $this->em()->flush();
 
-        $this->client->request('GET', '/action/pickup/' . $mapObject->getId());
+        $this->client->request('POST', '/api/action/pickup/' . $mapObject->getId());
         $this->assertJsonResponse($this->client->getResponse(), 403);
     }
 
@@ -157,7 +157,7 @@ class ActionControllerTest extends BaseTestCase
         $this->em()->persist($player);
         $this->em()->flush();
 
-        $this->client->request('GET', '/action/pickup/' . $mapObject->getId());
+        $this->client->request('POST', '/api/action/pickup/' . $mapObject->getId());
         $this->assertJsonResponse($this->client->getResponse(), 403);
     }
 
@@ -172,7 +172,7 @@ class ActionControllerTest extends BaseTestCase
         $this->em()->persist($player);
         $this->em()->flush();
 
-        $this->client->request('GET', '/action/pickup/' . $mapObject->getId());
+        $this->client->request('POST', '/api/action/pickup/' . $mapObject->getId());
         $this->assertJsonResponse($this->client->getResponse());
         $this->em()->refresh($player);
         $this->assertEquals(100, $player->getZeni());
@@ -188,7 +188,7 @@ class ActionControllerTest extends BaseTestCase
         $this->em()->persist($player);
         $this->em()->flush();
 
-        $this->client->request('GET', '/action/pickup/' . $mapObject->getId());
+        $this->client->request('POST', '/api/action/pickup/' . $mapObject->getId());
         $this->assertJsonResponse($this->client->getResponse());
         $this->em()->refresh($player);
         $this->assertEquals(50, $player->getZeni());
@@ -206,7 +206,7 @@ class ActionControllerTest extends BaseTestCase
         $this->em()->persist($player);
         $this->em()->flush();
 
-        $this->client->request('GET', '/action/pickup/' . $mapObject->getId());
+        $this->client->request('POST', '/api/action/pickup/' . $mapObject->getId());
         $this->assertJsonResponse($this->client->getResponse());
         $this->em()->refresh($player);
         $this->assertNotEquals(50, $player->getX());
@@ -224,7 +224,7 @@ class ActionControllerTest extends BaseTestCase
         $this->em()->persist($player);
         $this->em()->flush();
 
-        $this->client->request('GET', '/action/pickup/' . $mapObject->getId());
+        $this->client->request('POST', '/api/action/pickup/' . $mapObject->getId());
         $this->assertJsonResponse($this->client->getResponse());
         $this->em()->refresh($player);
         $playerObject = $player->getPlayerObjects()[0];
@@ -246,7 +246,7 @@ class ActionControllerTest extends BaseTestCase
         $this->em()->persist($player);
         $this->em()->flush();
 
-        $this->client->request('GET', '/action/pickup/' . $mapObject->getId());
+        $this->client->request('POST', '/api/action/pickup/' . $mapObject->getId());
         $this->assertJsonResponse($this->client->getResponse());
         $this->em()->refresh($player);
         $playerObject = $player->getPlayerObjects()[0];
@@ -268,7 +268,7 @@ class ActionControllerTest extends BaseTestCase
         $this->em()->persist($player);
         $this->em()->flush();
 
-        $this->client->request('GET', '/action/pickup/' . $mapObject->getId());
+        $this->client->request('POST', '/api/action/pickup/' . $mapObject->getId());
         $this->assertJsonResponse($this->client->getResponse());
         $this->em()->refresh($player);
         $playerObject = $player->getPlayerObjects()[0];
@@ -289,41 +289,41 @@ class ActionControllerTest extends BaseTestCase
         $this->em()->persist($player);
         $this->em()->flush();
 
-        $this->client->request('GET', '/action/attack/' . $enemy->getId());
+        $this->client->request('POST', '/api/action/attack/' . $enemy->getId());
         $this->assertJsonResponse($this->client->getResponse(), 403);
     }
 
     public function testAttackDifferentYPosition()
     {
         $player = $this->login();
-        $player->setX(100);
-        $player->setY(100);
+        $player->setX(5);
+        $player->setY(5);
         $enemy = $this->createPlayer('bast');
-        $enemy->setX(100);
+        $enemy->setX(5);
         $enemy->setY(10);
         $this->em()->persist($enemy);
         $this->em()->persist($player);
         $this->em()->flush();
 
-        $this->client->request('GET', '/action/attack/' . $enemy->getId());
+        $this->client->request('POST', '/api/action/attack/' . $enemy->getId());
         $this->assertJsonResponse($this->client->getResponse(), 403);
     }
 
     public function testAttackDifferentMapPosition()
     {
         $player = $this->login();
-        $player->setX(100);
-        $player->setY(100);
+        $player->setX(5);
+        $player->setY(5);
         $player->setMap($this->repos()->getMapRepository()->getDefaultMap());
         $enemy = $this->createPlayer('bast');
-        $enemy->setX(100);
-        $enemy->setY(100);
+        $enemy->setX(5);
+        $enemy->setY(5);
         $enemy->setMap($this->repos()->getMapRepository()->findOneById(Map::HEAVEN));
         $this->em()->persist($enemy);
         $this->em()->persist($player);
         $this->em()->flush();
 
-        $this->client->request('GET', '/action/attack/' . $enemy->getId());
+        $this->client->request('POST', '/api/action/attack/' . $enemy->getId());
         $this->assertJsonResponse($this->client->getResponse(), 403);
     }
 
@@ -335,65 +335,67 @@ class ActionControllerTest extends BaseTestCase
         $this->em()->persist($player);
         $this->em()->flush();
 
-        $this->client->request('GET', '/action/attack/' . $enemy->getId());
+        $this->client->request('POST', '/api/action/attack/' . $enemy->getId());
         $this->assertJsonResponse($this->client->getResponse(), 403);
     }
 
     public function testAttackAnOtherPlayer()
     {
         $player = $this->login();
-        $player->setX(100);
-        $player->setY(100);
+        $player->setX(5);
+        $player->setY(5);
         $player->setMap($this->repos()->getMapRepository()->getDefaultMap());
+
         $enemy = $this->createPlayer('bast');
-        $enemy->setX(100);
-        $enemy->setY(100);
+        $enemy->setX(5);
+        $enemy->setY(5);
         $enemy->setMap($this->repos()->getMapRepository()->getDefaultMap());
+
         $this->em()->persist($enemy);
         $this->em()->persist($player);
         $this->em()->flush();
 
         for ($i = 0; $i <= 10; $i++) {
-            $this->client->request('GET', '/action/attack/' . $enemy->getId());
-            $this->assertJsonResponse($this->client->getResponse());
+            $this->client->request('POST', '/api/action/attack/' . $enemy->getId());
+            $this->assertJsonResponse($this->client->getResponse(), 200);
         }
     }
 
     public function testAttackWithoutGoodMap()
     {
         $player = $this->login();
-        $player->setX(100);
-        $player->setY(100);
+        $player->setX(5);
+        $player->setY(5);
         $player->setMap($this->repos()->getMapRepository()->findOneById(Map::HEAVEN));
         $enemy = $this->createPlayer('bast');
-        $enemy->setX(100);
-        $enemy->setY(100);
+        $enemy->setX(5);
+        $enemy->setY(5);
         $enemy->setMap($this->repos()->getMapRepository()->findOneById(Map::HEAVEN));
         $this->em()->persist($enemy);
         $this->em()->persist($player);
         $this->em()->flush();
 
-        $this->client->request('GET', '/action/attack/' . $enemy->getId());
+        $this->client->request('POST', '/api/action/attack/' . $enemy->getId());
         $this->assertJsonResponse($this->client->getResponse(), 403);
     }
 
     public function testAttackALowerLevel()
     {
         $player = $this->login();
-        $player->setX(100);
-        $player->setY(100);
+        $player->setX(5);
+        $player->setY(5);
         $player->setLevel(50);
         $player->setMap($this->repos()->getMapRepository()->getDefaultMap());
         $enemy = $this->createPlayer('bast');
-        $enemy->setX(100);
-        $enemy->setY(100);
+        $enemy->setX(5);
+        $enemy->setY(5);
         $enemy->setMap($this->repos()->getMapRepository()->getDefaultMap());
         $this->em()->persist($enemy);
         $this->em()->persist($player);
         $this->em()->flush();
         $oldHealth = $player->getHealth();
 
-        $this->client->request('GET', '/action/attack/' . $enemy->getId());
+        $this->client->request('POST', '/api/action/attack/' . $enemy->getId());
         $this->assertJsonResponse($this->client->getResponse());
         $this->em()->refresh($player);
         $this->assertEquals($oldHealth - 50, $player->getHealth());
@@ -402,18 +404,18 @@ class ActionControllerTest extends BaseTestCase
     public function testAttackAnOtherPlayerBetray()
     {
         $player = $this->login();
-        $player->setX(100);
-        $player->setY(100);
+        $player->setX(5);
+        $player->setY(5);
         $player->setMap($this->repos()->getMapRepository()->getDefaultMap());
         $enemy = $this->createPlayer('bast');
-        $enemy->setX(100);
-        $enemy->setY(100);
+        $enemy->setX(5);
+        $enemy->setY(5);
         $enemy->setMap($this->repos()->getMapRepository()->getDefaultMap());
         $this->em()->persist($enemy);
         $this->em()->persist($player);
         $this->em()->flush();
 
-        $this->client->request('GET', '/action/attack/' . $enemy->getId() . '/betray');
+        $this->client->request('POST', '/api/action/attack/' . $enemy->getId() . '/betray');
         $this->assertJsonResponse($this->client->getResponse());
 
         $this->em()->refresh($enemy);
@@ -423,14 +425,14 @@ class ActionControllerTest extends BaseTestCase
     public function testAttackAnOtherPlayerBetrayWithoutSameSide()
     {
         $player = $this->login();
-        $player->setX(100);
-        $player->setY(100);
+        $player->setX(5);
+        $player->setY(5);
         $player->setMap($this->repos()->getMapRepository()->getDefaultMap());
         $side = $this->repos()->getSideRepository()->findOneById(Side::BAD);
         $player->setSide($side);
         $enemy = $this->createPlayer('bast');
-        $enemy->setX(100);
-        $enemy->setY(100);
+        $enemy->setX(5);
+        $enemy->setY(5);
         $enemy->setMap($this->repos()->getMapRepository()->getDefaultMap());
         $side = $this->repos()->getSideRepository()->findOneById(Side::GOOD);
         $enemy->setSide($side);
@@ -438,7 +440,7 @@ class ActionControllerTest extends BaseTestCase
         $this->em()->persist($player);
         $this->em()->flush();
 
-        $this->client->request('GET', '/action/attack/' . $enemy->getId() . '/betray');
+        $this->client->request('POST', '/api/action/attack/' . $enemy->getId() . '/betray');
         $this->assertJsonResponse($this->client->getResponse());
 
         $this->em()->refresh($enemy);
@@ -448,17 +450,17 @@ class ActionControllerTest extends BaseTestCase
     public function testAttackKillGood()
     {
         $player = $this->login();
-        $player->setX(100);
-        $player->setY(100);
-        $player->setAccuracy(100);
-        $player->setStrength(100);
+        $player->setX(5);
+        $player->setY(5);
+        $player->setAccuracy(5);
+        $player->setStrength(5);
         $player->setMap($this->repos()->getMapRepository()->getDefaultMap());
         $side = $this->repos()->getSideRepository()->findOneById(Side::BAD);
         $player->setSide($side);
 
         $enemy = $this->createPlayer('bast');
-        $enemy->setX(100);
-        $enemy->setY(100);
+        $enemy->setX(5);
+        $enemy->setY(5);
         $enemy->setHealth(10);
         $enemy->setMap($this->repos()->getMapRepository()->getDefaultMap());
         $side = $this->repos()->getSideRepository()->findOneById(Side::GOOD);
@@ -467,7 +469,7 @@ class ActionControllerTest extends BaseTestCase
         $this->em()->persist($player);
         $this->em()->flush();
 
-        $this->client->request('GET', '/action/attack/' . $enemy->getId());
+        $this->client->request('POST', '/api/action/attack/' . $enemy->getId());
         $this->assertJsonResponse($this->client->getResponse());
 
         $this->em()->refresh($enemy);
@@ -480,17 +482,17 @@ class ActionControllerTest extends BaseTestCase
     public function testAttackKillGoodBetray()
     {
         $player = $this->login();
-        $player->setX(100);
-        $player->setY(100);
-        $player->setAccuracy(100);
-        $player->setStrength(100);
+        $player->setX(5);
+        $player->setY(5);
+        $player->setAccuracy(5);
+        $player->setStrength(5);
         $player->setMap($this->repos()->getMapRepository()->getDefaultMap());
         $side = $this->repos()->getSideRepository()->findOneById(Side::GOOD);
         $player->setSide($side);
 
         $enemy = $this->createPlayer('bast');
-        $enemy->setX(100);
-        $enemy->setY(100);
+        $enemy->setX(5);
+        $enemy->setY(5);
         $enemy->setHealth(10);
         $enemy->setMap($this->repos()->getMapRepository()->getDefaultMap());
         $side = $this->repos()->getSideRepository()->findOneById(Side::GOOD);
@@ -499,7 +501,7 @@ class ActionControllerTest extends BaseTestCase
         $this->em()->persist($player);
         $this->em()->flush();
 
-        $this->client->request('GET', '/action/attack/' . $enemy->getId() . '/betray');
+        $this->client->request('POST', '/api/action/attack/' . $enemy->getId() . '/betray');
         $this->assertJsonResponse($this->client->getResponse());
 
         $this->em()->refresh($player);
@@ -514,17 +516,17 @@ class ActionControllerTest extends BaseTestCase
     public function testAttackKillBad()
     {
         $player = $this->login();
-        $player->setX(100);
-        $player->setY(100);
-        $player->setAccuracy(100);
-        $player->setStrength(100);
+        $player->setX(5);
+        $player->setY(5);
+        $player->setAccuracy(5);
+        $player->setStrength(5);
         $player->setMap($this->repos()->getMapRepository()->getDefaultMap());
         $side = $this->repos()->getSideRepository()->findOneById(Side::GOOD);
         $player->setSide($side);
 
         $enemy = $this->createPlayer('bast');
-        $enemy->setX(100);
-        $enemy->setY(100);
+        $enemy->setX(5);
+        $enemy->setY(5);
         $enemy->setHealth(10);
         $enemy->setMap($this->repos()->getMapRepository()->getDefaultMap());
         $side = $this->repos()->getSideRepository()->findOneById(Side::BAD);
@@ -533,7 +535,7 @@ class ActionControllerTest extends BaseTestCase
         $this->em()->persist($player);
         $this->em()->flush();
 
-        $this->client->request('GET', '/action/attack/' . $enemy->getId());
+        $this->client->request('POST', '/api/action/attack/' . $enemy->getId());
         $this->assertJsonResponse($this->client->getResponse());
 
         $this->em()->refresh($enemy);
@@ -546,20 +548,20 @@ class ActionControllerTest extends BaseTestCase
     public function testAttackKillBadBetrayAndHeadPrice()
     {
         $player = $this->login();
-        $player->setX(100);
-        $player->setY(100);
-        $player->setAccuracy(100);
-        $player->setStrength(100);
+        $player->setX(5);
+        $player->setY(5);
+        $player->setAccuracy(5);
+        $player->setStrength(5);
         $player->setMap($this->repos()->getMapRepository()->getDefaultMap());
         $side = $this->repos()->getSideRepository()->findOneById(Side::BAD);
         $player->setSide($side);
         $player->setZeni(10);
 
         $enemy = $this->createPlayer('bast');
-        $enemy->setX(100);
-        $enemy->setY(100);
+        $enemy->setX(5);
+        $enemy->setY(5);
         $enemy->setHealth(10);
-        $enemy->setHeadPrice(100);
+        $enemy->setHeadPrice(5);
         $enemy->setMap($this->repos()->getMapRepository()->getDefaultMap());
         $side = $this->repos()->getSideRepository()->findOneById(Side::BAD);
         $enemy->setSide($side);
@@ -567,13 +569,13 @@ class ActionControllerTest extends BaseTestCase
         $this->em()->persist($player);
         $this->em()->flush();
 
-        $this->client->request('GET', '/action/attack/' . $enemy->getId() . '/betray');
+        $this->client->request('POST', '/api/action/attack/' . $enemy->getId() . '/betray');
         $this->assertJsonResponse($this->client->getResponse());
 
         $this->em()->refresh($player);
         $this->em()->refresh($enemy);
-        $this->assertNotEquals(100, $enemy->getX());
-        $this->assertNotEquals(100, $enemy->getY());
+        $this->assertNotEquals(15, $enemy->getX());
+        $this->assertNotEquals(15, $enemy->getY());
         $this->assertNotEquals(3, $enemy->getMap()->getId());
         $this->assertEquals($player->getId(), $enemy->getTarget()->getId());
         $this->assertEquals(Side::GOOD, $player->getSide()->getId());
@@ -590,7 +592,7 @@ class ActionControllerTest extends BaseTestCase
         $this->em()->persist($player);
         $this->em()->flush();
 
-        $this->client->request('GET', '/action/move/' . $where);
+        $this->client->request('POST', '/api/action/move/' . $where);
         $this->assertJsonResponse($this->client->getResponse());
 
         $this->em()->refresh($player);
@@ -608,15 +610,15 @@ class ActionControllerTest extends BaseTestCase
         $this->em()->persist($player);
         $this->em()->flush();
 
-        $this->client->request('GET', '/action/steal/' . $enemy->getId());
+        $this->client->request('POST', '/api/action/steal/' . $enemy->getId());
         $this->assertJsonResponse($this->client->getResponse(), 403);
     }
 
     public function testStealDifferentYPosition()
     {
         $player = $this->login();
-        $player->setX(100);
-        $player->setY(100);
+        $player->setX(5);
+        $player->setY(5);
         $enemy = $this->createPlayer('bast');
         $enemy->setX(1);
         $enemy->setY(10);
@@ -624,25 +626,25 @@ class ActionControllerTest extends BaseTestCase
         $this->em()->persist($player);
         $this->em()->flush();
 
-        $this->client->request('GET', '/action/steal/' . $enemy->getId());
+        $this->client->request('POST', '/api/action/steal/' . $enemy->getId());
         $this->assertJsonResponse($this->client->getResponse(), 403);
     }
 
     public function testStealDifferentMapPosition()
     {
         $player = $this->login();
-        $player->setX(100);
-        $player->setY(100);
+        $player->setX(5);
+        $player->setY(5);
         $player->setMap($this->repos()->getMapRepository()->getDefaultMap());
         $enemy = $this->createPlayer('bast');
-        $enemy->setX(100);
-        $enemy->setY(100);
+        $enemy->setX(5);
+        $enemy->setY(5);
         $enemy->setMap($this->repos()->getMapRepository()->findOneById(Map::HEAVEN));
         $this->em()->persist($enemy);
         $this->em()->persist($player);
         $this->em()->flush();
 
-        $this->client->request('GET', '/action/steal/' . $enemy->getId());
+        $this->client->request('POST', '/api/action/steal/' . $enemy->getId());
         $this->assertJsonResponse($this->client->getResponse(), 403);
     }
 
@@ -654,37 +656,37 @@ class ActionControllerTest extends BaseTestCase
         $this->em()->persist($player);
         $this->em()->flush();
 
-        $this->client->request('GET', '/action/steal/' . $enemy->getId());
+        $this->client->request('POST', '/api/action/steal/' . $enemy->getId());
         $this->assertJsonResponse($this->client->getResponse(), 403);
     }
 
     public function testStealWithoutGoodMap()
     {
         $player = $this->login();
-        $player->setX(100);
-        $player->setY(100);
+        $player->setX(5);
+        $player->setY(5);
         $player->setMap($this->repos()->getMapRepository()->findOneById(Map::HEAVEN));
         $enemy = $this->createPlayer('bast');
-        $enemy->setX(100);
-        $enemy->setY(100);
+        $enemy->setX(5);
+        $enemy->setY(5);
         $enemy->setMap($this->repos()->getMapRepository()->findOneById(Map::HEAVEN));
         $this->em()->persist($enemy);
         $this->em()->persist($player);
         $this->em()->flush();
 
-        $this->client->request('GET', '/action/steal/' . $enemy->getId());
+        $this->client->request('POST', '/api/action/steal/' . $enemy->getId());
         $this->assertJsonResponse($this->client->getResponse(), 403);
     }
 
     public function testStealAnOtherPlayer()
     {
         $player = $this->login();
-        $player->setX(100);
-        $player->setY(100);
+        $player->setX(5);
+        $player->setY(5);
         $player->setMap($this->repos()->getMapRepository()->getDefaultMap());
         $enemy = $this->createPlayer('bast');
-        $enemy->setX(100);
-        $enemy->setY(100);
+        $enemy->setX(5);
+        $enemy->setY(5);
         $enemy->setMap($this->repos()->getMapRepository()->getDefaultMap());
         $enemy->setZeni(10000);
         $this->em()->persist($enemy);
@@ -692,7 +694,7 @@ class ActionControllerTest extends BaseTestCase
         $this->em()->flush();
 
         for ($i = 0; $i <= 10; $i++) {
-            $this->client->request('GET', '/action/steal/' . $enemy->getId());
+            $this->client->request('POST', '/api/action/steal/' . $enemy->getId());
             $this->assertJsonResponse($this->client->getResponse());
         }
     }
@@ -700,20 +702,20 @@ class ActionControllerTest extends BaseTestCase
     public function testStealALowerLevel()
     {
         $player = $this->login();
-        $player->setX(100);
-        $player->setY(100);
+        $player->setX(5);
+        $player->setY(5);
         $player->setLevel(50);
         $player->setMap($this->repos()->getMapRepository()->getDefaultMap());
         $enemy = $this->createPlayer('bast');
-        $enemy->setX(100);
-        $enemy->setY(100);
+        $enemy->setX(5);
+        $enemy->setY(5);
         $enemy->setMap($this->repos()->getMapRepository()->getDefaultMap());
         $this->em()->persist($enemy);
         $this->em()->persist($player);
         $this->em()->flush();
         $oldHealth = $player->getHealth();
 
-        $this->client->request('GET', '/action/steal/' . $enemy->getId());
+        $this->client->request('POST', '/api/action/steal/' . $enemy->getId());
         $this->assertJsonResponse($this->client->getResponse());
         $this->em()->refresh($player);
         $this->assertEquals($oldHealth - 50, $player->getHealth());
@@ -729,15 +731,15 @@ class ActionControllerTest extends BaseTestCase
         $this->em()->persist($player);
         $this->em()->flush();
 
-        $this->client->request('GET', '/action/analysis/' . $enemy->getId());
+        $this->client->request('POST', '/api/action/analysis/' . $enemy->getId());
         $this->assertJsonResponse($this->client->getResponse(), 403);
     }
 
     public function testAnalysisDifferentYPosition()
     {
         $player = $this->login();
-        $player->setX(100);
-        $player->setY(100);
+        $player->setX(5);
+        $player->setY(5);
         $enemy = $this->createPlayer('bast');
         $enemy->setX(1);
         $enemy->setY(10);
@@ -745,25 +747,25 @@ class ActionControllerTest extends BaseTestCase
         $this->em()->persist($player);
         $this->em()->flush();
 
-        $this->client->request('GET', '/action/analysis/' . $enemy->getId());
+        $this->client->request('POST', '/api/action/analysis/' . $enemy->getId());
         $this->assertJsonResponse($this->client->getResponse(), 403);
     }
 
     public function testAnalysisDifferentMapPosition()
     {
         $player = $this->login();
-        $player->setX(100);
-        $player->setY(100);
+        $player->setX(5);
+        $player->setY(5);
         $player->setMap($this->repos()->getMapRepository()->getDefaultMap());
         $enemy = $this->createPlayer('bast');
-        $enemy->setX(100);
-        $enemy->setY(100);
+        $enemy->setX(5);
+        $enemy->setY(5);
         $enemy->setMap($this->repos()->getMapRepository()->findOneById(Map::HEAVEN));
         $this->em()->persist($enemy);
         $this->em()->persist($player);
         $this->em()->flush();
 
-        $this->client->request('GET', '/action/analysis/' . $enemy->getId());
+        $this->client->request('POST', '/api/action/analysis/' . $enemy->getId());
         $this->assertJsonResponse($this->client->getResponse(), 403);
     }
 
@@ -775,7 +777,7 @@ class ActionControllerTest extends BaseTestCase
         $this->em()->persist($player);
         $this->em()->flush();
 
-        $this->client->request('GET', '/action/analysis/' . $enemy->getId());
+        $this->client->request('POST', '/api/action/analysis/' . $enemy->getId());
         $this->assertJsonResponse($this->client->getResponse(), 403);
     }
 
@@ -783,20 +785,20 @@ class ActionControllerTest extends BaseTestCase
     {
         $player = $this->login();
         $player->setActionPoints(6);
-        $player->setBattlePoints(100);
-        $player->setX(100);
-        $player->setY(100);
+        $player->setBattlePoints(5);
+        $player->setX(5);
+        $player->setY(5);
         $player->setMap($this->repos()->getMapRepository()->getDefaultMap());
 
         $enemy = $this->createPlayer('bast');
-        $enemy->setX(100);
-        $enemy->setY(100);
+        $enemy->setX(5);
+        $enemy->setY(5);
         $enemy->setMap($this->repos()->getMapRepository()->getDefaultMap());
         $this->em()->persist($enemy);
         $this->em()->persist($player);
         $this->em()->flush();
 
-        $this->client->request('GET', '/action/analysis/' . $enemy->getId());
+        $this->client->request('POST', '/api/action/analysis/' . $enemy->getId());
         $this->assertJsonResponse($this->client->getResponse());
         $this->em()->refresh($player);
         $this->em()->refresh($enemy);
@@ -814,15 +816,15 @@ class ActionControllerTest extends BaseTestCase
         $this->em()->persist($player);
         $this->em()->flush();
 
-        $this->client->request('GET', '/action/analysis/' . $enemy->getId());
+        $this->client->request('POST', '/api/action/analysis/' . $enemy->getId());
         $this->assertJsonResponse($this->client->getResponse(), 403);
     }
 
     public function testSlapDifferentYPosition()
     {
         $player = $this->login();
-        $player->setX(100);
-        $player->setY(100);
+        $player->setX(5);
+        $player->setY(5);
         $enemy = $this->createPlayer('bast');
         $enemy->setX(1);
         $enemy->setY(10);
@@ -830,63 +832,63 @@ class ActionControllerTest extends BaseTestCase
         $this->em()->persist($player);
         $this->em()->flush();
 
-        $this->client->request('GET', '/action/slap/' . $enemy->getId());
+        $this->client->request('POST', '/api/action/slap/' . $enemy->getId());
         $this->assertJsonResponse($this->client->getResponse(), 403);
     }
 
     public function testSlapDifferentMapPosition()
     {
         $player = $this->login();
-        $player->setX(100);
-        $player->setY(100);
+        $player->setX(5);
+        $player->setY(5);
         $player->setMap($this->repos()->getMapRepository()->getDefaultMap());
         $enemy = $this->createPlayer('bast');
-        $enemy->setX(100);
-        $enemy->setY(100);
+        $enemy->setX(5);
+        $enemy->setY(5);
         $enemy->setMap($this->repos()->getMapRepository()->findOneById(Map::HEAVEN));
         $this->em()->persist($enemy);
         $this->em()->persist($player);
         $this->em()->flush();
 
-        $this->client->request('GET', '/action/slap/' . $enemy->getId());
+        $this->client->request('POST', '/api/action/slap/' . $enemy->getId());
         $this->assertJsonResponse($this->client->getResponse(), 403);
     }
 
     public function testSlapWithoutBetrayals()
     {
         $player = $this->login();
-        $player->setX(100);
-        $player->setY(100);
+        $player->setX(5);
+        $player->setY(5);
         $player->setMap($this->repos()->getMapRepository()->getDefaultMap());
         $enemy = $this->createPlayer('bast');
-        $enemy->setX(100);
-        $enemy->setY(100);
+        $enemy->setX(5);
+        $enemy->setY(5);
         $enemy->setMap($this->repos()->getMapRepository()->getDefaultMap());
         $this->em()->persist($enemy);
         $this->em()->persist($player);
         $this->em()->flush();
 
-        $this->client->request('GET', '/action/slap/' . $enemy->getId());
+        $this->client->request('POST', '/api/action/slap/' . $enemy->getId());
         $this->assertJsonResponse($this->client->getResponse(), 403);
     }
 
     public function testSlapAnOtherPlayer()
     {
         $player = $this->login();
-        $player->setX(100);
-        $player->setY(100);
+        $player->setX(5);
+        $player->setY(5);
         $player->setActionPoints(10);
         $player->setMap($this->repos()->getMapRepository()->getDefaultMap());
         $enemy = $this->createPlayer('bast');
-        $enemy->setX(100);
-        $enemy->setY(100);
+        $enemy->setX(5);
+        $enemy->setY(5);
         $enemy->setBetrayals(10);
         $enemy->setMap($this->repos()->getMapRepository()->getDefaultMap());
         $this->em()->persist($enemy);
         $this->em()->persist($player);
         $this->em()->flush();
 
-        $this->client->request('GET', '/action/slap/' . $enemy->getId());
+        $this->client->request('POST', '/api/action/slap/' . $enemy->getId());
         $this->assertJsonResponse($this->client->getResponse());
         $this->em()->refresh($player);
         $this->em()->refresh($enemy);
@@ -899,21 +901,21 @@ class ActionControllerTest extends BaseTestCase
     public function testSlapAnOtherPlayerAndHeDie()
     {
         $player = $this->login();
-        $player->setX(100);
-        $player->setY(100);
+        $player->setX(5);
+        $player->setY(5);
         $player->setActionPoints(10);
         $player->setMap($this->repos()->getMapRepository()->getDefaultMap());
         $enemy = $this->createPlayer('bast');
         $enemy->setHealth(1);
-        $enemy->setX(100);
-        $enemy->setY(100);
+        $enemy->setX(5);
+        $enemy->setY(5);
         $enemy->setBetrayals(10);
         $enemy->setMap($this->repos()->getMapRepository()->getDefaultMap());
         $this->em()->persist($enemy);
         $this->em()->persist($player);
         $this->em()->flush();
 
-        $this->client->request('GET', '/action/slap/' . $enemy->getId());
+        $this->client->request('POST', '/api/action/slap/' . $enemy->getId());
         $this->assertJsonResponse($this->client->getResponse());
         $this->em()->refresh($player);
         $this->em()->refresh($enemy);
@@ -936,41 +938,41 @@ class ActionControllerTest extends BaseTestCase
         $this->em()->persist($player);
         $this->em()->flush();
 
-        $this->client->request('GET', '/action/give/' . $enemy->getId());
+        $this->client->request('POST', '/api/action/give/' . $enemy->getId());
         $this->assertJsonResponse($this->client->getResponse(), 403);
     }
 
     public function testGiveDifferentYPosition()
     {
         $player = $this->login();
-        $player->setX(100);
-        $player->setY(100);
+        $player->setX(5);
+        $player->setY(5);
         $enemy = $this->createPlayer('bast');
-        $enemy->setX(100);
+        $enemy->setX(5);
         $enemy->setY(10);
         $this->em()->persist($enemy);
         $this->em()->persist($player);
         $this->em()->flush();
 
-        $this->client->request('GET', '/action/give/' . $enemy->getId());
+        $this->client->request('POST', '/api/action/give/' . $enemy->getId());
         $this->assertJsonResponse($this->client->getResponse(), 403);
     }
 
     public function testGiveDifferentMapPosition()
     {
         $player = $this->login();
-        $player->setX(100);
-        $player->setY(100);
+        $player->setX(5);
+        $player->setY(5);
         $player->setMap($this->repos()->getMapRepository()->getDefaultMap());
         $enemy = $this->createPlayer('bast');
-        $enemy->setX(100);
-        $enemy->setY(100);
+        $enemy->setX(5);
+        $enemy->setY(5);
         $enemy->setMap($this->repos()->getMapRepository()->findOneById(Map::HEAVEN));
         $this->em()->persist($enemy);
         $this->em()->persist($player);
         $this->em()->flush();
 
-        $this->client->request('GET', '/action/give/' . $enemy->getId());
+        $this->client->request('POST', '/api/action/give/' . $enemy->getId());
         $this->assertJsonResponse($this->client->getResponse(), 403);
     }
 
@@ -982,41 +984,41 @@ class ActionControllerTest extends BaseTestCase
         $this->em()->persist($player);
         $this->em()->flush();
 
-        $this->client->request('GET', '/action/give/' . $enemy->getId());
+        $this->client->request('POST', '/api/action/give/' . $enemy->getId());
         $this->assertJsonResponse($this->client->getResponse(), 403);
     }
 
     public function testGiveToOtherPlayer()
     {
         $player = $this->login();
-        $player->setX(100);
-        $player->setY(100);
+        $player->setX(5);
+        $player->setY(5);
         $player->setMap($this->repos()->getMapRepository()->getDefaultMap());
         $enemy = $this->createPlayer('bast');
-        $enemy->setX(100);
-        $enemy->setY(100);
+        $enemy->setX(5);
+        $enemy->setY(5);
         $enemy->setMap($this->repos()->getMapRepository()->getDefaultMap());
         $this->em()->persist($enemy);
         $this->em()->persist($player);
         $this->em()->flush();
 
-        $this->client->request('GET', '/action/give/' . $enemy->getId());
+        $this->client->request('POST', '/api/action/give/' . $enemy->getId());
         $this->assertJsonResponse($this->client->getResponse());
     }
 
     public function testGiveZeniToOtherPlayer()
     {
         $player = $this->login();
-        $player->setX(100);
-        $player->setY(100);
+        $player->setX(5);
+        $player->setY(5);
         $player->setMap($this->repos()->getMapRepository()->getDefaultMap());
-        $player->setZeni(100);
+        $player->setZeni(5);
         $player->setActionPoints(5);
         $enemy = $this->createPlayer('bast');
-        $enemy->setX(100);
-        $enemy->setY(100);
+        $enemy->setX(5);
+        $enemy->setY(5);
         $enemy->setMap($this->repos()->getMapRepository()->getDefaultMap());
-        $enemy->setZeni(100);
+        $enemy->setZeni(5);
 
         $this->em()->persist($enemy);
         $this->em()->persist($player);
@@ -1024,7 +1026,7 @@ class ActionControllerTest extends BaseTestCase
 
         $this->client->request(
             'POST',
-            '/action/give/' . $enemy->getId(),
+            '/api/action/give/' . $enemy->getId(),
             ['zeni' => 10]
         );
         $this->assertJsonResponse($this->client->getResponse());
@@ -1038,16 +1040,16 @@ class ActionControllerTest extends BaseTestCase
     public function testGiveTonOfZeniToOtherPlayer()
     {
         $player = $this->login();
-        $player->setX(100);
-        $player->setY(100);
+        $player->setX(5);
+        $player->setY(5);
         $player->setMap($this->repos()->getMapRepository()->getDefaultMap());
-        $player->setZeni(100);
+        $player->setZeni(5);
         $player->setActionPoints(5);
         $enemy = $this->createPlayer('bast');
-        $enemy->setX(100);
-        $enemy->setY(100);
+        $enemy->setX(5);
+        $enemy->setY(5);
         $enemy->setMap($this->repos()->getMapRepository()->getDefaultMap());
-        $enemy->setZeni(100);
+        $enemy->setZeni(5);
 
         $this->em()->persist($enemy);
         $this->em()->persist($player);
@@ -1055,7 +1057,7 @@ class ActionControllerTest extends BaseTestCase
 
         $this->client->request(
             'POST',
-            '/action/give/' . $enemy->getId(),
+            '/api/action/give/' . $enemy->getId(),
             ['zeni' => 10000]
         );
         $this->assertJsonResponse($this->client->getResponse());
@@ -1070,16 +1072,16 @@ class ActionControllerTest extends BaseTestCase
     {
         $this->createItems();
         $player = $this->login();
-        $player->setX(100);
-        $player->setY(100);
+        $player->setX(5);
+        $player->setY(5);
         $player->setMap($this->repos()->getMapRepository()->getDefaultMap());
-        $player->setZeni(100);
+        $player->setZeni(5);
         $player->setActionPoints(5);
         $enemy = $this->createPlayer('bast');
-        $enemy->setX(100);
-        $enemy->setY(100);
+        $enemy->setX(5);
+        $enemy->setY(5);
         $enemy->setMap($this->repos()->getMapRepository()->getDefaultMap());
-        $enemy->setZeni(100);
+        $enemy->setZeni(5);
 
         $this->em()->persist($enemy);
         $this->em()->persist($player);
@@ -1087,7 +1089,7 @@ class ActionControllerTest extends BaseTestCase
 
         $this->client->request(
             'POST',
-            '/action/give/' . $enemy->getId() . '/12',
+            '/api/action/give/' . $enemy->getId() . '/12',
             ['quantity' => 100]
         );
         $this->assertJsonResponse($this->client->getResponse());
@@ -1114,16 +1116,16 @@ class ActionControllerTest extends BaseTestCase
     {
         $this->createItems();
         $player = $this->login();
-        $player->setX(100);
-        $player->setY(100);
+        $player->setX(5);
+        $player->setY(5);
         $player->setMap($this->repos()->getMapRepository()->getDefaultMap());
-        $player->setZeni(100);
+        $player->setZeni(5);
         $player->setActionPoints(5);
         $enemy = $this->createPlayer('bast');
-        $enemy->setX(100);
-        $enemy->setY(100);
+        $enemy->setX(5);
+        $enemy->setY(5);
         $enemy->setMap($this->repos()->getMapRepository()->getDefaultMap());
-        $enemy->setZeni(100);
+        $enemy->setZeni(5);
         $playerObject = $this->repos()->getPlayerObjectRepository()->findOneBy(
             [
                 'player' => $player,
@@ -1139,7 +1141,7 @@ class ActionControllerTest extends BaseTestCase
 
         $this->client->request(
             'POST',
-            '/action/give/' . $enemy->getId() . '/12',
+            '/api/action/give/' . $enemy->getId() . '/12',
             ['quantity' => 100]
         );
         $this->assertJsonResponse($this->client->getResponse(), 403);
@@ -1158,41 +1160,41 @@ class ActionControllerTest extends BaseTestCase
         $this->em()->persist($player);
         $this->em()->flush();
 
-        $this->client->request('GET', '/action/heal/' . $enemy->getId());
+        $this->client->request('POST', '/api/action/heal/' . $enemy->getId());
         $this->assertJsonResponse($this->client->getResponse(), 403);
     }
 
     public function testHealDifferentYPosition()
     {
         $player = $this->login();
-        $player->setX(100);
-        $player->setY(100);
+        $player->setX(5);
+        $player->setY(5);
         $enemy = $this->createPlayer('bast');
-        $enemy->setX(100);
+        $enemy->setX(5);
         $enemy->setY(10);
         $this->em()->persist($enemy);
         $this->em()->persist($player);
         $this->em()->flush();
 
-        $this->client->request('GET', '/action/heal/' . $enemy->getId());
+        $this->client->request('POST', '/api/action/heal/' . $enemy->getId());
         $this->assertJsonResponse($this->client->getResponse(), 403);
     }
 
     public function testHealDifferentMapPosition()
     {
         $player = $this->login();
-        $player->setX(100);
-        $player->setY(100);
+        $player->setX(5);
+        $player->setY(5);
         $player->setMap($this->repos()->getMapRepository()->getDefaultMap());
         $enemy = $this->createPlayer('bast');
-        $enemy->setX(100);
-        $enemy->setY(100);
+        $enemy->setX(5);
+        $enemy->setY(5);
         $enemy->setMap($this->repos()->getMapRepository()->findOneById(Map::HEAVEN));
         $this->em()->persist($enemy);
         $this->em()->persist($player);
         $this->em()->flush();
 
-        $this->client->request('GET', '/action/heal/' . $enemy->getId());
+        $this->client->request('POST', '/api/action/heal/' . $enemy->getId());
         $this->assertJsonResponse($this->client->getResponse(), 403);
     }
 
@@ -1204,24 +1206,24 @@ class ActionControllerTest extends BaseTestCase
         $this->em()->persist($player);
         $this->em()->flush();
 
-        $this->client->request('GET', '/action/heal/' . $enemy->getId());
+        $this->client->request('POST', '/api/action/heal/' . $enemy->getId());
         $this->assertJsonResponse($this->client->getResponse(), 403);
     }
 
     public function testHealWithHealthAlreadyFull()
     {
         $player = $this->login();
-        $player->setX(100);
-        $player->setY(100);
+        $player->setX(5);
+        $player->setY(5);
         $player->setMap($this->repos()->getMapRepository()->getDefaultMap());
         $enemy = $this->createPlayer('bast');
-        $enemy->setX(100);
-        $enemy->setY(100);
+        $enemy->setX(5);
+        $enemy->setY(5);
         $enemy->setMap($this->repos()->getMapRepository()->getDefaultMap());
         $this->em()->persist($player);
         $this->em()->flush();
 
-        $this->client->request('GET', '/action/heal/' . $enemy->getId());
+        $this->client->request('POST', '/api/action/heal/' . $enemy->getId());
         $this->assertJsonResponse($this->client->getResponse(), 403);
     }
 
@@ -1268,21 +1270,21 @@ class ActionControllerTest extends BaseTestCase
     protected function runTestHealWithSkillPoints($skill)
     {
         $player = $this->login();
-        $player->setX(100);
-        $player->setY(100);
+        $player->setX(5);
+        $player->setY(5);
         $player->setSkill($skill);
         $player->setActionPoints(60);
         $player->setMap($this->repos()->getMapRepository()->getDefaultMap());
         $enemy = $this->createPlayer('bast');
-        $enemy->setX(100);
-        $enemy->setY(100);
+        $enemy->setX(5);
+        $enemy->setY(5);
         $enemy->setHealth(10);
         $enemy->setMap($this->repos()->getMapRepository()->getDefaultMap());
         $this->em()->persist($enemy);
         $this->em()->persist($player);
         $this->em()->flush();
 
-        $this->client->request('GET', '/action/heal/' . $enemy->getId());
+        $this->client->request('POST', '/api/action/heal/' . $enemy->getId());
         $this->assertJsonResponse($this->client->getResponse());
         $this->em()->refresh($enemy);
         $this->em()->refresh($player);
@@ -1292,7 +1294,7 @@ class ActionControllerTest extends BaseTestCase
         $this->assertEquals(56, $player->getActionPoints());
 
         for ($i = 0; $i <= ($skill > 50 ? 2 : 10); $i++) {
-            $this->client->request('GET', '/action/heal/' . $enemy->getId());
+            $this->client->request('POST', '/api/action/heal/' . $enemy->getId());
             $this->assertJsonResponse($this->client->getResponse());
         }
     }

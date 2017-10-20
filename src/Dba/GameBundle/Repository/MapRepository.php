@@ -188,7 +188,7 @@ EOT;
      * Has valid position
      *
      * @param Player $player Player
-     * @param integer $mapBonusType Map bonus Type, default is Impassable
+     * @param integer $mapBonusType Map bonus Type, check if it's different. Default is Impassable
      *
      * @return boolean
      */

@@ -19,50 +19,50 @@ class InboxControllerTest extends BaseTestCase
 
     public function testInbox()
     {
-        $this->client->request('GET', '/inbox');
+        $this->client->request('GET', '/api/inbox');
         $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
     }
 
     public function testInboxInJson()
     {
-        $this->client->request('GET', '/inbox', [], [], $this->xhrHeaders);
+        $this->client->request('GET', '/api/inbox', [], [], $this->xhrHeaders);
         $this->assertJsonResponse($this->client->getResponse());
     }
 
     public function testOutbox()
     {
-        $this->client->request('GET', '/inbox/outbox');
+        $this->client->request('GET', '/api/inbox/outbox');
         $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
     }
 
     public function testOutboxInJson()
     {
-        $this->client->request('GET', '/inbox/outbox', [], [], $this->xhrHeaders);
+        $this->client->request('GET', '/api/inbox/outbox', [], [], $this->xhrHeaders);
         $this->assertJsonResponse($this->client->getResponse());
     }
 
     public function testArchive()
     {
-        $this->client->request('GET', '/inbox/archive');
+        $this->client->request('GET', '/api/inbox/archive');
         $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
     }
 
     public function testArchiveInJson()
     {
-        $this->client->request('GET', '/inbox/archive', [], [], $this->xhrHeaders);
+        $this->client->request('GET', '/api/inbox/archive', [], [], $this->xhrHeaders);
         $this->assertJsonResponse($this->client->getResponse());
     }
 
     public function testWriteInJson()
     {
-        $this->client->request('GET', '/inbox/write', [], [], $this->xhrHeaders);
+        $this->client->request('GET', '/api/inbox/write', [], [], $this->xhrHeaders);
         $this->assertJsonResponse($this->client->getResponse());
     }
 
     public function testWrite()
     {
         $this->createPlayer('bast');
-        $crawler = $this->client->request('GET', '/inbox/write');
+        $crawler = $this->client->request('GET', '/api/inbox/write');
         $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
 
         $form = $crawler->filter('#inbox-write-form')->form();
@@ -89,7 +89,7 @@ class InboxControllerTest extends BaseTestCase
         );
 
         $this->assertTrue(
-            $this->client->getResponse()->isRedirect('/inbox'),
+            $this->client->getResponse()->isRedirect('/api/inbox'),
             'response is a redirect to /inbox'
         );
     }
@@ -99,7 +99,7 @@ class InboxControllerTest extends BaseTestCase
         $player = $this->createPlayer('bast');
         $this->joinGuild($this->guild, $player);
         $this->em()->refresh($this->guild);
-        $crawler = $this->client->request('GET', '/inbox/write/guild');
+        $crawler = $this->client->request('GET', '/api/inbox/write/guild');
         $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
 
         $form = $crawler->filter('#inbox-write-form')->form();
@@ -125,14 +125,14 @@ class InboxControllerTest extends BaseTestCase
         );
 
         $this->assertTrue(
-            $this->client->getResponse()->isRedirect('/inbox'),
+            $this->client->getResponse()->isRedirect('/api/inbox'),
             'response is a redirect to /inbox'
         );
     }
 
     public function testWriteToUndefinedUser()
     {
-        $crawler = $this->client->request('GET', '/inbox/write');
+        $crawler = $this->client->request('GET', '/api/inbox/write');
         $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
 
         $form = $crawler->filter('#inbox-write-form')->form();
@@ -155,14 +155,14 @@ class InboxControllerTest extends BaseTestCase
         );
 
         $this->assertTrue(
-            $this->client->getResponse()->isRedirect('/inbox'),
+            $this->client->getResponse()->isRedirect('/api/inbox'),
             'response is a redirect to /inbox'
         );
     }
 
     public function testReadWithoutMessage()
     {
-        $this->client->request('GET', '/inbox/read/1');
+        $this->client->request('GET', '/api/inbox/read/1');
         $this->assertEquals(404, $this->client->getResponse()->getStatusCode());
     }
 }

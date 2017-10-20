@@ -2,16 +2,17 @@
 
 namespace Dba\GameBundle\Form;
 
-use Dba\GameBundle\Entity;
-use Symfony\Component\Form\Extension\Core\Type;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Symfony\Component\Serializer\Serializer;
+use Symfony\Component\Validator\Constraints as Assert;
+use Dba\GameBundle\Entity;
 
 class PlayerAppearance extends AbstractType
 {
@@ -134,7 +135,7 @@ class PlayerAppearance extends AbstractType
                 'attr' => [
                     'data-list' => $this->getSerializer()->serialize($result, 'json'),
                     'class' => 'hide'
-                ]
+                ],
             ]
         );
     }
@@ -529,7 +530,7 @@ class PlayerAppearance extends AbstractType
                 'attr' => [
                     'data-list' => $this->getSerializer()->serialize($result, 'json'),
                     'class' => 'hide'
-                ]
+                ],
             ]
         );
     }

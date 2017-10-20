@@ -46,7 +46,7 @@ class BaseTestCase extends WebTestCase
         $this->em()->flush();
     }
 
-    protected function assertJsonResponse($response, $responseCode = 200)
+    protected function assertJsonResponse($response, $responseCode = 200, $customMessage = null)
     {
         $this->assertEquals($responseCode, $response->getStatusCode());
         $this->assertEquals('application/json', $response->headers->get('Content-Type'));

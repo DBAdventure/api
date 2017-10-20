@@ -194,14 +194,16 @@ class AccountController extends BaseController
     public function appearanceAction(Request $request)
     {
         $player = $this->getUser();
+        $imageBackup = $player->getImage();
         $form = $this->createForm(PlayerAppearance::class, $player);
         $form->handleRequest($request);
         if (!$form->isSubmitted() || !$form->isValid()) {
+            $player->setImage($imageBackup);
+            $this->em()->persist($player);
+            $this->em()->flush();
             return $this->badRequest();
         }
 
-        $this->em()->persist($player);
-        $this->em()->flush();
         return [];
     }
 
