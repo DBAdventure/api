@@ -452,8 +452,8 @@ class ActionControllerTest extends BaseTestCase
         $player = $this->login();
         $player->setX(5);
         $player->setY(5);
-        $player->setAccuracy(5);
-        $player->setStrength(5);
+        $player->setAccuracy(100);
+        $player->setStrength(100);
         $player->setMap($this->repos()->getMapRepository()->getDefaultMap());
         $side = $this->repos()->getSideRepository()->findOneById(Side::BAD);
         $player->setSide($side);
@@ -518,8 +518,8 @@ class ActionControllerTest extends BaseTestCase
         $player = $this->login();
         $player->setX(5);
         $player->setY(5);
-        $player->setAccuracy(5);
-        $player->setStrength(5);
+        $player->setAccuracy(100);
+        $player->setStrength(100);
         $player->setMap($this->repos()->getMapRepository()->getDefaultMap());
         $side = $this->repos()->getSideRepository()->findOneById(Side::GOOD);
         $player->setSide($side);
@@ -1229,7 +1229,7 @@ class ActionControllerTest extends BaseTestCase
 
     public function testHealAnOtherPlayer()
     {
-        $this->runTestHealWithSkillPoints(10);
+        $this->runTestHealWithSkillPoints(15);
     }
 
     public function testHealAnOtherPlayerWith20Skill()
@@ -1273,6 +1273,7 @@ class ActionControllerTest extends BaseTestCase
         $player->setX(5);
         $player->setY(5);
         $player->setSkill($skill);
+        $player->setIntellect($skill);
         $player->setActionPoints(60);
         $player->setMap($this->repos()->getMapRepository()->getDefaultMap());
         $enemy = $this->createPlayer('bast');
