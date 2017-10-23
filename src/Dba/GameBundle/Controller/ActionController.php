@@ -226,7 +226,12 @@ class ActionController extends BaseController
         switch ($mapObject->getMapObjectType()->getId()) {
             case MapObjectType::ZENI:
                 $player->setZeni($player->getZeni() + $mapObject->getNumber());
-                $messages[] = $this->trans('action.pickup.zeni', ['%zeni%' => $mapObject->getNumber()]);
+                $messages[] = [
+                    'message' => 'action.pickup.zeni',
+                    'parameters' => [
+                        'zeni' => $mapObject->getNumber()
+                    ],
+                ];
                 break;
 
             case MapObjectType::BUSH:
@@ -240,20 +245,16 @@ class ActionController extends BaseController
                     $mapObject->getNumber()
                 );
                 if (is_numeric($playerObject)) {
-                    $this->addFlash(
-                        'danger',
-                        $this->trans('action.pickup.error.' . $result)
-                    );
-                    return $this->redirect($this->generateUrl('map', ['what' => 'elements']));
+                    return $this->forbidden('action.pickup.error.' . $playerObject);
                 } else {
                     $this->em()->persist($playerObject);
-                    $messages[] = $this->trans(
-                        'action.pickup.object',
-                        [
-                            '%number%' => $mapObject->getNumber(),
-                            '%objectName%' => $this->trans($mapObject->getObject()->getName() . '.name', [], 'objects')
+                    $messages[] = [
+                        'message' => 'action.pickup.object',
+                        'parameters' => [
+                            'number' => $mapObject->getNumber(),
+                            'name' => sprintf('objects.%s.name', $mapObject->getObject()->getName())
                         ]
-                    );
+                    ];
                 }
                 break;
 
@@ -265,19 +266,21 @@ class ActionController extends BaseController
                 $objectService->cloneMapObject($mapObject);
                 $result = $objectService->openCapsule($mapObject);
                 if (!empty($result['damages'])) {
-                    $messages[] = $this->trans(
-                        'action.pickup.damage',
-                        ['%damages%' => $result['damages']]
-                    );
+                    $messages[] = [
+                        'message' => 'action.pickup.damage',
+                        'parameters' => [
+                            'damages' => $result['damages'],
+                        ]
+                    ];
                     $playerService = $this->services()->getPlayerService();
                     if ($playerService->takeDamage($player, $result['damages'])) {
-                        $messages[] = $this->trans(
-                            'game.dead',
-                            [
-                                '%x%' => $player->getX(),
-                                '%y%' => $player->getY(),
+                        $messages[] = [
+                            'message' => 'game.dead',
+                            'parameters' => [
+                                'x' => $player->getX(),
+                                'y' => $player->getY(),
                             ]
-                        );
+                        ];
                     }
                 }
 
@@ -290,24 +293,16 @@ class ActionController extends BaseController
                     );
 
                     if (is_numeric($playerObject)) {
-                        $this->addFlash(
-                            'danger',
-                            $this->trans('action.pickup.error.' . $result)
-                        );
-                        return $this->redirect($this->generateUrl('map', ['what' => 'elements']));
+                        return $this->forbidden('action.pickup.error.' . $playerObject);
                     } else {
                         $this->em()->persist($playerObject);
-                        $messages[] = $this->trans(
-                            'action.pickup.capsule.object',
-                            [
-                                '%number%' => $result['object']['quantity'],
-                                '%objectName%' => $this->trans(
-                                    $result['object']['entity']->getName() . '.name',
-                                    [],
-                                    'objects'
-                                )
+                        $messages[] = [
+                            'message' => 'action.pickup.capsule.object',
+                            'parameters' => [
+                                'number' => $result['object']['quantity'],
+                                'name' => sprintf('objects.%s.name', $result['object']['entity']->getName()),
                             ]
-                        );
+                        ];
                     }
                 }
                 break;

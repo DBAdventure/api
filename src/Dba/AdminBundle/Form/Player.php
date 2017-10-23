@@ -47,6 +47,7 @@ class Player extends AbstractType
                 Type\TextareaType::class,
                 [
                     'label' => 'form.history',
+                    'required' => false,
                 ]
             )
             ->add(
