@@ -16,7 +16,7 @@ class BuildingControllerTest extends BaseTestCase
         $this->login();
         $building = $this->repos()->getBuildingRepository()->findOneById(self::SHOP_ID);
 
-        $this->client->request('GET', '/building/enter/' . $building->getId());
+        $this->client->request('GET', '/api/building/enter/' . $building->getId());
         $this->assertJsonResponse($this->client->getResponse(), 403);
     }
 
@@ -29,7 +29,7 @@ class BuildingControllerTest extends BaseTestCase
         $this->em()->persist($player);
         $this->em()->flush();
 
-        $this->client->request('GET', '/building/enter/' . $building->getId());
+        $this->client->request('GET', '/api/building/enter/' . $building->getId());
         $this->assertJsonResponse($this->client->getResponse(), 403);
     }
 
@@ -43,7 +43,7 @@ class BuildingControllerTest extends BaseTestCase
         $this->em()->persist($player);
         $this->em()->flush();
 
-        $this->client->request('GET', '/building/enter/' . $building->getId());
+        $this->client->request('GET', '/api/building/enter/' . $building->getId());
         $this->assertJsonResponse($this->client->getResponse(), 200);
     }
 
@@ -57,7 +57,7 @@ class BuildingControllerTest extends BaseTestCase
         $this->em()->persist($player);
         $this->em()->flush();
 
-        $this->client->request('GET', '/building/enter/' . $building->getId());
+        $this->client->request('GET', '/api/building/enter/' . $building->getId());
         $this->assertJsonResponse($this->client->getResponse(), 200);
     }
 
@@ -71,7 +71,7 @@ class BuildingControllerTest extends BaseTestCase
         $this->em()->persist($player);
         $this->em()->flush();
 
-        $this->client->request('GET', '/building/enter/' . $building->getId());
+        $this->client->request('GET', '/api/building/enter/' . $building->getId());
         $this->assertJsonResponse($this->client->getResponse(), 200);
     }
 
@@ -85,7 +85,7 @@ class BuildingControllerTest extends BaseTestCase
         $this->em()->persist($player);
         $this->em()->flush();
 
-        $this->client->request('GET', '/building/enter/' . $building->getId());
+        $this->client->request('GET', '/api/building/enter/' . $building->getId());
         $this->assertJsonResponse($this->client->getResponse(), 200);
     }
 
@@ -102,7 +102,7 @@ class BuildingControllerTest extends BaseTestCase
 
         $this->client->request(
             'POST',
-            '/building/bank/' . $building->getId() . '/deposit'
+            '/api/building/bank/' . $building->getId() . '/deposit'
         );
         $this->assertJsonResponse($this->client->getResponse(), 403);
     }
@@ -120,12 +120,12 @@ class BuildingControllerTest extends BaseTestCase
 
         $this->client->request(
             'POST',
-            '/building/bank/' . $building->getId() . '/deposit',
+            '/api/building/bank/' . $building->getId() . '/deposit',
             [
                 'deposit' => 4000
             ]
         );
-        $this->assertEquals(302, $this->client->getResponse()->getStatusCode());
+        $this->assertJsonResponse($this->client->getResponse(), 400);
     }
 
     public function testDepositBank()
@@ -142,13 +142,13 @@ class BuildingControllerTest extends BaseTestCase
 
         $this->client->request(
             'POST',
-            '/building/bank/' . $building->getId() . '/deposit',
+            '/api/building/bank/' . $building->getId() . '/deposit',
             [
                 'deposit' => 29
             ]
         );
 
-        $this->assertEquals(302, $this->client->getResponse()->getStatusCode());
+        $this->assertJsonResponse($this->client->getResponse());
         $this->assertEquals(80, $player->getZeni());
         $bankPlayer = $this->repos()->getBankRepository()->findOneByPlayer($player);
         $this->assertEquals(1, $bankPlayer->getZeni());
@@ -167,7 +167,7 @@ class BuildingControllerTest extends BaseTestCase
 
         $this->client->request(
             'POST',
-            '/building/bank/' . $building->getId() . '/withdraw'
+            '/api/building/bank/' . $building->getId() . '/withdraw'
         );
         $this->assertJsonResponse($this->client->getResponse(), 403);
     }
@@ -185,12 +185,12 @@ class BuildingControllerTest extends BaseTestCase
 
         $this->client->request(
             'POST',
-            '/building/bank/' . $building->getId() . '/withdraw',
+            '/api/building/bank/' . $building->getId() . '/withdraw',
             [
                 'withdraw' => 4000
             ]
         );
-        $this->assertEquals(302, $this->client->getResponse()->getStatusCode());
+        $this->assertJsonResponse($this->client->getResponse(), 400);
     }
 
     public function testWithdrawBank()
@@ -212,13 +212,13 @@ class BuildingControllerTest extends BaseTestCase
 
         $this->client->request(
             'POST',
-            '/building/bank/' . $building->getId() . '/withdraw',
+            '/api/building/bank/' . $building->getId() . '/withdraw',
             [
                 'withdraw' => 9
             ]
         );
 
-        $this->assertEquals(302, $this->client->getResponse()->getStatusCode());
+        $this->assertJsonResponse($this->client->getResponse());
         $this->assertEquals(262, $player->getZeni());
         $this->assertEquals(1, $bankPlayer->getZeni());
         $bankPlayer = $this->repos()->getBankRepository()->findOneByPlayer($player);
@@ -236,8 +236,11 @@ class BuildingControllerTest extends BaseTestCase
         $this->em()->flush();
 
         $this->client->request(
-            'GET',
-            '/building/teleport/' . $building->getId() . '/new'
+            'POST',
+            '/api/building/teleport/' . $building->getId(),
+            [
+                'where' => 'new',
+            ]
         );
         $this->assertJsonResponse($this->client->getResponse(), 403);
     }
@@ -254,8 +257,11 @@ class BuildingControllerTest extends BaseTestCase
         $this->em()->flush();
 
         $this->client->request(
-            'GET',
-            '/building/teleport/' . $building->getId() . '/nw'
+            'POST',
+            '/api/building/teleport/' . $building->getId(),
+            [
+                'where' => 'nw',
+            ]
         );
         $this->assertJsonResponse($this->client->getResponse(), 403);
     }
@@ -272,8 +278,11 @@ class BuildingControllerTest extends BaseTestCase
         $this->em()->flush();
 
         $this->client->request(
-            'GET',
-            '/building/teleport/' . $building->getId() . '/nw'
+            'POST',
+            '/api/building/teleport/' . $building->getId(),
+            [
+                'where' => 'nw',
+            ]
         );
         $this->assertJsonResponse($this->client->getResponse(), 403);
     }
@@ -285,12 +294,16 @@ class BuildingControllerTest extends BaseTestCase
         $player->setX($building->getX());
         $player->setY($building->getY());
         $player->setMap($building->getMap());
+        $player->setActionPoints(20);
         $this->em()->persist($player);
         $this->em()->flush();
 
         $this->client->request(
-            'GET',
-            '/building/teleport/' . $building->getId() . '/nw'
+            'POST',
+            '/api/building/teleport/' . $building->getId(),
+            [
+                'where' => 'ne',
+            ]
         );
         $this->assertJsonResponse($this->client->getResponse());
 
@@ -310,8 +323,8 @@ class BuildingControllerTest extends BaseTestCase
         $this->em()->flush();
 
         $this->client->request(
-            'GET',
-            '/building/shop/' . $building->getId() . '/buy/2'
+            'POST',
+            '/api/building/shop/' . $building->getId() . '/object/2'
         );
         $this->assertJsonResponse($this->client->getResponse(), 403);
     }
@@ -327,8 +340,8 @@ class BuildingControllerTest extends BaseTestCase
         $this->em()->flush();
 
         $this->client->request(
-            'GET',
-            '/building/shop/' . $building->getId() . '/buy/14'
+            'POST',
+            '/api/building/shop/' . $building->getId() . '/object/14'
         );
         $this->assertJsonResponse($this->client->getResponse(), 403);
     }
@@ -344,21 +357,15 @@ class BuildingControllerTest extends BaseTestCase
         $this->em()->persist($player);
         $this->em()->flush();
 
-
         $this->client->request(
-            'GET',
-            '/building/shop/' . $building->getId() . '/buy/2'
+            'POST',
+            '/api/building/shop/' . $building->getId() . '/object/2'
         );
-        $this->assertEquals(302, $this->client->getResponse()->getStatusCode());
+        $json = $this->assertJsonResponse($this->client->getResponse(), 400);
         $this->assertEquals(2, $player->getZeni());
-        $session = $this->container->get('session');
         $this->assertEquals(
-            [
-                'danger' => [
-                    'Not enough zeni!'
-                ]
-            ],
-            $session->getBag('flashes')->all()
+            'building.shop.error.2',
+            $json->error
         );
     }
 
@@ -372,21 +379,19 @@ class BuildingControllerTest extends BaseTestCase
         $this->em()->persist($player);
         $this->em()->flush();
 
-
         $this->client->request(
-            'GET',
-            '/building/shop/' . $building->getId() . '/buy/2'
+            'POST',
+            '/api/building/shop/' . $building->getId() . '/object/2'
         );
-        $this->assertEquals(302, $this->client->getResponse()->getStatusCode());
+        $json = $this->assertJsonResponse($this->client->getResponse(), 200);
         $this->assertEquals(5, $player->getZeni());
-        $session = $this->container->get('session');
         $this->assertEquals(
-            [
-                'success' => [
-                    'You successfully purchased this Senzu!'
-                ]
-            ],
-            $session->getBag('flashes')->all()
+            'building.shop.success',
+            $json->message
+        );
+        $this->assertEquals(
+            'objects.senzu.name',
+            $json->parameters->object
         );
     }
 
@@ -402,7 +407,7 @@ class BuildingControllerTest extends BaseTestCase
 
         $this->client->request(
             'POST',
-            '/building/wanted/' . $building->getId()
+            '/api/building/wanted/' . $building->getId()
         );
         $this->assertJsonResponse($this->client->getResponse(), 403);
     }
@@ -420,21 +425,13 @@ class BuildingControllerTest extends BaseTestCase
         $this->createPlayer('bast');
         $this->client->request(
             'POST',
-            '/building/wanted/' . $building->getId(),
+            '/api/building/wanted/' . $building->getId(),
             [
                 'target' => 'bast',
             ]
         );
-        $this->assertEquals(302, $this->client->getResponse()->getStatusCode());
-        $session = $this->container->get('session');
-        $this->assertEquals(
-            [
-                'danger' => [
-                    'building.wanted.error'
-                ]
-            ],
-            $session->getBag('flashes')->all()
-        );
+        $json = $this->assertJsonResponse($this->client->getResponse(), 400);
+        $this->assertEquals('building.wanted.error', $json->error);
     }
 
     public function testWantedItemWithoutTarget()
@@ -449,19 +446,11 @@ class BuildingControllerTest extends BaseTestCase
 
         $this->client->request(
             'POST',
-            '/building/wanted/' . $building->getId(),
+            '/api/building/wanted/' . $building->getId(),
             ['amount' => 20]
         );
-        $this->assertEquals(302, $this->client->getResponse()->getStatusCode());
-        $session = $this->container->get('session');
-        $this->assertEquals(
-            [
-                'danger' => [
-                    'building.wanted.error'
-                ]
-            ],
-            $session->getBag('flashes')->all()
-        );
+        $json = $this->assertJsonResponse($this->client->getResponse(), 400);
+        $this->assertEquals('building.wanted.error', $json->error);
     }
 
     public function testWantedItemWithNotEnoughMoney()
@@ -478,19 +467,11 @@ class BuildingControllerTest extends BaseTestCase
         $this->createPlayer('bast');
         $this->client->request(
             'POST',
-            '/building/wanted/' . $building->getId(),
+            '/api/building/wanted/' . $building->getId(),
             ['amount' => 70, 'target' => 'bast']
         );
-        $this->assertEquals(302, $this->client->getResponse()->getStatusCode());
-        $session = $this->container->get('session');
-        $this->assertEquals(
-            [
-                'danger' => [
-                    'building.wanted.error'
-                ]
-            ],
-            $session->getBag('flashes')->all()
-        );
+        $json = $this->assertJsonResponse($this->client->getResponse(), 400);
+        $this->assertEquals('building.wanted.error', $json->error);
     }
 
     public function testWanted()
@@ -507,20 +488,12 @@ class BuildingControllerTest extends BaseTestCase
         $enemy = $this->createPlayer('bast');
         $this->client->request(
             'POST',
-            '/building/wanted/' . $building->getId(),
+            '/api/building/wanted/' . $building->getId(),
             ['amount' => 55, 'target' => 'bast']
         );
-        $this->assertEquals(302, $this->client->getResponse()->getStatusCode());
-        $session = $this->container->get('session');
-        $this->assertEquals(
-            [
-                'success' => [
-                    'building.wanted.zeni'
-                ]
-            ],
-            $session->getBag('flashes')->all()
-        );
+        $json = $this->assertJsonResponse($this->client->getResponse());
 
+        $this->assertEquals('building.wanted.zeni', $json->message);
         $this->assertEquals(55, $enemy->getHeadPrice());
         $this->assertEquals(5, $player->getZeni());
     }

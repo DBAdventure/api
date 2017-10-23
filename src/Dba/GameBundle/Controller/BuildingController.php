@@ -107,7 +107,7 @@ class BuildingController extends BaseController
     /**
      * @ParamConverter("building", class="Dba\GameBundle\Entity\Building")
      * @ParamConverter("spell", class="Dba\GameBundle\Entity\Spell")
-     * @Annotations\Post("/buy/{building}/spell/{spell}")
+     * @Annotations\Post("/shop/{building}/spell/{spell}")
      */
     public function postBuySpellAction(Building $building, Spell $spell)
     {
@@ -137,7 +137,7 @@ class BuildingController extends BaseController
     /**
      * @ParamConverter("building", class="Dba\GameBundle\Entity\Building")
      * @ParamConverter("object", class="Dba\GameBundle\Entity\Object")
-     * @Annotations\Post("/buy/{building}/object/{object}")
+     * @Annotations\Post("/shop/{building}/object/{object}")
      */
     public function postBuyObjectAction(Building $building, Object $object)
     {
@@ -201,7 +201,7 @@ class BuildingController extends BaseController
 
     /**
      * @ParamConverter("building", class="Dba\GameBundle\Entity\Building")
-     * @Annotations\Post("/deposit/{building}")
+     * @Annotations\Post("/bank/{building}/deposit")
      */
     public function postDepositAction(Building $building, Request $request)
     {
@@ -215,14 +215,7 @@ class BuildingController extends BaseController
         $zenis = ceil($request->request->get('deposit'));
         $goldBar = floor($zenis / 20);
         if ($player->getZeni() < $zenis || empty($zenis) || $zenis < 1 || empty($goldBar)) {
-            $this->addFlash(
-                'danger',
-                $this->trans(
-                    'building.bank.deposit.error'
-                )
-            );
-
-            return $this->redirect($this->generateUrl('building.enter', ['id' => $building->getId()]));
+            return $this->badRequest('building.bank.deposit.error');
         }
 
         $player->setZeni($player->getZeni() - ($goldBar * 20));
@@ -235,27 +228,22 @@ class BuildingController extends BaseController
         $goldBank = $bankPlayer->getZeni() + $goldBar;
         $bankPlayer->setZeni($goldBank);
 
-        $this->addFlash(
-            'success',
-            $this->trans(
-                'building.bank.deposit.zeni',
-                [
-                    '%goldBar%' => $goldBar,
-                    '%goldBank%' => $goldBank,
-                ]
-            )
-        );
-
         $this->em()->persist($bankPlayer);
         $this->em()->persist($player);
         $this->em()->flush();
 
-        return $this->redirect($this->generateUrl('building.enter', ['id' => $building->getId()]));
+        return [
+            'messages' => 'building.bank.deposit.zeni',
+            'parameters' => [
+                'goldBar' => $goldBar,
+                'goldBank' => $goldBank,
+            ]
+        ];
     }
 
     /**
      * @ParamConverter("building", class="Dba\GameBundle\Entity\Building")
-     * @Annotations\Post("/withdraw/{building}")
+     * @Annotations\Post("/bank/{building}/withdraw")
      */
     public function postWithdrawAction(Building $building, Request $request)
     {
@@ -269,36 +257,24 @@ class BuildingController extends BaseController
         $withdraw = round($request->request->get('withdraw'));
         $bankPlayer = $this->repos()->getBankRepository()->findOneByPlayer($player);
         if (empty($bankPlayer) || $withdraw > $bankPlayer->getZeni()) {
-            $this->addFlash(
-                'danger',
-                $this->trans(
-                    'building.bank.withdraw.error'
-                )
-            );
-
-            return $this->redirect($this->generateUrl('building.enter', ['id' => $building->getId()]));
+            return $this->badRequest('building.bank.withdraw.error');
         }
 
         $goldBank = $bankPlayer->getZeni() - $withdraw;
         $bankPlayer->setZeni($goldBank);
         $player->setZeni($player->getZeni() + ($withdraw * 18));
 
-        $this->addFlash(
-            'success',
-            $this->trans(
-                'building.bank.withdraw.zeni',
-                [
-                    '%goldBar%' => $withdraw,
-                    '%goldBank%' => $goldBank,
-                ]
-            )
-        );
-
         $this->em()->persist($bankPlayer);
         $this->em()->persist($player);
         $this->em()->flush();
 
-        return $this->redirect($this->generateUrl('building.enter', ['id' => $building->getId()]));
+        return [
+            'messages' => 'building.bank.withdraw.zeni',
+            'parameters' => [
+                'goldBar' => $withdraw,
+                'goldBank' => $goldBank,
+            ]
+        ];
     }
 
     /**
@@ -317,34 +293,22 @@ class BuildingController extends BaseController
         $amount = (int) $request->request->get('amount');
         $target = $this->repos()->getPlayerRepository()->findOneByName($request->request->get('target'));
         if (empty($target) || $amount < self::MINIMAL_WANTED_AMOUNT || $amount > $player->getZeni()) {
-            $this->addFlash(
-                'danger',
-                $this->trans(
-                    'building.wanted.error'
-                )
-            );
-
-            return $this->redirect($this->generateUrl('building.enter', ['id' => $building->getId()]));
+            return $this->badRequest('building.wanted.error');
         }
 
         $target->setHeadPrice($target->getHeadPrice() + $amount);
         $player->setZeni($player->getZeni() - $amount);
 
-        $this->addFlash(
-            'success',
-            $this->trans(
-                'building.wanted.zeni',
-                [
-                    '%amount%' => $amount,
-                    '%headPrice%' => $target->getHeadPrice(),
-                ]
-            )
-        );
-
         $this->em()->persist($target);
         $this->em()->persist($player);
         $this->em()->flush();
 
-        return $this->redirect($this->generateUrl('building.enter', ['id' => $building->getId()]));
+        return [
+            'message' => 'building.wanted.zeni',
+            'parameters' => [
+                'amount' => $amount,
+                'headPrice' => $target->getHeadPrice(),
+            ]
+        ];
     }
 }
