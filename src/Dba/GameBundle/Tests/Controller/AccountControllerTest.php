@@ -137,7 +137,7 @@ class AccountControllerTest extends BaseTestCase
                 'image' => 'HS10.png',
             ]
         ];
-        $response = $this->client->request(
+        $this->client->request(
             'POST',
             '/api/account/appearance',
             $data
@@ -157,7 +157,7 @@ class AccountControllerTest extends BaseTestCase
                 'type' => 'H1',
             ]
         ];
-        $response = $this->client->request(
+        $this->client->request(
             'POST',
             '/api/account/appearance',
             $data

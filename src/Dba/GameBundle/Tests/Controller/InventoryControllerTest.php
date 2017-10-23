@@ -174,7 +174,7 @@ class InventoryControllerTest extends BaseTestCase
         $json = $this->assertJsonResponse($this->client->getResponse());
         $this->assertEquals('inventory.object.equip', $json->messages[0]->message);
         $this->assertEquals('objects.shoes.broly.name', $json->messages[0]->parameters->name);
-   }
+    }
 
     public function testEquipCantEquipItemDueToCapacity()
     {
