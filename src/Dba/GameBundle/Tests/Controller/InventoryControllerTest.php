@@ -9,24 +9,16 @@ class InventoryControllerTest extends BaseTestCase
     public function testInventoryWithItems()
     {
         $this->createItems();
-        $this->client->request('GET', '/inventory');
-        $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
+        $this->client->request('GET', '/api/inventory/objects');
+        $this->assertJsonResponse($this->client->getResponse());
     }
 
     public function testUseItemThatCantBeUsed()
     {
         $this->createItems();
-        $this->client->request('GET', '/inventory/use/1');
-        $this->assertEquals(302, $this->client->getResponse()->getStatusCode());
-        $session = $this->container->get('session');
-        $this->assertEquals(
-            [
-                'danger' => [
-                    'You can\'t use this object.'
-                ]
-            ],
-            $session->getBag('flashes')->all()
-        );
+        $this->client->request('POST', '/api/inventory/use/1');
+        $json = $this->assertJsonResponse($this->client->getResponse(), 403);
+        $this->assertEquals('inventory.object.cant.use', $json->error);
     }
 
     public function testUseItemWithHealthPercent()
@@ -38,19 +30,13 @@ class InventoryControllerTest extends BaseTestCase
         $this->em()->persist($player);
         $this->em()->flush();
 
-        $this->client->request('GET', '/inventory/use/3');
-        $this->assertEquals(302, $this->client->getResponse()->getStatusCode());
+        $this->client->request('POST', '/api/inventory/use/3');
+        $json = $this->assertJsonResponse($this->client->getResponse());
+        $this->assertEquals('inventory.object.used', $json->message);
+        $this->assertEquals(1, $json->parameters->number);
+        $this->assertEquals('objects.potion.life.name', $json->parameters->name);
 
         $this->assertEquals(75, $player->getHealth());
-        $session = $this->container->get('session');
-        $this->assertEquals(
-            [
-                'success' => [
-                    'You used 1 Potion of life!'
-                ]
-            ],
-            $session->getBag('flashes')->all()
-        );
     }
 
     public function testUseItemWithTeleport()
@@ -61,21 +47,14 @@ class InventoryControllerTest extends BaseTestCase
         $y = $player->getY();
         $mapId = $player->getMap()->getId();
 
-        $this->client->request('GET', '/inventory/use/4');
-        $this->assertEquals(302, $this->client->getResponse()->getStatusCode());
-
+        $this->client->request('POST', '/api/inventory/use/4');
+        $json = $this->assertJsonResponse($this->client->getResponse());
         $this->assertNotEquals($x, $player->getX());
         $this->assertNotEquals($y, $player->getY());
         $this->assertNotEquals($mapId, $player->getMap()->getId());
-        $session = $this->container->get('session');
-        $this->assertEquals(
-            [
-                'success' => [
-                    'You used 1 Teleport cloud n°1!'
-                ]
-            ],
-            $session->getBag('flashes')->all()
-        );
+        $this->assertEquals('inventory.object.used', $json->message);
+        $this->assertEquals(1, $json->parameters->number);
+        $this->assertEquals('objects.teleport.cloud.1.name', $json->parameters->name);
     }
 
     public function testUseItemWithTeleportWithoutMovementPoints()
@@ -89,21 +68,13 @@ class InventoryControllerTest extends BaseTestCase
         $this->em()->persist($player);
         $this->em()->flush();
 
-        $this->client->request('GET', '/inventory/use/4');
-        $this->assertEquals(302, $this->client->getResponse()->getStatusCode());
+        $this->client->request('POST', '/api/inventory/use/4');
+        $json = $this->assertJsonResponse($this->client->getResponse(), 403);
 
         $this->assertEquals($x, $player->getX());
         $this->assertEquals($y, $player->getY());
         $this->assertEquals($mapId, $player->getMap()->getId());
-        $session = $this->container->get('session');
-        $this->assertEquals(
-            [
-                'danger' => [
-                    'Not enough movement points'
-                ]
-            ],
-            $session->getBag('flashes')->all()
-        );
+        $this->assertEquals('inventory.object.error.teleport', $json->error);
     }
 
     public function testUseItemWithHealthPoints()
@@ -115,20 +86,12 @@ class InventoryControllerTest extends BaseTestCase
         $this->em()->persist($player);
         $this->em()->flush();
 
-        $this->client->request('GET', '/inventory/use/27');
-        $this->assertEquals(302, $this->client->getResponse()->getStatusCode());
-
-
+        $this->client->request('POST', '/api/inventory/use/27');
+        $json = $this->assertJsonResponse($this->client->getResponse());
         $this->assertEquals(80, $player->getHealth());
-        $session = $this->container->get('session');
-        $this->assertEquals(
-            [
-                'success' => [
-                    'You used 1 Wild berries!'
-                ]
-            ],
-            $session->getBag('flashes')->all()
-        );
+        $this->assertEquals('inventory.object.used', $json->message);
+        $this->assertEquals(1, $json->parameters->number);
+        $this->assertEquals('objects.berries.name', $json->parameters->name);
     }
 
     public function testDropItem()
@@ -136,8 +99,8 @@ class InventoryControllerTest extends BaseTestCase
         $this->createItems();
         $player = $this->login();
 
-        $this->client->request('GET', '/inventory/drop/12');
-        $this->assertEquals(302, $this->client->getResponse()->getStatusCode());
+        $this->client->request('POST', '/api/inventory/drop/12');
+        $json = $this->assertJsonResponse($this->client->getResponse());
 
         $playerObject = $this->repos()->getPlayerObjectRepository()->findOneBy(
             [
@@ -148,34 +111,17 @@ class InventoryControllerTest extends BaseTestCase
 
         $this->assertEquals(0, $playerObject->getNumber());
         $this->assertFalse($playerObject->getEquipped());
-
-        $session = $this->container->get('session');
-        $this->assertEquals(
-            [
-                'success' => [
-                    'Sayajin detector has been drop on the map!'
-                ]
-            ],
-            $session->getBag('flashes')->all()
-        );
+        $this->assertEquals('inventory.object.drop', $json->message);
+        $this->assertEquals('objects.vision.detector.sayajin.name', $json->parameters->name);
     }
 
     public function testDropItemCantBeDropped()
     {
         $this->createItems();
         $this->login();
-        $this->client->request('GET', '/inventory/drop/35');
-        $this->assertEquals(302, $this->client->getResponse()->getStatusCode());
-
-        $session = $this->container->get('session');
-        $this->assertEquals(
-            [
-                'danger' => [
-                    'You can\'t drop this object.'
-                ]
-            ],
-            $session->getBag('flashes')->all()
-        );
+        $this->client->request('POST', '/api/inventory/drop/35');
+        $json = $this->assertJsonResponse($this->client->getResponse(), 403);
+        $this->assertEquals('inventory.object.cant.drop', $json->error);
     }
 
     public function testEquipItem()
@@ -190,46 +136,30 @@ class InventoryControllerTest extends BaseTestCase
         $playerObject->setEquipped(true);
         $this->em()->persist($playerObject);
         $this->em()->flush();
-        $this->client->request('GET', '/inventory/equip/12');
-        $this->assertEquals(302, $this->client->getResponse()->getStatusCode());
+        $this->client->request('POST', '/api/inventory/equip/12');
+        $json = $this->assertJsonResponse($this->client->getResponse());
         $this->em()->refresh($playerObject);
 
         $this->assertFalse($playerObject->getEquipped());
-
-        $session = $this->container->get('session');
-        $this->assertEquals(
-            [
-                'success' => [
-                    'Antennas of King Kai has been unequipped!',
-                    'Sayajin detector has been equipped!'
-                ]
-            ],
-            $session->getBag('flashes')->all()
-        );
+        $this->assertEquals('inventory.object.unequip', $json->messages[0]->message);
+        $this->assertEquals('objects.vision.king.kai.name', $json->messages[0]->parameters->name);
+        $this->assertEquals('inventory.object.equip', $json->messages[1]->message);
+        $this->assertEquals('objects.vision.detector.sayajin.name', $json->messages[1]->parameters->name);
     }
 
     public function testEquipCantEquipItemDueToNotFoundItem()
     {
         $this->createItems();
-        $this->client->request('GET', '/inventory/equip/50');
-        $this->assertEquals(404, $this->client->getResponse()->getStatusCode());
+        $this->client->request('POST', '/api/inventory/equip/50');
+        $this->assertJsonResponse($this->client->getResponse(), 404);
     }
 
     public function testEquipCantEquipItem()
     {
         $this->createItems();
-        $this->client->request('GET', '/inventory/equip/2');
-        $this->assertEquals(302, $this->client->getResponse()->getStatusCode());
-
-        $session = $this->container->get('session');
-        $this->assertEquals(
-            [
-                'danger' => [
-                    'You can\'t equip this object.'
-                ]
-            ],
-            $session->getBag('flashes')->all()
-        );
+        $this->client->request('POST', '/api/inventory/equip/2');
+        $json = $this->assertJsonResponse($this->client->getResponse(), 403);
+        $this->assertEquals('inventory.object.cant.equip', $json->error);
     }
 
     public function testEquipCanEquipItemDueToCapacity()
@@ -240,35 +170,19 @@ class InventoryControllerTest extends BaseTestCase
         $this->em()->persist($player);
         $this->em()->flush();
 
-        $this->client->request('GET', '/inventory/equip/45');
-        $this->assertEquals(302, $this->client->getResponse()->getStatusCode());
-
-        $session = $this->container->get('session');
-        $this->assertEquals(
-            [
-                'success' => [
-                    'Bottes de Broly has been equipped!'
-                ]
-            ],
-            $session->getBag('flashes')->all()
-        );
-    }
+        $this->client->request('POST', '/api/inventory/equip/45');
+        $json = $this->assertJsonResponse($this->client->getResponse());
+        $this->assertEquals('inventory.object.equip', $json->messages[0]->message);
+        $this->assertEquals('objects.shoes.broly.name', $json->messages[0]->parameters->name);
+   }
 
     public function testEquipCantEquipItemDueToCapacity()
     {
         $this->createItems();
-        $this->client->request('GET', '/inventory/equip/45');
-        $this->assertEquals(302, $this->client->getResponse()->getStatusCode());
-
-        $session = $this->container->get('session');
-        $this->assertEquals(
-            [
-                'danger' => [
-                    'Bottes de Broly can not be equipped right now!'
-                ]
-            ],
-            $session->getBag('flashes')->all()
-        );
+        $this->client->request('POST', '/api/inventory/equip/45');
+        $json = $this->assertJsonResponse($this->client->getResponse(), 403);
+        $this->assertEquals('inventory.object.error.equip', $json->error->message);
+        $this->assertEquals('objects.shoes.broly.name', $json->error->parameters->name);
     }
 
     public function testUnequip()
@@ -284,21 +198,13 @@ class InventoryControllerTest extends BaseTestCase
         $this->em()->persist($playerObject);
         $this->em()->flush();
 
-        $this->client->request('GET', '/inventory/unequip/12');
-        $this->assertEquals(302, $this->client->getResponse()->getStatusCode());
+        $this->client->request('POST', '/api/inventory/unequip/12');
+        $json = $this->assertJsonResponse($this->client->getResponse());
         $this->em()->refresh($playerObject);
 
         $this->assertFalse($playerObject->getEquipped());
-
-        $session = $this->container->get('session');
-        $this->assertEquals(
-            [
-                'success' => [
-                    'Sayajin detector has been unequipped!'
-                ]
-            ],
-            $session->getBag('flashes')->all()
-        );
+        $this->assertEquals('inventory.object.unequip', $json->message);
+        $this->assertEquals('objects.vision.detector.sayajin.name', $json->parameters->name);
     }
 
     protected function createItems()

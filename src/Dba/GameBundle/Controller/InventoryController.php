@@ -47,7 +47,7 @@ class InventoryController extends BaseController
         $player = $this->getUser();
         $playerObject = $this->repos()->getPlayerObjectRepository()->checkPlayerObject($player, $object);
         if (!$playerObject->canBeUsed()) {
-            return $this->forbidden('inventory.use.cant');
+            return $this->forbidden('inventory.object.cant.use');
         }
 
         $nbObjectsUsed = (int) $request->request->get('nb', 1);
@@ -93,7 +93,7 @@ class InventoryController extends BaseController
 
                 case Object::BONUS_TELEPORT:
                     if ($player->getMovementPoints() < self::TELEPORT_MOVEMENT_POINTS) {
-                        return $this->forbidden('object.error.teleport');
+                        return $this->forbidden('inventory.object.error.teleport');
                     }
 
                     $player->usePoints(Player::MOVEMENT_POINT, self::TELEPORT_MOVEMENT_POINTS);
@@ -109,7 +109,7 @@ class InventoryController extends BaseController
         $this->em()->flush();
 
         return [
-            'message' => 'object.used',
+            'message' => 'inventory.object.used',
             'parameters' => [
                 'number' => $nbObjectsUsed,
                 'name' => sprintf('objects.%s.name', $playerObject->getObject()->getName()),
@@ -126,7 +126,7 @@ class InventoryController extends BaseController
         $player = $this->getUser();
         $playerObject = $this->repos()->getPlayerObjectRepository()->checkPlayerObject($player, $object);
         if (!$playerObject->canBeDropped()) {
-            return $this->forbidden('inventory.drop.cant');
+            return $this->forbidden('inventory.object.cant.drop');
         }
 
         $nbObjectsDropped = (int) $request->request->get('nb', 1);
@@ -140,7 +140,7 @@ class InventoryController extends BaseController
         $this->em()->persist($playerObject);
         $this->em()->flush();
         return [
-            'message' => 'object.drop',
+            'message' => 'inventory.object.drop',
             'parameters' => [
                 'name' => sprintf('objects.%s.name', $playerObject->getObject()->getName()),
             ]
@@ -163,7 +163,7 @@ class InventoryController extends BaseController
         $this->em()->persist($playerObject);
         $this->em()->flush();
         return [
-            'message' => 'object.unequip',
+            'message' => 'inventory.object.unequip',
             'parameters' => [
                 'name' => sprintf('objects.%s.name', $playerObject->getObject()->getName()),
             ]
@@ -183,7 +183,7 @@ class InventoryController extends BaseController
         $player = $this->getUser();
         $playerObject = $this->repos()->getPlayerObjectRepository()->checkPlayerObject($player, $object);
         if (!$playerObject->canBeEquipped()) {
-            return $this->forbidden('inventory.equip.cant');
+            return $this->forbidden('inventory.object.cant.equip');
         }
 
         $canEquip = true;
@@ -199,7 +199,7 @@ class InventoryController extends BaseController
 
         if (!$canEquip) {
             return $this->forbidden([
-                'message' => 'object.error.equip',
+                'message' => 'inventory.object.error.equip',
                 'parameters' => [
                     'name' => sprintf('objects.%s.name', $playerObject->getObject()->getName()),
                 ]
@@ -214,7 +214,7 @@ class InventoryController extends BaseController
         $messages = [];
         if (!empty($similarObject)) {
             $messages[] = [
-                'message' => 'object.unequip',
+                'message' => 'inventory.object.unequip',
                 'parameters' => [
                     'name' => sprintf('objects.%s.name', $similarObject->getObject()->getName()),
                 ]
@@ -224,7 +224,7 @@ class InventoryController extends BaseController
         }
 
         $messages[] = [
-            'message' => 'object.equip',
+            'message' => 'inventory.object.equip',
             'parameters' => [
                 'name' => sprintf('objects.%s.name', $playerObject->getObject()->getName()),
             ]
