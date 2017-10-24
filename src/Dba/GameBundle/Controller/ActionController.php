@@ -783,19 +783,20 @@ class ActionController extends BaseController
             'target' => $target,
             'attackType' => null,
             'isDead' => false,
-            'distances' => [
-                'max_x' => abs($target->getX() - $player->getX()),
-                'max_y' => abs($target->getY() - $player->getY())
-            ]
+            'distance' => max(
+                abs($target->getX() - $player->getX()),
+                abs($target->getY() - $player->getY())
+            ),
         ];
     }
 
     /**
      * @ParamConverter("target", class="Dba\GameBundle\Entity\Player")
      * @ParamConverter("playerSpell", class="Dba\GameBundle\Entity\PlayerSpell")
-     * @Annotations\Post("/spell/{target}/{type}/{playerSpell}")
+     * @Annotations\Post("/spell/{target}/{playerSpell}")
+     * @Annotations\Post("/spell/{target}/{playerSpell}/{type}")
      */
-    public function postSpellAction(Player $target, $type, PlayerSpell $playerSpell)
+    public function postSpellAction(Player $target, PlayerSpell $playerSpell, $type = null)
     {
         $player = $this->getUser();
         if ($this->checkPosition($player, $target, Player::SPELL_ACTION) ||
@@ -960,10 +961,10 @@ class ActionController extends BaseController
             'isDead' => $isDead,
             'target' => $target,
             'attackType' => $type,
-            'distances' => [
-                'max_x' => abs($target->getX() - $player->getX()),
-                'max_y' => abs($target->getY() - $player->getY())
-            ]
+            'distance' => max(
+                abs($target->getX() - $player->getX()),
+                abs($target->getY() - $player->getY())
+            ),
         ];
     }
 
