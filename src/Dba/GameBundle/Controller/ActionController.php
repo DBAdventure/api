@@ -115,40 +115,45 @@ class ActionController extends BaseController
         list($luck, $damages, $isDead) = $playerService->attack($player, $target);
 
         if ($type == Player::ATTACK_TYPE_BETRAY) {
-            $messages[] = $this->trans('action.betray');
+            $messages[] = 'action.betray';
         } elseif ($type == Player::ATTACK_TYPE_REVENGE) {
-            $messages[] = $this->trans('action.revenge');
+            $messages[] = 'action.revenge';
         }
 
         if (($luck >= -4 && $luck < -3) || $damages <= 0) {
-            $messages[] = $this->trans('action.attack.dodge');
+            $messages[] = 'action.attack.dodge';
             $eventMessage = 'event.action.attack.dodge';
         } elseif ($luck >= -3 && $luck < -2.25) {
-            $messages[] = $this->trans('action.attack.really.failed');
-            $eventMessage = 'event.action.attack.really.failed';
+            $messages[] = 'action.attack.reallyFailed';
+            $eventMessage = 'event.action.attack.reallyFailed';
         } elseif ($luck >= -2.25 && $luck < -1.5) {
-            $messages[] = $this->trans('action.attack.failed');
+            $messages[] = 'action.attack.failed';
             $eventMessage = 'event.action.attack.failed';
         } elseif ($luck >= -1.5 && $luck < 0.5) {
-            $messages[] = $this->trans('action.attack.mediocre');
+            $messages[] = 'action.attack.mediocre';
             $eventMessage = 'event.action.attack.moderately.succeeded';
         } elseif ($luck >= 0.5 && $luck < 1) {
-            $messages[] = $this->trans('action.attack.successful');
+            $messages[] = 'action.attack.successful';
             $eventMessage = 'event.action.attack.succeeded';
         } elseif ($luck >= 1 && $luck < 1.5) {
-            $messages[] = $this->trans('action.attack.nice');
+            $messages[] = 'action.attack.nice';
             $eventMessage = 'event.action.attack.nice';
         } elseif ($luck >= 1.5 && $luck < 5) {
-            $messages[] = $this->trans('action.attack.critical');
+            $messages[] = 'action.attack.critical';
             $eventMessage = 'event.action.attack.critic';
         } elseif ($luck >= 5 && $luck <= 6) {
-            $messages[] = $this->trans('action.attack.master');
+            $messages[] = 'action.attack.master';
             $eventMessage = 'event.action.attack.master';
         }
 
-        $messages[] = $this->trans('action.attack.damages', ['%damages%' => $damages]);
+        $messages[] = [
+            'message' => 'action.attack.damages',
+            'parameters' => [
+                'damages' => $damages
+            ]
+        ];
         if ($type == Player::ATTACK_TYPE_BETRAY) {
-            $messages[] = $this->trans('action.betrayPoints');
+            $messages[] = 'action.betrayPoints';
         }
         $playerService->addEvent(
             $player,
@@ -162,7 +167,7 @@ class ActionController extends BaseController
         $playerService->addBattlePoints($player, Player::ATTACK_ACTION, $target, $messages);
 
         if ($isDead) {
-            $messages[] = $this->trans('action.killed');
+            $messages[] = 'action.killed';
             if (!$target->isPlayer()) {
                 $target->setZeni($target->getZeni() + self::DEFAULT_NPC_ZENI);
             } else {
@@ -174,12 +179,12 @@ class ActionController extends BaseController
             }
 
             $this->checkHeadPrice($player, $target, $messages);
-            $messages[] = $this->trans('action.attack.kill.battlePoints');
+            $messages[] = 'action.attack.kill.battlePoints';
             $player->setBattlePoints($player->getBattlePoints() + self::DEFAULT_BATTLE_POINT_KILL);
 
             if ($type == Player::ATTACK_TYPE_REVENGE) {
                 $player->setTarget(null);
-                $messages[] = $this->trans('action.attack.kill.revenge');
+                $messages[] = 'action.attack.kill.revenge';
             }
         }
 
@@ -349,29 +354,34 @@ class ActionController extends BaseController
         $this->dispatchEvent(DbaEvents::BEFORE_STEAL, $player, $target, ['messages' => &$messages]);
         list($luck, $zenisAdded) = $playerService->steal($player, $target);
         if ($luck >= -3 && $luck < -2.5) {
-            $messages[] = $this->trans('action.steal.completelyMissed');
+            $messages[] = 'action.steal.completelyMissed';
             $eventMessage = 'event.action.steal.completelyMissed';
         } elseif ($luck >= -2.5 && $luck < -1.5) {
-            $messages[] = $this->trans('action.steal.missed');
+            $messages[] = 'action.steal.missed';
             $eventMessage = 'event.action.steal.missed';
         } elseif ($luck >= -1.5 && $luck < -0.5) {
-            $messages[] = $this->trans('action.steal.moderatelySuccessful');
+            $messages[] = 'action.steal.moderatelySuccessful';
             $eventMessage = 'event.action.steal.moderatelySuccessful';
         } elseif ($luck >= -0.5 && $luck < 0.5) {
-            $messages[] = $this->trans('action.steal.successful');
+            $messages[] = 'action.steal.successful';
             $eventMessage = 'event.action.steal.successful';
         } elseif ($luck >= 0.5 && $luck < 1.5) {
-            $messages[] = $this->trans('action.steal.wellSuccessful');
+            $messages[] = 'action.steal.wellSuccessful';
             $eventMessage = 'event.action.steal.wellSuccessful';
         } elseif ($luck >= 1.5 && $luck < 2.5) {
-            $messages[] = $this->trans('action.steal.veryWell');
+            $messages[] = 'action.steal.veryWell';
             $eventMessage = 'event.action.steal.veryWell';
         } else {
-            $messages[] = $this->trans('action.steal.perfectly');
+            $messages[] = 'action.steal.perfectly';
             $eventMessage = 'event.action.steal.perfectly';
         }
 
-        $messages[] = $this->trans('action.steal.zeni.added', ['%zenisAdded%' => $zenisAdded]);
+        $messages[] = [
+            'message' => 'action.steal.zeni.added',
+            'parameters' => [
+                'zenisAdded' => $zenisAdded
+            ]
+        ];
         $playerService->addEvent(
             $player,
             $target,
@@ -423,19 +433,19 @@ class ActionController extends BaseController
         list($luck, $competences) = $playerService->analysis($player, $target);
 
         if ($luck >= 56 and $luck <= 61) {
-            $messages[] = $this->trans('action.analysis.catastrophic'); //'Évaluation catastrophique...';
+            $messages[] = 'action.analysis.catastrophic'; //'Évaluation catastrophique...';
         } elseif ($luck >= 45 and $luck <= 55) {
-            $messages[] = $this->trans('action.analysis.really.failed'); //'Évaluation vraiment échouée...';
+            $messages[] = 'action.analysis.reallyFailed'; //'Évaluation vraiment échouée...';
         } elseif ($luck >= 30 and $luck <= 44) {
-            $messages[] = $this->trans('action.analysis.failed'); //'Évaluation échouée';
+            $messages[] = 'action.analysis.failed'; //'Évaluation échouée';
         } elseif ($luck >= 15 and $luck <= 29) {
-            $messages[] = $this->trans('action.analysis.moderatelySuccessful'); //'Évaluation moyennement réussie';
+            $messages[] = 'action.analysis.moderatelySuccessful'; //'Évaluation moyennement réussie';
         } elseif ($luck >= 8 and $luck <= 14) {
-            $messages[] = $this->trans('action.analysis.successful'); //'Évaluation bien réussie !';
+            $messages[] = 'action.analysis.successful'; //'Évaluation bien réussie !';
         } elseif ($luck >= 1 and $luck <= 7) {
-            $messages[] = $this->trans('action.analysis.wellSuccessful'); //'Évaluation très bien réussie !';
+            $messages[] = 'action.analysis.wellSuccessful'; //'Évaluation très bien réussie !';
         } elseif ($luck == 0) {
-            $messages[] = $this->trans('action.analysis.excellent'); //'Évaluation excellente !!';
+            $messages[] = 'action.analysis.excellent'; //'Évaluation excellente !!';
         }
 
         $player->usePoints(Player::ACTION_POINT, Player::ANALYSIS_ACTION);
@@ -484,11 +494,11 @@ class ActionController extends BaseController
             $player->setBattlePoints($player->getBattlePoints() + self::DEFAULT_BATTLE_POINT_KILL_SLAP);
             $playerService->addAttackStats($player, $target, $damages, true, Player::ATTACK_TYPE_SLAP);
             $eventMessage = 'event.action.slap.killed';
-            $messages[] = $this->trans('action.slap.killed');
-            $messages[] = $this->trans('action.slap.battlePoints');
+            $messages[] = 'action.slap.killed';
+            $messages[] = 'action.slap.battlePoints';
         } else {
             $eventMessage = 'event.action.slap.damages';
-            $messages[] = $this->trans('action.slap.damages');
+            $messages[] = 'action.slap.damages';
         }
 
         $player->setNbSlapGiven($player->getNbSlapGiven() + 1);
@@ -612,7 +622,7 @@ class ActionController extends BaseController
             );
 
             if (is_numeric($targetObject)) {
-                $messages[] = $this->trans('action.give.error.' . $targetObject);
+                $messages[] = 'action.give.error.' . $targetObject;
             } else {
                 $playerObject->setNumber($playerObject->getNumber() - $quantity);
                 $player->usePoints(Player::ACTION_POINT, Player::GIVE_ACTION);
@@ -627,11 +637,7 @@ class ActionController extends BaseController
                     $target,
                     'event.action.give.item',
                     [
-                        'objectName' => $this->trans(
-                            $playerObject->getObject()->getName() . '.name',
-                            [],
-                            'objects'
-                        ),
+                        'name' => sprint('objects.%s.name', $playerObject->getObject()->getName()),
                         'quantity' => $quantity
                     ]
                 );
@@ -675,29 +681,34 @@ class ActionController extends BaseController
         list($luck, $healPoints, $fatiguePoints) = $playerService->heal($player, $target);
 
         if ($luck < -20) {
-            $messages[] = $this->trans('action.heal.completelyMissed');
+            $messages[] = 'action.heal.completelyMissed';
             $eventMessage = 'event.action.heal.completelyMissed';
         } elseif ($luck >= -20 && $luck < -10) {
-            $messages[] = $this->trans('action.heal.missed');
+            $messages[] = 'action.heal.missed';
             $eventMessage = 'event.action.heal.missed';
         } elseif ($luck >= -10 && $luck < -5) {
-            $messages[] = $this->trans('action.heal.moderatelySuccessful');
+            $messages[] = 'action.heal.moderatelySuccessful';
             $eventMessage = 'event.action.heal.moderatelySuccessful';
         } elseif ($luck >= -5 && $luck < 0) {
-            $messages[] = $this->trans('action.heal.successful');
+            $messages[] = 'action.heal.successful';
             $eventMessage = 'event.action.heal.successful';
         } elseif ($luck >= 0 && $luck < 5) {
-            $messages[] = $this->trans('action.heal.wellSuccessful');
+            $messages[] = 'action.heal.wellSuccessful';
             $eventMessage = 'event.action.heal.wellSuccessful';
         } elseif ($luck >= 5 && $luck < 15) {
-            $messages[] = $this->trans('action.heal.veryWell');
+            $messages[] = 'action.heal.veryWell';
             $eventMessage = 'event.action.heal.veryWell';
         } else {
-            $messages[] = $this->trans('action.heal.perfectly');
+            $messages[] = 'action.heal.perfectly';
             $eventMessage = 'event.action.heal.perfectly';
         }
 
-        $messages[] = $this->trans('action.heal.restore', ['%healPoints%' => $healPoints]);
+        $messages[] = [
+            'message' => 'action.heal.restore',
+            'parameters' => [
+                'healPoints' => $healPoints
+            ]
+        ];
         $playerService->addEvent(
             $player,
             $target,
@@ -710,9 +721,9 @@ class ActionController extends BaseController
         if (!empty($fatiguePoints)) {
             $eventMessage = 'event.action.heal.fatigue';
             if ($target->getFatiguePoints() > 0) {
-                $messages[] = $this->trans('action.heal.fatigue.decrease');
+                $messages[] = 'action.heal.fatigue.decrease';
             } else {
-                $messages[] = $this->trans('action.heal.fatigue.disappear');
+                $messages[] = 'action.heal.fatigue.disappear';
             }
 
             $playerService->addEvent(
@@ -827,12 +838,12 @@ class ActionController extends BaseController
         }
 
         $messages = [];
-        $messages[] = $this->trans(
-            'action.spell.cast',
-            [
-                '%name%' => $this->trans($playerSpell->getSpell()->getName() . '.name', [], 'spells')
+        $messages[] = [
+            'message' => 'action.spell.cast',
+            'parameters' => [
+                'name' => sprintf('spells.%s.name', $playerSpell->getSpell()->getName())
             ]
-        );
+        ];
 
         $this->dispatchEvent(
             DbaEvents::BEFORE_SPELL,
@@ -847,40 +858,45 @@ class ActionController extends BaseController
 
         if ($luck !== null) {
             if ($type == Player::ATTACK_TYPE_BETRAY) {
-                $messages[] = $this->trans('action.betray');
+                $messages[] = 'action.betray';
             } elseif ($type == Player::ATTACK_TYPE_REVENGE) {
-                $messages[] = $this->trans('action.revenge');
+                $messages[] = 'action.revenge';
             }
 
             if (($luck >= -4 && $luck < -3) || $damages <= 0) {
-                $messages[] = $this->trans('action.spell.dodge');
+                $messages[] = 'action.spell.dodge';
                 $eventMessage = 'event.action.spell.dodge';
             } elseif ($luck >= -3 && $luck < -2.25) {
-                $messages[] = $this->trans('action.spell.really.failed');
-                $eventMessage = 'event.action.spell.really.failed';
+                $messages[] = 'action.spell.reallyFailed';
+                $eventMessage = 'event.action.spell.reallyFailed';
             } elseif ($luck >= -2.25 && $luck < -1.5) {
-                $messages[] = $this->trans('action.spell.failed');
+                $messages[] = 'action.spell.failed';
                 $eventMessage = 'event.action.spell.failed';
             } elseif ($luck >= -1.5 && $luck < 0.5) {
-                $messages[] = $this->trans('action.spell.mediocre');
+                $messages[] = 'action.spell.mediocre';
                 $eventMessage = 'event.action.spell.moderately.succeeded';
             } elseif ($luck >= 0.5 && $luck < 1) {
-                $messages[] = $this->trans('action.spell.successful');
+                $messages[] = 'action.spell.successful';
                 $eventMessage = 'event.action.spell.succeeded';
             } elseif ($luck >= 1 && $luck < 1.5) {
-                $messages[] = $this->trans('action.spell.nice');
+                $messages[] = 'action.spell.nice';
                 $eventMessage = 'event.action.spell.nice';
             } elseif ($luck >= 1.5 && $luck < 5) {
-                $messages[] = $this->trans('action.spell.critical');
+                $messages[] = 'action.spell.critical';
                 $eventMessage = 'event.action.spell.critic';
             } elseif ($luck >= 5 && $luck <= 6) {
-                $messages[] = $this->trans('action.spell.master');
+                $messages[] = 'action.spell.master';
                 $eventMessage = 'event.action.spell.master';
             }
 
-            $messages[] = $this->trans('action.spell.damages', ['%damages%' => $damages]);
+            $messages[] = [
+                'message' => 'action.spell.damages',
+                'parameters' => [
+                    'damages' => $damages
+                ]
+            ];
             if ($type == Player::ATTACK_TYPE_BETRAY) {
-                $messages[] = $this->trans('action.betrayPoints');
+                $messages[] = 'action.betrayPoints';
             }
             $playerService->addEvent(
                 $player,
@@ -895,7 +911,7 @@ class ActionController extends BaseController
         $playerService->addBattlePoints($player, Player::SPELL_ACTION, $target, $messages);
 
         if ($isDead) {
-            $messages[] = $this->trans('action.killed');
+            $messages[] = 'action.killed';
             if (!$target->isPlayer()) {
                 $target->setZeni($target->getZeni() + self::DEFAULT_NPC_ZENI);
             } else {
@@ -907,12 +923,12 @@ class ActionController extends BaseController
             }
 
             $this->checkHeadPrice($player, $target, $messages);
-            $messages[] = $this->trans('action.spell.kill.battlePoints');
+            $messages[] = 'action.spell.kill.battlePoints';
             $player->setBattlePoints($player->getBattlePoints() + self::DEFAULT_BATTLE_POINT_KILL);
 
             if ($type == Player::ATTACK_TYPE_REVENGE) {
                 $player->setTarget(null);
-                $messages[] = $this->trans('action.spell.kill.revenge');
+                $messages[] = 'action.spell.kill.revenge';
             }
         }
 
@@ -964,12 +980,12 @@ class ActionController extends BaseController
             return;
         }
 
-        $messages[] = $this->trans(
-            'action.head.price',
-            [
-                '%headPrice%' => $target->getHeadPrice()
+        $messages[] = [
+            'message' => 'action.head.price',
+            'parameters' => [
+                'headPrice' => $target->getHeadPrice()
             ]
-        );
+        ];
 
         $player->setZeni($player->getZeni() + $target->getHeadPrice());
         $target->setHeadPrice(0);

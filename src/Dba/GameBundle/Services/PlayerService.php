@@ -29,12 +29,17 @@ class PlayerService extends BaseService
             ($player->getLevel() * 0.5) > $target->getLevel()
         ) {
             $return = [
-                $this->trans('game.attack.protect'),
-                $this->trans('game.lose.life', ['%damages%' => self::PILAF_ATTACK])
+                'game.attack.protect',
+                [
+                    'message' => 'game.lose.life',
+                    'parameters' => [
+                        'damages' => self::PILAF_ATTACK
+                    ]
+                ]
             ];
 
             if ($this->takeDamage($player, self::PILAF_ATTACK)) {
-                $return[] = $this->trans('game.you.die');
+                $return[] = 'game.you.die';
             }
 
             return $return;
@@ -267,11 +272,21 @@ class PlayerService extends BaseService
     {
         $battlePoints = $this->calculateBattlePoints($player, $actionPointsUsed, $target);
         if (!empty($battlePoints)) {
-            $messages[] = $this->trans('action.battle.points', ['%battlePoints%' => $battlePoints]);
+            $messages[] = [
+                'message' => 'action.battle.points',
+                'parameters' => [
+                    'battlePoints' => $battlePoints
+                ]
+            ];
         }
 
         if ($this->updateLevel($player, $battlePoints)) {
-            $messages[] = $this->trans('action.level.up', ['%level%' => $player->getLevel()]);
+            $messages[] = [
+                'message' => 'action.level.up',
+                'parameters' => [
+                    'level' => $player->getLevel()
+                ]
+            ];
         }
     }
 
