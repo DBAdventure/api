@@ -129,7 +129,7 @@ class BuildingController extends BaseController
         return [
             'message' => 'building.magic.success',
             'parameters' => [
-                'spell' => sprintf('spells.%s.name', $spell->getName()),
+                'name' => sprintf('spells.%s.name', $spell->getName()),
             ]
         ];
     }
@@ -160,7 +160,7 @@ class BuildingController extends BaseController
         return [
             'message' => 'building.shop.success',
             'parameters' => [
-                'object' => sprintf('objects.%s.name', $object->getName()),
+                'name' => sprintf('objects.%s.name', $object->getName()),
             ]
         ];
     }
