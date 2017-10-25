@@ -637,7 +637,7 @@ class ActionController extends BaseController
                     $target,
                     'event.action.give.item',
                     [
-                        'name' => sprint('objects.%s.name', $playerObject->getObject()->getName()),
+                        'name' => sprintf('objects.%s.name', $playerObject->getObject()->getName()),
                         'quantity' => $quantity
                     ]
                 );

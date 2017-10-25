@@ -391,7 +391,7 @@ class BuildingControllerTest extends BaseTestCase
         );
         $this->assertEquals(
             'objects.senzu.name',
-            $json->parameters->object
+            $json->parameters->name
         );
     }
 

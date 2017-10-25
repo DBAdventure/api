@@ -6,47 +6,35 @@ use Dba\GameBundle\Entity\PlayerObject;
 
 class MapControllerTest extends BaseTestCase
 {
-    public function testRefreshMenu()
+    public function testMinimapPngWithoutMap()
     {
         $this->login();
-        $this->client->request('GET', '/map/refresh/menu');
-        $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
+        $this->client->request('GET', '/api/map/mini.png');
+        $this->assertJsonResponse($this->client->getResponse(), 403);
     }
 
     public function testMinimapPng()
     {
-        $this->login();
-        $this->client->request('GET', '/map/mini.png');
-        $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
-    }
+        $player = $this->login();
+        $playerObject = new PlayerObject();
+        $playerObject->setObject($this->repos()->getObjectRepository()->findOneById(1));
+        $playerObject->setPlayer($player);
+        $playerObject->setNumber(1);
+        $playerObject->setEquipped(false);
+        $player->addPlayerObject($playerObject);
+        $this->em()->persist($playerObject);
+        $this->em()->flush();
 
-    public function testMiniMap()
-    {
-        $this->login();
-        $this->client->request('GET', '/map/mini');
-        $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
+        $this->client->request('GET', '/api/map/mini.png');
+        $response = $this->client->getResponse();
+        $this->assertEquals(200, $response->getStatusCode());
+        $this->assertEquals('image/png', $response->headers->get('Content-Type'));
     }
 
     public function testMap()
     {
         $this->login();
-        $this->client->request('GET', '/map');
-        $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
-    }
-
-    public function testMapPartial()
-    {
-        $this->login();
-        $this->client->request('GET', '/map/partial');
-        $json = $this->assertJsonResponse($this->client->getResponse());
-        $this->assertNotEmpty($json->content);
-    }
-
-    public function testElements()
-    {
-        $this->login();
-        $this->client->request('GET', '/map/elements');
-        $json = $this->assertJsonResponse($this->client->getResponse());
-        $this->assertNotEmpty($json->content);
+        $this->client->request('GET', '/api/map/');
+        $this->assertJsonResponse($this->client->getResponse());
     }
 }
