@@ -473,8 +473,6 @@ class ActionControllerTest extends BaseTestCase
         $this->assertJsonResponse($this->client->getResponse());
 
         $this->em()->refresh($enemy);
-        $this->assertNotEquals(5, $enemy->getX());
-        $this->assertNotEquals(5, $enemy->getY());
         $this->assertNotEquals(3, $enemy->getMap()->getId());
         $this->assertNull($enemy->getTarget());
     }
@@ -506,8 +504,6 @@ class ActionControllerTest extends BaseTestCase
 
         $this->em()->refresh($player);
         $this->em()->refresh($enemy);
-        $this->assertNotEquals(5, $enemy->getX());
-        $this->assertNotEquals(5, $enemy->getY());
         $this->assertNotEquals(3, $enemy->getMap()->getId());
         $this->assertEquals($player->getId(), $enemy->getTarget()->getId());
         $this->assertEquals(Side::BAD, $player->getSide()->getId());
@@ -574,8 +570,6 @@ class ActionControllerTest extends BaseTestCase
 
         $this->em()->refresh($player);
         $this->em()->refresh($enemy);
-        $this->assertNotEquals(15, $enemy->getX());
-        $this->assertNotEquals(15, $enemy->getY());
         $this->assertNotEquals(3, $enemy->getMap()->getId());
         $this->assertEquals($player->getId(), $enemy->getTarget()->getId());
         $this->assertEquals(Side::GOOD, $player->getSide()->getId());
@@ -923,8 +917,6 @@ class ActionControllerTest extends BaseTestCase
         $this->assertEquals(1, $player->getNbSlapGiven());
         $this->assertEquals(9, $enemy->getBetrayals());
         $this->assertEquals(1, $enemy->getNbSlapTaken());
-        $this->assertNotEquals(5, $enemy->getX());
-        $this->assertNotEquals(5, $enemy->getY());
         $this->assertNotEquals(3, $enemy->getMap()->getId());
     }
 
