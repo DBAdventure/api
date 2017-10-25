@@ -4,31 +4,15 @@ namespace Dba\GameBundle\Tests\Controller;
 
 class DefaultControllerTest extends BaseTestCase
 {
-    public function testHome()
-    {
-        $this->client->request('GET', '/');
-        $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
-    }
-
     public function testConfirm()
     {
         $this->registerClass(1);
         $player = $this->repos()->getPlayerRepository()->findOneByEmail('test@test.com');
         $this->client->request(
-            'GET',
-            '/confirm/' . $player->getId() . '/' . $player->getConfirmationToken()
+            'POST',
+            '/api/account/confirm/' . $player->getId() . '/' . $player->getConfirmationToken()
         );
-        $this->assertEquals(302, $this->client->getResponse()->getStatusCode());
-        $session = $this->container->get('session');
-        $this->assertEquals(
-            [
-                'success' => [
-                    'account.created',
-                    'account.enabled'
-                ]
-            ],
-            $session->getBag('flashes')->all()
-        );
+        $this->assertJsonResponse($this->client->getResponse());
     }
 
     /**
@@ -38,8 +22,8 @@ class DefaultControllerTest extends BaseTestCase
     {
         $this->registerClass(1);
         $player = $this->repos()->getPlayerRepository()->findOneByEmail('test@test.com');
-        $this->client->request('GET', '/confirm/99999/' . $player->getConfirmationToken());
-        $this->assertEquals(404, $this->client->getResponse()->getStatusCode());
+        $this->client->request('POST', '/api/account/confirm/99999/' . $player->getConfirmationToken());
+        $this->assertJsonResponse($this->client->getResponse(), 400);
     }
 
 
@@ -48,8 +32,8 @@ class DefaultControllerTest extends BaseTestCase
      */
     public function testConfirmWithWrongToken()
     {
-        $this->client->request('GET', '/confirm/99999/badToken');
-        $this->assertEquals(404, $this->client->getResponse()->getStatusCode());
+        $this->client->request('POST', '/api/account/confirm/99999/badToken');
+        $this->assertJsonResponse($this->client->getResponse(), 400);
     }
 
     public function testRegisterClassOne()
@@ -162,49 +146,28 @@ class DefaultControllerTest extends BaseTestCase
 
     public function registerClass($class)
     {
-        $crawler = $this->client->request('GET', '/register');
-        $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
-        $this->assertCount(1, $crawler->filter('#player_registration_name'));
-        $this->assertCount(1, $crawler->filter('#player_registration_username'));
-        $this->assertCount(1, $crawler->filter('#player_registration_password_password'));
-        $this->assertCount(1, $crawler->filter('#player_registration_password_password_confirm'));
-        $this->assertCount(1, $crawler->filter('#player_registration_email_email'));
-        $this->assertCount(1, $crawler->filter('#player_registration_email_email_confirm'));
-        $this->assertCount(1, $crawler->filter('#player_registration_class'));
-
-        $form = $crawler->filter('#register-form')->form();
-        $form->disableValidation();
-        // set some values
-        $form['player_registration[name]'] = 'Test';
-        $form['player_registration[username]'] = 'My Name is Sparta';
-        $form['player_registration[password][password]'] = 'test';
-        $form['player_registration[password][password_confirm]'] = 'test';
-        $form['player_registration[email][email]'] = 'test@test.com';
-        $form['player_registration[email][email_confirm]'] = 'test@test.com';
-        $form['player_registration[class]'] = $class;
-        $form['player_registration[race]'] = '1';
-        $form['player_registration[appearance][type]'] = 'H3';
-        $form['player_registration[appearance][image]'] = 'H1.png';
-
-        // submit the form
-        $this->client->submit($form);
-        $session = $this->client->getContainer()->get('session');
-        $this->assertEquals(
+        $this->client->request(
+            'POST',
+            '/api/register',
             [
-                'success' => [
-                    'account.created'
+                'player_registration' => [
+                    'name' => 'Test',
+                    'username' => 'My name is GoT',
+                    'password' => 'test',
+                    'password_confirm' => 'test',
+                    'email' => 'test@test.com',
+                    'email_confirm' => 'test@test.com',
+                    'class' => $class,
+                    'race' => '1',
+                    'side' => '1',
+                    'appearance' => [
+                        'type' => 'H3',
+                        'image' => 'H1.png',
+                    ]
                 ]
-            ],
-            $session->getBag('flashes')->all()
-        );
-        $this->assertEquals(
-            302,
-            $this->client->getResponse()->getStatusCode()
+            ]
         );
 
-        $this->assertTrue(
-            $this->client->getResponse()->isRedirect('/'),
-            'response is a redirect to /'
-        );
+        $this->assertJsonResponse($this->client->getResponse());
     }
 }
