@@ -157,6 +157,8 @@ class PlayerSpell
 
     /**
      * Check if spell can be used
+     *
+     * @return boolean
      */
     public function canBeUsed()
     {

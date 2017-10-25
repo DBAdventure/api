@@ -794,12 +794,13 @@ class ActionController extends BaseController
      * @ParamConverter("target", class="Dba\GameBundle\Entity\Player")
      * @ParamConverter("playerSpell", class="Dba\GameBundle\Entity\PlayerSpell")
      * @Annotations\Post("/spell/{target}/{playerSpell}")
-     * @Annotations\Post("/spell/{target}/{playerSpell}/{type}")
+     * @Annotations\Post("/spell/{target}/{playerSpell}/{type}", name="_with_type")
      */
     public function postSpellAction(Player $target, PlayerSpell $playerSpell, $type = null)
     {
         $player = $this->getUser();
-        if ($this->checkPosition($player, $target, Player::SPELL_ACTION) ||
+        if ($player->getActionPoints() < Player::SPELL_ACTION ||
+            $player->getMap()->getId() != $target->getMap()->getId() ||
             $player->getId() == $target->getId() ||
             (!empty($playerSpell) && !$this->canMakeAction($player, $target, $playerSpell))
         ) {
@@ -937,6 +938,8 @@ class ActionController extends BaseController
         $playerService->addSpellStats($player, $playerSpell);
 
         $player->usePoints(Player::ACTION_POINT, Player::SPELL_ACTION);
+        $player->usePoints(Player::KI_POINT, $playerSpell->getSpell()->getRequirements()['ki']);
+
         $this->dispatchEvent(
             DbaEvents::AFTER_SPELL,
             $player,

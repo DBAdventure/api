@@ -2930,6 +2930,10 @@ class Player implements AdvancedUserInterface, Serializable
                 $newAP = $this->getActionPoints() - $howMuch;
                 $this->setActionPoints($newAP < 0 ? 0 : $newAP);
                 break;
+            case self::KI_POINT:
+                $newKI = $this->getKi() - $howMuch;
+                $this->setKi($newKI < 0 ? 0 : $newKI);
+                break;
             case self::SKILL_POINT:
                 $newSK = $this->getSkillPoints() - $howMuch;
                 $this->setSkillPoints($newSK < 0 ? 0 : $newSK);
