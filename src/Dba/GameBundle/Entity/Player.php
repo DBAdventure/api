@@ -3644,7 +3644,7 @@ class Player implements AdvancedUserInterface, Serializable
     /**
      * @JMS\VirtualProperty()
      * @JMS\SerializedName("can_be_healed")
-     * @JMS\Exclude
+     * @JMS\Expose
      */
     public function canBeHealed()
     {

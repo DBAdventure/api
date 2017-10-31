@@ -757,7 +757,6 @@ class ActionController extends BaseController
         return [
             'messages' => $messages,
             'target' => $target,
-            'canBeHealed' => $target->getHealth() < $target->getTotalMaxHealth(),
         ];
     }
 
