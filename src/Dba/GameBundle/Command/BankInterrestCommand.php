@@ -24,9 +24,9 @@ class BankInterrestCommand extends BaseCommand
     {
         $this
             ->setName('dba:bank:interest')
-            ->setDescription('Calculate bank interrest.')
+            ->setDescription('Calculate bank interest.')
             ->setHelp(<<<'EOT'
-The <info>%command.name%</info> command calculate and distribute bank interrest:
+The <info>%command.name%</info> command calculate and distribute bank interest:
 
   <info>php %command.full_name%</info>
 EOT
@@ -46,7 +46,7 @@ EOT
         $bankRepo = $this->repos()->getBankRepository();
         $banks = $bankRepo->findAll();
         $playerService = $this->services()->getPlayerService();
-        $message = sprintf('Calcul interrests of <comment>%d</comment> players', count($banks));
+        $message = sprintf('Calcul interests of <comment>%d</comment> players', count($banks));
         $output->writeln($message);
         $this->getLogger()->info($message);
         foreach ($banks as $bank) {
