@@ -23,7 +23,7 @@ class SendMailCommand extends BaseCommand
     protected function configure()
     {
         $this
-            ->setName('dba:send_mail')
+            ->setName('dba:mail:send')
             ->setDescription('Send mail in queue.')
             ->setHelp(<<<'EOT'
 The <info>%command.name%</info> command let you send mail store in database:

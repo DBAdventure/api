@@ -23,7 +23,7 @@ class BankInterrestCommand extends BaseCommand
     protected function configure()
     {
         $this
-            ->setName('dba:bank')
+            ->setName('dba:bank:interest')
             ->setDescription('Calculate bank interrest.')
             ->setHelp(<<<'EOT'
 The <info>%command.name%</info> command calculate and distribute bank interrest:
