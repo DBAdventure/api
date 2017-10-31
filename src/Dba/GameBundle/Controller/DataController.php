@@ -122,7 +122,7 @@ class DataController extends BaseController
                         'Yajirobé' => 'H9.png',
                         'Yajirobé (un peu plus gros)' => 'H20.png',
                         'Mr Popo' => 'H12.png',
-                        'Maître Karine' => 'H11',
+                        'Maître Karine' => 'H11.png',
                         'Chichi jeune' => 'H25.png',
                         'Chichi' => 'H8.png',
                         'Gyumao' => 'H24.png',

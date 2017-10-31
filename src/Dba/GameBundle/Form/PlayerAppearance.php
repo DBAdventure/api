@@ -353,7 +353,7 @@ class PlayerAppearance extends AbstractType
                 'Yajirobé' => 'H9.png',
                 'Yajirobé (un peu plus gros)' => 'H20.png',
                 'Mr Popo' => 'H12.png',
-                'Maître Karine' => 'H11',
+                'Maître Karine' => 'H11.png',
                 'Chichi jeune' => 'H25.png',
                 'Chichi' => 'H8.png',
                 'Gyumao' => 'H24.png',
@@ -470,7 +470,7 @@ class PlayerAppearance extends AbstractType
                 'Bou Mal incarné' => 'M9.png',
                 'Majin Bou' => 'M8.png',
                 'Majin Bou + Gotrunks' => 'M12.png',
-                'Majin Bou + Piccolo' => 'M11',
+                'Majin Bou + Piccolo' => 'M11.png',
                 'Majin Bou + San Gohan' => 'M10.png',
                 'Bou Ultime' => 'M1.png',
                 'Super Oub' => 'M13.png'
