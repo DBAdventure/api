@@ -79,44 +79,61 @@ class ActionControllerTest extends BaseTestCase
         $this->assertJsonResponse($this->client->getResponse(), 403);
     }
 
+    public function testMoveOnRespawn()
+    {
+        $player = $this->login();
+        $player->setX(10);
+        $player->setY(10);
+        $player->setMovementPoints(10);
+        $this->em()->flush();
+
+        $this->client->request('POST', '/api/action/move/n');
+        $this->assertJsonResponse($this->client->getResponse());
+
+        $this->em()->refresh($player);
+        $this->assertEquals(10, $player->getX());
+        $this->assertEquals(9, $player->getY());
+        $this->assertEquals(10, $player->getMovementPoints());
+    }
+
     public function testMoveNorth()
     {
-        $this->assertTestPosition('n', 10, 9);
+        $this->assertTestPosition('n', 10, 9, 5);
     }
 
     public function testMoveNorthEast()
     {
-        $this->assertTestPosition('ne', 11, 9);
+        $this->assertTestPosition('ne', 11, 9, 6);
     }
 
     public function testMoveNorthWest()
     {
-        $this->assertTestPosition('nw', 9, 9);
+        $this->assertTestPosition('nw', 9, 9, 6);
     }
 
     public function testMoveSouth()
     {
-        $this->assertTestPosition('s', 10, 11);
+        $this->assertTestPosition('s', 10, 11, 5);
     }
 
     public function testMoveSouthEast()
     {
-        $this->assertTestPosition('se', 11, 11);
+        $this->assertTestPosition('se', 11, 11, 6);
     }
 
     public function testMoveSouthWest()
     {
-        $this->assertTestPosition('sw', 9, 11);
+        $this->assertTestPosition('sw', 9, 11, 6);
     }
 
     public function testMoveEast()
     {
-        $this->assertTestPosition('e', 11, 10);
+        $this->assertTestPosition('e', 11, 10, 5);
     }
 
     public function testMoveWest()
     {
-        $this->assertTestPosition('w', 9, 10);
+        $this->assertTestPosition('w', 9, 10, 5);
     }
 
     public function testPickupWrongXPosition()
@@ -578,12 +595,13 @@ class ActionControllerTest extends BaseTestCase
         $this->assertEquals(1, $player->getNbWanted());
     }
 
-    protected function assertTestPosition($where, $x, $y)
+    protected function assertTestPosition($where, $x, $y, $usage)
     {
         $player = $this->login();
         $player->setX(10);
         $player->setY(10);
-        $this->em()->persist($player);
+        $player->setMovementPoints(10);
+        $player->setMap($this->repos()->getMapRepository()->getDefaultMap());
         $this->em()->flush();
 
         $this->client->request('POST', '/api/action/move/' . $where);
@@ -592,6 +610,7 @@ class ActionControllerTest extends BaseTestCase
         $this->em()->refresh($player);
         $this->assertEquals($x, $player->getX());
         $this->assertEquals($y, $player->getY());
+        $this->assertEquals(10 - $usage, $player->getMovementPoints());
     }
 
     public function testStealDifferentXPosition()

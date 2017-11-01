@@ -62,7 +62,10 @@ class ActionController extends BaseController
             return $this->forbidden();
         }
 
-        $player->usePoints(Player::MOVEMENT_POINT, Player::MOVEMENT_ACTION + (int) ($move > 1));
+        if (!$player->getMap()->isRespawn()) {
+            $player->usePoints(Player::MOVEMENT_POINT, Player::MOVEMENT_ACTION + (int) ($move > 1));
+        }
+
         $this->dispatchEvent(DbaEvents::AFTER_MOVE, $player, null);
 
         $this->em()->persist($player);

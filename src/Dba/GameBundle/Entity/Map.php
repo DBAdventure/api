@@ -127,4 +127,14 @@ class Map
     {
         return $this->id;
     }
+
+    /**
+     * Check if it's respawn map
+     *
+     * @return boolean
+     */
+    public function isRespawn()
+    {
+        return in_array($this->getId(), [self::HEAVEN, self::HELL]);
+    }
 }
