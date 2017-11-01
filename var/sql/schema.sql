@@ -955,6 +955,13 @@ ALTER TABLE ONLY guild ALTER COLUMN id SET DEFAULT nextval('guild_id_seq'::regcl
 -- Name: id; Type: DEFAULT
 --
 
+ALTER TABLE ONLY mail ALTER COLUMN id SET DEFAULT nextval('mail_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT
+--
+
 ALTER TABLE ONLY building ALTER COLUMN id SET DEFAULT nextval('building_id_seq'::regclass);
 
 
