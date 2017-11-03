@@ -120,7 +120,8 @@ class GuildController extends BaseController
             return $this->forbidden();
         }
 
-        return [];
+
+        return $guildPlayer->getGuild()->getEvents();
     }
 
     /**
@@ -146,6 +147,12 @@ class GuildController extends BaseController
 
         $this->em()->persist($guildPlayer);
         $this->em()->flush();
+
+        $this->services()->getGuildService()->addEvent(
+            $player,
+            $guild,
+            'event.guild.request'
+        );
 
         return [];
     }
@@ -190,10 +197,7 @@ class GuildController extends BaseController
                 $this->services()->getGuildService()->addEvent(
                     $player,
                     $guildPlayer->getGuild(),
-                    'event.guild.leave',
-                    [
-                        'name' => $player->getName(),
-                    ]
+                    'event.guild.leave'
                 );
 
                 $messages[] = 'guild.left';
@@ -201,7 +205,6 @@ class GuildController extends BaseController
         }
 
         $this->em()->remove($guildPlayer);
-        $this->em()->remove($guildPlayer->getRank());
         $this->em()->flush();
 
         return ['messages' => $messages];

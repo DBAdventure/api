@@ -93,6 +93,14 @@ class Guild
     /**
      * @var ArrayCollection
      *
+     * @ORM\OneToMany(targetEntity="Dba\GameBundle\Entity\GuildEvent", mappedBy="guild", cascade={"all"})
+     * @JMS\Exclude
+     */
+    private $events;
+
+    /**
+     * @var ArrayCollection
+     *
      * @ORM\OneToMany(targetEntity="Dba\GameBundle\Entity\GuildRank", mappedBy="guild", cascade={"all"})
      */
     private $ranks;
@@ -326,6 +334,40 @@ class Guild
     public function getPlayers()
     {
         return $this->players;
+    }
+
+    /**
+     * Add Event
+     *
+     * @param GuildEvent $guildEvent
+     *
+     * @return Guild
+     */
+    public function addEvent(GuildEvent $guildEvent)
+    {
+        $this->event[] = $guildEvent;
+
+        return $this;
+    }
+
+    /**
+     * Remove Event
+     *
+     * @param GuildEvent $guildEvent
+     */
+    public function removeEvent(GuildEvent $guildEvent)
+    {
+        $this->event->removeElement($guildEvent);
+    }
+
+    /**
+     * Get Events
+     *
+     * @return ArrayCollection
+     */
+    public function getEvents()
+    {
+        return $this->events;
     }
 
     /**

@@ -28,7 +28,7 @@ class GuildEvent
     /**
      * @var Player
      *
-     * @ORM\ManyToOne(targetEntity="Player", inversedBy="playerEvents")
+     * @ORM\ManyToOne(targetEntity="Player")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="player_id", referencedColumnName="id", nullable=true, onDelete="CASCADE")
      * })
@@ -38,7 +38,7 @@ class GuildEvent
     /**
      * @var Guild
      *
-     * @ORM\ManyToOne(targetEntity="Guild", inversedBy="guildEvents")
+     * @ORM\ManyToOne(targetEntity="Guild", inversedBy="events")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="guild_id", referencedColumnName="id", nullable=false, onDelete="CASCADE")
      * })

@@ -3,8 +3,7 @@
 DIR=$(dirname $(readlink -f $0))
 PROJECT_DIR="${DIR}/../"
 
-##Source file requried for taskes (Env is mandatory and must be first)
-source ${DIR}/bash/env
+## Source file requried for tasks
 source ${DIR}/bash/common
 source ${DIR}/bash/project
 
