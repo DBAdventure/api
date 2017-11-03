@@ -1,17 +1,16 @@
-<h3>You did it! You registered!</h3>
-
-Hi <strong>{{ player.name }}!</strong>
-
-<p>You're successfully registered.</p>
+<h3>Vous l'avez fait <strong>{{ player.name }} !</strong> Bievenue dans l'aventure !</h3>
 
 <p>
-  <strong>Login:</strong> {{ player.username}}
+  Afin de pouvoir vous balader sur l'île, vous avez besoin de valider l'inscription. <br />
+  Pour cela, rendez-vous à l'adresse suivante : <br/>
+  <a href="{{ front_url }}/account/confirm/{{ player.id }}/{{ player.confirmationToken }}">{{ front_url }}/account/confirm/{{ player.id }}/{{ player.confirmationToken }}</a>.
 </p>
 
 <p>
-  To validate your account, go to: <a href="{{ front_url }}/account/confirm/{{ player.id }}/{{ player.confirmationToken }}">{{ front_url }}/{{ player.id }}/{{ player.confirmationToken }}</a>.
+  Au cas où vous auriez oublié votre identifiant.
+  <strong>Identifiant :</strong> {{ player.username}}
 </p>
 
 <p>
-  Thanks!
+  Merci de ne pas répondre a ce mail.
 </p>
