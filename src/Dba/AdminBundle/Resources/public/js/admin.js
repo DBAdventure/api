@@ -215,7 +215,7 @@ var DbaAdmin = function($)
             this.displayImage($images, '#object-image-displayed');
             Dba.collectionType();
         },
-        buildings: function($images)
+        building: function($images)
         {
             this.displayImage($images, '#building-image-displayed');
         },
