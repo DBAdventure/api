@@ -16,4 +16,5 @@
 !var/SymfonyRequirements.php
 /vendor/
 /web/bundles/
+/web/admin/
 /coverage/
