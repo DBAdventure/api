@@ -19,6 +19,25 @@ class Building
     const TYPE_WANTED = 3;
     const TYPE_BANK = 12;
     const TYPE_MAGIC = 13;
+    const TYPE_DOOR = 14;
+
+    const TYPE_LIST = [
+        self::TYPE_TELEPORT => 'teleport',
+        self::TYPE_WANTED => 'wanted',
+        self::TYPE_BANK => 'bank',
+        self::TYPE_MAGIC => 'magic',
+        self::TYPE_DOOR => 'door',
+
+        Object::TYPE_UNIQUE => 'shop unique',
+        Object::TYPE_CONSUMABLE => 'shop consumable',
+        Object::TYPE_VISION => 'shop vision',
+        Object::TYPE_WEAPON => 'shop weapon',
+        Object::TYPE_SHIELD => 'shop shield',
+        Object::TYPE_ACCESSORY => 'shop accessory',
+        Object::TYPE_CAP => 'shop cap',
+        Object::TYPE_SHOES => 'shop shoes',
+        Object::TYPE_OUTFIT => 'shop outfit',
+    ];
 
     /**
      * @var string

@@ -59,4 +59,15 @@
       <a href="{{ path('admin.object') }}" class="list-group-item">{{ 'admin.object.list' | trans }}</a>
     </div>
   {% endif %}
+
+  {% if is_granted('ROLE_MODO') %}
+    {% set isActive = (currentRoute matches '~^admin.building~') %}
+    <a href="#building" class="list-group-item{% if isActive %} active{% endif %}" data-toggle="collapse">
+      <i class="glyphicon glyphicon-chevron-right"></i>{{ 'admin.building' | trans }}
+    </a>
+    <div class="list-group{% if not isActive %} collapse{% endif %}" id="building">
+      <a href="{{ path('admin.building.create') }}" class="list-group-item">{{ 'admin.building.create' | trans }}</a>
+      <a href="{{ path('admin.building') }}" class="list-group-item">{{ 'admin.building.list' | trans }}</a>
+    </div>
+  {% endif %}
 </div>

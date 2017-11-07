@@ -15,6 +15,9 @@ admin:
   object: "Manage objects"
   object.list: "List"
   object.create: "Create"
+  building: "Manage Buildings"
+  building.list: "List"
+  building.create: "Create"
   map:
     create: "Create a new Map"
     max.size: "Actual max size:"
@@ -83,6 +86,16 @@ object:
   type: "Type"
   price: "Price"
   weight: "Weight"
+  actions: "Actions"
+  enabled: "Enabled"
+
+building:
+  created: "Building created!"
+  saved: "Building saved!"
+  name: "Name"
+  description: "Description"
+  type: "Type"
+  position: "Position"
   actions: "Actions"
   enabled: "Enabled"
 
