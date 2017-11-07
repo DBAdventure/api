@@ -1,11 +1,10 @@
 {% extends 'DbaAdminBundle::base.html.twig' %}
-{% import "DbaAdminBundle::object/macros.html.twig" as helper %}
 
 {% block body %}
   {% set currentPath = path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')) %}
-  <form id="object-form" class="form-horizontal" method="post" action="{{ currentPath }}" autocomplete="off">
+  <form id="building-form" class="form-horizontal" method="post" action="{{ currentPath }}" autocomplete="off">
     <div class="col-sm-10 col-sm-offset-2">
-      <img id="object-image-displayed" />
+      <img id="building-image-displayed" />
     </div>
 
     {{ form_row(form.name) }}
