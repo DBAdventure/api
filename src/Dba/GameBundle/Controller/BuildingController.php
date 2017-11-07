@@ -233,7 +233,7 @@ class BuildingController extends BaseController
         $this->em()->flush();
 
         return [
-            'messages' => 'building.bank.deposit.zeni',
+            'message' => 'building.bank.deposit.zeni',
             'parameters' => [
                 'goldBar' => $goldBar,
                 'goldBank' => $goldBank,
@@ -256,7 +256,7 @@ class BuildingController extends BaseController
 
         $withdraw = round($request->request->get('withdraw'));
         $bankPlayer = $this->repos()->getBankRepository()->findOneByPlayer($player);
-        if (empty($bankPlayer) || $withdraw > $bankPlayer->getZeni()) {
+        if (empty($bankPlayer) || $withdraw <= 0 || $withdraw > $bankPlayer->getZeni()) {
             return $this->badRequest('building.bank.withdraw.error');
         }
 
@@ -269,7 +269,7 @@ class BuildingController extends BaseController
         $this->em()->flush();
 
         return [
-            'messages' => 'building.bank.withdraw.zeni',
+            'message' => 'building.bank.withdraw.zeni',
             'parameters' => [
                 'goldBar' => $withdraw,
                 'goldBank' => $goldBank,
