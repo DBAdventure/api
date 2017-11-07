@@ -107,6 +107,27 @@ class BuildingControllerTest extends BaseTestCase
         $this->assertJsonResponse($this->client->getResponse(), 403);
     }
 
+    public function testDepositBankWithNegativeZenis()
+    {
+        $player = $this->login();
+        $building = $this->repos()->getBuildingRepository()->findOneById(self::BANK_ID);
+        $player->setX($building->getX());
+        $player->setY($building->getY());
+        $player->setMap($building->getMap());
+
+        $this->em()->persist($player);
+        $this->em()->flush();
+
+        $this->client->request(
+            'POST',
+            '/api/building/bank/' . $building->getId() . '/deposit',
+            [
+                'deposit' => -100
+            ]
+        );
+        $this->assertJsonResponse($this->client->getResponse(), 400);
+    }
+
     public function testDepositBankWithNotEnoughZenis()
     {
         $player = $this->login();
@@ -188,6 +209,33 @@ class BuildingControllerTest extends BaseTestCase
             '/api/building/bank/' . $building->getId() . '/withdraw',
             [
                 'withdraw' => 4000
+            ]
+        );
+        $this->assertJsonResponse($this->client->getResponse(), 400);
+    }
+
+    public function testWithdrawBankWithNegativeZenis()
+    {
+        $player = $this->login();
+        $building = $this->repos()->getBuildingRepository()->findOneById(self::BANK_ID);
+        $player->setX($building->getX());
+        $player->setY($building->getY());
+        $player->setMap($building->getMap());
+        $player->setZeni(100);
+
+        $bankPlayer = new Bank();
+        $bankPlayer->setPlayer($player);
+        $bankPlayer->setZeni(10);
+        $this->em()->persist($player);
+        $this->em()->persist($bankPlayer);
+        $this->em()->flush();
+        $this->em()->refresh($bankPlayer);
+
+        $this->client->request(
+            'POST',
+            '/api/building/bank/' . $building->getId() . '/withdraw',
+            [
+                'withdraw' => -9
             ]
         );
         $this->assertJsonResponse($this->client->getResponse(), 400);
