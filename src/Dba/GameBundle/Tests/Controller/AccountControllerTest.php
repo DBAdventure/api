@@ -168,6 +168,78 @@ class AccountControllerTest extends BaseTestCase
         $this->assertEquals('HS15.png', $player->getImage());
     }
 
+    public function testSettingsChange()
+    {
+        $player = $this->login();
+        $password = $player->getPassword();
+        $data = [
+            'player_settings' => [
+                'email' => 'blyat@blyat.com',
+                'history' => 'Mouahahah',
+                'username' => 'Bast',
+            ]
+        ];
+        $this->client->request(
+            'POST',
+            '/api/account/settings',
+            $data
+        );
+
+        $this->assertJsonResponse($this->client->getResponse());
+        $player = $this->repos()->getPlayerRepository()->findOneById($player->getId());
+        $this->assertEquals('blyat@blyat.com', $player->getEmail());
+        $this->assertEquals('Bast', $player->getUsername());
+        $this->assertEquals('Mouahahah', $player->getHistory());
+        $this->assertEquals($password, $player->getPassword());
+    }
+
+    public function testSettingsChangeWithPassword()
+    {
+        $player = $this->login();
+        $password = $player->getPassword();
+        $data = [
+            'player_settings' => [
+                'email' => 'blyat@blyat.com',
+                'history' => 'Mouahahah',
+                'username' => 'Bast',
+                'password' => 'newPassword',
+            ]
+        ];
+        $this->client->request(
+            'POST',
+            '/api/account/settings',
+            $data
+        );
+
+        $this->assertJsonResponse($this->client->getResponse());
+        $player = $this->repos()->getPlayerRepository()->findOneById($player->getId());
+        $this->assertEquals('blyat@blyat.com', $player->getEmail());
+        $this->assertEquals('Bast', $player->getUsername());
+        $this->assertEquals('Mouahahah', $player->getHistory());
+        $this->assertNotEquals($password, $player->getPassword());
+    }
+
+    public function testSettingsNotChange()
+    {
+        $player = $this->login();
+        $data = [
+            'player_settings' => [
+                'email' => 'blyat',
+                'history' => 'Mouahahah',
+                'username' => 'Bast',
+            ]
+        ];
+        $this->client->request(
+            'POST',
+            '/api/account/appearance',
+            $data
+        );
+
+        $this->assertJsonResponse($this->client->getResponse(), 400);
+        $player = $this->repos()->getPlayerRepository()->findOneById($player->getId());
+        $this->assertEquals('admin@dba.com', $player->getEmail());
+    }
+
     public function testTrainingRoomWithWrongParameter()
     {
         $this->login();
