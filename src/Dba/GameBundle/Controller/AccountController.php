@@ -7,6 +7,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Dba\GameBundle\Entity\Object;
 use Dba\GameBundle\Entity\Player;
 use Dba\GameBundle\Form\PlayerAppearance;
+use Dba\GameBundle\Form\PlayerSettings;
 
 /**
  * @Annotations\NamePrefix("account_")
@@ -186,6 +187,48 @@ class AccountController extends BaseController
                 10
             ),
         ];
+    }
+
+    /**
+     * @Annotations\Post("/settings")
+     */
+    public function settingsAction(Request $request)
+    {
+        $player = $this->getUser();
+        $data = json_decode($request->getContent(), true);
+        $backup = [
+            'email' => $player->getEmail(),
+            'username' => $player->getUsername(),
+            'password' => $player->getPassword(),
+            'history' => $player->getHistory(),
+        ];
+
+        $form = $this->createForm(PlayerSettings::class, $player);
+        $form->handleRequest($request);
+        if (!$form->isSubmitted() || !$form->isValid()) {
+            $player->setEmail($backup['email']);
+            $player->setUsername($backup['username']);
+            $player->setHistory($backup['history']);
+            $this->em()->persist($player);
+            $this->em()->flush();
+            return $this->badRequest();
+        }
+
+        if (empty($player->getPassword())) {
+            $player->setPassword($backup['password']);
+        } else {
+            $player->setPassword(
+                $this->container->get('security.password_encoder')->encodePassword(
+                    $player,
+                    $player->getPassword()
+                )
+            );
+        }
+
+        $this->em()->persist($player);
+        $this->em()->flush();
+
+        return [];
     }
 
     /**
