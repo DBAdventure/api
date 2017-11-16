@@ -2,13 +2,13 @@
 
 namespace Dba\GameBundle\Controller;
 
-use Dba\GameBundle\Entity\Player;
+use FOS\RestBundle\Controller\Annotations;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Symfony\Component\HttpFoundation\Request;
 use Dba\GameBundle\Entity\Guild;
 use Dba\GameBundle\Entity\GuildPlayer;
 use Dba\GameBundle\Entity\GuildRank;
-use Dba\GameBundle\Form;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Symfony\Component\HttpFoundation\Request;
+use Dba\GameBundle\Entity\Player;
 
 /**
  * @Annotations\NamePrefix("guild_admin_")
@@ -30,91 +30,60 @@ class GuildAdminController extends BaseController
 
     protected function accessDenied()
     {
-        $this->addFlash(
-            'danger',
-            $this->trans('guild.admin.access.denied')
+        $this->services()->getGuildService()->addEvent(
+            $this->getUser(),
+            $this->getUser()->getGuildPlayer()->getGuild(),
+            'event.guild.admin.access.denied'
         );
-        return $this->redirect($this->generateUrl('guild'));
+
+        return $this->forbidden('guild.admin.access.denied');
     }
 
     /**
-     * @Route("", name="guild.admin", methods="GET")
-     * @Template()
+     * @Annotations\Post("/requester/{id}")
+     * @ParamConverter("targetPlayer", class="Dba\GameBundle\Entity\GuildPlayer")
      */
-    public function indexAction()
+    public function requesterAction(Request $request, GuildPlayer $targetPlayer)
     {
         $guildPlayer = $this->getUser()->getGuildPlayer();
         if (!$this->checkRank($guildPlayer, GuildRank::ROLE_MODO)) {
             return $this->accessDenied();
         }
 
-        return $this->render('DbaGameBundle::guild/admin/index.html.twig');
-    }
-
-    /**
-     * @Route("/requester", name="guild.admin.requester", methods="GET")
-     * @Route("/requester/{id}/choice/{decision}", name="guild.admin.requester.decision",
-              methods="GET", requirements={"id": "\d+", "decision": "(accept|decline)"})
-     * @ParamConverter("targetPlayer", class="Dba\GameBundle\Entity\GuildPlayer",
-                       isOptional="true", options={"id" = "id"})
-     * @Template()
-     */
-    public function requesterAction(GuildPlayer $targetPlayer = null, $decision = null)
-    {
-        $guildPlayer = $this->getUser()->getGuildPlayer();
-        if (!$this->checkRank($guildPlayer, GuildRank::ROLE_MODO)) {
-            return $this->accessDenied();
+        if ($targetPlayer->isEnabled()) {
+            return $this->badRequest('guild.admin.bad.request');
         }
 
-        if (!empty($targetPlayer)) {
-            if ($targetPlayer->isEnabled()) {
-                return $this->accessDenied();
-            }
-
-            if ($decision == 'accept') {
-                $targetPlayer->setEnabled(true);
-                $this->em()->persist($targetPlayer);
-                $this->em()->flush();
-                $this->addFlash(
-                    'success',
-                    $this->trans('guild.admin.requester.accept')
-                );
-                return $this->redirect($this->generateUrl('guild.admin'));
-            }
-
-            $this->em()->remove($targetPlayer());
-            $this->em()->flush();
-            $this->addFlash(
-                'success',
-                $this->trans('guild.admin.requester.decline')
-            );
-            return $this->redirect($this->generateUrl('guild.admin'));
+        $decision = $request->request->get('decision', false);
+        if ($decision) {
+            $targetPlayer->setEnabled(true);
+            $this->em()->persist($targetPlayer);
+            $message = 'guild.admin.requester.accept';
+            $eventMessage = 'event.guild.admin.request.accept';
+        } else {
+            $this->em()->remove($targetPlayer);
+            $message = 'guild.admin.requester.decline';
+            $eventMessage = 'event.guild.admin.request.decline';
         }
 
-        $players = $guildPlayer->getGuild()->getPlayers();
-        $guildPlayers = [];
-        foreach ($players as $player) {
-            if ($player->isEnabled()) {
-                continue;
-            }
-
-            $guildPlayers[] = $player;
-        }
-
-        return $this->render(
-            'DbaGameBundle::guild/admin/requester.html.twig',
+        $this->services()->getGuildService()->addEvent(
+            $this->getUser(),
+            $guildPlayer->getGuild(),
+            $eventMessage,
             [
-                'guildPlayers' => $guildPlayers
+                'name' => $targetPlayer->getPlayer()->getName(),
             ]
         );
+        $this->em()->flush();
+
+        return [
+            'message' => $message,
+        ];
     }
 
     /**
-     * @Route("/fired/{id}", name="guild.admin.fired", methods="GET",
-              defaults={"id": null}, requirements={"id": "\d+"})
-     * @ParamConverter("targetPlayer", class="Dba\GameBundle\Entity\GuildPlayer",
-                       isOptional="true", options={"id" = "id"})
-     * @Template()
+     * @Annotations\Post("/fired/{id}")
+     * @ParamConverter("targetPlayer", class="Dba\GameBundle\Entity\GuildPlayer")
      */
     public function firedAction()
     {
@@ -142,8 +111,8 @@ class GuildAdminController extends BaseController
     }
 
     /**
-     * @Route("/rank", name="guild.admin.rank", methods="GET")
-     * @Template()
+     * @Annotations\Post("/rank/{id}")
+     * @Annotations\Get("/rank")
      */
     public function rankAction()
     {
@@ -156,8 +125,8 @@ class GuildAdminController extends BaseController
     }
 
     /**
-     * @Route("/general", name="guild.admin.general", methods="GET")
-     * @Template()
+     * @Annotations\Post("/general/{id}")
+     * @Annotations\Get("/general")
      */
     public function generalAction()
     {

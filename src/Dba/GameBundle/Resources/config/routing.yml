@@ -53,6 +53,11 @@ game_guild:
   type:     rest
   prefix: /guild
 
+game_guild_admin:
+  resource: "@DbaGameBundle/Controller/GuildAdminController.php"
+  type:     rest
+  prefix: /guild/admin
+
 game_magic:
   resource: "@DbaGameBundle/Controller/MagicController.php"
   type:     rest

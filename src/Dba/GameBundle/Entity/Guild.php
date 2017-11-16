@@ -94,6 +94,7 @@ class Guild
      * @var ArrayCollection
      *
      * @ORM\OneToMany(targetEntity="Dba\GameBundle\Entity\GuildEvent", mappedBy="guild", cascade={"all"})
+     * @ORM\OrderBy({"createdAt" = "DESC"})
      * @JMS\Exclude
      */
     private $events;
@@ -406,5 +407,35 @@ class Guild
     public function getRanks()
     {
         return $this->ranks;
+    }
+
+    /**
+     * Check if user can archive
+     *
+     * @JMS\VirtualProperty()
+     * @JMS\SerializedName("nb_members")
+     *
+     * @return integer
+     */
+    public function getNbMembers()
+    {
+        return count($this->getPlayers()->filter(
+            function ($entity) {
+                return $entity->isEnabled();
+            }
+        ));
+    }
+
+    /**
+     * Check if user can archive
+     *
+     * @JMS\VirtualProperty()
+     * @JMS\SerializedName("nb_max_members")
+     *
+     * @return integer
+     */
+    public function getNbMaxMembers()
+    {
+        return self::MAX_MEMBERS;
     }
 }

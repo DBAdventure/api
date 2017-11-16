@@ -25,6 +25,7 @@ class BuildingController extends BaseController
                 'buildingList' => $this->repos()->getBuildingRepository()->findBy(
                     [],
                     [
+                        'map' => 'ASC',
                         'name' => 'ASC',
                     ]
                 ),

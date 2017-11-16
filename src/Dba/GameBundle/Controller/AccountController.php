@@ -195,7 +195,6 @@ class AccountController extends BaseController
     public function settingsAction(Request $request)
     {
         $player = $this->getUser();
-        $data = json_decode($request->getContent(), true);
         $backup = [
             'email' => $player->getEmail(),
             'username' => $player->getUsername(),

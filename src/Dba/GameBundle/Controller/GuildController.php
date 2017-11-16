@@ -121,7 +121,7 @@ class GuildController extends BaseController
         }
 
 
-        return $guildPlayer->getGuild()->getEvents();
+        return $guildPlayer->getGuild()->getEvents()->slice(0, 50);
     }
 
     /**
