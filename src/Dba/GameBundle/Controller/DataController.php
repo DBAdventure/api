@@ -26,7 +26,7 @@ class DataController extends BaseController
     public function getGameAction()
     {
         $playerRepository = $this->repos()->getPlayerRepository();
-        return [
+        $data = [
             'nbObjects' => $this->repos()->getObjectRepository()->countObjects(),
             'nbBuildings' => $this->repos()->getBuildingRepository()->countBuildings(),
             'nbGuilds' => $this->repos()->getGuildRepository()->countGuilds(),
@@ -45,6 +45,11 @@ class DataController extends BaseController
             'nbCyborgs' => $playerRepository->countByRace(Race::CYBORG),
             'nbMajins' => $playerRepository->countByRace(Race::MAJIN),
         ];
+        if ($this->getUser()) {
+            $data['unreadMessages'] = $this->repos()->getInboxRepository()->countUnreadMessages($this->getUser());
+        }
+
+        return $data;
     }
 
     /**
