@@ -58,11 +58,11 @@ class GuildAdminController extends BaseController
         if ($decision) {
             $targetPlayer->setEnabled(true);
             $this->em()->persist($targetPlayer);
-            $message = 'guild.admin.requester.accept';
+            $message = 'guild.admin.requester.accepted';
             $eventMessage = 'event.guild.admin.request.accept';
         } else {
             $this->em()->remove($targetPlayer);
-            $message = 'guild.admin.requester.decline';
+            $message = 'guild.admin.requester.declined';
             $eventMessage = 'event.guild.admin.request.decline';
         }
 
@@ -85,29 +85,36 @@ class GuildAdminController extends BaseController
      * @Annotations\Post("/fired/{id}")
      * @ParamConverter("targetPlayer", class="Dba\GameBundle\Entity\GuildPlayer")
      */
-    public function firedAction()
+    public function firedAction(GuildPlayer $targetPlayer)
     {
         $guildPlayer = $this->getUser()->getGuildPlayer();
         if (!$this->checkRank($guildPlayer, GuildRank::ROLE_MODO)) {
             return $this->forbidden();
         }
 
-        $players = $guildPlayer->getGuild()->getPlayers();
-        $guildPlayers = [];
-        foreach ($players as $player) {
-            if (!$player->isEnabled() or $player->getRank()->isAdmin()) {
-                continue;
-            }
-
-            $guildPlayers[] = $player;
+        if (!$targetPlayer->isEnabled()) {
+            return $this->badRequest('guild.admin.bad.request');
         }
 
-        return $this->render(
-            'DbaGameBundle::guild/admin/fired.html.twig',
+        $playerName = $targetPlayer->getPlayer()->getName();
+        $this->services()->getGuildService()->addEvent(
+            $this->getUser(),
+            $guildPlayer->getGuild(),
+            'event.guild.admin.fired',
             [
-                'guildPlayers' => $guildPlayers
+                'name' => $playerName,
             ]
         );
+
+        $this->em()->remove($targetPlayer);
+        $this->em()->flush();
+
+        return [
+            'message' => 'guild.admin.fired',
+            'parameters' => [
+                'name' => $playerName,
+            ],
+        ];
     }
 
     /**
