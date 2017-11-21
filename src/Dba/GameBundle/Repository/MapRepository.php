@@ -188,11 +188,11 @@ EOT;
      * Has valid position
      *
      * @param Player $player Player
-     * @param integer $mapBonusType Map bonus Type, check if it's different. Default is Impassable
+     * @param array $mapBonusTypes Map bonus Type, check if it's different. Default is Impassable
      *
      * @return boolean
      */
-    public function hasValidPosition(Player $player, $mapBonusType = MapBonus::TYPE_IMPASSABLE)
+    public function hasValidPosition(Player $player, array $mapBonusTypes = [MapBonus::TYPE_IMPASSABLE])
     {
         $request = <<<EOT
 SELECT mbs.type AS type
@@ -213,7 +213,7 @@ EOT;
 
         try {
             $result = $query->getSingleResult();
-            return $result['type'] != $mapBonusType;
+            return !in_array($result['type'], $mapBonusTypes);
         } catch (NoResultException $e) {
             return false;
         }

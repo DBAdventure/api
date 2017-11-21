@@ -782,6 +782,26 @@ class ActionControllerTest extends BaseTestCase
         $this->assertJsonResponse($this->client->getResponse(), 403);
     }
 
+    public function testAnalysisWithoutGoodMap()
+    {
+        $player = $this->login();
+        $player->setX(5);
+        $player->setY(5);
+        $player->setMap($this->repos()->getMapRepository()->getDefaultMap());
+        $player->setMap($this->repos()->getMapRepository()->findOneById(Map::HEAVEN));
+        $enemy = $this->createPlayer('bast');
+        $enemy->setX(5);
+        $enemy->setY(5);
+        $enemy->setMap($this->repos()->getMapRepository()->findOneById(Map::HEAVEN));
+        $this->em()->persist($enemy);
+        $this->em()->persist($player);
+        $this->em()->flush();
+
+        $this->client->request('POST', '/api/action/analysis/' . $enemy->getId());
+        $this->assertJsonResponse($this->client->getResponse(), 403);
+    }
+
+
     public function testAnalysisWithoutActionPoints()
     {
         $player = $this->login();

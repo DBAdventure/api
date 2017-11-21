@@ -424,7 +424,8 @@ class ActionController extends BaseController
     {
         $player = $this->getUser();
         if ($this->checkPosition($player, $target, Player::ANALYSIS_ACTION) ||
-            $player->getId() == $target->getId()
+            $player->getId() == $target->getId() ||
+            !$this->canMakeAction($player, $target)
         ) {
             // failed to analysis
             return $this->forbidden();
@@ -1019,8 +1020,8 @@ class ActionController extends BaseController
             }
         }
 
-        return $mapRepo->hasValidPosition($player, MapBonus::TYPE_RESPAWN) ||
-            $mapRepo->hasValidPosition($target, MapBonus::TYPE_RESPAWN);
+        return $mapRepo->hasValidPosition($player, [MapBonus::TYPE_IMPASSABLE, MapBonus::TYPE_RESPAWN]) ||
+            $mapRepo->hasValidPosition($target, [MapBonus::TYPE_IMPASSABLE, MapBonus::TYPE_RESPAWN]);
     }
 
     /**
