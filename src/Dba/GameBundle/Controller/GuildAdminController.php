@@ -119,17 +119,46 @@ class GuildAdminController extends BaseController
     }
 
     /**
-     * @Annotations\Post("/rank/{id}")
-     * @Annotations\Get("/rank")
+     * @Annotations\Post("/ranks")
      */
-    public function rankAction()
+    public function rankAction(Request $request)
     {
         $guildPlayer = $this->getUser()->getGuildPlayer();
         if (!$this->checkRank($guildPlayer, GuildRank::ROLE_ADMIN)) {
             return $this->forbidden();
         }
 
-        return $this->render('DbaGameBundle::guild/admin/index.html.twig');
+        $ranks = $request->request->get('guild_ranks', []);
+        $this->editRankRole(
+            $guildPlayer->getGuild(),
+            GuildRank::ROLE_PLAYER,
+            $ranks
+        );
+        $this->editRankRole(
+            $guildPlayer->getGuild(),
+            GuildRank::ROLE_MODO,
+            $ranks
+        );
+        $this->editRankRole(
+            $guildPlayer->getGuild(),
+            GuildRank::ROLE_ADMIN,
+            $ranks
+        );
+
+        return [];
+    }
+
+    protected function editRankRole($guild, $role, $ranks)
+    {
+        if (!empty($ranks[$role]) && !empty(trim($ranks[$role]))) {
+            $guildRank = $this->repos()->getGuildRankRepository()->findOneBy([
+                'guild' => $guild,
+                'role' => $role
+            ]);
+            $guildRank->setName($ranks[$role]);
+            $this->em()->persist($guildRank);
+            $this->em()->flush();
+        }
     }
 
     /**
