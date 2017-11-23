@@ -9,6 +9,7 @@ use Dba\GameBundle\Entity\Guild;
 use Dba\GameBundle\Entity\GuildPlayer;
 use Dba\GameBundle\Entity\GuildRank;
 use Dba\GameBundle\Entity\Player;
+use Dba\GameBundle\Form\GuildSettings;
 
 /**
  * @Annotations\NamePrefix("guild_admin_")
@@ -143,5 +144,33 @@ class GuildAdminController extends BaseController
         }
 
         return $this->render('DbaGameBundle::guild/admin/index.html.twig');
+    }
+
+    /**
+     * @Annotations\Post("/settings")
+     */
+    public function settingsAction(Request $request)
+    {
+        $guildPlayer = $this->getUser()->getGuildPlayer();
+        if (!$this->checkRank($guildPlayer, GuildRank::ROLE_MODO)) {
+            return $this->forbidden();
+        }
+
+        $guild = $guildPlayer->getGuild();
+        $form = $this->createForm(GuildSettings::class, $guild);
+        $form->handleRequest($request);
+        if (!$form->isSubmitted() || !$form->isValid()) {
+            return $this->badRequest();
+        }
+
+        $this->services()->getGuildService()->addEvent(
+            $this->getUser(),
+            $guildPlayer->getGuild(),
+            'event.guild.admin.settings'
+        );
+        $this->em()->persist($guild);
+        $this->em()->flush();
+
+        return [];
     }
 }
