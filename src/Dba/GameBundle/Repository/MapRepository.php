@@ -16,6 +16,45 @@ class MapRepository extends EntityRepository
     protected $items = [];
 
     /**
+     * Get player case data
+     *
+     * @param Player $player Player
+     * @param string $period Period of the day
+     *
+     * @return array
+     */
+    public function getCaseData(Player $player, $period)
+    {
+        $request = <<<EOT
+SELECT
+  mif.file AS file,
+  mbs.type AS bonus
+FROM player AS p
+INNER JOIN map_box AS mb ON (p.map_id = mb.map_id)
+INNER JOIN map_bonus AS mbs ON (mb.map_bonus_id = mbs.id)
+INNER JOIN map_image_file AS mif ON
+  (mb.map_image_id = mif.map_image_id AND ROUND(mb.damage/50) = mif.damage AND mif.period = :period)
+INNER JOIN map AS m ON (m.id = p.map_id)
+WHERE p.id = :id
+  AND mb.x = p.x
+  AND mb.y = p.y
+EOT;
+
+        $rsm = new ResultSetMapping();
+        $rsm->addScalarResult('file', 'file');
+        $rsm->addScalarResult('bonus', 'bonus');
+
+        $query = $this->getEntityManager()->createNativeQuery($request, $rsm);
+        $query->setParameters([
+            'period' => (int) ($period == TemplateService::PERIOD_NIGHT),
+            'id' => $player->getId(),
+        ]);
+
+        $mapData = [];
+        return $query->getSingleResult();
+    }
+
+    /**
      * Generate map boxes without items
      *
      * @param Player $player Player
@@ -34,7 +73,7 @@ SELECT
 FROM player AS p
 INNER JOIN map_box AS mb ON (p.map_id = mb.map_id)
 INNER JOIN map_bonus AS mbs ON (mb.map_bonus_id = mbs.id)
-INNER JOIN map_image_file AS mif ON
+INNER JOIN map_image_file AS mipppf ON
   (mb.map_image_id = mif.map_image_id AND ROUND(mb.damage/50) = mif.damage AND mif.period = :period)
 INNER JOIN map AS m ON (m.id = p.map_id)
 WHERE p.id = :id

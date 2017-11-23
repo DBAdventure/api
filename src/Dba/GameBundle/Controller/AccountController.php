@@ -131,6 +131,10 @@ class AccountController extends BaseController
             'class' => $player->getClass(),
             'guild_player' => $player->getGuildPlayer(),
             'map' => $player->getMap(),
+            'case' => $this->repos()->getMapRepository()->getCaseData(
+                $player,
+                $this->services()->getTemplateService()->getPeriod()
+            ),
             'rank' => $player->getRank(),
             'side' => $player->getSide(),
             'race' => $player->getRace(),
