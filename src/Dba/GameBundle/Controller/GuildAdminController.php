@@ -120,30 +120,46 @@ class GuildAdminController extends BaseController
 
     /**
      * @Annotations\Post("/ranks")
+     * @Annotations\Post("/ranks/{id}", name="_set")
+     * @ParamConverter("targetPlayer", class="Dba\GameBundle\Entity\GuildPlayer", isOptional=true)
      */
-    public function rankAction(Request $request)
+    public function rankAction(Request $request, GuildPlayer $targetPlayer = null)
     {
         $guildPlayer = $this->getUser()->getGuildPlayer();
         if (!$this->checkRank($guildPlayer, GuildRank::ROLE_ADMIN)) {
             return $this->forbidden();
         }
 
-        $ranks = $request->request->get('guild_ranks', []);
-        $this->editRankRole(
-            $guildPlayer->getGuild(),
-            GuildRank::ROLE_PLAYER,
-            $ranks
-        );
-        $this->editRankRole(
-            $guildPlayer->getGuild(),
-            GuildRank::ROLE_MODO,
-            $ranks
-        );
-        $this->editRankRole(
-            $guildPlayer->getGuild(),
-            GuildRank::ROLE_ADMIN,
-            $ranks
-        );
+        if (empty($targetPlayer)) {
+            $ranks = $request->request->get('guild_ranks', []);
+            $this->editRankRole(
+                $guildPlayer->getGuild(),
+                GuildRank::ROLE_PLAYER,
+                $ranks
+            );
+            $this->editRankRole(
+                $guildPlayer->getGuild(),
+                GuildRank::ROLE_MODO,
+                $ranks
+            );
+            $this->editRankRole(
+                $guildPlayer->getGuild(),
+                GuildRank::ROLE_ADMIN,
+                $ranks
+            );
+
+            return [];
+        }
+
+        $rank = $request->request->get('what');
+        if (empty($rank) || !in_array($rank, [GuildRank::ROLE_ADMIN, GuildRank::ROLE_MODO, GuildRank::ROLE_PLAYER])) {
+            return $this->badRequest();
+        }
+
+        $newRank = $this->repos()->getGuildRankRepository()->findOneByRole($rank);
+        $targetPlayer->setRank($newRank);
+        $this->em()->persist($targetPlayer);
+        $this->em()->flush();
 
         return [];
     }
