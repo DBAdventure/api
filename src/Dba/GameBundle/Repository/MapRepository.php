@@ -73,7 +73,7 @@ SELECT
 FROM player AS p
 INNER JOIN map_box AS mb ON (p.map_id = mb.map_id)
 INNER JOIN map_bonus AS mbs ON (mb.map_bonus_id = mbs.id)
-INNER JOIN map_image_file AS mipppf ON
+INNER JOIN map_image_file AS mif ON
   (mb.map_image_id = mif.map_image_id AND ROUND(mb.damage/50) = mif.damage AND mif.period = :period)
 INNER JOIN map AS m ON (m.id = p.map_id)
 WHERE p.id = :id
