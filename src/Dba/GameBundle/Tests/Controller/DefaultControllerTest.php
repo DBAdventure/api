@@ -170,4 +170,41 @@ class DefaultControllerTest extends BaseTestCase
 
         $this->assertJsonResponse($this->client->getResponse());
     }
+
+    public function testRegisterWithInvalidData()
+    {
+        $this->client->request(
+            'POST',
+            '/api/register',
+            [
+                'player_registration' => [
+                    'name' => '',
+                    'username' => '',
+                    'password' => 'test',
+                    'password_confirm' => 'test',
+                    'email' => 'test@test.com',
+                    'email_confirm' => 'test@test.com',
+                    'race' => '1',
+                    'side' => '1',
+                    'appearance' => [
+                        'type' => 'H3',
+                        'image' => 'H1.png',
+                    ]
+                ]
+            ]
+        );
+
+        $this->assertJsonResponse($this->client->getResponse(), 400);
+    }
+
+    public function testRegisterWithAlreadyConnected()
+    {
+        $this->login();
+        $this->client->request(
+            'POST',
+            '/api/register'
+        );
+
+        $this->assertJsonResponse($this->client->getResponse(), 403);
+    }
 }

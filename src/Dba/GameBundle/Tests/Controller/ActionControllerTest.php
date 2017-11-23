@@ -374,6 +374,10 @@ class ActionControllerTest extends BaseTestCase
 
         for ($i = 0; $i <= 10; $i++) {
             $this->client->request('POST', '/api/action/attack/' . $enemy->getId());
+            if ($this->client->getResponse()->getStatusCode() != 200 && $i >= 5) {
+                return;
+            }
+
             $this->assertJsonResponse($this->client->getResponse(), 200);
         }
     }
@@ -490,7 +494,10 @@ class ActionControllerTest extends BaseTestCase
         $this->assertJsonResponse($this->client->getResponse());
 
         $this->em()->refresh($enemy);
-        $this->assertNotEquals(3, $enemy->getMap()->getId());
+        $this->assertNotEquals(
+            $this->repos()->getMapRepository()->getDefaultMap(),
+            $enemy->getMap()->getId()
+        );
         $this->assertNull($enemy->getTarget());
     }
 
@@ -510,7 +517,6 @@ class ActionControllerTest extends BaseTestCase
         $enemy->setY(5);
         $enemy->setHealth(10);
         $enemy->setMap($this->repos()->getMapRepository()->getDefaultMap());
-        $side = $this->repos()->getSideRepository()->findOneById(Side::GOOD);
         $enemy->setSide($side);
         $this->em()->persist($enemy);
         $this->em()->persist($player);
@@ -521,7 +527,10 @@ class ActionControllerTest extends BaseTestCase
 
         $this->em()->refresh($player);
         $this->em()->refresh($enemy);
-        $this->assertNotEquals(3, $enemy->getMap()->getId());
+        $this->assertNotEquals(
+            $this->repos()->getMapRepository()->getDefaultMap(),
+            $enemy->getMap()->getId()
+        );
         $this->assertEquals($player->getId(), $enemy->getTarget()->getId());
         $this->assertEquals(Side::BAD, $player->getSide()->getId());
     }
@@ -554,7 +563,10 @@ class ActionControllerTest extends BaseTestCase
         $this->em()->refresh($enemy);
         $this->assertNotEquals(5, $enemy->getX());
         $this->assertNotEquals(5, $enemy->getY());
-        $this->assertNotEquals(3, $enemy->getMap()->getId());
+        $this->assertNotEquals(
+            $this->repos()->getMapRepository()->getDefaultMap(),
+            $enemy->getMap()->getId()
+        );
         $this->assertNull($enemy->getTarget());
     }
 
@@ -587,7 +599,10 @@ class ActionControllerTest extends BaseTestCase
 
         $this->em()->refresh($player);
         $this->em()->refresh($enemy);
-        $this->assertNotEquals(3, $enemy->getMap()->getId());
+        $this->assertNotEquals(
+            $this->repos()->getMapRepository()->getDefaultMap(),
+            $enemy->getMap()->getId()
+        );
         $this->assertEquals($player->getId(), $enemy->getTarget()->getId());
         $this->assertEquals(Side::GOOD, $player->getSide()->getId());
         $this->assertEquals(110, $player->getZeni());
@@ -956,7 +971,10 @@ class ActionControllerTest extends BaseTestCase
         $this->assertEquals(1, $player->getNbSlapGiven());
         $this->assertEquals(9, $enemy->getBetrayals());
         $this->assertEquals(1, $enemy->getNbSlapTaken());
-        $this->assertNotEquals(3, $enemy->getMap()->getId());
+        $this->assertNotEquals(
+            $this->repos()->getMapRepository()->getDefaultMap(),
+            $enemy->getMap()->getId()
+        );
     }
 
     public function testGiveDifferentXPosition()

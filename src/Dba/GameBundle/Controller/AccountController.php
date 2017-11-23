@@ -206,6 +206,7 @@ class AccountController extends BaseController
         $form->handleRequest($request);
         if (!$form->isSubmitted() || !$form->isValid()) {
             $player->setEmail($backup['email']);
+            $player->setPassword($backup['password']);
             $player->setUsername($backup['username']);
             $player->setHistory($backup['history']);
             $this->em()->persist($player);

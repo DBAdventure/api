@@ -127,6 +127,16 @@ class AccountControllerTest extends BaseTestCase
         }
     }
 
+    public function testEvents()
+    {
+        $this->login();
+        $this->client->request('GET', '/api/account/events');
+        $this->assertJsonResponse($this->client->getResponse());
+        $json = json_decode($this->client->getResponse()->getContent(), true);
+        $this->assertArrayHasKey('player', $json);
+        $this->assertArrayHasKey('target', $json);
+    }
+
     public function testAppearanceChange()
     {
         $player = $this->login();
@@ -231,7 +241,7 @@ class AccountControllerTest extends BaseTestCase
         ];
         $this->client->request(
             'POST',
-            '/api/account/appearance',
+            '/api/account/settings',
             $data
         );
 

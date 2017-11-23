@@ -42,7 +42,8 @@ class PlayerActivityListener
         $player = $this->context->getToken()->getUser();
         if ($player instanceof Player && !$player->isConnected() && $player->isEnabled()) {
             $player->setLastLogin(new DateTime());
-            $this->em->flush($player);
+            $this->em->persist($player);
+            $this->em->flush();
         }
     }
 }

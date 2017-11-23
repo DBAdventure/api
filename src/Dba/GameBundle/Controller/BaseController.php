@@ -110,20 +110,6 @@ class BaseController extends FOSRestController
     }
 
     /**
-     * Get serialize object
-     *
-     * @return Serializer
-     */
-    protected function getSerializer()
-    {
-        if (empty($this->serializer)) {
-            $this->serializer = SerializerBuilder::create()->build();
-        }
-
-        return $this->serializer;
-    }
-
-    /**
      * Get error message from form
      *
      * @param Form $form Form

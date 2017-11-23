@@ -121,6 +121,7 @@ class Player implements AdvancedUserInterface, Serializable
      *
      * @ORM\Column(name="email", type="string", length=180, nullable=false, unique=true)
      * @Assert\NotBlank()
+     * @Assert\Email()
      * @JMS\Exclude
      */
     private $email;
