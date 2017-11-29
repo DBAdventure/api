@@ -2,7 +2,8 @@
 {% import "DbaAdminBundle::default/macros.html.twig" as helper %}
 
 {% block body %}
-  <form class="form-horizontal" method="post" action="{{ path('admin.quest.create') }}">
+  {% set currentPath = path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')) %}
+  <form id="quest-form" class="form-horizontal" method="post" action="{{ currentPath }}" autocomplete="off">
     <div class="col-sm-10 col-sm-offset-2">
       <img id="quest-image-displayed" />
     </div>
@@ -32,6 +33,21 @@
         {{ helper.widget_prototype(widget, 'form.remove')}}
       {% endfor %}
     </div>
+
+
+    <div class="text-center">
+      <button class="btn btn-default btn-add" data-target="gainObjects">
+        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+        {{ 'form.add.gainObjects' | trans }}
+      </button>
+      <div class="clearfix">&nbsp;</div>
+    </div>
+
+    {# <div id="gainObjects" data-prototype="{{ helper.widget_prototype(form.gainObjects, 'form.remove') | escape }}"> #}
+    {#   {% for widget in form.gainObjects.children %} #}
+    {#     {{ helper.widget_prototype(widget, 'form.remove')}} #}
+    {#   {% endfor %} #}
+    {# </div> #}
 
     {{ form_widget(form._token) }}
 
