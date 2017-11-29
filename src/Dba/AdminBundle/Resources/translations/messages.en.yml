@@ -18,6 +18,9 @@ admin:
   building: "Manage Buildings"
   building.list: "List"
   building.create: "Create"
+  quest: "Manage Quests"
+  quest.list: "List"
+  quest.create: "Create"
   map:
     create: "Create a new Map"
     max.size: "Actual max size:"
@@ -99,6 +102,17 @@ building:
   actions: "Actions"
   enabled: "Enabled"
 
+quest:
+  created: "Quest created!"
+  saved: "Quest saved!"
+  name: "Name"
+  npc.name: "Npc Name"
+  description: "Description"
+  type: "Type"
+  position: "Position"
+  actions: "Actions"
+  enabled: "Enabled"
+
 locust: "Locust"
 crocodile: "Crocodile"
 wolf: "Wolf"
@@ -116,6 +130,7 @@ form:
   roles: "Roles"
   key: "Key"
   value: "Value"
+  npcName: "Npc name"
   max:
     x: "Max X"
     y: "Max Y"
@@ -149,3 +164,5 @@ form:
   health: "Health"
   ki: "Ki"
   weight: "Weight"
+  gainZeni: "Gain zeni"
+  gainBattlePoints: "Gain battle points"

@@ -204,4 +204,14 @@ class DragonBall
     {
         return sprintf('/bundles/dbaadmin/images/dragon-ball/%s.png', $this->getId());
     }
+
+    /**
+     * Get visible
+     *
+     * @return boolean
+     */
+    public function getVisible()
+    {
+        return $this->visible;
+    }
 }

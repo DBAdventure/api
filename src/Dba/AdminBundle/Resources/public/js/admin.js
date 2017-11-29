@@ -219,11 +219,10 @@ var DbaAdmin = function($)
         {
             this.displayImage($images, '#building-image-displayed');
         },
-        guilds: function()
+        quest: function($images)
         {
-        },
-        npcs: function()
-        {
+            this.displayImage($images, '#quest-image-displayed');
+            Dba.collectionType();
         },
         players: function($assetPath, $formChoice, $defaultImage)
         {

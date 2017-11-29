@@ -38,6 +38,17 @@
   {% endif %}
 
   {% if is_granted('ROLE_MODO') %}
+    {% set isActive = (currentRoute matches '~^admin.quest~') %}
+    <a href="#quest" class="list-group-item{% if isActive %} active{% endif %}" data-toggle="collapse">
+      <i class="glyphicon glyphicon-chevron-right"></i>{{ 'admin.quest' | trans }}
+    </a>
+    <div class="list-group{% if not isActive %} collapse{% endif %}" id="quest">
+      <a href="{{ path('admin.quest') }}" class="list-group-item">{{ 'admin.quest.list' | trans }}</a>
+      <a href="{{ path('admin.quest.create') }}" class="list-group-item">{{ 'admin.quest.create' | trans }}</a>
+    </div>
+  {% endif %}
+
+  {% if is_granted('ROLE_MODO') %}
     {% set isActive = (currentRoute matches '~^admin.generator~') %}
     <a href="#generator" class="list-group-item{% if isActive %} active{% endif %}" data-toggle="collapse">
       <i class="glyphicon glyphicon-chevron-right"></i>{{ 'admin.generator' | trans }}

@@ -160,7 +160,6 @@ class Player extends AbstractType
             );
         }
 
-
         $integerAttributes = [
             'x',
             'y',

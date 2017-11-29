@@ -3,11 +3,12 @@
 namespace Dba\AdminBundle\Form;
 
 use Dba\GameBundle\Entity;
-use Symfony\Component\Form\Extension\Core\Type;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type;
 use Symfony\Component\Form\FormBuilderInterface;
 
-class RequirementsType extends AbstractType
+class QuestNpcObjectType extends AbstractType
 {
     /**
      * @inheritdoc
@@ -16,24 +17,26 @@ class RequirementsType extends AbstractType
     {
         $builder
             ->add(
-                'key',
-                Type\ChoiceType::class,
+                'race',
+                EntityType::class,
                 [
-                    'label' => 'form.key',
-                    'choices' => array_flip(Entity\Object::REQUIREMENTS_LIST)
+                    'class' => Entity\NpcObject::class,
+                    'choice_label' => 'name',
+                    'label' => 'form.object',
+                    'choice_translation_domain' => true
                 ]
             )
             ->add(
-                'value',
+                'number',
                 Type\TextType::class,
                 [
-                    'label' => 'form.value'
+                    'label' => 'form.number'
                 ]
             );
     }
 
     public function getBlockPrefix()
     {
-        return 'requirements_type';
+        return 'quest_npc_object_type';
     }
 }

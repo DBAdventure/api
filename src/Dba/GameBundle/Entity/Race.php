@@ -21,6 +21,24 @@ class Race
     const MAJIN = 7;
     const DRAGON = 8;
 
+    const PREDATOR = 9;
+    const GHOST = 10;
+    const INSECT = 11;
+    const REPTILIAN = 12;
+    const DEMON = 13;
+    const HYDRA = 14;
+    const HUMAN_SOLDIER = 15;
+
+    const NPC_LIST = [
+        self::PREDATOR => 'predator',
+        self::GHOST => 'ghost',
+        self::INSECT => 'insect',
+        self::REPTILIAN => 'reptilian',
+        self::DEMON => 'demon',
+        self::HYDRA => 'hydra',
+        self::HUMAN_SOLDIER => 'human-soldier',
+    ];
+
     /**
      * @var string
      *
@@ -36,7 +54,6 @@ class Race
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $id;
-
 
 
     /**

@@ -2,32 +2,22 @@
 {% import "DbaAdminBundle::default/macros.html.twig" as helper %}
 
 {% block body %}
-  {% set currentPath = path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')) %}
-  <form id="object-form" class="form-horizontal" method="post" action="{{ currentPath }}" autocomplete="off">
+  <form class="form-horizontal" method="post" action="{{ path('admin.quest.create') }}">
     <div class="col-sm-10 col-sm-offset-2">
-      <img id="object-image-displayed" />
+      <img id="quest-image-displayed" />
     </div>
 
-    {{ form_row(form.name) }}
-    {{ form_row(form.enabled) }}
-    {{ form_row(form.weight) }}
-    {{ form_row(form.price) }}
-    {{ form_row(form.type) }}
     {{ form_row(form.image) }}
+    {{ form_row(form.name) }}
+    {{ form_row(form.npcName) }}
+    {{ form_row(form.enabled) }}
+    {{ form_row(form.history) }}
 
-    <div class="text-center">
-      <button class="btn btn-default btn-add" data-target="bonus">
-        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-        {{ 'form.add.bonus' | trans }}
-      </button>
-      <div class="clearfix">&nbsp;</div>
-    </div>
-
-    <div id="bonus" data-prototype="{{ helper.widget_prototype(form.bonus, 'form.remove') | escape }}">
-      {% for widget in form.bonus.children %}
-        {{ helper.widget_prototype(widget, 'form.remove')}}
-      {% endfor %}
-    </div>
+    {{ form_row(form.map) }}
+    {{ form_row(form.x) }}
+    {{ form_row(form.y) }}
+    {{ form_row(form.gainZeni) }}
+    {{ form_row(form.gainBattlePoints) }}
 
     <div class="text-center">
       <button class="btn btn-default btn-add" data-target="requirements">
@@ -53,6 +43,6 @@
 
 {% block javascripts %}
   <script type="text/javascript">
-    DbaAdmin.object($('#{{ form.image.vars.id }}'));
+    DbaAdmin.quest($('#{{ form.image.vars.id }}'));
   </script>
 {% endblock %}

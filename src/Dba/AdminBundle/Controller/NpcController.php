@@ -11,6 +11,7 @@ use Dba\AdminBundle\Form;
 use Dba\GameBundle\Entity\Map;
 use Dba\GameBundle\Entity\Player;
 use Dba\GameBundle\Entity\Side;
+use Dba\GameBundle\Entity\Race;
 
 /**
  * @Route("/npc")
@@ -20,7 +21,7 @@ class NpcController extends BaseController
     const MAPPING = [
         1 => [
             'fyi' => 'locust',
-            'race' => 11,
+            'race' => Race::INSECT,
             'stats' => [
                 'skill',
                 'agility',
@@ -30,7 +31,7 @@ class NpcController extends BaseController
         ],
         2 => [
             'fyi' => 'crocodile',
-            'race' => 12,
+            'race' => Race::REPTILIAN,
             'stats' => [
                 'resistance',
                 'strength',
@@ -39,7 +40,7 @@ class NpcController extends BaseController
         ],
         3 => [
             'fyi' => 'wolf',
-            'race' => 9,
+            'race' => Race::PREDATOR,
             'stats' => [
                 'resistance',
                 'strength',
@@ -48,7 +49,7 @@ class NpcController extends BaseController
         ],
         4 => [
             'fyi' => 'triceratop',
-            'race' => 9,
+            'race' => Race::PREDATOR,
             'stats' => [
                 'resistance',
                 'strength',
@@ -57,7 +58,7 @@ class NpcController extends BaseController
         ],
         5 => [
             'fyi' => 'snake.green',
-            'race' => 12,
+            'race' => Race::REPTILIAN,
             'stats' => [
                 'agility',
                 'intellect',
@@ -65,7 +66,7 @@ class NpcController extends BaseController
         ],
         6 => [
             'fyi' => 'snake.purple',
-            'race' => 12,
+            'race' => Race::REPTILIAN,
             'stats' => [
                 'agility',
                 'accuracy',
@@ -74,7 +75,7 @@ class NpcController extends BaseController
         ],
         7 => [
             'fyi' => 'snake.blue',
-            'race' => 12,
+            'race' => Race::REPTILIAN,
             'stats' => [
                 'agility',
                 'accuracy',
@@ -83,7 +84,7 @@ class NpcController extends BaseController
         ],
         8 => [
             'fyi' => 'monkey',
-            'race' => 9,
+            'race' => Race::PREDATOR,
             'stats' => [
                 'agility',
                 'accuracy',
@@ -92,7 +93,7 @@ class NpcController extends BaseController
         ],
         9 => [
             'fyi' => 'ghost',
-            'race' => 10,
+            'race' => Race::GHOST,
             'stats' => [
                 'agility',
                 'intellect',
@@ -102,7 +103,7 @@ class NpcController extends BaseController
         ],
         10 => [
             'fyi' => 'soldier',
-            'race' => 15,
+            'race' => Race::HUMAN_SOLDIER,
             'stats' => [
                 'strength',
                 'agility',

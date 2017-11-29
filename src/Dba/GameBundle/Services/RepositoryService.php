@@ -197,4 +197,12 @@ class RepositoryService extends BaseService
     {
         return $this->em()->getRepository('DbaGameBundle:Mail');
     }
+
+    /**
+     * @return Repository\QuestRepository
+     */
+    public function getQuestRepository()
+    {
+        return $this->em()->getRepository('DbaGameBundle:Quest');
+    }
 }

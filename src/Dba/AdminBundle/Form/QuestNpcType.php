@@ -7,7 +7,7 @@ use Symfony\Component\Form\Extension\Core\Type;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 
-class RequirementsType extends AbstractType
+class QuestNpcType extends AbstractType
 {
     /**
      * @inheritdoc
@@ -16,24 +16,24 @@ class RequirementsType extends AbstractType
     {
         $builder
             ->add(
-                'key',
+                'race',
                 Type\ChoiceType::class,
                 [
-                    'label' => 'form.key',
-                    'choices' => array_flip(Entity\Object::REQUIREMENTS_LIST)
+                    'label' => 'form.race',
+                    'choices' => array_flip(Entity\Race::NPC_LIST)
                 ]
             )
             ->add(
-                'value',
+                'number',
                 Type\TextType::class,
                 [
-                    'label' => 'form.value'
+                    'label' => 'form.number'
                 ]
             );
     }
 
     public function getBlockPrefix()
     {
-        return 'requirements_type';
+        return 'quest_npc_type';
     }
 }

@@ -50,7 +50,6 @@ EOT;
             'id' => $player->getId(),
         ]);
 
-        $mapData = [];
         return $query->getSingleResult();
     }
 

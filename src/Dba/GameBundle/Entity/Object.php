@@ -42,6 +42,8 @@ class Object
     const BONUS_RESISTANCE = 'resistance';
     const BONUS_VISION = 'vision';
 
+    const LEVEL = 'level';
+
     const TYPE_SPECIAL = 0;
     const TYPE_UNIQUE = 2;
     const TYPE_CONSUMABLE = 4;
@@ -86,6 +88,7 @@ class Object
         self::BONUS_INTELLECT => 'bonus.intellect',
         self::BONUS_RESISTANCE => 'bonus.resistance',
         self::BONUS_VISION => 'bonus.vision',
+        self::LEVEL => 'level',
     ];
 
     const TYPE_LIST = [

@@ -2,37 +2,33 @@
 {% import "DbaAdminBundle::default/macros.html.twig" as defaultHelper %}
 
 {% block body %}
-  <h2>{{ ('npc.list') | trans }}</h2>
-
-  {{ defaultHelper.pagination(nbPages, page, 'admin.npc') }}
-
   <table class="table table-hover table-clickable">
     <thead>
       <tr>
-        <th>{{ 'npc.name' | trans }}</th>
-        <th>{{ 'npc.level' | trans }}</th>
-        <th>{{ 'npc.enabled' | trans }}</th>
-        <th>{{ 'npc.actions' | trans }}</th>
+        <th>{{ 'quest.name' | trans }}</th>
+        <th>{{ 'quest.npc.name' | trans }}</th>
+        <th>{{ 'quest.enabled' | trans }}</th>
+        <th>{{ 'quest.actions' | trans }}</th>
       </tr>
     </thead>
     <tbody>
-      {% for npc in npcs %}
+      {% for quest in quests %}
         <tr>
           <td>
-            {{ npc.name }}
+            {{ quest.name }}
           </td>
           <td>
-            {{ npc.level }}
+            {{ quest.npcName }}
           </td>
           <td>
-            {{ npc.enabled }}
+            {{ quest.enabled }}
           </td>
           <td>
-            <a href="{{ path('admin.player.edit', {"id": npc.id}) }}">
+            <a href="{{ path('admin.quest.edit', {"id": quest.id}) }}">
               <img src="{{ asset('bundles/dbaadmin/images/edit.png') }}" alt="{{ 'edit' | trans }}" />
             </a>
             &nbsp;-&nbsp;
-            <a href="{{ path('admin.player.delete', {"id": npc.id}) }}" class="delete-news" data-toggle="confirmation">
+            <a href="{{ path('admin.quest.delete', {"id": quest.id}) }}" class="delete-news" data-toggle="confirmation">
               <img src="{{ asset('bundles/dbaadmin/images/trash.png') }}" alt="{{ 'delete' | trans }}" />
             </a>
           </td>
@@ -40,8 +36,6 @@
       {% endfor %}
     </tbody>
   </table>
-
-  {{ defaultHelper.pagination(nbPages, page, 'admin.npc') }}
 {% endblock %}
 
 {% block javascripts %}
