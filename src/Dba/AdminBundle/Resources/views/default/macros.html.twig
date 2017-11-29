@@ -54,15 +54,15 @@
   {% endif %}
 {% endmacro %}
 
-{% macro widget_prototype(widget, remove_text) %}
+{% macro widget_prototype(widget, remove_text, key='key', value='value') %}
   {% if widget.vars.prototype is defined %}
     {% set id = widget.vars.prototype.vars.id %}
-    {% set key = widget.vars.prototype.key %}
-    {% set value = widget.vars.prototype.value %}
+    {% set key = attribute(widget.vars.prototype, key) %}
+    {% set value = attribute(widget.vars.prototype, value) %}
   {% else %}
     {% set id = widget.vars.id %}
-    {% set key = widget.key %}
-    {% set value = widget.value %}
+    {% set key = attribute(widget, key) %}
+    {% set value = attribute(widget, value) %}
   {% endif %}
 
   <div data-content="{{ id }}">

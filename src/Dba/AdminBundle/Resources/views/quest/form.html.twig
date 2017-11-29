@@ -43,16 +43,58 @@
       <div class="clearfix">&nbsp;</div>
     </div>
 
-    {# <div id="gainObjects" data-prototype="{{ helper.widget_prototype(form.gainObjects, 'form.remove') | escape }}"> #}
-    {#   {% for widget in form.gainObjects.children %} #}
-    {#     {{ helper.widget_prototype(widget, 'form.remove')}} #}
-    {#   {% endfor %} #}
-    {# </div> #}
+    <div id="gainObjects" data-prototype="{{ helper.widget_prototype(form.gainObjects, 'form.remove', 'object', 'number') | escape }}">
+      {% for widget in form.gainObjects.children %}
+        {{ helper.widget_prototype(widget, 'form.remove', 'object', 'number')}}
+      {% endfor %}
+    </div>
+
+    <div class="text-center">
+      <button class="btn btn-default btn-add" data-target="npcNeeded">
+        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+        {{ 'form.add.npcNeeded' | trans }}
+      </button>
+      <div class="clearfix">&nbsp;</div>
+    </div>
+
+    <div id="npcNeeded" data-prototype="{{ helper.widget_prototype(form.npcNeeded, 'form.remove', 'race', 'number') | escape }}">
+      {% for widget in form.npcNeeded.children %}
+        {{ helper.widget_prototype(widget, 'form.remove', 'race', 'number')}}
+      {% endfor %}
+    </div>
+
+    <div class="text-center">
+      <button class="btn btn-default btn-add" data-target="npcObjectsNeeded">
+        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+        {{ 'form.add.npcObjectsNeeded' | trans }}
+      </button>
+      <div class="clearfix">&nbsp;</div>
+    </div>
+
+    <div id="npcObjectsNeeded" data-prototype="{{ helper.widget_prototype(form.npcObjectsNeeded, 'form.remove', 'object', 'number') | escape }}">
+      {% for widget in form.npcObjectsNeeded.children %}
+        {{ helper.widget_prototype(widget, 'form.remove', 'object', 'number')}}
+      {% endfor %}
+    </div>
+
+    <div class="text-center">
+      <button class="btn btn-default btn-add" data-target="objectsNeeded">
+        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+        {{ 'form.add.objectsNeeded' | trans }}
+      </button>
+      <div class="clearfix">&nbsp;</div>
+    </div>
+
+    <div id="objectsNeeded" data-prototype="{{ helper.widget_prototype(form.objectsNeeded, 'form.remove', 'object', 'number') | escape }}">
+      {% for widget in form.npcObjectsNeeded.children %}
+        {{ helper.widget_prototype(widget, 'form.remove', 'object', 'number')}}
+      {% endfor %}
+    </div>
 
     {{ form_widget(form._token) }}
 
     <div class="col-sm-offset-2 col-sm-10">
-      <button type="submit" class="btn btn-default">{{ 'save' | trans }}</button>
+      <button type="submit" class="btn btn-primary">{{ 'save' | trans }}</button>
     </div>
   </form>
 {% endblock %}

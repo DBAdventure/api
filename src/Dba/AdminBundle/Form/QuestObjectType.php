@@ -17,13 +17,13 @@ class QuestObjectType extends AbstractType
     {
         $builder
             ->add(
-                'race',
+                'object',
                 EntityType::class,
                 [
                     'class' => Entity\Object::class,
                     'choice_label' => 'name',
                     'label' => 'form.object',
-                    'choice_translation_domain' => true
+                    'choice_translation_domain' => false
                 ]
             )
             ->add(

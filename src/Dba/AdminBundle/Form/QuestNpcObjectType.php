@@ -17,7 +17,7 @@ class QuestNpcObjectType extends AbstractType
     {
         $builder
             ->add(
-                'race',
+                'object',
                 EntityType::class,
                 [
                     'class' => Entity\NpcObject::class,

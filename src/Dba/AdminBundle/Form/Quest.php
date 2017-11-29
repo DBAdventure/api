@@ -100,6 +100,16 @@ class Quest extends AbstractType
                 ]
             )
             ->add(
+                'objectsNeeded',
+                Type\CollectionType::class,
+                [
+                    'entry_type' => QuestObjectType::class,
+                    'allow_add' => true,
+                    'allow_delete' => true,
+                    'prototype' => true,
+                ]
+            )
+            ->add(
                 'gainObjects',
                 Type\CollectionType::class,
                 [
