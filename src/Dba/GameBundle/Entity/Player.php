@@ -2,17 +2,17 @@
 
 namespace Dba\GameBundle\Entity;
 
-use Exception;
 use DateTime;
+use Exception;
 use Serializable;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
-use Symfony\Component\Validator\Constraints as Assert;
-use Gedmo\Mapping\Annotation as Gedmo;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\Common\Collections\Collection;
 use FOS\UserBundle\Model\User as BaseUser;
-use Symfony\Component\Security\Core\User\AdvancedUserInterface;
+use Gedmo\Mapping\Annotation as Gedmo;
 use JMS\Serializer\Annotation as JMS;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Security\Core\User\AdvancedUserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Player
@@ -722,6 +722,15 @@ class Player implements AdvancedUserInterface, Serializable
      * @JMS\Expose
      */
     private $guildPlayer;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->playerObjects = new ArrayCollection();
+        $this->playerSpells = new ArrayCollection();
+    }
 
     /**
      * Set name
@@ -2736,9 +2745,24 @@ class Player implements AdvancedUserInterface, Serializable
         return array_unique($roles);
     }
 
-    public function isEnabled()
+    /**
+     * Get enabled
+     *
+     * @return boolean
+     */
+    public function getEnabled()
     {
         return $this->enabled;
+    }
+
+    /**
+     * Get enabled
+     *
+     * @return boolean
+     */
+    public function isEnabled()
+    {
+        return $this->getEnabled();
     }
 
     /**

@@ -2,8 +2,8 @@
 
 namespace Dba\GameBundle\Form;
 
-use Doctrine\ORM\EntityRepository;
 use Dba\GameBundle\Entity;
+use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Form\Extension\Core\Type;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;

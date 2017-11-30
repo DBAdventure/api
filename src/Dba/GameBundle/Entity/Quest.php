@@ -113,7 +113,7 @@ class Quest
     /**
      * @var ArrayCollection
      *
-     * @ORM\OneToMany(targetEntity="QuestObject", mappedBy="quest", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="QuestGainObject", mappedBy="quest", cascade={"persist"})
      */
     private $gainObjects;
 

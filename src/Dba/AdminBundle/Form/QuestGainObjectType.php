@@ -3,13 +3,12 @@
 namespace Dba\AdminBundle\Form;
 
 use Dba\GameBundle\Entity;
-use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class QuestNpcType extends AbstractQuestType
+class QuestGainObjectType extends AbstractQuestType
 {
     /**
      * @inheritdoc
@@ -18,23 +17,13 @@ class QuestNpcType extends AbstractQuestType
     {
         $builder
             ->add(
-                'race',
+                'object',
                 EntityType::class,
                 [
-                    'class' => Entity\Race::class,
-                    'label' => 'form.race',
+                    'class' => Entity\Object::class,
                     'choice_label' => 'name',
-                    'label' => 'form.map',
-                    'query_builder' => function (EntityRepository $er) {
-                        $qb = $er->createQueryBuilder('r');
-                        $qb->where(
-                            $qb->expr()->in(
-                                'r.id',
-                                array_flip(Entity\Race::NPC_LIST)
-                            )
-                        );
-                        return $qb;
-                    },
+                    'label' => 'form.object',
+                    'choice_translation_domain' => false
                 ]
             )
             ->add(
@@ -44,7 +33,6 @@ class QuestNpcType extends AbstractQuestType
                     'label' => 'form.number',
                 ]
             );
-
         parent::buildForm($builder, $options);
     }
 
@@ -55,13 +43,13 @@ class QuestNpcType extends AbstractQuestType
     {
         $resolver->setDefaults(
             [
-                'data_class' => Entity\QuestNpc::class,
+                'data_class' => Entity\QuestGainObject::class,
             ]
         );
     }
 
-    public function getBlockPrefix()
+    public function getBlockPostfix()
     {
-        return 'quest_npc_type';
+        return 'quest_gain_object_type';
     }
 }

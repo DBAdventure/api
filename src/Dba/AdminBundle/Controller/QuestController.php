@@ -51,6 +51,18 @@ class QuestController extends BaseController
         );
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+            $children = [
+                'npcNeeded',
+                'npcObjectsNeeded',
+                'objectsNeeded',
+                'gainObjects',
+            ];
+            foreach ($children as $child) {
+                foreach ($form->get($child)->getData() as $record) {
+                    $record->setQuest($quest);
+                }
+            }
+
             $this->em()->persist($quest);
             $this->em()->flush();
 

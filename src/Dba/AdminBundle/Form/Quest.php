@@ -113,7 +113,7 @@ class Quest extends AbstractType
                 'gainObjects',
                 Type\CollectionType::class,
                 [
-                    'entry_type' => QuestObjectType::class,
+                    'entry_type' => QuestGainObjectType::class,
                     'allow_add' => true,
                     'allow_delete' => true,
                     'prototype' => true,

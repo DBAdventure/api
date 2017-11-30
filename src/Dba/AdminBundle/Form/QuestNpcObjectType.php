@@ -4,11 +4,11 @@ namespace Dba\AdminBundle\Form;
 
 use Dba\GameBundle\Entity;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
-use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class QuestNpcObjectType extends AbstractType
+class QuestNpcObjectType extends AbstractQuestType
 {
     /**
      * @inheritdoc
@@ -30,9 +30,22 @@ class QuestNpcObjectType extends AbstractType
                 'number',
                 Type\TextType::class,
                 [
-                    'label' => 'form.number'
+                    'label' => 'form.number',
                 ]
             );
+        parent::buildForm($builder, $options);
+    }
+
+    /**
+     * @param OptionsResolver $resolver
+     */
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver->setDefaults(
+            [
+                'data_class' => Entity\QuestNpcObject::class,
+            ]
+        );
     }
 
     public function getBlockPrefix()
