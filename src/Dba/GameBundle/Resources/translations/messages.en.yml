@@ -68,35 +68,6 @@ previous: "Previous"
 next: "Next"
 guilds: "Guilds"
 
-form:
-  add:
-    recipient: "Add Recipient"
-    bonus: "Add Bonus"
-    requirements: "Add Requirements"
-  description: "Description"
-  price: "Price"
-  remove: "Remove"
-  password: "Password"
-  password.confirm: "Password confirm"
-  email: "Email"
-  email.confirm: "Email confirm"
-  login: "Login"
-  name: "Name"
-  image: "Image"
-  shortName: "Short name"
-  history: "History"
-  create: "Create"
-  subject: "Subject"
-  message: "Message"
-  send: "Send"
-  choice:
-    appearance: 'Choice appearance'
-  bank:
-    deposit: "Deposit"
-    withdraw: "Withdraw"
-  wanted:
-    setprice: "Set price on his head"
-
 map:
   created: 'Map created'
 
@@ -136,7 +107,6 @@ player:
     none: ""
 
 guild:
-  join: "Join this guild"
   createdBy: "Created by"
   history: "History"
   action: "Action"

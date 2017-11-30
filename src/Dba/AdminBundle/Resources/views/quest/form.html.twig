@@ -21,15 +21,21 @@
     {{ form_row(form.gainBattlePoints) }}
 
     <ul class="nav nav-tabs" role="tablist">
-      <li class="active"><a href="#requirements" aria-controls="requirements" role="tab" data-toggle="tab">{{ 'form.requirements' | trans }}</a></li>
-      <li><a href="#gain-objects" aria-controls="go" role="tab" data-toggle="tab">{{ 'fomr.gainObjects' | trans }}</a></li>
+      <li class="active"><a href="#quest-requirements" aria-controls="quest-requirements" role="tab" data-toggle="tab">{{ 'form.requirements' | trans }}</a></li>
+      <li><a href="#gain-objects" aria-controls="go" role="tab" data-toggle="tab">{{ 'form.gainObjects' | trans }}</a></li>
       <li><a href="#npc-needed" aria-controls="nn" role="tab" data-toggle="tab">{{ 'form.npcNeeded' | trans }}</a></li>
       <li><a href="#npc-objects-needed" aria-controls="non" role="tab" data-toggle="tab">{{ 'form.npcObjectsNeeded' | trans }}</a></li>
       <li><a href="#objects-needed" aria-controls="on" role="tab" data-toggle="tab">{{ 'form.objectsNeeded' | trans }}</a></li>
     </ul>
 
     <div class="tab-content">
-      <div role="tabpanel" class="tab-pane active" id="requirements">
+      <div role="tabpanel" class="tab-pane active" id="quest-requirements">
+
+        <div id="requirements" data-prototype="{{ helper.widget_prototype(form.requirements, 'form.remove') | escape }}">
+          {% for widget in form.requirements.children %}
+            {{ helper.widget_prototype(widget, 'form.remove')}}
+          {% endfor %}
+        </div>
         <div class="text-center">
           <button class="btn btn-default btn-add" data-target="requirements">
             <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
@@ -37,15 +43,14 @@
           </button>
           <div class="clearfix">&nbsp;</div>
         </div>
-
-        <div id="requirements" data-prototype="{{ helper.widget_prototype(form.requirements, 'form.remove') | escape }}">
-          {% for widget in form.requirements.children %}
-            {{ helper.widget_prototype(widget, 'form.remove')}}
-          {% endfor %}
-        </div>
       </div>
 
       <div role="tabpanel" class="tab-pane" id="gain-objects">
+        <div id="gainObjects" data-prototype="{{ helper.widget_prototype(form.gainObjects, 'form.remove', 'object', 'number') | escape }}">
+          {% for widget in form.gainObjects.children %}
+            {{ helper.widget_prototype(widget, 'form.remove', 'object', 'number')}}
+          {% endfor %}
+        </div>
         <div class="text-center">
           <button class="btn btn-default btn-add" data-target="gainObjects">
             <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
@@ -53,15 +58,14 @@
           </button>
           <div class="clearfix">&nbsp;</div>
         </div>
-
-        <div id="gainObjects" data-prototype="{{ helper.widget_prototype(form.gainObjects, 'form.remove', 'object', 'number') | escape }}">
-          {% for widget in form.gainObjects.children %}
-            {{ helper.widget_prototype(widget, 'form.remove', 'object', 'number')}}
-          {% endfor %}
-        </div>
       </div>
 
       <div role="tabpanel" class="tab-pane" id="npc-needed">
+        <div id="npcNeeded" data-prototype="{{ helper.widget_prototype(form.npcNeeded, 'form.remove', 'race', 'number') | escape }}">
+          {% for widget in form.npcNeeded.children %}
+            {{ helper.widget_prototype(widget, 'form.remove', 'race', 'number')}}
+          {% endfor %}
+        </div>
         <div class="text-center">
           <button class="btn btn-default btn-add" data-target="npcNeeded">
             <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
@@ -69,15 +73,14 @@
           </button>
           <div class="clearfix">&nbsp;</div>
         </div>
-
-        <div id="npcNeeded" data-prototype="{{ helper.widget_prototype(form.npcNeeded, 'form.remove', 'race', 'number') | escape }}">
-          {% for widget in form.npcNeeded.children %}
-            {{ helper.widget_prototype(widget, 'form.remove', 'race', 'number')}}
-          {% endfor %}
-        </div>
       </div>
 
       <div role="tabpanel" class="tab-pane" id="npc-objects-needed">
+        <div id="npcObjectsNeeded" data-prototype="{{ helper.widget_prototype(form.npcObjectsNeeded, 'form.remove', 'object', 'number') | escape }}">
+          {% for widget in form.npcObjectsNeeded.children %}
+            {{ helper.widget_prototype(widget, 'form.remove', 'object', 'number')}}
+          {% endfor %}
+        </div>
         <div class="text-center">
           <button class="btn btn-default btn-add" data-target="npcObjectsNeeded">
             <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
@@ -85,27 +88,20 @@
           </button>
           <div class="clearfix">&nbsp;</div>
         </div>
-
-        <div id="npcObjectsNeeded" data-prototype="{{ helper.widget_prototype(form.npcObjectsNeeded, 'form.remove', 'object', 'number') | escape }}">
-          {% for widget in form.npcObjectsNeeded.children %}
-            {{ helper.widget_prototype(widget, 'form.remove', 'object', 'number')}}
-          {% endfor %}
-        </div>
       </div>
 
       <div role="tabpanel" class="tab-pane" id="objects-needed">
+        <div id="objectsNeeded" data-prototype="{{ helper.widget_prototype(form.objectsNeeded, 'form.remove', 'object', 'number') | escape }}">
+          {% for widget in form.objectsNeeded.children %}
+            {{ helper.widget_prototype(widget, 'form.remove', 'object', 'number')}}
+          {% endfor %}
+        </div>
         <div class="text-center">
           <button class="btn btn-default btn-add" data-target="objectsNeeded">
             <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
             {{ 'form.add.objectsNeeded' | trans }}
           </button>
           <div class="clearfix">&nbsp;</div>
-        </div>
-
-        <div id="objectsNeeded" data-prototype="{{ helper.widget_prototype(form.objectsNeeded, 'form.remove', 'object', 'number') | escape }}">
-          {% for widget in form.objectsNeeded.children %}
-            {{ helper.widget_prototype(widget, 'form.remove', 'object', 'number')}}
-          {% endfor %}
         </div>
       </div>
     </div>

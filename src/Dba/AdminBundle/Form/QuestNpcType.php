@@ -24,7 +24,7 @@ class QuestNpcType extends AbstractQuestType
                     'class' => Entity\Race::class,
                     'label' => 'form.race',
                     'choice_label' => 'name',
-                    'label' => 'form.map',
+                    'label' => 'form.race',
                     'query_builder' => function (EntityRepository $er) {
                         $qb = $er->createQueryBuilder('r');
                         $qb->where(
