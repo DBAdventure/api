@@ -125,7 +125,7 @@ class Object
     /**
      * @var string
      *
-     * @ORM\Column(name="description", type="text", nullable=true)
+     * @ORM\Column(name="description", type="text", nullable=false)
      * @Assert\NotBlank()
      */
     private $description;
