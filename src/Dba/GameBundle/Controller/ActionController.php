@@ -260,7 +260,7 @@ class ActionController extends BaseController
                         'message' => 'action.pickup.object',
                         'parameters' => [
                             'number' => $mapObject->getNumber(),
-                            'name' => sprintf('objects.%s.name', $mapObject->getObject()->getName())
+                            'name' => $mapObject->getObject()->getName()
                         ]
                     ];
                 }
@@ -308,7 +308,7 @@ class ActionController extends BaseController
                             'message' => 'action.pickup.capsule.object',
                             'parameters' => [
                                 'number' => $result['object']['quantity'],
-                                'name' => sprintf('objects.%s.name', $result['object']['entity']->getName()),
+                                'name' => $result['object']['entity']->getName(),
                             ]
                         ];
                     }
@@ -641,7 +641,7 @@ class ActionController extends BaseController
                     $target,
                     'event.action.give.item',
                     [
-                        'name' => sprintf('objects.%s.name', $playerObject->getObject()->getName()),
+                        'name' => $playerObject->getObject()->getName(),
                         'quantity' => $quantity
                     ]
                 );

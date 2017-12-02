@@ -123,6 +123,14 @@ class Object
     private $name;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="description", type="text", nullable=true)
+     * @Assert\NotBlank()
+     */
+    private $description;
+
+    /**
      * @var integer
      *
      * @ORM\Column(name="price", type="integer", nullable=false)
@@ -211,6 +219,29 @@ class Object
     public function getName()
     {
         return $this->name;
+    }
+
+    /**
+     * Set description
+     *
+     * @param string $description
+     *
+     * @return Object
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+        return $this;
+    }
+
+    /**
+     * Get description
+     *
+     * @return string
+     */
+    public function getDescription()
+    {
+        return $this->description;
     }
 
     /**

@@ -51,6 +51,7 @@ class ObjectControllerTest extends BaseTestCase
         $form = $crawler->filter('#object-form')->form();
         // set some values
         $form['object[name]'] = 'Test';
+        $form['object[description]'] = 'Test';
         $form['object[weight]'] = 1;
         $form['object[price]'] = 200;
         $form['object[type]'] = 8;

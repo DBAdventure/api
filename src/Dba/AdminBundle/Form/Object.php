@@ -42,6 +42,13 @@ class Object extends AbstractType
                 ]
             )
             ->add(
+                'description',
+                Type\TextareaType::class,
+                [
+                    'label' => 'form.description',
+                ]
+            )
+            ->add(
                 'weight',
                 Type\IntegerType::class,
                 [

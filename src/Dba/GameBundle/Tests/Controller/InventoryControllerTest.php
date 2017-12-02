@@ -34,7 +34,7 @@ class InventoryControllerTest extends BaseTestCase
         $json = $this->assertJsonResponse($this->client->getResponse());
         $this->assertEquals('inventory.object.used', $json->message);
         $this->assertEquals(1, $json->parameters->number);
-        $this->assertEquals('objects.potion.life.name', $json->parameters->name);
+        $this->assertEquals('Potion de vie', $json->parameters->name);
 
         $this->assertEquals(75, $player->getHealth());
     }
@@ -54,7 +54,7 @@ class InventoryControllerTest extends BaseTestCase
         $this->assertNotEquals($mapId, $player->getMap()->getId());
         $this->assertEquals('inventory.object.used', $json->message);
         $this->assertEquals(1, $json->parameters->number);
-        $this->assertEquals('objects.teleport.cloud.1.name', $json->parameters->name);
+        $this->assertEquals('Nuage magique n°1', $json->parameters->name);
     }
 
     public function testUseItemWithTeleportWithoutMovementPoints()
@@ -91,7 +91,7 @@ class InventoryControllerTest extends BaseTestCase
         $this->assertEquals(80, $player->getHealth());
         $this->assertEquals('inventory.object.used', $json->message);
         $this->assertEquals(1, $json->parameters->number);
-        $this->assertEquals('objects.berries.name', $json->parameters->name);
+        $this->assertEquals('Baies sauvages', $json->parameters->name);
     }
 
     public function testDropItem()
@@ -112,7 +112,7 @@ class InventoryControllerTest extends BaseTestCase
         $this->assertEquals(0, $playerObject->getNumber());
         $this->assertFalse($playerObject->getEquipped());
         $this->assertEquals('inventory.object.drop', $json->message);
-        $this->assertEquals('objects.vision.detector.sayajin.name', $json->parameters->name);
+        $this->assertEquals('Détecteur Saïyen', $json->parameters->name);
     }
 
     public function testDropItemCantBeDropped()
@@ -142,9 +142,9 @@ class InventoryControllerTest extends BaseTestCase
 
         $this->assertFalse($playerObject->getEquipped());
         $this->assertEquals('inventory.object.unequip', $json->messages[0]->message);
-        $this->assertEquals('objects.vision.king.kai.name', $json->messages[0]->parameters->name);
+        $this->assertEquals('Antennes du roi Kaïo', $json->messages[0]->parameters->name);
         $this->assertEquals('inventory.object.equip', $json->messages[1]->message);
-        $this->assertEquals('objects.vision.detector.sayajin.name', $json->messages[1]->parameters->name);
+        $this->assertEquals('Détecteur Saïyen', $json->messages[1]->parameters->name);
     }
 
     public function testEquipCantEquipItemDueToNotFoundItem()
@@ -173,7 +173,7 @@ class InventoryControllerTest extends BaseTestCase
         $this->client->request('POST', '/api/inventory/equip/45');
         $json = $this->assertJsonResponse($this->client->getResponse());
         $this->assertEquals('inventory.object.equip', $json->messages[0]->message);
-        $this->assertEquals('objects.shoes.broly.name', $json->messages[0]->parameters->name);
+        $this->assertEquals('Bottes de Broly', $json->messages[0]->parameters->name);
     }
 
     public function testEquipCantEquipItemDueToCapacity()
@@ -182,7 +182,7 @@ class InventoryControllerTest extends BaseTestCase
         $this->client->request('POST', '/api/inventory/equip/45');
         $json = $this->assertJsonResponse($this->client->getResponse(), 403);
         $this->assertEquals('inventory.object.error.equip', $json->error->message);
-        $this->assertEquals('objects.shoes.broly.name', $json->error->parameters->name);
+        $this->assertEquals('Bottes de Broly', $json->error->parameters->name);
     }
 
     public function testUnequip()
@@ -204,7 +204,7 @@ class InventoryControllerTest extends BaseTestCase
 
         $this->assertFalse($playerObject->getEquipped());
         $this->assertEquals('inventory.object.unequip', $json->message);
-        $this->assertEquals('objects.vision.detector.sayajin.name', $json->parameters->name);
+        $this->assertEquals('Détecteur Saïyen', $json->parameters->name);
     }
 
     protected function createItems()

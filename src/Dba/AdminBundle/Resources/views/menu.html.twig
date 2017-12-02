@@ -45,6 +45,8 @@
     <div class="list-group{% if not isActive %} collapse{% endif %}" id="quest">
       <a href="{{ path('admin.quest') }}" class="list-group-item">{{ 'admin.quest.list' | trans }}</a>
       <a href="{{ path('admin.quest.create') }}" class="list-group-item">{{ 'admin.quest.create' | trans }}</a>
+      <a href="{{ path('admin.quest.object') }}" class="list-group-item">{{ 'admin.quest.object.list' | trans }}</a>
+      <a href="{{ path('admin.quest.object.create') }}" class="list-group-item">{{ 'admin.quest.object.create' | trans }}</a>
     </div>
   {% endif %}
 

@@ -438,7 +438,7 @@ class BuildingControllerTest extends BaseTestCase
             $json->message
         );
         $this->assertEquals(
-            'objects.senzu.name',
+            'Senzu',
             $json->parameters->name
         );
     }

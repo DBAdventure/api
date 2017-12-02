@@ -160,7 +160,7 @@ class BuildingController extends BaseController
         return [
             'message' => 'building.shop.success',
             'parameters' => [
-                'name' => sprintf('objects.%s.name', $object->getName()),
+                'name' => $object->getName(),
             ]
         ];
     }

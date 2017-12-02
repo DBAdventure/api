@@ -205,4 +205,12 @@ class RepositoryService extends BaseService
     {
         return $this->em()->getRepository('DbaGameBundle:Quest');
     }
+
+    /**
+     * @return Repository\NpcObjectRepository
+     */
+    public function getNpcObjectRepository()
+    {
+        return $this->em()->getRepository('DbaGameBundle:NpcObject');
+    }
 }

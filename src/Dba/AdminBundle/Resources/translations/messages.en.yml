@@ -21,6 +21,8 @@ admin:
   quest: "Manage Quests"
   quest.list: "List"
   quest.create: "Create"
+  quest.object.list: "List npc object"
+  quest.object.create: "Create npc object"
   map:
     create: "Create a new Map"
     max.size: "Actual max size:"
@@ -112,6 +114,15 @@ quest:
   position: "Position"
   actions: "Actions"
   enabled: "Enabled"
+  object:
+    npc:
+      list: "List of npc"
+    luck: "Loot luck"
+    created: "Quest object created!"
+    saved: "Quest object saved!"
+    name: "Name"
+    actions: "Actions"
+
 
 locust: "Locust"
 crocodile: "Crocodile"
@@ -131,6 +142,7 @@ form:
     bonus: "Add Bonus"
     requirements: "Add Requirements"
     gainObjects: "Add object"
+    npc: "Add Npc"
     npcNeeded: "Add Npc"
     npcObjectsNeeded: "Add needed object loot on npc"
     objectsNeeded: "Add needed object"
@@ -156,8 +168,8 @@ form:
   npcNeeded: "Npc Kill needed"
   npcObjectsNeeded: "Npc objects needed"
   objectsNeeded: "Objects needed"
-  add:
   number: "Number"
+  luck: "Loot luck"
   roles: "Roles"
   key: "Key"
   value: "Value"

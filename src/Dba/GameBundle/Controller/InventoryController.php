@@ -112,7 +112,7 @@ class InventoryController extends BaseController
             'message' => 'inventory.object.used',
             'parameters' => [
                 'number' => $nbObjectsUsed,
-                'name' => sprintf('objects.%s.name', $playerObject->getObject()->getName()),
+                'name' => $playerObject->getObject()->getName(),
             ],
         ];
     }
@@ -142,7 +142,7 @@ class InventoryController extends BaseController
         return [
             'message' => 'inventory.object.drop',
             'parameters' => [
-                'name' => sprintf('objects.%s.name', $playerObject->getObject()->getName()),
+                'name' => $playerObject->getObject()->getName(),
             ]
         ];
     }
@@ -165,7 +165,7 @@ class InventoryController extends BaseController
         return [
             'message' => 'inventory.object.unequip',
             'parameters' => [
-                'name' => sprintf('objects.%s.name', $playerObject->getObject()->getName()),
+                'name' => $playerObject->getObject()->getName(),
             ]
         ];
     }
@@ -201,7 +201,7 @@ class InventoryController extends BaseController
             return $this->forbidden([
                 'message' => 'inventory.object.error.equip',
                 'parameters' => [
-                    'name' => sprintf('objects.%s.name', $playerObject->getObject()->getName()),
+                    'name' => $playerObject->getObject()->getName(),
                 ]
             ]);
         }
@@ -216,7 +216,7 @@ class InventoryController extends BaseController
             $messages[] = [
                 'message' => 'inventory.object.unequip',
                 'parameters' => [
-                    'name' => sprintf('objects.%s.name', $similarObject->getObject()->getName()),
+                    'name' => $similarObject->getObject()->getName(),
                 ]
             ];
             $similarObject->setEquipped(false);
@@ -226,7 +226,7 @@ class InventoryController extends BaseController
         $messages[] = [
             'message' => 'inventory.object.equip',
             'parameters' => [
-                'name' => sprintf('objects.%s.name', $playerObject->getObject()->getName()),
+                'name' => $playerObject->getObject()->getName(),
             ]
         ];
         $playerObject->setEquipped(true);

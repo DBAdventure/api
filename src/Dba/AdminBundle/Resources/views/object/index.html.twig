@@ -16,7 +16,7 @@
       {% for object in objectList %}
         <tr>
           <td>
-            {{ (object.name ~ '.name') | trans({}, 'objects') }}
+            {{ object.name }}
           </td>
           <td>
             {{ constant('TYPE_LIST', object)[object.type] }}

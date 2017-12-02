@@ -224,6 +224,10 @@ var DbaAdmin = function($)
             this.displayImage($images, '#quest-image-displayed');
             Dba.collectionType();
         },
+        questObject: function($images)
+        {
+            Dba.collectionType();
+        },
         players: function($assetPath, $formChoice, $defaultImage)
         {
             Dba.appearance($assetPath, $formChoice, $defaultImage);
