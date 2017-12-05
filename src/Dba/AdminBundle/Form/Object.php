@@ -115,35 +115,50 @@ class Object extends AbstractType
 
         $builder->get('bonus')
             ->addModelTransformer(
-                new CallbackTransformer(
-                    function ($bonus) {
-                        if (empty($bonus)) {
-                            return [];
-                        }
-
-                        $data = [];
-                        foreach ($bonus as $key => $value) {
-                            $data[$key] = [
-                                'key' => $key,
-                                'value' => $value
-                            ];
-                        }
-                        return $data;
-                    },
-                    function ($data) {
-                        if (empty($data)) {
-                            return [];
-                        }
-
-                        $result = [];
-                        foreach ($data as $bonus) {
-                            $result[$bonus['key']] = $bonus['value'];
-                        }
-
-                        return $result;
-                    }
-                )
+                $this->getCallbackTransformer()
             );
+
+        $builder->get('requirements')
+            ->addModelTransformer(
+                $this->getCallbackTransformer()
+            );
+    }
+
+    /**
+     * Callback transformer
+     *
+     * @return CallbackTransformer
+     */
+    protected function getCallbackTransformer()
+    {
+        return new CallbackTransformer(
+            function ($bonus) {
+                if (empty($bonus)) {
+                    return [];
+                }
+
+                $data = [];
+                foreach ($bonus as $key => $value) {
+                    $data[$key] = [
+                        'key' => $key,
+                        'value' => $value
+                    ];
+                }
+                return $data;
+            },
+            function ($data) {
+                if (empty($data)) {
+                    return [];
+                }
+
+                $result = [];
+                foreach ($data as $bonus) {
+                    $result[$bonus['key']] = $bonus['value'];
+                }
+
+                return $result;
+            }
+        );
     }
 
     /**

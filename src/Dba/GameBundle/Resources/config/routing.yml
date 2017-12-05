@@ -62,3 +62,8 @@ game_magic:
   resource: "@DbaGameBundle/Controller/MagicController.php"
   type:     rest
   prefix: /magic
+
+game_quest:
+  resource: "@DbaGameBundle/Controller/QuestController.php"
+  type:     rest
+  prefix: /quest

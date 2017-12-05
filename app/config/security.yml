@@ -32,10 +32,11 @@ security:
     - { path: ^/api/account, roles: ROLE_PLAYER }
     - { path: ^/api/action, roles: ROLE_PLAYER }
     - { path: ^/api/building, roles: ROLE_PLAYER }
-    - { path: ^/api/inbox, roles: ROLE_PLAYER }
-    - { path: ^/api/magic, roles: ROLE_PLAYER }
-    - { path: ^/api/inventory, roles: ROLE_PLAYER }
-    - { path: ^/api/map, roles: ROLE_PLAYER }
     - { path: ^/api/guild, roles: ROLE_PLAYER }
+    - { path: ^/api/inbox, roles: ROLE_PLAYER }
+    - { path: ^/api/inventory, roles: ROLE_PLAYER }
+    - { path: ^/api/magic, roles: ROLE_PLAYER }
+    - { path: ^/api/map, roles: ROLE_PLAYER }
+    - { path: ^/api/quest, roles: ROLE_PLAYER }
 
     - { path: ^/admin, roles: ROLE_MODO }

@@ -194,6 +194,7 @@ class MapController extends BaseController
                 'buildings' => $this->repos()->getBuildingRepository(),
                 'players' => $this->repos()->getPlayerRepository(),
                 'objects' => $this->repos()->getMapObjectRepository(),
+                'quests' => $this->repos()->getQuestRepository(),
             ],
             $this->getUser(),
             $borders

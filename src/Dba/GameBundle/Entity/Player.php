@@ -716,6 +716,14 @@ class Player implements AdvancedUserInterface, Serializable
     private $playerSpells = [];
 
     /**
+     * @var ArrayCollection
+     *
+     * @ORM\OneToMany(targetEntity="PlayerQuest", mappedBy="player", cascade={"persist"})
+     * @JMS\Exclude
+     */
+    private $playerQuests = [];
+
+    /**
      * @var GuildPlayer
      *
      * @ORM\OneToOne(targetEntity="GuildPlayer", mappedBy="player", cascade={"persist"})
@@ -729,6 +737,7 @@ class Player implements AdvancedUserInterface, Serializable
     public function __construct()
     {
         $this->playerObjects = new ArrayCollection();
+        $this->playerQuests = new ArrayCollection();
         $this->playerSpells = new ArrayCollection();
     }
 
@@ -2452,6 +2461,39 @@ class Player implements AdvancedUserInterface, Serializable
     public function getPlayerObjects()
     {
         return $this->playerObjects;
+    }
+
+    /**
+     * Add player quest
+     *
+     * @param PlayerQuest $playerQuest
+     *
+     * @return Player
+     */
+    public function addPlayerQuest(PlayerQuest $playerQuest)
+    {
+        $this->playerQuests[] = $playerQuest;
+        return $this;
+    }
+
+    /**
+     * Remove player quest
+     *
+     * @param PlayerQuest $playerQuest
+     */
+    public function removePlayerQuest(PlayerQuest $playerQuest)
+    {
+        $this->playerQuests->removeElement($playerQuest);
+    }
+
+    /**
+     * Get player quests
+     *
+     * @return ArrayCollection
+     */
+    public function getPlayerQuests()
+    {
+        return $this->playerQuests;
     }
 
     /**

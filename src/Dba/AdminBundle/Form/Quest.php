@@ -152,6 +152,37 @@ class Quest extends AbstractType
                 ]
             );
         }
+        $builder->get('requirements')
+            ->addModelTransformer(
+                new CallbackTransformer(
+                    function ($bonus) {
+                        if (empty($bonus)) {
+                            return [];
+                        }
+
+                        $data = [];
+                        foreach ($bonus as $key => $value) {
+                            $data[$key] = [
+                                'key' => $key,
+                                'value' => $value
+                            ];
+                        }
+                        return $data;
+                    },
+                    function ($data) {
+                        if (empty($data)) {
+                            return [];
+                        }
+
+                        $result = [];
+                        foreach ($data as $bonus) {
+                            $result[$bonus['key']] = $bonus['value'];
+                        }
+
+                        return $result;
+                    }
+                )
+            );
     }
 
     /**

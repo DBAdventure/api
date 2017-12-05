@@ -13,6 +13,7 @@ use Dba\GameBundle\Entity\MapObjectType;
 use Dba\GameBundle\Entity\Object;
 use Dba\GameBundle\Entity\Player;
 use Dba\GameBundle\Entity\PlayerSpell;
+use Dba\GameBundle\Entity\Quest;
 use Dba\GameBundle\Entity\Side;
 use Dba\GameBundle\Entity\Spell;
 
@@ -973,6 +974,160 @@ class ActionController extends BaseController
             ),
         ];
     }
+    /**
+     * @ParamConverter("quest", class="Dba\GameBundle\Entity\Quest")
+     * @Annotations\Get("/talk/{quest}")
+     */
+    public function getTalkAction(Quest $quest)
+    {
+        $player = $this->getUser();
+        if ($this->checkPosition($player, $quest)) {
+            // failed to talk
+            return $this->forbidden();
+        }
+
+        return [
+            'quest' => $quest,
+            'player_quest'
+        ];
+
+        // $res_valide = mysql_query("SELECT valide FROM pnj_quete_valide WHERE id_joueur=\"$smartid\" AND id_pnj=\"$id\"");
+        // $verif_valide_quete = 0;
+        // if(mysql_num_rows($res_valide) > 0)
+        // {
+        //     $verif_valide_quete = mysql_result($res_valide,0,"valide");
+        // }
+        // if(($joueur_etat_niveau<$niv_min or $joueur_etat_niveau>$niv_max) AND $verif_valide_quete !=2)
+        // {
+        //     echo utf8_encode("<center>Ton niveau ne te permet pas de faire cette quête...<br />
+        //             Il faut avoir un niveau compris entre <span class='typecsmaqua'>$niv_min</span> et <span class='typecsmaqua'>$niv_max</span>");
+        // }
+        // else
+        // {
+        //     $query_quete="SELECT * from pnj_quete_valide WHERE id_joueur='$smartid' AND id_pnj='$id'";
+        //     $res_quete=mysql_query($query_quete);
+        //     if(mysql_num_rows($res_quete)==1)
+        //     {
+        //         while($quete=mysql_fetch_array($res_quete))
+        //         {
+        //             $valide_quete = $quete["valide"];
+        //             $nombre_mob = $quete["nombre_mob"];
+        //             $nombre_objet = $quete["nombre_objet"];
+        //             $nombre_objet_mob = $quete["nombre_objet_mob"];
+        //             $time_joueur = $quete["time_joueur"];
+        //             $varTextTime = "";
+        //             if($time_pnj != 0 AND $time_joueur != 0)
+        //             {
+        //                 $remains_time = $time_joueur + $time_pnj - time();
+        //                 if($remains_time < 0)
+        //                 {
+        //                     $valide_quete = 3;
+        //                 }
+        //                 else
+        //                 {
+        //                     include_once(dirname(__FILE__)."/include_quetes_time.php");
+        //                     $varTextTime .= "<font class=\"mechant\">Temps restant :</font><br> ".ChangeNumberInTime($remains_time,$valide_quete,$joueur_pseudo,$id)."<br />";
+        //                 }
+        //             }
+        //             if($valide_quete==2)
+        //             {
+        //                 mysql_query("UPDATE pnj_quete_valide SET valide='0' WHERE id_joueur='$smartid' AND id_pnj='$id'");
+        //                 echo utf8_encode("<center>Tu viens de finir la quête voici ta récompense :<br />");
+        //                 if($id_objet != 0 AND !empty($id_objet))
+        //                 {
+        //                     mysql_query("UPDATE objets_perso SET nbr=nbr-$nombre_objet, porter=0 WHERE id_joueur=\"$smartid\" AND id_objet=\"$id_objet\"");
+        //                 }
+        //                 if($recoit_bp!=0 AND $recoit_bp!="")
+        //                 {
+        //                     $joueur_etat_bp+=$recoit_bp;
+        //                     mysql_query("UPDATE perso SET bp=\"$joueur_etat_bp\" WHERE id=\"$smartid\"");
+        //                     echo utf8_encode("Tu as gagné <span class='typecsmaqua'>$recoit_bp</span> Bp<br />");
+        //                 }
+        //                 if($recoit_Z!=0 AND $recoit_Z!="")
+        //                 {
+        //                     $joueur_etat_Zenies+=$recoit_Z;
+        //                     mysql_query("UPDATE perso SET Z=\"$joueur_etat_Zenies\" WHERE id=\"$smartid\"");
+        //                     echo utf8_encode("Tu as gagné <span class='typecsmaqua'>$recoit_Z</span> Zénies<br />");
+        //                 }
+        //                 if($recoit_objet!=0 AND $recoit_objet!="")
+        //                 {
+        //                     $res = inventaire_ajout($perso, $recoit_objet, $recoit_nbr_objet, FALSE, $texte);
+        //                     if($res == 0)
+        //                     {
+        //                         $nom_objet_recu = $texte[0];
+        //                         print("L'objet <span class='typecsmaqua'>$nom_objet_recu</span>, a &eacute;t&eacute; ajout&eacute; &agrave; ton inventaire.");
+        //                     }
+        //                     else
+        //                     {
+        //                         print("$texte");
+        //                         if($res == 4 OR $res == 7)
+        //                         {
+        //                             /* Trop chargé, ou objet en double */
+        //                             $res = log_sql(__FILE__, $joueur_pseudo, "SELECT prix FROM objets_acheter WHERE id = $recoit_objet");
+        //                             if($res AND mysql_num_rows($res) == 1)
+        //                             {
+        //                                 $prix = ceil(mysql_result($res, 0, 'prix') * $recoit_nbr_objet / 20);
+        //                                 $res = log_sql(__FILE__, $joueur_pseudo, "SELECT * FROM banque WHERE id_joueur='$smartid'");
+        //                                 if($res AND mysql_num_rows($res) == 1)
+        //                                 {
+        //                                     $queryBanque = "UPDATE banque SET Z=Z+$prix WHERE id_joueur='$smartid'";
+        //                                 }
+        //                                 else
+        //                                 {
+        //                                     $queryBanque = "INSERT INTO banque (id_joueur, Z) VALUES ('$smartid', $prix)";
+        //                                 }
+        //                                 if(log_sql(__FILE__, $joueur_pseudo, $queryBanque))
+        //                                 {
+        //                                     print(", tu re&ccedil;ois la somme de l'objet sur ton compte en banque (+$prix lingot".($prix>1 ? 's':'').")");
+        //                                 }
+        //                             }
+        //                         }
+        //                         print("<br />");
+        //                     }
+        //                     echo utf8_encode( "</center>");
+        //                 }
+        //             }
+        //             elseif($valide_quete==1)
+        //             {
+        //                 echo utf8_encode("<center>Tu n'as pas fini cette quête...</center><br/>");
+        //                 echo utf8_encode( "<br><center> $varTextTime </center><br>");
+        //             }
+        //             elseif($valide_quete==3)
+        //             {
+        //                 echo utf8_encode("<center>Le temps que tu avais pour faire cette quête est dépassé.</center>");
+        //                 mysql_query("DELETE FROM pnj_quete_valide WHERE id_pnj=\"$id_pnj\" AND id_joueur=\"$smartid\"");
+        //             }
+        //             else
+        //             {
+        //                 echo utf8_encode("<center>Tu as déjà fait cette quête...</center>");
+        //             }
+        //         }
+        //     }
+        //     else
+        //     {
+        //         if($choix=="accepter")
+        //         {
+        //             $query_verif=mysql_query("SELECT * from pnj_quete_valide WHERE id_joueur='$smartid' AND (valide='1' or valide='2' or valide='3')");
+        //             if(mysql_num_rows($query_verif)<10)
+        //             {
+        //                 mysql_query("INSERT INTO `pnj_quete_valide` ( `id_pnj` , `id_joueur` , `valide` , `nombre_mob` , `nombre_objet_mob` , `nombre_objet`, `time_joueur` )
+        //                                         VALUES (
+        //                                         '$id', '$smartid', '1', '0', '0', '0', '".time()."'
+        //                                         );");
+        //                 echo utf8_encode("<center>Tu viens d'accepter cette quête...<br /> Bonne route...</center>");
+        //             }
+        //             else
+        //             {
+        //                 echo utf8_encode("<center>Tu as déjà 10 quêtes en cours.</center>");
+        //             }
+        //         }
+        //         else
+        //         {
+        //             echo utf8_encode($chaine_afficher);
+        //         }
+        //     }
+        // }
+    }
 
     /**
      * Check for price on target's head
@@ -1049,10 +1204,10 @@ class ActionController extends BaseController
      * Check player and target prosition
      *
      * @param Player  $player Player
-     * @param mixed  $target Player or MapObject
-     * @param integer $actionPoints Action points
+     * @param mixed  $target Player or MapObject or Quest
+     * @param integer $actionPoints Action points required
      */
-    protected function checkPosition(Player $player, $target, $actionPoints)
+    protected function checkPosition(Player $player, $target, $actionPoints = 0)
     {
         return $player->getActionPoints() < $actionPoints ||
             $player->getX() != $target->getX() ||

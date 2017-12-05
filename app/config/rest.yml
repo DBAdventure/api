@@ -1,6 +1,7 @@
 fos_rest:
   serializer:
     serialize_null: true
+    groups: [Default]
   body_listener:
     enabled: true
   view:
