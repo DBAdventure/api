@@ -988,7 +988,7 @@ class ActionController extends BaseController
 
         return [
             'quest' => $quest,
-            'player_quest'
+            'player_quest' => null,
         ];
 
         // $res_valide = mysql_query("SELECT valide FROM pnj_quete_valide WHERE id_joueur=\"$smartid\" AND id_pnj=\"$id\"");
