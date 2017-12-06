@@ -44,6 +44,7 @@ class QuestObjectController extends BaseController
         );
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+            $questNpcObject->removeDuplicates();
             $this->em()->persist($questNpcObject);
             $this->em()->flush();
 
@@ -73,6 +74,7 @@ class QuestObjectController extends BaseController
         );
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+            $questNpcObject->removeDuplicates();
             $this->em()->persist($questNpcObject);
             $this->em()->flush();
 

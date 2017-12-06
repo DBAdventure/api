@@ -24,9 +24,9 @@
       <div class="clearfix">&nbsp;</div>
     </div>
 
-    <div id="bonus" data-prototype="{{ helper.widget_prototype(form.bonus, 'form.remove') | escape }}">
+    <div id="bonus" data-prototype="{{ helper.widget_prototype(form.bonus) | escape }}">
       {% for widget in form.bonus.children %}
-        {{ helper.widget_prototype(widget, 'form.remove')}}
+        {{ helper.widget_prototype(widget)}}
       {% endfor %}
     </div>
 
@@ -38,9 +38,9 @@
       <div class="clearfix">&nbsp;</div>
     </div>
 
-    <div id="requirements" data-prototype="{{ helper.widget_prototype(form.requirements, 'form.remove') | escape }}">
+    <div id="requirements" data-prototype="{{ helper.widget_prototype(form.requirements) | escape }}">
       {% for widget in form.requirements.children %}
-        {{ helper.widget_prototype(widget, 'form.remove')}}
+        {{ helper.widget_prototype(widget)}}
       {% endfor %}
     </div>
 

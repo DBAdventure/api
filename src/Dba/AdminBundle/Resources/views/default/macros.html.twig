@@ -54,7 +54,7 @@
   {% endif %}
 {% endmacro %}
 
-{% macro widget_prototype(widget, remove_text, key='key', value='value') %}
+{% macro widget_prototype(widget, key='key', value='value') %}
   {% if widget.vars.prototype is defined %}
     {% set id = widget.vars.prototype.vars.id %}
     {% set key = attribute(widget.vars.prototype, key) %}
@@ -74,6 +74,28 @@
       <div class="col-sm-8">
         <input type="text" class="form-control" required="required" name="{{ value.vars.full_name }}" id="{{ value.vars.id }}" value="{{ value.vars.value }}"/>
       </div>
+      <div class="col-sm-2 text-right">
+        <button type="button" class="btn btn-default btn-sm btn-remove" data-related="{{ id }}">
+          <span class="glyphicon glyphicon-remove btn-remove" aria-hidden="true"></span>
+        </button>
+      </div>
+    </div>
+  </div>
+{% endmacro %}
+
+{% macro simple_widget_prototype(widget) %}
+  {% if widget.vars.prototype is defined %}
+    {% set id = widget.vars.prototype.vars.id %}
+  {% else %}
+    {% set id = widget.vars.id %}
+  {% endif %}
+
+  <div data-content="{{ id }}">
+    <div class="form-group">
+      <div class="col-sm-10">
+        {{ form_widget(widget) }}
+      </div>
+
       <div class="col-sm-2 text-right">
         <button type="button" class="btn btn-default btn-sm btn-remove" data-related="{{ id }}">
           <span class="glyphicon glyphicon-remove btn-remove" aria-hidden="true"></span>

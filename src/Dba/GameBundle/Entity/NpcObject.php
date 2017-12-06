@@ -3,6 +3,8 @@
 namespace Dba\GameBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -33,9 +35,10 @@ class NpcObject
     /**
      * @var array
      *
-     * @ORM\Column(name="list", type="json_array", nullable=false)
+     * @var ArrayCollection
+     * @ORM\ManyToMany(targetEntity="Dba\GameBundle\Entity\Race", cascade={"all"})
      */
-    private $list;
+    private $races;
 
     /**
      * @var integer
@@ -44,6 +47,14 @@ class NpcObject
      * @Assert\NotBlank()
      */
     private $luck = 100;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->races = new ArrayCollection();
+    }
 
     /**
      * Get id
@@ -128,26 +139,70 @@ class NpcObject
     }
 
     /**
-     * Set list
+     * Add Race
      *
-     * @param array $list
+     * @param Race $race
      *
      * @return NpcObject
      */
-    public function setList($list)
+    public function addRace(Race $race)
     {
-        $this->list = $list;
+        if (!$this->races->contains($race)) {
+            $this->races[] = $race;
+        }
 
         return $this;
     }
 
     /**
-     * Get list
+     * Set Races
      *
-     * @return array
+     * @param Collection $races
+     *
+     * @return NpcObject
      */
-    public function getList()
+    public function setRaces(Collection $races = null)
     {
-        return $this->list;
+        $this->races = new ArrayCollection();
+        if (is_null($races)) {
+            return;
+        }
+
+        foreach ($races as $race) {
+            $this->addRace($race);
+        }
+    }
+
+    /**
+     * Remove Race
+     *
+     * @param Race $race
+     */
+    public function removeRace(Race $race)
+    {
+        $this->races->removeElement($race);
+    }
+
+    /**
+     * Get Races
+     *
+     * @return ArrayCollection
+     */
+    public function getRaces()
+    {
+        return $this->races;
+    }
+
+    /**
+     * Remove duplicates in collection
+     *
+     * @return NpcObject
+     */
+    public function removeDuplicates()
+    {
+        $races = $this->getRaces();
+        $this->setRaces();
+        $this->setRaces($races);
+        return $this;
     }
 }

@@ -26,10 +26,34 @@ class NpcObject extends AbstractType
                 ]
             )
             ->add(
-                'list',
+                'races',
                 Type\CollectionType::class,
                 [
-                    'entry_type' => Type\TextType::class,
+                    'entry_type' => EntityType::class,
+                    'entry_options' => [
+                        'class' => Entity\Race::class,
+                        'choice_label' => 'name',
+                        'query_builder' => function (EntityRepository $er) {
+                            $qb = $er->createQueryBuilder('r');
+                            $qb->where(
+                                $qb->expr()->notIn(
+                                    'r.id',
+                                    [
+                                        Entity\Race::HUMAN,
+                                        Entity\Race::HUMAN_SAIYAJIN,
+                                        Entity\Race::NAMEKIAN,
+                                        Entity\Race::SAIYAJIN,
+                                        Entity\Race::ALIEN,
+                                        Entity\Race::CYBORG,
+                                        Entity\Race::MAJIN,
+                                        Entity\Race::DRAGON,
+                                    ]
+                                )
+                            );
+                            return $qb;
+                        },
+                        'choice_translation_domain' => true,
+                    ],
                     'allow_add' => true,
                     'allow_delete' => true,
                     'prototype' => true,
@@ -50,7 +74,11 @@ class NpcObject extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults([]);
+        $resolver->setDefaults(
+            [
+                'data_class' => Entity\NpcObject::class,
+            ]
+        );
     }
 
     public function getBlockPrefix()

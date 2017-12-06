@@ -11,15 +11,15 @@
     {{ form_row(form.name) }}
     {{ form_row(form.luck) }}
 
-    <h3>{{ 'quest.object.npc.list' | trans }}</h3>
-    <div id="npcList" data-prototype="{{ form_widget(form.list.vars.prototype) | escape }}">
-      {% for widget in form.list.children %}
-        {{ form_widget(widget) }}
+    <h3>{{ 'quest.object.npc.races' | trans }}</h3>
+    <div id="npcRaces" data-prototype="{{ helper.simple_widget_prototype(form.races.vars.prototype) | escape }}">
+      {% for widget in form.races.children %}
+        {{ helper.simple_widget_prototype(widget) }}
       {% endfor %}
     </div>
 
     <div class="text-center">
-      <button class="btn btn-default btn-add" data-target="npcList">
+      <button class="btn btn-default btn-add" data-target="npcRaces">
         <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
         {{ 'form.add.npc' | trans }}
       </button>

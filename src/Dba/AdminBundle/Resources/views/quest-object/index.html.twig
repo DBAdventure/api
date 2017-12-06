@@ -21,7 +21,9 @@
             {{ quest.luck }}
           </td>
           <td>
-            {{ quest.list | join(', ') }}
+            {% for race in quest.races %}
+              {{ race.name | trans }}
+            {% endfor %}
           </td>
           <td>
             <a href="{{ path('admin.quest.object.edit', {"id": quest.id}) }}">

@@ -116,7 +116,7 @@ quest:
   enabled: "Enabled"
   object:
     npc:
-      list: "List of npc"
+      races: "List of npc"
     luck: "Loot luck"
     created: "Quest object created!"
     saved: "Quest object saved!"
