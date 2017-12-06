@@ -80,7 +80,7 @@ class Quest extends AbstractType
                 ]
             )
             ->add(
-                'npcNeeded',
+                'npcsNeeded',
                 Type\CollectionType::class,
                 [
                     'entry_type' => QuestNpcType::class,

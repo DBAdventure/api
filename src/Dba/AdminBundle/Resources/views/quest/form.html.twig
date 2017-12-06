@@ -23,7 +23,7 @@
     <ul class="nav nav-tabs" role="tablist">
       <li class="active"><a href="#quest-requirements" aria-controls="quest-requirements" role="tab" data-toggle="tab">{{ 'form.requirements' | trans }}</a></li>
       <li><a href="#gain-objects" aria-controls="go" role="tab" data-toggle="tab">{{ 'form.gainObjects' | trans }}</a></li>
-      <li><a href="#npc-needed" aria-controls="nn" role="tab" data-toggle="tab">{{ 'form.npcNeeded' | trans }}</a></li>
+      <li><a href="#npcs-needed" aria-controls="nn" role="tab" data-toggle="tab">{{ 'form.npcsNeeded' | trans }}</a></li>
       <li><a href="#npc-objects-needed" aria-controls="non" role="tab" data-toggle="tab">{{ 'form.npcObjectsNeeded' | trans }}</a></li>
       <li><a href="#objects-needed" aria-controls="on" role="tab" data-toggle="tab">{{ 'form.objectsNeeded' | trans }}</a></li>
     </ul>
@@ -60,16 +60,16 @@
         </div>
       </div>
 
-      <div role="tabpanel" class="tab-pane" id="npc-needed">
-        <div id="npcNeeded" data-prototype="{{ helper.widget_prototype(form.npcNeeded, 'form.remove', 'race', 'number') | escape }}">
-          {% for widget in form.npcNeeded.children %}
+      <div role="tabpanel" class="tab-pane" id="npcs-needed">
+        <div id="npcsNeeded" data-prototype="{{ helper.widget_prototype(form.npcsNeeded, 'form.remove', 'race', 'number') | escape }}">
+          {% for widget in form.npcsNeeded.children %}
             {{ helper.widget_prototype(widget, 'form.remove', 'race', 'number')}}
           {% endfor %}
         </div>
         <div class="text-center">
-          <button class="btn btn-default btn-add" data-target="npcNeeded">
+          <button class="btn btn-default btn-add" data-target="npcsNeeded">
             <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-            {{ 'form.add.npcNeeded' | trans }}
+            {{ 'form.add.npcsNeeded' | trans }}
           </button>
           <div class="clearfix">&nbsp;</div>
         </div>

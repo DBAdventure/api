@@ -3,6 +3,7 @@
 namespace Dba\GameBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 use JMS\Serializer\Annotation as JMS;
 
 /**
@@ -13,6 +14,10 @@ use JMS\Serializer\Annotation as JMS;
  */
 class PlayerQuest
 {
+    const STATUS_IN_PROGRESS = 0;
+    const STATUS_FINISHED = 1;
+    const STATUS_TIMEOUT = 2;
+
     /**
      * @var Player
      *
@@ -22,6 +27,7 @@ class PlayerQuest
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="player_id", referencedColumnName="id", onDelete="CASCADE")
      * })
+     * @JMS\Exclude
      */
     private $player;
 
@@ -34,22 +40,38 @@ class PlayerQuest
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="quest_id", referencedColumnName="id", onDelete="CASCADE")
      * })
+     * @JMS\Exclude
      */
     private $quest;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="npc_objects", type="integer", nullable=false)
+     * @ORM\Column(name="status", type="integer", nullable=false)
      */
-    private $npcObjects;
+    private $status = self::STATUS_IN_PROGRESS;
 
     /**
-     * @var integer
+     * @var DateTime
      *
-     * @ORM\Column(name="npc", type="integer", nullable=false)
+     * @Gedmo\Timestampable(on="create")
+     * @ORM\Column(name="created_at", type="datetime", nullable=false)
      */
-    private $npc;
+    private $createdAt;
+
+    /**
+     * @var array
+     *
+     * @ORM\Column(name="npc_objects", type="json_array", nullable=false)
+     */
+    private $npcObjects = [];
+
+    /**
+     * @var array
+     *
+     * @ORM\Column(name="npcs", type="json_array", nullable=false)
+     */
+    private $npcs = [];
 
     /**
      * Set quest
@@ -101,25 +123,25 @@ class PlayerQuest
     }
 
     /**
-     * Get npc
+     * Get npcs
      *
-     * @return integer
+     * @return array
      */
-    public function getNpc()
+    public function getNpcs()
     {
-        return $this->npc;
+        return $this->npcs;
     }
 
     /**
-     * Set npc
+     * Set npcs
      *
-     * @param string $npc
+     * @param array $npcs
      *
      * @return PlayerQuest
      */
-    public function setNpc($npc)
+    public function setNpcs($npcs)
     {
-        $this->npc = $npc;
+        $this->npcs = $npcs;
 
         return $this;
     }
@@ -127,7 +149,7 @@ class PlayerQuest
     /**
      * Get Npc objects
      *
-     * @return integer
+     * @return array
      */
     public function getNpcObjects()
     {
@@ -137,13 +159,83 @@ class PlayerQuest
     /**
      * Set Npc objects
      *
-     * @param integer $npcObjects
+     * @param array $npcObjects
      *
      * @return PlayerQuest
      */
     public function setNpcObjects($npcObjects)
     {
         $this->npcObjects = $npcObjects;
+
+        return $this;
+    }
+
+    /**
+     * Get status
+     *
+     * @return integer
+     */
+    public function getStatus()
+    {
+        return $this->status;
+    }
+
+    /**
+     * Set status
+     *
+     * @param integer $status
+     *
+     * @return Inbox
+     */
+    public function setStatus($status)
+    {
+        $this->status = $status;
+
+        return $this;
+    }
+
+    /**
+     * Check if quest is in progress
+     *
+     * @JMS\VirtualProperty()
+     * @JMS\SerializedName("is_in_progress")
+     * @return boolean
+     */
+    public function isInProgress()
+    {
+        return $this->getStatus() === self::STATUS_IN_PROGRESS;
+    }
+
+    /**
+     * Check if quest is finished
+     *
+     * @JMS\VirtualProperty()
+     * @JMS\SerializedName("is_finished")
+     * @return boolean
+     */
+    public function isFinished()
+    {
+        return $this->getStatus() === self::STATUS_FINISHED;
+    }
+
+    /**
+     * Get is createdAt
+     */
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
+    }
+
+    /**
+     * Set createdAt
+     *
+     * @param DateTime $createdAt
+     *
+     * @return PlayerEvent
+     */
+    public function setCreatedAt(DateTime $createdAt)
+    {
+        $this->createdAt = $createdAt;
 
         return $this;
     }

@@ -52,7 +52,7 @@ class QuestController extends BaseController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $children = [
-                'npcNeeded',
+                'npcsNeeded',
                 'npcObjectsNeeded',
                 'objectsNeeded',
                 'gainObjects',

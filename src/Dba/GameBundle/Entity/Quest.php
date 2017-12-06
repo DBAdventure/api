@@ -136,7 +136,7 @@ class Quest
      *
      * @ORM\OneToMany(targetEntity="QuestNpc", mappedBy="quest", cascade={"persist"})
      */
-    private $npcNeeded;
+    private $npcsNeeded;
 
     /**
      * @var array
@@ -374,7 +374,7 @@ class Quest
         $this->gainObjects = new ArrayCollection();
         $this->objectsNeeded = new ArrayCollection();
         $this->npcObjectsNeeded = new ArrayCollection();
-        $this->npcNeeded = new ArrayCollection();
+        $this->npcsNeeded = new ArrayCollection();
     }
 
     /**
@@ -576,36 +576,36 @@ class Quest
     }
 
     /**
-     * Add npcNeeded
+     * Add npcsNeeded
      *
-     * @param QuestNpc $npcNeeded
+     * @param QuestNpc $npcsNeeded
      *
      * @return Quest
      */
-    public function addNpcNeeded(QuestNpc $npcNeeded)
+    public function addNpcsNeeded(QuestNpc $npcsNeeded)
     {
-        $this->npcNeeded[] = $npcNeeded;
+        $this->npcsNeeded[] = $npcsNeeded;
 
         return $this;
     }
 
     /**
-     * Remove npcNeeded
+     * Remove npcsNeeded
      *
-     * @param QuestNpc $npcNeeded
+     * @param QuestNpc $npcsNeeded
      */
-    public function removeNpcNeeded(QuestNpc $npcNeeded)
+    public function removeNpcsNeeded(QuestNpc $npcsNeeded)
     {
-        $this->npcNeeded->removeElement($npcNeeded);
+        $this->npcsNeeded->removeElement($npcsNeeded);
     }
 
     /**
-     * Get npcNeeded
+     * Get npcsNeeded
      *
      * @return ArrayCollection
      */
-    public function getNpcNeeded()
+    public function getNpcsNeeded()
     {
-        return $this->npcNeeded;
+        return $this->npcsNeeded;
     }
 }

@@ -32,7 +32,6 @@ services:
     calls:
       - [setContainer, ['@service_container']]
 
-
   player.subscriber:
     class: Dba\GameBundle\EventListener\PlayerSubscriber
     tags:
@@ -41,6 +40,11 @@ services:
     class: Dba\GameBundle\EventListener\PlayerSpellSubscriber
     tags:
       - { name: kernel.event_subscriber }
+  player.quest.subscriber:
+    class: Dba\GameBundle\EventListener\PlayerQuestSubscriber
+    tags:
+      - { name: kernel.event_subscriber }
+
   player.activity.listener:
     class: Dba\GameBundle\EventListener\PlayerActivityListener
     arguments: ['@security.token_storage', '@doctrine.orm.entity_manager']
