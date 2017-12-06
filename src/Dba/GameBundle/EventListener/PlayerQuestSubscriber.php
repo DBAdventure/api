@@ -52,18 +52,14 @@ class PlayerQuestSubscriber implements EventSubscriberInterface
                 $npcObjects = $playerQuest->getNpcObjects();
                 foreach ($quest->getNpcObjectsNeeded() as $npcObjectNeeded) {
                     $npcObject = $npcObjectNeeded->getNpcObject();
-                    $names = $npcObject->getList();
-
-                    foreach ($names as $npcName) {
-                        $value = !empty($npcObjects[$npcObject->getId()]) ? $npcObjects[$npcObject->getId()] : 0;
-                        // Check if name of target begins with one in the list
-                        // Check for change to loot
-                        if (strpos($target->getName(), $npcName) === 0 &&
-                            $value < $npcObjectNeeded->getNumber() &&
-                            mt_rand(0, 100) > (100 - $npcObject->getLuck())
-                        ) {
-                            $npcObjects[$npcObject->getId()] = $value += 1;
-                        }
+                    $value = !empty($npcObjects[$npcObject->getId()]) ? $npcObjects[$npcObject->getId()] : 0;
+                    // Check if name of target begins with one in the list
+                    // Check for change to loot
+                    if ($npcObject->getRaces()->contains($target->getRace()) &&
+                        $value < $npcObjectNeeded->getNumber() &&
+                        mt_rand(0, 100) > (100 - $npcObject->getLuck())
+                    ) {
+                        $npcObjects[$npcObject->getId()] = $value += 1;
                     }
                 }
 
