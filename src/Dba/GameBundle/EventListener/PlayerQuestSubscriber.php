@@ -30,7 +30,8 @@ class PlayerQuestSubscriber implements EventSubscriberInterface
                     return $entity->isInProgress();
                 }
             );
-            foreach ($player->getPlayerQuests() as $playerQuest) {
+
+            foreach ($playerQuests as $playerQuest) {
                 $quest = $playerQuest->getQuest();
 
                 // Check npc needed
@@ -43,6 +44,13 @@ class PlayerQuestSubscriber implements EventSubscriberInterface
                         $value < $npcNeeded->getNumber()
                     ) {
                         $npcs[$npcNeeded->getRace()->getId()] = $value + 1;
+                        $messages[] = [
+                            'message' => 'game.quest.npc.kill',
+                            'parameters' => [
+                                'name' => $npcNeeded->getRace()->getName(),
+                                'questName' => $quest->getName(),
+                            ]
+                        ];
                     }
                 }
 
@@ -56,10 +64,26 @@ class PlayerQuestSubscriber implements EventSubscriberInterface
                     // Check if name of target begins with one in the list
                     // Check for change to loot
                     if ($npcObject->getRaces()->contains($target->getRace()) &&
-                        $value < $npcObjectNeeded->getNumber() &&
-                        mt_rand(0, 100) > (100 - $npcObject->getLuck())
+                        $value < $npcObjectNeeded->getNumber()
                     ) {
-                        $npcObjects[$npcObject->getId()] = $value += 1;
+                        if (mt_rand(0, 100) > (100 - $npcObject->getLuck())) {
+                            $npcObjects[$npcObject->getId()] = $value += 1;
+                            $messages[] = [
+                                'message' => 'game.quest.npc.object.found',
+                                'parameters' => [
+                                    'name' => $npcObject->getName(),
+                                    'questName' => $quest->getName(),
+                                ]
+                            ];
+                        } else {
+                            $messages[] = [
+                                'message' => 'game.quest.npc.object.notFound',
+                                'parameters' => [
+                                    'name' => $npcObject->getName(),
+                                    'questName' => $quest->getName(),
+                                ]
+                            ];
+                        }
                     }
                 }
 

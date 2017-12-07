@@ -5,6 +5,7 @@ namespace Dba\GameBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Validator\Constraints as Assert;
+use JMS\Serializer\Annotation as JMS;
 
 /**
  * Object
@@ -180,6 +181,7 @@ class Object
      * @var ArrayCollection
      *
      * @ORM\OneToMany(targetEntity="PlayerObject", mappedBy="object", cascade={"persist"})
+     * @JMS\Exclude
      */
     private $playerObjects;
 

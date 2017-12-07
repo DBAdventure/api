@@ -20,12 +20,11 @@ SET search_path = public, pg_catalog;
 -- Data for Name: map; Type: TABLE DATA; Schema: public; Owner: dba
 --
 
-INSERT INTO map VALUES (1, 'hell', 20, 20);
-INSERT INTO map VALUES (2, 'heaven', 20, 20);
-INSERT INTO map VALUES (3, 'pilaf.island', 150, 150);
-INSERT INTO map VALUES (4, 'bear.den', 22, 22);
-INSERT INTO map VALUES (6, 'new.pilaf.island', 50, 50);
-
+INSERT INTO map VALUES (1, 'Enfer', 20, 20);
+INSERT INTO map VALUES (2, 'Parais', 20, 20);
+INSERT INTO map VALUES (3, 'Île de Pilaf', 150, 150);
+INSERT INTO map VALUES (4, 'Antre de l''ours', 22, 22);
+INSERT INTO map VALUES (6, 'Monde de Pilaf', 50, 50);
 
 --
 -- Data for Name: map_bonus; Type: TABLE DATA; Schema: public; Owner: dba
@@ -32419,4 +32418,3 @@ SELECT pg_catalog.setval('map_image_id_seq', 165, true);
 --
 -- PostgreSQL database dump complete
 --
-

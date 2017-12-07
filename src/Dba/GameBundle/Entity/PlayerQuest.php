@@ -37,11 +37,10 @@ class PlayerQuest
      *
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="NONE")
-     * @ORM\ManyToOne(targetEntity="Quest", inversedBy="playerQuests")
+     * @ORM\ManyToOne(targetEntity="Quest")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="quest_id", referencedColumnName="id", onDelete="CASCADE")
      * })
-     * @JMS\Exclude
      */
     private $quest;
 

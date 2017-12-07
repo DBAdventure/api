@@ -5,7 +5,7 @@
     <ul>
       {% for map in maps %}
         <li>
-          <a href="{{ path('admin.generator.map', {"id": map.id}) }}">{{ map.name | trans }}</a>
+          <a href="{{ path('admin.generator.map', {"id": map.id}) }}">{{ map.name }}</a>
           (<a href="{{ path('admin.generator.minimap', {"id": map.id}) }}">{{ 'admin.generator.minimap.generate' | trans }}</a>)
         </li>
       {% endfor %}
@@ -46,7 +46,7 @@
       </ul>
     {% endif %}
     <form class="form-horizontal" id="save-map-form" action="{{ path('admin.generator.map', {"id": map.id}) }}" method="POST">
-      <h1>{{ map.name | trans }}</h1>
+      <h1>{{ map.name }}</h1>
       <div class="form-group">
         <label class="col-sm-5 control-label">{{ 'admin.map.max.size' | trans }}</label>
         <div class="col-sm-7">

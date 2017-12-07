@@ -4,6 +4,7 @@ namespace Dba\GameBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use JMS\Serializer\Annotation as JMS;
 
 /**
  * Quest Npc
@@ -23,6 +24,7 @@ class QuestNpc
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="quest_id", referencedColumnName="id", nullable=false, onDelete="CASCADE")
      * })
+     * @JMS\Exclude
      */
     private $quest;
 
