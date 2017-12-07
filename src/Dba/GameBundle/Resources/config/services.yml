@@ -1,4 +1,6 @@
 services:
+  _defaults:
+    public: true
   dba.game.repos:
     class: Dba\GameBundle\Services\RepositoryService
     calls:
