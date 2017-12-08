@@ -17,6 +17,7 @@ use Dba\GameBundle\Entity\PlayerSpell;
 use Dba\GameBundle\Entity\Quest;
 use Dba\GameBundle\Entity\Side;
 use Dba\GameBundle\Entity\Spell;
+use Dba\GameBundle\Services\ObjectService;
 
 /**
  * @Annotations\NamePrefix("action_")
@@ -998,33 +999,148 @@ class ActionController extends BaseController
             $playerQuest = $playerQuests->first();
         }
 
-        if ($request->getMethod() === 'POST') {
-            foreach ($quest->getRequirements() as $bonus => $value) {
-                $method = $this->getMethod($bonus);
-                if (method_exists($player, $method)) {
-                    if (call_user_func(array($player, $method)) < $value) {
-                        return $this->forbidden('action.talk.quest.conditions');
-                    }
-                }
-            }
+        $playerService = $this->services()->getPlayerService();
+        if ($request->getMethod() === 'GET') {
+            return [
+                'quest' => $quest,
+                'player_quest' => $playerQuest,
+                'player_objects' => $playerService->getAvailableObjects($player),
+            ];
+        }
 
-            if ($playerQuest === null) {
-                $playerQuest = new PlayerQuest();
-                $playerQuest->setPlayer($player);
-                $playerQuest->setQuest($quest);
-                $this->em()->persist($playerQuest);
-                $this->em()->flush();
-                return [
-                    'message' => 'action.talk.quest.accepted',
-                    'player_quest' => $playerQuest,
-                ];
+        foreach ($quest->getRequirements() as $bonus => $value) {
+            $method = $this->getMethod($bonus);
+            if (method_exists($player, $method)) {
+                if (call_user_func(array($player, $method)) < $value) {
+                    return $this->forbidden('action.talk.quest.conditions');
+                }
             }
         }
 
+        // Accept quest
+        if ($playerQuest === null) {
+            $playerQuest = new PlayerQuest();
+            $playerQuest->setPlayer($player);
+            $playerQuest->setQuest($quest);
+            $this->em()->persist($playerQuest);
+            $this->em()->flush();
+            return [
+                'message' => 'action.talk.quest.accepted',
+                'player_quest' => $playerQuest,
+                'player_objects' => $playerService->getAvailableObjects($player),
+            ];
+        }
+
+        // Already finished the quest
+        if ($playerQuest->isFinished()) {
+            return $this->forbidden('action.talk.quest.already.finished');
+        }
+
+
+        // Check to return quest
+        $canBeDone = true;
+        $npcs = $playerQuest->getNpcs();
+        foreach ($quest->getNpcsNeeded() as $obj) {
+            if (!empty($npcs[$obj->getRace()->getId()]) && $npcs[$obj->getRace()->getId()] < $obj->getNumber()) {
+                $canBeDone = false;
+                break;
+            }
+        }
+
+        $npcObjects = $playerQuest->getNpcObjects();
+        foreach ($quest->getNpcObjectsNeeded() as $obj) {
+            if (!empty($npcObjects[$obj->getNpcObject()->getId()]) &&
+                $npcObjects[$obj->getNpcObject()->getId()] < $obj->getNumber()
+            ) {
+                $canBeDone = false;
+                break;
+            }
+        }
+
+        $playerObjectsNeeded = [];
+        $playerObjectRepo = $this->repos()->getPlayerObjectRepository();
+        foreach ($quest->getObjectsNeeded() as $obj) {
+            $objectNeeded = $playerObjectRepo->findOneBy(
+                [
+                    'player' => $player,
+                    'object' => $obj->getObject(),
+                ]
+            );
+            $playerObjectsNeeded[] = [
+                'playerObject' => $objectNeeded,
+                'number' => $obj->getNumber(),
+            ];
+
+            if ($objectNeeded->getNumber() < $obj->getNumber()) {
+                $canBeDone = false;
+                break;
+            }
+        }
+
+        // Quest not finished
+        if (empty($canBeDone)) {
+            return $this->forbidden('action.talk.quest.not.finished');
+        }
+
+
+        $messages = [
+            [
+                'message' => 'action.talk.quest.finished',
+            ]
+        ];
+        // Yeah quest complete receive gifts
+        foreach ($playerObjectsNeeded as $data) {
+            $data['playerObject']->setNumber($data['playerObject']->getNumber() - $data['number']);
+            $this->em()->persist($data['playerObject']);
+        }
+
+        if ($quest->getGainZeni()) {
+            $player->setZeni($player->getZeni() + $quest->getGainZeni());
+            $messages[] = [
+                'message' => 'action.talk.quest.gain.zeni',
+                'parameters' => [
+                    'zeni' => $quest->getGainZeni()
+                ],
+            ];
+        }
+
+        $playerService->addBattlePoints($player, 0, null, $messages, $quest->getGainBattlePoints());
+
+        $objectService = $this->services()->getObjectService();
+        foreach ($quest->getGainObjects() as $gainObject) {
+            $playerObject = $objectService->addToInventory(
+                $player,
+                $gainObject->getObject(),
+                false,
+                $gainObject->getNumber()
+            );
+
+            if (is_numeric($playerObject)) {
+                $player->setZeni($player->getZeni() + $gainObject->getObject()->getPrice());
+                $messages[] = [
+                    'message' => 'action.talk.quest.already.object',
+                    'parameters' => [
+                        'name' => $gainObject->getObject()->getName(),
+                        'zeni' => $gainObject->getObject()->getPrice(),
+                    ],
+                ];
+            } else {
+                $messages[] = [
+                    'message' => 'action.talk.quest.gain.object',
+                    'parameters' => [
+                        'number' => $gainObject->getNumber(),
+                        'name' => $gainObject->getObject()->getName(),
+                    ],
+                ];
+                $this->em()->persist($playerObject);
+            }
+        }
+
+        $playerQuest->setStatus(PlayerQuest::STATUS_FINISHED);
+        $this->em()->flush();
         return [
-            'quest' => $quest,
+            'messages' => $messages,
             'player_quest' => $playerQuest,
-            'player_objects' => $this->services()->getPlayerService()->getAvailableObjects($player),
         ];
     }
 

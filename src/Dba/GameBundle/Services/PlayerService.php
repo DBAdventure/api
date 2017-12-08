@@ -267,10 +267,20 @@ class PlayerService extends BaseService
      * @param Player $player Player
      * @param integer $actionPointsUsed Action points used
      * @param Player $target Target
+     * @param array $messages Array of Messages
+     * @param integer $battlePoints BattlePoints
      */
-    public function addBattlePoints(Player $player, $actionPointsUsed, Player $target, array &$messages = [])
-    {
-        $battlePoints = $this->calculateBattlePoints($player, $actionPointsUsed, $target);
+    public function addBattlePoints(
+        Player $player,
+        $actionPointsUsed,
+        Player $target = null,
+        array &$messages = [],
+        $battlePoints = null
+    ) {
+        if ($battlePoints === null && $target !== null) {
+            $battlePoints = $this->calculateBattlePoints($player, $actionPointsUsed, $target);
+        }
+
         if (!empty($battlePoints)) {
             $messages[] = [
                 'message' => 'action.battle.points',
