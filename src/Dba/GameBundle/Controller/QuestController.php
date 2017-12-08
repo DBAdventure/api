@@ -17,6 +17,9 @@ class QuestController extends BaseController
      */
     public function getQuestsAction()
     {
-        return $this->getUser()->getPlayerQuests();
+        return [
+            'player_quests' => $this->getUser()->getPlayerQuests(),
+            'player_objects' => $this->services()->getPlayerService()->getAvailableObjects($this->getUser()),
+        ];
     }
 }

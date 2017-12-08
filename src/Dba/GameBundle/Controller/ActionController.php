@@ -1024,6 +1024,7 @@ class ActionController extends BaseController
         return [
             'quest' => $quest,
             'player_quest' => $playerQuest,
+            'player_objects' => $this->services()->getPlayerService()->getAvailableObjects($player),
         ];
     }
 

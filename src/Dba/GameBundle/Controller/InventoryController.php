@@ -21,17 +21,7 @@ class InventoryController extends BaseController
      */
     public function getObjectsAction()
     {
-        $objects = [];
-        $playerObjects = $this->getUser()->getPlayerObjects();
-        foreach ($playerObjects as $playerObject) {
-            if (empty($playerObject->getNumber()) || !$playerObject->getObject()->isEnabled()) {
-                continue;
-            }
-
-            $objects[$playerObject->getObject()->getType()][] = $playerObject;
-        }
-
-        return $objects;
+        return $this->services()->getPlayerService()->getAvailableObjects($this->getUser());
     }
 
     /**

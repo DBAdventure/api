@@ -847,4 +847,25 @@ class PlayerService extends BaseService
 
         return [$this->repos()->getMapRepository()->hasValidPosition($player), $move];
     }
+
+
+    /**
+     * Find available player objects
+     *
+     * @return array
+     */
+    public function getAvailableObjects(Player $player)
+    {
+        $objects = [];
+        $playerObjects = $player->getPlayerObjects();
+        foreach ($playerObjects as $playerObject) {
+            if (empty($playerObject->getNumber()) || !$playerObject->getObject()->isEnabled()) {
+                continue;
+            }
+
+            $objects[$playerObject->getObject()->getType()][] = $playerObject;
+        }
+
+        return $objects;
+    }
 }

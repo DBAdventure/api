@@ -22,6 +22,7 @@ class PlayerObject
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="player_id", referencedColumnName="id", onDelete="CASCADE")
      * })
+     * @JMS\Exclude
      */
     private $player;
 
