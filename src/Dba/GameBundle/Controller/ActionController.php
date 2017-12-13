@@ -56,13 +56,13 @@ class ActionController extends BaseController
             !in_array($where, Player::AVAILABLE_MOVE)
         ) {
             // failed to move
-            return $this->forbidden();
+            return $this->forbidden('error.move.empty');
         }
 
         $this->dispatchEvent(DbaEvents::BEFORE_MOVE, $player, null, ['where' => $where]);
         list($result, $move) = $this->services()->getPlayerService()->move($player, $where);
         if (empty($result)) {
-            return $this->forbidden();
+            return $this->forbidden('error.move.forbidden');
         }
 
         if (!$player->getMap()->isRespawn()) {
