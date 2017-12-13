@@ -56,9 +56,9 @@ class InboxController extends BaseController
     public function getArchiveAction()
     {
         $messages = $this->repos()->getInboxRepository()
-                  ->findArchive(
-                      $this->getUser()
-                  );
+            ->findArchive(
+                $this->getUser()
+            );
         return $this->displayList($messages);
     }
 
