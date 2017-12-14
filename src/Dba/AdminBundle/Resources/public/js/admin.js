@@ -96,6 +96,17 @@ var DbaAdmin = function($)
                 $('#nb-selected-boxes').val($nbSelectedBoxes);
             }, 500);
 
+            $document.popover({
+                placement: 'auto',
+                container: 'body',
+                html: true,
+                selector: '.map-generator img',
+                trigger: 'hover',
+                content: function() {
+                    return $('#available-bonus [value=' + $(this).data('bonus') + ']').text();
+                }
+            });
+
             $document.on('click', '.map-generator img', function() {
                 var $x = $(this).data('x');
                 var $y = $(this).data('y');
