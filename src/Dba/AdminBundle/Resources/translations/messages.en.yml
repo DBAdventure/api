@@ -34,6 +34,9 @@ admin:
     image.select: "Image:"
     bonus.select: "Bonus:"
     view: "View from x %idxMin%, %idxMax% to y %idyMin%, %idyMax%"
+    object: 'Manage Map objects'
+    object.create: 'Create'
+    object.list: 'List'
 news:
   created: "News created!"
   saved: "News saved!"
@@ -146,6 +149,7 @@ form:
     npcsNeeded: "Add Npc"
     npcObjectsNeeded: "Add needed object loot on npc"
     objectsNeeded: "Add needed object"
+    extra: "Add extra data"
   description: "Description"
   object: "Object"
   price: "Price"
@@ -209,3 +213,16 @@ form:
   weight: "Weight"
   gainZeni: "Gain zeni"
   gainBattlePoints: "Gain battle points"
+
+
+extra:
+  dialogue: 'Dialogue'
+
+filter.by: "Filter by"
+none: "Nothing"
+
+map:
+  object:
+    name: "Name"
+    position: "Position"
+    actions: "Actions"

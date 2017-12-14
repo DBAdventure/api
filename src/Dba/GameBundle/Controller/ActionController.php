@@ -233,6 +233,7 @@ class ActionController extends BaseController
         }
 
         $objectService = $this->services()->getObjectService();
+        $usePoint = true;
         $messages = [];
         switch ($mapObject->getMapObjectType()->getId()) {
             case MapObjectType::ZENI:
@@ -317,12 +318,22 @@ class ActionController extends BaseController
                     }
                 }
                 break;
+            case MapObjectType::SIGN:
+                $usePoint = false;
+                foreach ($mapObject->getExtra() as $extra) {
+                    if (!empty($extra['key']) && $extra['key'] === MapObject::EXTRA_DIALOGUE) {
+                        $messages[] = $extra['value'];
+                    }
+                }
+                break;
         }
 
-        $player->usePoints(Player::ACTION_POINT, Player::PICKUP_ACTION);
+        if ($usePoint) {
+            $player->usePoints(Player::ACTION_POINT, Player::PICKUP_ACTION);
+            $this->em()->remove($mapObject);
+        }
 
         $this->em()->persist($player);
-        $this->em()->remove($mapObject);
         $this->em()->flush();
 
         return [

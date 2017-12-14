@@ -22,6 +22,18 @@ class MapObjectType
     const CAPSULE_GREEN = 8;
     const SIGN = 9;
 
+    const TYPE_LIST = [
+        self::ZENI => 'zeni',
+        self::BUSH => 'bush',
+        self::BOX => 'box',
+        self::CAPSULE_BLUE => 'capsule.blue',
+        self::CAPSULE_RED => 'capsule.red',
+        self::CAPSULE_ORANGE => 'capsule.orange',
+        self::CAPSULE_BLACK => 'capsule.black',
+        self::CAPSULE_GREEN => 'capsule.green',
+        self::SIGN => 'sign',
+    ];
+
     /**
      * @var integer
      *

@@ -3,6 +3,7 @@
 namespace Dba\GameBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation as JMS;
 
 /**
  * MapObject
@@ -14,6 +15,12 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class MapObject
 {
+    const EXTRA_DIALOGUE = 'dialogue';
+
+    const EXTRA_LIST = [
+        self::EXTRA_DIALOGUE => 'extra.dialogue',
+    ];
+
     /**
      * @var integer
      *
@@ -27,6 +34,7 @@ class MapObject
      * @var integer
      *
      * @ORM\Column(name="x", type="integer", nullable=false)
+     * @JMS\Exclude
      */
     private $x;
 
@@ -34,6 +42,7 @@ class MapObject
      * @var integer
      *
      * @ORM\Column(name="y", type="integer", nullable=false)
+     * @JMS\Exclude
      */
     private $y;
 
@@ -41,6 +50,7 @@ class MapObject
      * @var integer
      *
      * @ORM\Column(name="number", type="integer", nullable=true)
+     * @JMS\Exclude
      */
     private $number;
 
@@ -63,6 +73,7 @@ class MapObject
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="map_id", referencedColumnName="id", nullable=false, onDelete="CASCADE")
      * })
+     * @JMS\Exclude
      */
     private $map;
 
@@ -73,9 +84,17 @@ class MapObject
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="object_id", referencedColumnName="id", nullable=true, onDelete="CASCADE")
      * })
+     * @JMS\Exclude
      */
     private $object;
 
+    /**
+     * @var array
+     *
+     * @ORM\Column(name="extra", type="json_array", nullable=true)
+     * @JMS\Exclude
+     */
+    private $extra;
 
     /**
      * Set x
@@ -212,7 +231,7 @@ class MapObject
      *
      * @param Object $object
      *
-     * @return PlayerObject
+     * @return MapObject
      */
     public function setObject(Object $object = null)
     {
@@ -224,11 +243,34 @@ class MapObject
     /**
      * Get object
      *
-     *
-     * @return PlayerObject
+     * @return Object
      */
     public function getObject()
     {
         return $this->object;
+    }
+
+    /**
+     * Get extra
+     *
+     * @return array
+     */
+    public function getExtra()
+    {
+        return $this->extra;
+    }
+
+    /**
+     * Set extra
+     *
+     * @param string $extra
+     *
+     * @return MapObject
+     */
+    public function setExtra($extra)
+    {
+        $this->extra = $extra;
+
+        return $this;
     }
 }

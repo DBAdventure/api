@@ -1,0 +1,63 @@
+{% extends 'DbaAdminBundle::base.html.twig' %}
+{% import "DbaAdminBundle::default/macros.html.twig" as defaultHelper %}
+
+{% block body %}
+  <p>{{ 'filter.by' | trans }}</p>
+  <ul>
+    <li>
+      <a href="{{ path('admin.map.object') }}">
+        {{ 'none' | trans }}
+      </a>
+    </li>
+  {% for id, name in types %}
+    <li>
+      <a href="{{ path('admin.map.object', ((routeParams | default({})) | merge({"type": name}))) }}">
+        {{ name | trans }}
+      </a>
+    </li>
+  {% endfor %}
+  </ul>
+
+  {{ defaultHelper.pagination(nbPages, page, 'admin.map.object') }}
+
+  <table class="table table-hover table-clickable">
+    <thead>
+      <tr>
+        <th>{{ 'map.object.name' | trans }}</th>
+        <th>{{ 'map.object.position' | trans }}</th>
+        <th>{{ 'map.object.actions' | trans }}</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for mapObject in mapObjectList %}
+        <tr>
+          <td>
+            {{ mapObject.mapObjectType.name }}
+          </td>
+          <td>
+            {{ mapObject.map.name }}
+            ({{ mapObject.x }} / {{ mapObject.y }} )
+          </td>
+          <td>
+            <a href="{{ path('admin.map.object.edit', {"id": mapObject.id}) }}">
+              <img src="{{ asset('bundles/dbaadmin/images/edit.png') }}" alt="{{ 'edit' | trans }}" />
+            </a>
+            &nbsp;-&nbsp;
+            <a href="{{ path('admin.map.object.delete', {"id": mapObject.id}) }}" class="delete-map.object" data-toggle="confirmation">
+              <img src="{{ asset('bundles/dbaadmin/images/trash.png') }}" alt="{{ 'delete' | trans }}" />
+            </a>
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  {{ defaultHelper.pagination(nbPages, page, 'admin.map.object') }}
+{% endblock %}
+
+{% block javascripts %}
+  <script type="text/javascript">
+    DbaAdmin.confirmation();
+    DbaAdmin.clickable();
+  </script>
+{% endblock %}

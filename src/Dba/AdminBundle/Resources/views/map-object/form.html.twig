@@ -1,0 +1,44 @@
+{% extends 'DbaAdminBundle::base.html.twig' %}
+{% import "DbaAdminBundle::default/macros.html.twig" as helper %}
+
+{% block body %}
+  {% set currentPath = path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')) %}
+  <form id="building-form" class="form-horizontal" method="post" action="{{ currentPath }}" autocomplete="off">
+    <div class="col-sm-10 col-sm-offset-2">
+      <img id="building-image-displayed" />
+    </div>
+
+    {{ form_row(form.mapObjectType) }}
+    {{ form_row(form.map) }}
+    {{ form_row(form.x) }}
+    {{ form_row(form.y) }}
+    {{ form_row(form.number) }}
+    {{ form_row(form.object) }}
+
+    {{ form_widget(form._token) }}
+
+    <div class="text-center">
+      <button class="btn btn-default btn-add" data-target="extra">
+        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+        {{ 'form.add.extra' | trans }}
+      </button>
+      <div class="clearfix">&nbsp;</div>
+    </div>
+
+    <div id="extra" data-prototype="{{ helper.widget_prototype(form.extra) | escape }}">
+      {% for widget in form.extra.children %}
+        {{ helper.widget_prototype(widget)}}
+      {% endfor %}
+    </div>
+
+    <div class="col-sm-offset-2 col-sm-10">
+      <button type="submit" class="btn btn-primary">{{ 'save' | trans }}</button>
+    </div>
+  </form>
+{% endblock %}
+
+{% block javascripts %}
+  <script type="text/javascript">
+    DbaAdmin.mapObject();
+  </script>
+{% endblock %}

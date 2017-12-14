@@ -2,7 +2,7 @@
 
 <div class="list-group list-group-root well">
   {% if is_granted('ROLE_MODO') %}
-    {% set isActive = (currentRoute matches '~^admin.news~') %}
+    {% set isActive = (currentRoute matches '~^admin\.news~') %}
     <a href="#news" class="list-group-item{% if isActive %} active{% endif %}" data-toggle="collapse">
       <i class="glyphicon glyphicon-chevron-right"></i>{{ 'admin.news' | trans }}
     </a>
@@ -13,21 +13,21 @@
   {% endif %}
 
   {% if is_granted('ROLE_MODO') %}
-    {% set isActive = (currentRoute matches '~^admin.player~') %}
+    {% set isActive = (currentRoute matches '~^admin\.player~') %}
     <a href="{{ path('admin.player') }}" class="list-group-item{% if isActive %} active{% endif %}">
       <i class="glyphicon glyphicon-chevron-right"></i>{{ 'admin.player' | trans }}
     </a>
   {% endif %}
 
   {% if is_granted('ROLE_MODO') %}
-    {% set isActive = (currentRoute matches '~^admin.guild~') %}
+    {% set isActive = (currentRoute matches '~^admin\.guild~') %}
     <a href="{{ path('admin.guild') }}" class="list-group-item{% if isActive %} active{% endif %}">
       <i class="glyphicon glyphicon-chevron-right"></i>{{ 'admin.guild' | trans }}
     </a>
   {% endif %}
 
   {% if is_granted('ROLE_MODO') %}
-    {% set isActive = (currentRoute matches '~^admin.npc~') %}
+    {% set isActive = (currentRoute matches '~^admin\.npc~') %}
     <a href="#npc" class="list-group-item{% if isActive %} active{% endif %}" data-toggle="collapse">
       <i class="glyphicon glyphicon-chevron-right"></i>{{ 'admin.npc' | trans }}
     </a>
@@ -38,7 +38,7 @@
   {% endif %}
 
   {% if is_granted('ROLE_MODO') %}
-    {% set isActive = (currentRoute matches '~^admin.quest~') %}
+    {% set isActive = (currentRoute matches '~^admin\.quest~') %}
     <a href="#quest" class="list-group-item{% if isActive %} active{% endif %}" data-toggle="collapse">
       <i class="glyphicon glyphicon-chevron-right"></i>{{ 'admin.quest' | trans }}
     </a>
@@ -51,19 +51,7 @@
   {% endif %}
 
   {% if is_granted('ROLE_MODO') %}
-    {% set isActive = (currentRoute matches '~^admin.generator~') %}
-    <a href="#generator" class="list-group-item{% if isActive %} active{% endif %}" data-toggle="collapse">
-      <i class="glyphicon glyphicon-chevron-right"></i>{{ 'admin.generator' | trans }}
-    </a>
-    <div class="list-group{% if not isActive %} collapse{% endif %}" id="generator">
-      <a href="{{ path('admin.generator.map.create') }}" class="list-group-item">{{ 'admin.generator.map.create' | trans }}</a>
-      <a href="{{ path('admin.generator.map') }}" class="list-group-item">{{ 'admin.generator.map' | trans }}</a>
-      <a href="{{ path('admin.generator.image') }}" class="list-group-item">{{ 'admin.generator.image' | trans }}</a>
-    </div>
-  {% endif %}
-
-  {% if is_granted('ROLE_MODO') %}
-    {% set isActive = (currentRoute matches '~^admin.object~') %}
+    {% set isActive = (currentRoute matches '~^admin\.object~') %}
     <a href="#object" class="list-group-item{% if isActive %} active{% endif %}" data-toggle="collapse">
       <i class="glyphicon glyphicon-chevron-right"></i>{{ 'admin.object' | trans }}
     </a>
@@ -74,13 +62,36 @@
   {% endif %}
 
   {% if is_granted('ROLE_MODO') %}
-    {% set isActive = (currentRoute matches '~^admin.building~') %}
+    {% set isActive = (currentRoute matches '~^admin\.building~') %}
     <a href="#building" class="list-group-item{% if isActive %} active{% endif %}" data-toggle="collapse">
       <i class="glyphicon glyphicon-chevron-right"></i>{{ 'admin.building' | trans }}
     </a>
     <div class="list-group{% if not isActive %} collapse{% endif %}" id="building">
       <a href="{{ path('admin.building.create') }}" class="list-group-item">{{ 'admin.building.create' | trans }}</a>
       <a href="{{ path('admin.building') }}" class="list-group-item">{{ 'admin.building.list' | trans }}</a>
+    </div>
+  {% endif %}
+
+  {% if is_granted('ROLE_MODO') %}
+    {% set isActive = (currentRoute matches '~^admin\.map.object~') %}
+    <a href="#map-object" class="list-group-item{% if isActive %} active{% endif %}" data-toggle="collapse">
+      <i class="glyphicon glyphicon-chevron-right"></i>{{ 'admin.map.object' | trans }}
+    </a>
+    <div class="list-group{% if not isActive %} collapse{% endif %}" id="map-object">
+      <a href="{{ path('admin.map.object.create') }}" class="list-group-item">{{ 'admin.map.object.create' | trans }}</a>
+      <a href="{{ path('admin.map.object') }}" class="list-group-item">{{ 'admin.map.object.list' | trans }}</a>
+    </div>
+  {% endif %}
+
+  {% if is_granted('ROLE_MODO') %}
+    {% set isActive = (currentRoute matches '~^admin\.generator~') %}
+    <a href="#generator" class="list-group-item{% if isActive %} active{% endif %}" data-toggle="collapse">
+      <i class="glyphicon glyphicon-chevron-right"></i>{{ 'admin.generator' | trans }}
+    </a>
+    <div class="list-group{% if not isActive %} collapse{% endif %}" id="generator">
+      <a href="{{ path('admin.generator.map.create') }}" class="list-group-item">{{ 'admin.generator.map.create' | trans }}</a>
+      <a href="{{ path('admin.generator.map') }}" class="list-group-item">{{ 'admin.generator.map' | trans }}</a>
+      <a href="{{ path('admin.generator.image') }}" class="list-group-item">{{ 'admin.generator.image' | trans }}</a>
     </div>
   {% endif %}
 </div>

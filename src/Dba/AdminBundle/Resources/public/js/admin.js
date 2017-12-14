@@ -235,7 +235,11 @@ var DbaAdmin = function($)
             this.displayImage($images, '#quest-image-displayed');
             Dba.collectionType();
         },
-        questObject: function($images)
+        questObject: function()
+        {
+            Dba.collectionType();
+        },
+        mapObject: function()
         {
             Dba.collectionType();
         },

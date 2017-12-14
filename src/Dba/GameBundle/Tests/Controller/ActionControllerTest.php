@@ -296,6 +296,22 @@ class ActionControllerTest extends BaseTestCase
         );
     }
 
+    public function testPickupSign()
+    {
+        $player = $this->login();
+        $player->setX(50);
+        $player->setY(50);
+        $player->setMap($this->repos()->getMapRepository()->getDefaultMap());
+        $mapObject = $this->createMapObject(MapObjectType::SIGN);
+        $this->em()->persist($player);
+        $this->em()->flush();
+
+        $this->client->request('POST', '/api/action/pickup/' . $mapObject->getId());
+        $json = $this->assertJsonResponse($this->client->getResponse());
+        $this->assertEquals($json->messages[0], 'Bast');
+        $this->assertEquals($json->messages[1], 'GoT');
+        $this->em()->refresh($player);
+    }
     public function testAttackDifferentXPosition()
     {
         $player = $this->login();
@@ -1381,6 +1397,12 @@ class ActionControllerTest extends BaseTestCase
             case MapObjectType::CAPSULE_BLUE:
             case MapObjectType::CAPSULE_RED:
                 $mapObject->setNumber(mt_rand(1, 100));
+                break;
+            case MapObjectType::SIGN:
+                $mapObject->setExtra([
+                    ['key' => MapObject::EXTRA_DIALOGUE, 'value' => 'Bast'],
+                    ['key' => MapObject::EXTRA_DIALOGUE, 'value' => 'GoT']
+                ]);
                 break;
             default:
                 $mapObject->setNumber(50);

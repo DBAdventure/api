@@ -92,7 +92,7 @@ class GuildEvent
      *
      * @param EventType $eventType
      *
-     * @return PlayerEvent
+     * @return GuildEvent
      */
     public function setEventType(EventType $eventType)
     {
@@ -116,7 +116,7 @@ class GuildEvent
      *
      * @param Guild $guild
      *
-     * @return PlayerEvent
+     * @return GuildEvent
      */
     public function setGuild(Guild $guild)
     {
@@ -140,7 +140,7 @@ class GuildEvent
      *
      * @param Player $player
      *
-     * @return PlayerEvent
+     * @return GuildEvent
      */
     public function setPlayer(Player $player)
     {
@@ -172,7 +172,7 @@ class GuildEvent
      *
      * @param string $parameters
      *
-     * @return PlayerEvent
+     * @return GuildEvent
      */
     public function setParameters($parameters)
     {
@@ -194,7 +194,7 @@ class GuildEvent
      *
      * @param string $message
      *
-     * @return PlayerEvent
+     * @return GuildEvent
      */
     public function setMessage($message)
     {
@@ -216,7 +216,7 @@ class GuildEvent
      *
      * @param DateTime $createdAt
      *
-     * @return PlayerEvent
+     * @return GuildEvent
      */
     public function setCreatedAt(DateTime $createdAt)
     {
