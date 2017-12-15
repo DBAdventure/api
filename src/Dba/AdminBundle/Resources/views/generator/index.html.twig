@@ -2,14 +2,41 @@
 
 {% block body %}
   {% if map is null %}
-    <ul>
-      {% for map in maps %}
-        <li>
-          <a href="{{ path('admin.generator.map', {"id": map.id}) }}">{{ map.name }}</a>
-          (<a href="{{ path('admin.generator.minimap', {"id": map.id}) }}">{{ 'admin.generator.minimap.generate' | trans }}</a>)
-        </li>
-      {% endfor %}
-    </ul>
+    <table class="table table-hover table-clickable">
+      <thead>
+        <tr>
+          <th>{{ 'map.name' | trans }}</th>
+          <th>{{ 'map.type' | trans }}</th>
+          <th>{{ 'map.actions' | trans }}</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for map in maps %}
+          <tr>
+            <td>
+              {{ map.name }}
+              &nbsp;-&nbsp;
+              (<a href="{{ path('admin.generator.minimap', {"id": map.id}) }}">{{ 'admin.generator.minimap.generate' | trans }}</a>)
+            </td>
+            <td>
+              {{ map.type }}
+            </td>
+            <td>
+              <a href="{{ path('admin.generator.map', {"id": map.id}) }}">
+                <img src="{{ asset('bundles/dbaadmin/images/edit.png') }}" alt="{{ 'edit' | trans }}" />
+              </a>
+              &nbsp;-&nbsp;
+              <a href="{{ path('admin.generator.map.delete', {"id": map.id}) }}" class="delete-news" data-toggle="confirmation">
+                <img src="{{ asset('bundles/dbaadmin/images/trash.png') }}" alt="{{ 'delete' | trans }}" />
+              </a>
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+
+
+
   {% else %}
     <table class="map-generator">
       {% for y in range(minY, maxY) %}

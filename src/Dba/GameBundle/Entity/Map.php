@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Map
  *
- * @ORM\Table(name="map", uniqueConstraints={@ORM\UniqueConstraint(name="map_name", columns={"name"})})
+ * @ORM\Table(name="map")
  * @ORM\Entity(repositoryClass="Dba\GameBundle\Repository\MapRepository")
  */
 class Map
@@ -15,7 +15,10 @@ class Map
     const HELL = 1;
     const HEAVEN = 2;
     const ISLAND = 6;
+    const TUTORIAL = 7;
 
+    const TYPE_NORMAL = 0;
+    const TYPE_TUTORIAL = 1;
     /**
      * @var string
      *
@@ -45,6 +48,13 @@ class Map
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $id;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="type", type="integer", nullable=false, options={"default": 0})
+     */
+    private $type;
 
     /**
      * Set name
@@ -119,6 +129,30 @@ class Map
     }
 
     /**
+     * Set type
+     *
+     * @param integer $type
+     *
+     * @return Map
+     */
+    public function setType($type)
+    {
+        $this->type = $type;
+
+        return $this;
+    }
+
+    /**
+     * Get type
+     *
+     * @return integer
+     */
+    public function getType()
+    {
+        return $this->type;
+    }
+
+    /**
      * Get id
      *
      * @return integer
@@ -136,5 +170,15 @@ class Map
     public function isRespawn()
     {
         return in_array($this->getId(), [self::HEAVEN, self::HELL]);
+    }
+
+    /**
+     * Check if it's tutorial map
+     *
+     * @return boolean
+     */
+    public function isTutorial()
+    {
+        return $this->getType() == self::TYPE_TUTORIAL;
     }
 }

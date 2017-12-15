@@ -7,7 +7,8 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * MapImageFile
  *
- * @ORM\Table(name="map_image_file", indexes={@ORM\Index(name="map_image_file_id", columns={"map_image_id"})})
+ * @ORM\Table(name="map_image_file", indexes={@ORM\Index(name="map_image_file_id", columns={"map_image_id"})},
+              uniqueConstraints={@ORM\UniqueConstraint(name="map_image_file_file", columns={"file"})})
  * @ORM\Entity
  */
 class MapImageFile

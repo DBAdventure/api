@@ -8,7 +8,8 @@ use Doctrine\ORM\Mapping as ORM;
  * MapBox
  *
  * @ORM\Table(name="map_box", indexes={@ORM\Index(name="map_image_id", columns={"map_image_id"}),
-              @ORM\Index(name="map_bonus_id", columns={"map_bonus_id"})})
+              @ORM\Index(name="map_bonus_id", columns={"map_bonus_id"})},
+              uniqueConstraints={@ORM\UniqueConstraint(name="map_box_unique", columns={"map_id", "x", "y"})})
  * @ORM\Entity
  */
 class MapBox

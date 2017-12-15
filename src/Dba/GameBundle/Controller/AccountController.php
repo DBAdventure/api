@@ -259,8 +259,7 @@ class AccountController extends BaseController
      */
     public function postConfirmUserTokenAction($id, $token)
     {
-        $playerRepo = $this->repos()->getPlayerRepository();
-        $player = $playerRepo->findOneByConfirmationToken($token);
+        $player = $this->repos()->getPlayerRepository()->findOneByConfirmationToken($token);
 
         if (null === $player || $player->getId() != $id) {
             return $this->badRequest();
@@ -268,6 +267,8 @@ class AccountController extends BaseController
 
         $player->setConfirmationToken(null);
         $player->setEnabled(true);
+        // @TODO In progress
+        // $this->services()->getPlayerService()->prepareTutorial($player);
         $this->em()->persist($player);
         $this->em()->flush();
 

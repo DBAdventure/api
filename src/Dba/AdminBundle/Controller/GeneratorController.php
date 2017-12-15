@@ -12,6 +12,7 @@ use Dba\GameBundle\Entity\Map;
 use Dba\GameBundle\Entity\MapBox;
 use Dba\GameBundle\Entity\MapImage;
 use Dba\GameBundle\Entity\MapImageFile;
+use Dba\GameBundle\Entity\Player;
 
 /**
  * @Route("/generator")
@@ -410,5 +411,26 @@ class GeneratorController extends BaseController
             }
             $this->em()->remove($file);
         }
+    }
+
+    /**
+     * @Route("/delete/{id}", name="admin.generator.map.delete")
+     * @ParamConverter("map", class="Dba\GameBundle\Entity\Map")
+     */
+    public function deleteAction(Map $map)
+    {
+        $roleService = $this->get('dba.admin.role');
+        if (!$roleService->isGranted(Player::ROLE_ADMIN, $this->getUser())) {
+            $this->addFlash(
+                'danger',
+                $this->trans('map.cant.delete')
+            );
+
+            return $this->redirect($this->generateUrl('admin.generator.map'));
+        }
+
+        $this->em()->remove($map);
+        $this->em()->flush();
+        return $this->redirect($this->generateUrl('admin.generator.map'));
     }
 }

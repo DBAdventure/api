@@ -4,10 +4,13 @@ namespace Dba\GameBundle\Services;
 
 use Dba\GameBundle\Entity\EventType;
 use Dba\GameBundle\Entity\Map;
+use Dba\GameBundle\Entity\MapObject;
+use Dba\GameBundle\Entity\MapObjectType;
+use Dba\GameBundle\Entity\Object;
 use Dba\GameBundle\Entity\Player;
+use Dba\GameBundle\Entity\PlayerEvent;
 use Dba\GameBundle\Entity\PlayerSpell;
 use Dba\GameBundle\Entity\PlayerSpellEffect;
-use Dba\GameBundle\Entity\PlayerEvent;
 use Dba\GameBundle\Entity\Side;
 use Dba\GameBundle\Entity\Spell;
 
@@ -877,5 +880,87 @@ class PlayerService extends BaseService
         }
 
         return $objects;
+    }
+
+    /**
+     * Prepare tutorial
+     * - Create Map
+     * - Create Map Object
+     *
+     * @param Player $player The player
+     * @return void
+     */
+    public function prepareTutorial(Player $player)
+    {
+        $originalTutorial = $this->repos()->getMapRepository()->findOneById(Map::TUTORIAL);
+        $tutorial = clone $originalTutorial;
+        $tutorial->setType(Map::TYPE_TUTORIAL);
+        $mapBoxes = $this->repos()->getMapBoxRepository()->findBy(
+            [
+                'map' => $originalTutorial
+            ]
+        );
+
+        foreach ($mapBoxes as $mapBox) {
+            $newMapBox = clone $mapBox;
+            $newMapBox->setMap($tutorial);
+            $this->em()->persist($newMapBox);
+        }
+
+        $this->em()->persist($tutorial);
+        $player->setMap($tutorial);
+        $player->setX(3);
+        $player->setY(10);
+
+        $objects = [
+            [
+                'type' => MapObjectType::BUSH,
+                'x' => 9,
+                'y' => 10,
+                'object' => Object::DEFAULT_BERRIES,
+                'number' => 4,
+            ],
+            [
+                'type' => MapObjectType::BUSH,
+                'x' => 6,
+                'y' => 3,
+                'object' => Object::DEFAULT_BERRIES,
+                'number' => 3
+            ],
+            [
+                'type' => MapObjectType::ZENI,
+                'x' => 10,
+                'y' => 4,
+                'number' => 10,
+            ],
+            [
+                'type' => MapObjectType::ZENI,
+                'x' => 7,
+                'y' => 10,
+                'number' => 20,
+            ],
+        ];
+
+        foreach ($objects as $mapObject) {
+            $newMapObject = new MapObject();
+            $newMapObject->setMap($tutorial);
+            $newMapObject->setX($mapObject['x']);
+            $newMapObject->setY($mapObject['y']);
+            if (!empty($mapObject['object'])) {
+                $newMapObject->setObject(
+                    $this->repos()->getObjectRepository()->find($mapObject['object'])
+                );
+            }
+
+            if (!empty($mapObject['number'])) {
+                $newMapObject->setNumber($mapObject['number']);
+            }
+            $newMapObject->setMapObjectType(
+                $this->repos()->getMapObjectTypeRepository()->find($mapObject['type'])
+            );
+            $this->em()->persist($newMapObject);
+
+        }
+        $this->em()->flush();
     }
 }
