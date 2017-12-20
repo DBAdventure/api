@@ -134,7 +134,7 @@ class Quest
     /**
      * @var ArrayCollection
      *
-     * @ORM\OneToMany(targetEntity="QuestNpc", mappedBy="quest", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="QuestNpc", mappedBy="quest", cascade={"persist"}, fetch="EAGER")
      */
     private $npcsNeeded;
 
@@ -607,5 +607,45 @@ class Quest
     public function getNpcsNeeded()
     {
         return $this->npcsNeeded;
+    }
+
+    public function __clone()
+    {
+        if ($this->id) {
+            $this->id = null;
+
+            // cloning the relation M which is a OneToMany
+            $npcsNeeded = new ArrayCollection();
+            foreach ($this->getNpcsNeeded() as $item) {
+                $clone = clone $item;
+                $clone->setQuest($this);
+                $npcsNeeded->add($clone);
+            }
+            $this->npcsNeeded = $npcsNeeded;
+
+            $gainObjects = new ArrayCollection();
+            foreach ($this->getGainObjects() as $item) {
+                $clone = clone $item;
+                $clone->setQuest($this);
+                $gainObjects->add($clone);
+            }
+            $this->gainObjects = $gainObjects;
+
+            $objectsNeeded = new ArrayCollection();
+            foreach ($this->getObjectsNeeded() as $item) {
+                $clone = clone $item;
+                $clone->setQuest($this);
+                $objectsNeeded->add($clone);
+            }
+            $this->objectsNeeded = $objectsNeeded;
+
+            $npcObjectsNeeded = new ArrayCollection();
+            foreach ($this->getNpcObjectsNeeded() as $item) {
+                $clone = clone $item;
+                $clone->setQuest($this);
+                $npcObjectsNeeded->add($clone);
+            }
+            $this->npcObjectsNeeded = $npcObjectsNeeded;
+        }
     }
 }

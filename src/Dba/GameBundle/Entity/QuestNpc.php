@@ -10,7 +10,7 @@ use JMS\Serializer\Annotation as JMS;
  * Quest Npc
  *
  * @ORM\Table(name="quest_npc", indexes={@ORM\Index(name="quest_npc_quest_id", columns={"quest_id"}),
-   @ORM\Index(name="quest_npc_npc_id", columns={"object_id"})})
+   @ORM\Index(name="quest_npc_race_id", columns={"race_id"})})
  * @ORM\Entity(repositoryClass="Dba\GameBundle\Repository\QuestNpcRepository")
  */
 class QuestNpc
@@ -35,7 +35,7 @@ class QuestNpc
      *
      * @ORM\ManyToOne(targetEntity="Dba\GameBundle\Entity\Race", fetch="EAGER")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="object_id", referencedColumnName="id", nullable=false, onDelete="CASCADE")
+     *   @ORM\JoinColumn(name="race_id", referencedColumnName="id", nullable=false, onDelete="CASCADE")
      * })
      */
     private $race;

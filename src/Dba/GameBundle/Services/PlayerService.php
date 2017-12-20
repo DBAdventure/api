@@ -11,6 +11,7 @@ use Dba\GameBundle\Entity\Player;
 use Dba\GameBundle\Entity\PlayerEvent;
 use Dba\GameBundle\Entity\PlayerSpell;
 use Dba\GameBundle\Entity\PlayerSpellEffect;
+use Dba\GameBundle\Entity\QuestNpc;
 use Dba\GameBundle\Entity\Side;
 use Dba\GameBundle\Entity\Spell;
 
@@ -893,72 +894,50 @@ class PlayerService extends BaseService
     public function prepareTutorial(Player $player)
     {
         $originalTutorial = $this->repos()->getMapRepository()->findOneById(Map::TUTORIAL);
-        $tutorial = clone $originalTutorial;
-        $tutorial->setType(Map::TYPE_TUTORIAL);
-        $mapBoxes = $this->repos()->getMapBoxRepository()->findBy(
-            [
-                'map' => $originalTutorial
-            ]
-        );
-
-        foreach ($mapBoxes as $mapBox) {
-            $newMapBox = clone $mapBox;
-            $newMapBox->setMap($tutorial);
-            $this->em()->persist($newMapBox);
-        }
-
-        $this->em()->persist($tutorial);
-        $player->setMap($tutorial);
-        $player->setX(3);
-        $player->setY(10);
-
-        $objects = [
-            [
-                'type' => MapObjectType::BUSH,
-                'x' => 9,
-                'y' => 10,
-                'object' => Object::DEFAULT_BERRIES,
-                'number' => 4,
-            ],
-            [
-                'type' => MapObjectType::BUSH,
-                'x' => 6,
-                'y' => 3,
-                'object' => Object::DEFAULT_BERRIES,
-                'number' => 3
-            ],
-            [
-                'type' => MapObjectType::ZENI,
-                'x' => 10,
-                'y' => 4,
-                'number' => 10,
-            ],
-            [
-                'type' => MapObjectType::ZENI,
-                'x' => 7,
-                'y' => 10,
-                'number' => 20,
-            ],
-        ];
-
-        foreach ($objects as $mapObject) {
-            $newMapObject = new MapObject();
-            $newMapObject->setMap($tutorial);
-            $newMapObject->setX($mapObject['x']);
-            $newMapObject->setY($mapObject['y']);
-            if (!empty($mapObject['object'])) {
-                $newMapObject->setObject(
-                    $this->repos()->getObjectRepository()->find($mapObject['object'])
-                );
-            }
-
-            if (!empty($mapObject['number'])) {
-                $newMapObject->setNumber($mapObject['number']);
-            }
-            $newMapObject->setMapObjectType(
-                $this->repos()->getMapObjectTypeRepository()->find($mapObject['type'])
+        if ($player->getMap()->isTutorial()) {
+            $tutorial = $player->getMap();
+        } else {
+            $tutorial = clone $originalTutorial;
+            $tutorial->setType(Map::TYPE_TUTORIAL);
+            $mapBoxes = $this->repos()->getMapBoxRepository()->findBy(
+                [
+                    'map' => $originalTutorial
+                ]
             );
-            $this->em()->persist($newMapObject);
+
+            foreach ($mapBoxes as $mapBox) {
+                $newMapBox = clone $mapBox;
+                $newMapBox->setMap($tutorial);
+                $this->em()->persist($newMapBox);
+            }
+
+            $mapObjects = $this->repos()->getMapObjectRepository()->findBy(
+                [
+                    'map' => $originalTutorial
+                ]
+            );
+
+            foreach ($mapObjects as $mapObject) {
+                $newMapObject = clone $mapObject;
+                $newMapObject->setMap($tutorial);
+                $this->em()->persist($newMapObject);
+            }
+
+            $quests = $this->repos()->getQuestRepository()->findBy(
+                [
+                    'map' => $originalTutorial
+                ]
+            );
+            foreach ($quests as $quest) {
+                $newQuest = clone $quest;
+                $newQuest->setMap($tutorial);
+                $this->em()->persist($newQuest);
+            }
+
+            $this->em()->persist($tutorial);
+            $player->setMap($tutorial);
+            $player->setX(3);
+            $player->setY(10);
         }
 
         $this->em()->flush();
