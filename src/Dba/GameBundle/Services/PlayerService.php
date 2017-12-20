@@ -959,8 +959,8 @@ class PlayerService extends BaseService
                 $this->repos()->getMapObjectTypeRepository()->find($mapObject['type'])
             );
             $this->em()->persist($newMapObject);
-
         }
+
         $this->em()->flush();
     }
 }
