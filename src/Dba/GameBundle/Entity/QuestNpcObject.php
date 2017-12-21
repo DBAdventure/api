@@ -20,7 +20,7 @@ class QuestNpcObject
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="NONE")
      *
-     * @ORM\ManyToOne(targetEntity="Dba\GameBundle\Entity\Quest", fetch="EAGER")
+     * @ORM\ManyToOne(targetEntity="Dba\GameBundle\Entity\Quest", fetch="EAGER", inversedBy="npcObjectsNeeded")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="quest_id", referencedColumnName="id", nullable=false, onDelete="CASCADE")
      * })

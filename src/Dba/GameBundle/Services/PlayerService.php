@@ -60,6 +60,11 @@ class PlayerService extends BaseService
      */
     public function respawn(Player $player)
     {
+        if ($player->getMap()->isTutorial()) {
+            // Don't care so continue
+            return;
+        }
+
         if (!$player->isPlayer()) {
             $where = ['c'] + Player::AVAILABLE_MOVE;
             return $this->teleport(

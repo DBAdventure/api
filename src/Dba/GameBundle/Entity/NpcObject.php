@@ -36,7 +36,7 @@ class NpcObject
      * @var array
      *
      * @var ArrayCollection
-     * @ORM\ManyToMany(targetEntity="Dba\GameBundle\Entity\Race", cascade={"all"})
+     * @ORM\ManyToMany(targetEntity="Dba\GameBundle\Entity\Race", cascade={"persist"})
      */
     private $races;
 

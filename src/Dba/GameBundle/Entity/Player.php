@@ -693,7 +693,7 @@ class Player implements AdvancedUserInterface, Serializable
     /**
      * @var Map
      *
-     * @ORM\ManyToOne(targetEntity="Map", fetch="EAGER")
+     * @ORM\ManyToOne(targetEntity="Map", fetch="EAGER", cascade={"persist"})
      * @ORM\JoinColumn(name="map_id", referencedColumnName="id", nullable=false)
      * @JMS\Groups("Guild")
      */
