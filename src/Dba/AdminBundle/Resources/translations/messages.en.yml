@@ -213,6 +213,11 @@ form:
   weight: "Weight"
   gainZeni: "Gain zeni"
   gainBattlePoints: "Gain battle points"
+  teleport: "Teleport on"
+  on:
+    completed: "On completed"
+    finished: "On finished"
+    accepted: "On accepted"
 
 
 extra:
@@ -222,6 +227,9 @@ filter.by: "Filter by"
 none: "Nothing"
 
 map:
+  name: "Name"
+  type: "Type"
+  actions: "Actions"
   object:
     name: "Name"
     position: "Position"

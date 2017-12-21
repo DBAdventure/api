@@ -29,14 +29,14 @@
       </tr>
     </thead>
     <tbody>
-      {% for mapObject in mapObjectList %}
+      {% for mapObject in mapObjectList if not mapObject.map.isTutorial %}
         <tr>
           <td>
             {{ mapObject.mapObjectType.name }}
           </td>
           <td>
             {{ mapObject.map.name }}
-            ({{ mapObject.x }} / {{ mapObject.y }} )
+            ({{ mapObject.x }} / {{ mapObject.y }})
           </td>
           <td>
             <a href="{{ path('admin.map.object.edit', {"id": mapObject.id}) }}">

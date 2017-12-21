@@ -43,6 +43,7 @@ class QuestController extends BaseController
             Form\Quest::class,
             $quest,
             [
+                'repositories' => $this->em(),
                 'attr' => [
                     'asset-path' => 'bundles/dbaadmin/images/avatars/npc_quest',
                     'web-dir' => $this->getParameter('kernel.root_dir') . '/../web/',
@@ -90,6 +91,7 @@ class QuestController extends BaseController
             Form\Quest::class,
             $quest,
             [
+                'repositories' => $this->repos(),
                 'attr' => [
                     'asset-path' => 'bundles/dbaadmin/images/avatars/npc_quest',
                     'web-dir' => $this->getParameter('kernel.root_dir') . '/../web/',

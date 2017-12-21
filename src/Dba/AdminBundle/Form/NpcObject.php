@@ -52,7 +52,7 @@ class NpcObject extends AbstractType
                             );
                             return $qb;
                         },
-                        'choice_translation_domain' => true,
+                        'choice_translation_domain' => false,
                     ],
                     'allow_add' => true,
                     'allow_delete' => true,

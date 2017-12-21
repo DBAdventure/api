@@ -3,6 +3,7 @@
 namespace Dba\AdminBundle\Form;
 
 use Dba\GameBundle\Entity;
+use Dba\GameBundle\Services\RepositoryService;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Form\AbstractType;
@@ -80,6 +81,30 @@ class Quest extends AbstractType
                 ]
             )
             ->add(
+                'onAccepted',
+                EventType::class,
+                [
+                    'required' => false,
+                    'label' => 'form.teleport',
+                ]
+            )
+            ->add(
+                'onCompleted',
+                EventType::class,
+                [
+                    'required' => false,
+                    'label' => 'form.teleport',
+                ]
+            )
+            ->add(
+                'onFinished',
+                EventType::class,
+                [
+                    'required' => false,
+                    'label' => 'form.teleport',
+                ]
+            )
+            ->add(
                 'npcsNeeded',
                 Type\CollectionType::class,
                 [
@@ -134,7 +159,7 @@ class Quest extends AbstractType
                     'class' => Entity\Map::class,
                     'choice_label' => 'name',
                     'label' => 'form.map',
-                    'choice_translation_domain' => true
+                    'choice_translation_domain' => false
                 ]
             );
         $integerAttributes = [
@@ -183,6 +208,48 @@ class Quest extends AbstractType
                     }
                 )
             );
+
+        foreach (['onAccepted', 'onCompleted', 'onFinished'] as $eventType) {
+            $builder->get($eventType)
+                ->addModelTransformer(
+                    $this->getEventTransformer($options['repositories'])
+                );
+        }
+    }
+
+    /**
+     * Event transformer
+     *
+     * @param RepositoryService $em Entity Manager
+     *
+     * @return CallbackTransformer
+     */
+    protected function getEventTransformer(RepositoryService $em)
+    {
+        return new CallbackTransformer(
+            function ($event) use ($em) {
+                if (empty($event)) {
+                    return [];
+                }
+
+                if (!empty($event['map'])) {
+                    $event['map'] = $em->getMapRepository()->findOneById($event['map']);
+                }
+
+                return $event;
+            },
+            function ($data) use ($em) {
+                if (empty($data)) {
+                    return [];
+                }
+
+                if (!empty($data['map'])) {
+                    $data['map'] = $data['map']->getId();
+                }
+
+                return $data;
+            }
+        );
     }
 
     /**
@@ -190,6 +257,7 @@ class Quest extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
+        $resolver->setRequired('repositories');
         $resolver->setDefaults(
             [
                 'data_class' => Entity\Quest::class,

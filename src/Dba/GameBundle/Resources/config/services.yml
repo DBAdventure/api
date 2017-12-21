@@ -21,6 +21,10 @@ services:
     class: Dba\GameBundle\Services\GuildService
     calls:
       - [setContainer, ['@service_container']]
+  dba.game.quest:
+    class: Dba\GameBundle\Services\QuestService
+    calls:
+      - [setContainer, ['@service_container']]
   dba.game.object:
     class: Dba\GameBundle\Services\ObjectService
     calls:
@@ -44,6 +48,7 @@ services:
       - { name: kernel.event_subscriber }
   player.quest.subscriber:
     class: Dba\GameBundle\EventListener\PlayerQuestSubscriber
+    arguments: ['@dba.game.services']
     tags:
       - { name: kernel.event_subscriber }
 

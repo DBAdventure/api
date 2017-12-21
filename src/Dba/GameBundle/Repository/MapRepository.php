@@ -131,7 +131,7 @@ EOT;
                 $qb->andWhere($qb->expr()->between('t.y', $borders['yStart'], $borders['yEnd']));
                 $qb->andWhere('t.map = :map_id');
 
-                if ($type == 'players' || $type == 'buildings') {
+                if ($type != 'objects') {
                     $qb->andWhere('t.enabled = TRUE');
                 }
 

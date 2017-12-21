@@ -65,7 +65,7 @@ class ActionController extends BaseController
             return $this->forbidden('error.move.forbidden');
         }
 
-        if (!$player->getMap()->isRespawn()) {
+        if (!$player->getMap()->isRespawn() && !$player->getMap()->isTutorial()) {
             $player->usePoints(Player::MOVEMENT_POINT, Player::MOVEMENT_ACTION + (int) ($move > 1));
         }
 
@@ -1010,6 +1010,7 @@ class ActionController extends BaseController
             $playerQuest = $playerQuests->first();
         }
 
+        $questService = $this->services()->getQuestService();
         $playerService = $this->services()->getPlayerService();
         if ($request->getMethod() === 'GET') {
             return [
@@ -1034,9 +1035,12 @@ class ActionController extends BaseController
             $playerQuest->setPlayer($player);
             $playerQuest->setQuest($quest);
             $this->em()->persist($playerQuest);
+            $questService->runEvent($player, $quest->getOnAccepted());
             $this->em()->flush();
             return [
-                'message' => 'action.talk.quest.accepted',
+                'messages' => [
+                    ['message' => 'action.talk.quest.accepted'],
+                ],
                 'player_quest' => $playerQuest,
                 'player_objects' => $playerService->getAvailableObjects($player),
             ];
@@ -1048,52 +1052,14 @@ class ActionController extends BaseController
         }
 
 
-        // Check to return quest
-        $canBeDone = true;
-        $npcs = $playerQuest->getNpcs();
-        foreach ($quest->getNpcsNeeded() as $obj) {
-            if (!empty($npcs[$obj->getRace()->getId()]) && $npcs[$obj->getRace()->getId()] < $obj->getNumber()) {
-                $canBeDone = false;
-                break;
-            }
-        }
-
-        $npcObjects = $playerQuest->getNpcObjects();
-        foreach ($quest->getNpcObjectsNeeded() as $obj) {
-            if (!empty($npcObjects[$obj->getNpcObject()->getId()]) &&
-                $npcObjects[$obj->getNpcObject()->getId()] < $obj->getNumber()
-            ) {
-                $canBeDone = false;
-                break;
-            }
-        }
-
-        $playerObjectsNeeded = [];
-        $playerObjectRepo = $this->repos()->getPlayerObjectRepository();
-        foreach ($quest->getObjectsNeeded() as $obj) {
-            $objectNeeded = $playerObjectRepo->findOneBy(
-                [
-                    'player' => $player,
-                    'object' => $obj->getObject(),
-                ]
-            );
-            $playerObjectsNeeded[] = [
-                'playerObject' => $objectNeeded,
-                'number' => $obj->getNumber(),
-            ];
-
-            if ($objectNeeded->getNumber() < $obj->getNumber()) {
-                $canBeDone = false;
-                break;
-            }
-        }
-
         // Quest not finished
+        list($canBeDone, $playerObjectsNeeded) = $questService->canBeDone($playerQuest);
         if (empty($canBeDone)) {
             return $this->forbidden('action.talk.quest.not.finished');
         }
 
 
+        $questService->runEvent($player, $quest->getOnFinished());
         $messages = [
             [
                 'message' => 'action.talk.quest.finished',

@@ -22,6 +22,9 @@
 
     <ul class="nav nav-tabs" role="tablist">
       <li class="active"><a href="#quest-requirements" aria-controls="quest-requirements" role="tab" data-toggle="tab">{{ 'form.requirements' | trans }}</a></li>
+      <li><a href="#on-accepted" aria-controls="oa" role="tab" data-toggle="tab">{{ 'form.on.accepted' | trans }}</a></li>
+      <li><a href="#on-completed" aria-controls="oc" role="tab" data-toggle="tab">{{ 'form.on.completed' | trans }}</a></li>
+      <li><a href="#on-finished" aria-controls="of" role="tab" data-toggle="tab">{{ 'form.on.finished' | trans }}</a></li>
       <li><a href="#gain-objects" aria-controls="go" role="tab" data-toggle="tab">{{ 'form.gainObjects' | trans }}</a></li>
       <li><a href="#npcs-needed" aria-controls="nn" role="tab" data-toggle="tab">{{ 'form.npcsNeeded' | trans }}</a></li>
       <li><a href="#npc-objects-needed" aria-controls="non" role="tab" data-toggle="tab">{{ 'form.npcObjectsNeeded' | trans }}</a></li>
@@ -30,7 +33,6 @@
 
     <div class="tab-content">
       <div role="tabpanel" class="tab-pane active" id="quest-requirements">
-
         <div id="requirements" data-prototype="{{ helper.widget_prototype(form.requirements) | escape }}">
           {% for widget in form.requirements.children %}
             {{ helper.widget_prototype(widget)}}
@@ -41,6 +43,27 @@
             <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
             {{ 'form.add.requirements' | trans }}
           </button>
+          <div class="clearfix">&nbsp;</div>
+        </div>
+      </div>
+
+      <div role="tabpanel" class="tab-pane" id="on-accepted">
+        <div class="text-center">
+          {{ form_row(form.onAccepted) }}
+          <div class="clearfix">&nbsp;</div>
+        </div>
+      </div>
+
+      <div role="tabpanel" class="tab-pane" id="on-completed">
+        <div class="text-center">
+          {{ form_row(form.onCompleted) }}
+          <div class="clearfix">&nbsp;</div>
+        </div>
+      </div>
+
+      <div role="tabpanel" class="tab-pane" id="on-finished">
+        <div class="text-center">
+          {{ form_row(form.onFinished) }}
           <div class="clearfix">&nbsp;</div>
         </div>
       </div>
@@ -60,7 +83,7 @@
         </div>
       </div>
 
-      <div role="tabpanel" class="tab-pane" id="npcs-needed">
+      <div rpole="tabpanel" class="tab-pane" id="npcs-needed">
         <div id="npcsNeeded" data-prototype="{{ helper.widget_prototype(form.npcsNeeded, 'race', 'number') | escape }}">
           {% for widget in form.npcsNeeded.children %}
             {{ helper.widget_prototype(widget, 'race', 'number')}}

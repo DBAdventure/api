@@ -12,7 +12,7 @@
       </tr>
     </thead>
     <tbody>
-      {% for quest in quests %}
+      {% for quest in quests if not quest.map.isTutorial %}
         <tr>
           <td>
             {{ quest.name }}

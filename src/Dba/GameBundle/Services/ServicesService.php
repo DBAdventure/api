@@ -5,7 +5,14 @@ namespace Dba\GameBundle\Services;
 class ServicesService extends BaseService
 {
     /**
-     *
+     * @return QuestService
+     */
+    public function getQuestService()
+    {
+        return $this->container->get('dba.game.quest');
+    }
+
+    /**
      * @return GuildService
      */
     public function getGuildService()
@@ -14,7 +21,6 @@ class ServicesService extends BaseService
     }
 
     /**
-     *
      * @return PlayerService
      */
     public function getPlayerService()
@@ -23,7 +29,6 @@ class ServicesService extends BaseService
     }
 
     /**
-     *
      * @return MailService
      */
     public function getMailService()
@@ -32,7 +37,6 @@ class ServicesService extends BaseService
     }
 
     /**
-     *
      * @return ObjectService
      */
     public function getObjectService()
@@ -41,7 +45,6 @@ class ServicesService extends BaseService
     }
 
     /**
-     *
      * @return SpellService
      */
     public function getSpellService()
@@ -50,7 +53,6 @@ class ServicesService extends BaseService
     }
 
     /**
-     *
      * @return TemplateService
      */
     public function getTemplateService()

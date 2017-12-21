@@ -135,8 +135,13 @@ class PlayerController extends BaseController
     public function deleteAction(Player $player)
     {
         // Do not remove, add this player as deleted status
+        $side = $player->getSide()->getId();
         $this->em()->remove($player);
         $this->em()->flush();
+
+        if ($side === Side::NPC) {
+            return $this->redirect($this->generateUrl('admin.npc'));
+        }
 
         return $this->redirect($this->generateUrl('admin.player'));
     }

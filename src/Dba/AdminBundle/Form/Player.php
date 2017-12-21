@@ -137,6 +137,16 @@ class Player extends AbstractType
                 EntityType::class,
                 [
                     'class' => Entity\Map::class,
+                    'query_builder' => function (EntityRepository $er) {
+                        $qb = $er->createQueryBuilder('m');
+                        $qb->where(
+                            $qb->expr()->in(
+                                'm.type',
+                                [Entity\Map::TYPE_NORMAL]
+                            )
+                        );
+                        return $qb;
+                    },
                     'choice_label' => 'name',
                     'label' => 'form.map',
                     'choice_translation_domain' => true

@@ -134,16 +134,37 @@ class Quest
     /**
      * @var ArrayCollection
      *
-     * @ORM\OneToMany(targetEntity="QuestNpc", mappedBy="quest", cascade={"persist"}, fetch="EAGER")
+     * @ORM\OneToMany(targetEntity="QuestNpc", mappedBy="quest", cascade={"persist"})
      */
     private $npcsNeeded;
 
     /**
      * @var array
      *
-     * @ORM\Column(name="requirements", type="json_array", nullable=false)
+     * @ORM\Column(name="requirements", type="json_array", nullable=false, options={"default": "{}"})
      */
-    private $requirements;
+    private $requirements = [];
+
+    /**
+     * @var array
+     *
+     * @ORM\Column(name="on_accepted", type="json_array", nullable=false, options={"default": "{}"})
+     */
+    private $onAccepted = [];
+
+    /**
+     * @var array
+     *
+     * @ORM\Column(name="on_completed", type="json_array", nullable=false, options={"default": "{}"})
+     */
+    private $onCompleted = [];
+
+    /**
+     * @var array
+     *
+     * @ORM\Column(name="on_finished", type="json_array", nullable=false, options={"default": "{}"})
+     */
+    private $onFinished = [];
 
     /**
      * Set name
@@ -474,6 +495,78 @@ class Quest
     }
 
     /**
+     * Set on Accepted
+     *
+     * @param array $onAccepted
+     *
+     * @return Quest
+     */
+    public function setOnAccepted($onAccepted)
+    {
+        $this->onAccepted = $onAccepted;
+
+        return $this;
+    }
+
+    /**
+     * Get on Accepted
+     *
+     * @return array
+     */
+    public function getOnAccepted()
+    {
+        return $this->onAccepted;
+    }
+
+    /**
+     * Set onFinished
+     *
+     * @param array $onFinished
+     *
+     * @return Quest
+     */
+    public function setOnFinished($onFinished)
+    {
+        $this->onFinished = $onFinished;
+
+        return $this;
+    }
+
+    /**
+     * Get onFinished
+     *
+     * @return array
+     */
+    public function getOnFinished()
+    {
+        return $this->onFinished;
+    }
+
+    /**
+     * Set onCompleted
+     *
+     * @param array $onCompleted
+     *
+     * @return Quest
+     */
+    public function setOnCompleted($onCompleted)
+    {
+        $this->onCompleted = $onCompleted;
+
+        return $this;
+    }
+
+    /**
+     * Get onCompleted
+     *
+     * @return array
+     */
+    public function getOnCompleted()
+    {
+        return $this->onCompleted;
+    }
+
+    /**
      * Add gainObject
      *
      * @param Object $gainObject
@@ -614,38 +707,16 @@ class Quest
         if ($this->id) {
             $this->id = null;
 
-            // cloning the relation M which is a OneToMany
-            $npcsNeeded = new ArrayCollection();
-            foreach ($this->getNpcsNeeded() as $item) {
-                $clone = clone $item;
-                $clone->setQuest($this);
-                $npcsNeeded->add($clone);
+            $fields = ['npcsNeeded', 'gainObjects', 'objectsNeeded', 'npcObjectsNeeded'];
+            foreach ($fields as $field) {
+                $items = new ArrayCollection();
+                foreach ($this->{$field} as $item) {
+                    $clone = clone $item;
+                    $clone->setQuest($this);
+                    $items->add($clone);
+                }
+                $this->{$field} = $items;
             }
-            $this->npcsNeeded = $npcsNeeded;
-
-            $gainObjects = new ArrayCollection();
-            foreach ($this->getGainObjects() as $item) {
-                $clone = clone $item;
-                $clone->setQuest($this);
-                $gainObjects->add($clone);
-            }
-            $this->gainObjects = $gainObjects;
-
-            $objectsNeeded = new ArrayCollection();
-            foreach ($this->getObjectsNeeded() as $item) {
-                $clone = clone $item;
-                $clone->setQuest($this);
-                $objectsNeeded->add($clone);
-            }
-            $this->objectsNeeded = $objectsNeeded;
-
-            $npcObjectsNeeded = new ArrayCollection();
-            foreach ($this->getNpcObjectsNeeded() as $item) {
-                $clone = clone $item;
-                $clone->setQuest($this);
-                $npcObjectsNeeded->add($clone);
-            }
-            $this->npcObjectsNeeded = $npcObjectsNeeded;
         }
     }
 }

@@ -934,6 +934,21 @@ class PlayerService extends BaseService
                 $this->em()->persist($newQuest);
             }
 
+            $npcs = $this->repos()->getPlayerRepository()->findBy(
+                [
+                    'map' => $originalTutorial,
+                    'side' => $this->repos()->getSideRepository()->findOneById(Side::NPC),
+                ]
+            );
+            foreach ($npcs as $npc) {
+                $newNpc = clone $npc;
+                $newNpc->setMap($tutorial);
+                $newNpc->setName($newNpc->getName() . mt_rand());
+                $newNpc->setUsername($newNpc->getUsername() . mt_rand());
+                $newNpc->setEmail($newNpc->getEmail() . mt_rand());
+                $this->em()->persist($newNpc);
+            }
+
             $this->em()->persist($tutorial);
             $player->setMap($tutorial);
             $player->setX(3);
