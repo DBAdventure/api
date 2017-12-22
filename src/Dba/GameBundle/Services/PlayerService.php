@@ -60,7 +60,7 @@ class PlayerService extends BaseService
      */
     public function respawn(Player $player, $forceRandom = false)
     {
-        if ($player->getMap()->isTutorial()) {
+        if ($player->getMap() && $player->getMap()->isTutorial()) {
             // Don't care so continue
             return;
         }

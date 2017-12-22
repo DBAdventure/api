@@ -59,16 +59,16 @@ EOT
 
         $clean = $input->getOption('clean');
         if (!empty($clean)) {
-            $this->cleanMaps($input, $output);
+            $this->cleanMaps($output);
         } else {
-            $this->createOrUpdateTutorial($input, $output);
+            $this->createOrUpdateTutorial($output);
         }
 
         $this->em()->flush();
         $this->release();
     }
 
-    protected function cleanMaps(InputInterface $input, OutputInterface $output)
+    protected function cleanMaps(OutputInterface $output)
     {
         $playerRepo = $this->repos()->getPlayerRepository();
         $playerQuestRepo = $this->repos()->getPlayerQuestRepository();
@@ -116,7 +116,7 @@ EOT
         }
     }
 
-    protected function createOrUpdateTutorial(InputInterface $input, OutputInterface $output)
+    protected function createOrUpdateTutorial(OutputInterface $output)
     {
         $tutorial = $this->repos()->getMapRepository()->findOneById(Map::TUTORIAL);
         $message = sprintf('Update map <comment>%s</comment>', $tutorial->getName());
@@ -208,6 +208,7 @@ EOT
         $quest->setName('Que l\'histoire commence');
         $quest->setNpcName('Shu');
         $quest->setEnabled(true);
+        // phpcs:disable
         $history = <<<EOT
 Bonjour à toi voyageur.
 Mon maître <strong>Pilaf</strong> m'a envoyé auprès de toi pour répondre à tes questions et t'initier à ton nouveau lieu de résidence...
@@ -242,6 +243,7 @@ Regarde l'autre rive, là bas se dresse un loup et il bloque l'accès à divers 
 
 Ecoute, si tu es d'accord, je te téléporte sur la petite île, et si tu arrives à tuer ce loup, alors je te ferai débarquer sur l'île, d'accord ?
 EOT;
+        // phpcs:enable
         $quest->setHistory($history);
         $quest->setMap($tutorial);
         $quest->setX(3);
@@ -254,11 +256,13 @@ EOT;
             'y' => 10,
         ]);
 
+        // phpcs:disable
         $message = <<<EOF
 Shu : Génial, je vais pouvoir accéder à ma réserve !!!
 T'es pas si faible que ça finallement. Pour te récompenser, je vais te téléporter sur l'île !
 Il me reste plus qu'à te souhaiter bonne route et n'oublie pas que maintenant, tes points de mouvements ne sont plus illimités...
 EOF;
+        // phpcs:enable
         $quest->setOnCompleted([
             'message' => $message,
             'map' => Map::ISLAND,
