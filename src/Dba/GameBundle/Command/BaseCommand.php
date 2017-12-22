@@ -10,6 +10,8 @@ use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 
 abstract class BaseCommand extends ContainerAwareCommand
 {
+    const TAB = "\t";
+
     /**
      * @return Logger
      */

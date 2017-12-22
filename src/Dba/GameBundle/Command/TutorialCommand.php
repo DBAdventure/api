@@ -14,11 +14,9 @@ use Dba\GameBundle\Entity\Race;
 use Dba\GameBundle\Entity\Side;
 use Exception;
 use Symfony\Component\Console\Command\LockableTrait;
-use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Question\Question;
 
 class TutorialCommand extends BaseCommand
 {
@@ -38,6 +36,14 @@ The <info>%command.name%</info> command refresh tutorial:
   <info>php %command.full_name%</info>
 EOT
             );
+
+        $this->addOption(
+            'clean',
+            null,
+            InputOption::VALUE_OPTIONAL,
+            'Should clean unused maps',
+            false
+        );
     }
 
     /**
@@ -45,13 +51,64 @@ EOT
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        if (!$this->lock()) {
-            $output->writeln('The command is already running in another process.');
-            return 0;
+        // if (!$this->lock()) {
+        //     $output->writeln('The command is already running in another process.');
+        //     return 0;
+        // }
+
+        $clean = $input->getOption('clean');
+        if (!empty($clean)) {
+            $this->cleanMaps($input, $output);
+        } else {
+            $this->createOrUpdateTutorial($input, $output);
         }
 
+        $this->em()->flush();
+        $this->release();
+    }
+
+    protected function cleanMaps(InputInterface $input, OutputInterface $output)
+    {
+        $playerRepo = $this->repos()->getPlayerRepository();
+        $maps = $this->repos()->getMapRepository()->findBy([
+            'type' => Map::TYPE_TUTORIAL,
+        ]);
+
+        $message = sprintf('Clean maps <comment>%d</comment>', count($maps));
+        $output->writeln($message);
+        $this->getLogger()->info($message);
+        foreach ($maps as $map) {
+            $hasPlayer = false;
+            $players = $playerRepo->findByMap($map);
+            foreach ($players as $player) {
+                if ($player->isPlayer()) {
+                    $hasPlayer = true;
+                    break;
+                }
+            }
+
+            if ($hasPlayer) {
+                $message = sprintf('Player found on map <info>%d</info>', $map->getId());
+                $output->writeln(self::TAB . $message);
+                $this->getLogger()->info($message);
+            } else {
+                $message = sprintf('No player found: <info>map %d</info>', $map->getId());
+                $output->writeln(self::TAB . $message);
+                $this->getLogger()->info($message);
+                foreach ($players as $player) {
+                    $this->em()->remove($player);
+                }
+                $this->em()->remove($map);
+            }
+        }
+    }
+
+    protected function createOrUpdateTutorial(InputInterface $input, OutputInterface $output)
+    {
         $tutorial = $this->repos()->getMapRepository()->findOneById(Map::TUTORIAL);
-        $output->writeln('Tutorial map found');
+        $message = sprintf('Update map <comment>%s</comment>', $tutorial->getName());
+        $output->writeln($message);
+        $this->getLogger()->info($message);
         $objects = [
             [
                 'type' => MapObjectType::BUSH,
@@ -102,10 +159,7 @@ EOT
             ]);
 
             if (empty($newMapObject)) {
-                $output->writeln('Object not found');
                 $newMapObject = new MapObject();
-            } else {
-                $output->writeln('Object found, update it');
             }
 
             $newMapObject->setMap($tutorial);
@@ -122,6 +176,9 @@ EOT
             }
 
             $newMapObject->setMapObjectType($type);
+            $message = sprintf('Update: <info>%s</info>', $newMapObject->getMapObjectType()->getName());
+            $output->writeln(self::TAB . $message);
+            $this->getLogger()->info($message);
             $this->em()->persist($newMapObject);
         }
 
@@ -195,10 +252,10 @@ EOT;
         $npcNeeded->setNumber(1);
         $quest->addNpcsNeeded($npcNeeded);
 
-        $output->writeln('Update quest');
+        $message = sprintf('Update quest: <info>%s</info>', $quest->getName());
+        $output->writeln(self::TAB . $message);
+        $this->getLogger()->info($message);
         $this->em()->persist($quest);
-
-
 
         /**
          * Update npc
@@ -267,10 +324,10 @@ EOT;
 
         $npc->setHealth($npc->getMaxHealth());
 
-        $this->em()->persist($npc);
-        $output->writeln('Update npc');
+        $message = sprintf('Update npc: <info>%s</info>', $npc->getName());
+        $output->writeln(self::TAB . $message);
+        $this->getLogger()->info($message);
 
-        $this->em()->flush();
-        $this->release();
+        $this->em()->persist($npc);
     }
 }

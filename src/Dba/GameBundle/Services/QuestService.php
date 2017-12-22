@@ -29,11 +29,7 @@ class QuestService extends BaseService
         if (!empty($event['map'])) {
             $map = $this->repos()->getMapRepository()->findOneById($event['map']);
             if ($map->getId() !== Map::TUTORIAL && !$map->isTutorial()) {
-                $oldMap = $player->getMap();
                 $player->setMap($map);
-                if ($oldMap->isTutorial()) {
-                    $this->clearTutorial($oldMap);
-                }
             }
         }
     }
@@ -93,19 +89,5 @@ class QuestService extends BaseService
         }
 
         return [$canBeDone, $playerObjectsNeeded];
-    }
-
-
-    protected function clearTutorial(Map $map)
-    {
-        $npcs = $this->repos()->getPlayerRepository()->findBy([
-            'map' => $map,
-            'side' => $this->repos()->getSideRepository()->findOneById(Side::NPC),
-        ]);
-
-        foreach ($npcs as $npc) {
-            $this->em()->remove($npc);
-        }
-        $this->em()->remove($map);
     }
 }

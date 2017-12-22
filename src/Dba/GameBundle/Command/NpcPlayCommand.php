@@ -9,14 +9,11 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Question\Question;
 use Symfony\Component\Console\Command\LockableTrait;
 
 class NpcPlayCommand extends BaseCommand
 {
     use LockableTrait;
-
-    const TAB = "\t";
 
     /**
      * {@inheritdoc}
@@ -58,7 +55,7 @@ EOT
             $number
         );
 
-        $message = sprintf('Npcs found <comment>%s</comment>', count($npcs));
+        $message = sprintf('Npcs found <comment>%d</comment>', count($npcs));
         $output->writeln($message);
         $this->getLogger()->info($message);
         foreach ($npcs as $npc) {
