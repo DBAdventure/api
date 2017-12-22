@@ -23,7 +23,7 @@ class QuestNpcObjectType extends AbstractQuestType
                     'class' => Entity\NpcObject::class,
                     'choice_label' => 'name',
                     'label' => 'form.object',
-                    'choice_translation_domain' => true
+                    'choice_translation_domain' => false,
                 ]
             )
             ->add(

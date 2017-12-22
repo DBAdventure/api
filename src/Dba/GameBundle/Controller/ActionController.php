@@ -1035,12 +1035,13 @@ class ActionController extends BaseController
             $playerQuest->setPlayer($player);
             $playerQuest->setQuest($quest);
             $this->em()->persist($playerQuest);
-            $questService->runEvent($player, $quest->getOnAccepted());
+            $messages = [
+                ['message' => 'action.talk.quest.accepted'],
+            ];
+            $questService->runEvent($player, $quest->getOnAccepted(), $messages);
             $this->em()->flush();
             return [
-                'messages' => [
-                    ['message' => 'action.talk.quest.accepted'],
-                ],
+                'messages' => $messages,
                 'player_quest' => $playerQuest,
                 'player_objects' => $playerService->getAvailableObjects($player),
             ];
@@ -1058,13 +1059,11 @@ class ActionController extends BaseController
             return $this->forbidden('action.talk.quest.not.finished');
         }
 
-
-        $questService->runEvent($player, $quest->getOnFinished());
         $messages = [
-            [
-                'message' => 'action.talk.quest.finished',
-            ]
+            ['message' => 'action.talk.quest.finished'],
         ];
+        $questService->runEvent($player, $quest->getOnFinished(), $messages);
+
         // Yeah quest complete receive gifts
         foreach ($playerObjectsNeeded as $data) {
             $data['playerObject']->setNumber($data['playerObject']->getNumber() - $data['number']);

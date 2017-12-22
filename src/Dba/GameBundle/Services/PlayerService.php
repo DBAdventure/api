@@ -56,16 +56,16 @@ class PlayerService extends BaseService
      *  Respawn a player
      *
      * @param Player $player Player
-     *
+     * @param boolean $forceRandom Force random teleport (default: false)
      */
-    public function respawn(Player $player)
+    public function respawn(Player $player, $forceRandom = false)
     {
         if ($player->getMap()->isTutorial()) {
             // Don't care so continue
             return;
         }
 
-        if (!$player->isPlayer()) {
+        if (!$player->isPlayer() || $forceRandom) {
             $where = ['c'] + Player::AVAILABLE_MOVE;
             return $this->teleport(
                 $player,

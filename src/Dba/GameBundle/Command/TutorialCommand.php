@@ -8,6 +8,7 @@ use Dba\GameBundle\Entity\MapObject;
 use Dba\GameBundle\Entity\MapObjectType;
 use Dba\GameBundle\Entity\Object;
 use Dba\GameBundle\Entity\Player;
+use Dba\GameBundle\Entity\PlayerQuest;
 use Dba\GameBundle\Entity\Quest;
 use Dba\GameBundle\Entity\QuestNpc;
 use Dba\GameBundle\Entity\Race;
@@ -51,10 +52,10 @@ EOT
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        // if (!$this->lock()) {
-        //     $output->writeln('The command is already running in another process.');
-        //     return 0;
-        // }
+        if (!$this->lock()) {
+            $output->writeln('The command is already running in another process.');
+            return 0;
+        }
 
         $clean = $input->getOption('clean');
         if (!empty($clean)) {
@@ -70,6 +71,8 @@ EOT
     protected function cleanMaps(InputInterface $input, OutputInterface $output)
     {
         $playerRepo = $this->repos()->getPlayerRepository();
+        $playerQuestRepo = $this->repos()->getPlayerQuestRepository();
+        $questRepo = $this->repos()->getQuestRepository();
         $maps = $this->repos()->getMapRepository()->findBy([
             'type' => Map::TYPE_TUTORIAL,
         ]);
@@ -77,6 +80,10 @@ EOT
         $message = sprintf('Clean maps <comment>%d</comment>', count($maps));
         $output->writeln($message);
         $this->getLogger()->info($message);
+        $originalQuest = $this->repos()->getQuestRepository()->findOneByMap(
+            $this->repos()->getMapRepository()->findOneById(Map::TUTORIAL)
+        );
+
         foreach ($maps as $map) {
             $hasPlayer = false;
             $players = $playerRepo->findByMap($map);
@@ -92,9 +99,15 @@ EOT
                 $output->writeln(self::TAB . $message);
                 $this->getLogger()->info($message);
             } else {
-                $message = sprintf('No player found: <info>map %d</info>', $map->getId());
+                $message = sprintf('Clear map: <info>%d</info>', $map->getId());
                 $output->writeln(self::TAB . $message);
                 $this->getLogger()->info($message);
+
+                $playerQuest = $playerQuestRepo->findOneByQuest($questRepo->findOneByMap($map));
+                $playerQuest->setQuest($originalQuest);
+                $playerQuest->setStatus(PlayerQuest::STATUS_FINISHED);
+                $this->em()->persist($playerQuest);
+
                 foreach ($players as $player) {
                     $this->em()->remove($player);
                 }
@@ -234,11 +247,20 @@ EOT;
         $quest->setX(3);
         $quest->setY(10);
         $quest->setOnAccepted([
+            'message' => 'Tu as du courage dis moi, marché conclu ! ' .
+            'Je viens de te téléporter sur l\'autre rive. Tu pourras y affronter le loup.',
             'map' => Map::TUTORIAL,
             'x' => 6,
             'y' => 10,
         ]);
+
+        $message = <<<EOF
+Shu : Génial, je vais pouvoir accéder à ma réserve !!!
+T'es pas si faible que ça finallement. Pour te récompenser, je vais te téléporter sur l'île !
+Il me reste plus qu'à te souhaiter bonne route et n'oublie pas que maintenant, tes points de mouvements ne sont plus illimités...
+EOF;
         $quest->setOnCompleted([
+            'message' => $message,
             'map' => Map::ISLAND,
         ]);
         if (count($quest->getNpcsNeeded()) === 0) {

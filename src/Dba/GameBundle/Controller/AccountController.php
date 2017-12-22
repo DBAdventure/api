@@ -267,8 +267,7 @@ class AccountController extends BaseController
 
         $player->setConfirmationToken(null);
         $player->setEnabled(true);
-        // @TODO In progress
-        // $this->services()->getPlayerService()->prepareTutorial($player);
+        $this->services()->getPlayerService()->prepareTutorial($player);
         $this->em()->persist($player);
         $this->em()->flush();
 

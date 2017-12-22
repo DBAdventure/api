@@ -36,7 +36,7 @@ class PlayerQuestSubscriber implements EventSubscriberInterface
 
     public function afterAttack(ActionEvent $event)
     {
-        $messages = $event->getData()['messages'];
+        $messages = &$event->getData()['messages'];
         $target = $event->getTarget();
         if (empty($event->getData()['isDead']) || $target->getSide()->getId() !== Side::NPC) {
             return;
@@ -108,6 +108,6 @@ class PlayerQuestSubscriber implements EventSubscriberInterface
             $playerQuest->setNpcObjects($npcObjects);
         }
 
-        $this->services->getQuestService()->canbeDone($playerQuest);
+        $this->services->getQuestService()->canBeDone($playerQuest, $messages);
     }
 }

@@ -213,7 +213,7 @@ form:
   weight: "Weight"
   gainZeni: "Gain zeni"
   gainBattlePoints: "Gain battle points"
-  teleport: "Teleport on"
+  teleport: "Teleport on & message"
   on:
     completed: "On completed"
     finished: "On finished"

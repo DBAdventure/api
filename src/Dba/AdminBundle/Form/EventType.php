@@ -18,6 +18,14 @@ class EventType extends AbstractType
     {
         $builder
             ->add(
+                'message',
+                Type\TextareaType::class,
+                [
+                    'label' => 'form.message',
+                    'required' => false,
+                ]
+            )
+            ->add(
                 'map',
                 EntityType::class,
                 [
@@ -42,14 +50,16 @@ class EventType extends AbstractType
                 'x',
                 Type\IntegerType::class,
                 [
-                    'label' => 'form.x'
+                    'label' => 'form.x',
+                    'required' => false,
                 ]
             )
             ->add(
                 'y',
                 Type\IntegerType::class,
                 [
-                    'label' => 'form.y'
+                    'label' => 'form.y',
+                    'required' => false,
                 ]
             );
     }

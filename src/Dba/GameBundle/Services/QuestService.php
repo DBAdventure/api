@@ -15,9 +15,14 @@ class QuestService extends BaseService
      *
      * @param Player $player Player who cause the event
      * @param array $event Quest Event
+     * @param array $messages Array of Messages
      */
-    public function runEvent(Player $player, array $event)
+    public function runEvent(Player $player, array $event, array &$messages = [])
     {
+        if (!empty($event['message'])) {
+            $messages[] = $event['message'];
+        }
+
         if (!empty($event['x'])) {
             $player->setX($event['x']);
         }
@@ -30,6 +35,9 @@ class QuestService extends BaseService
             $map = $this->repos()->getMapRepository()->findOneById($event['map']);
             if ($map->getId() !== Map::TUTORIAL && !$map->isTutorial()) {
                 $player->setMap($map);
+                if (empty($event['y']) && empty($event['x'])) {
+                    $this->services()->getPlayerService()->respawn($player, true);
+                }
             }
         }
     }
@@ -38,10 +46,11 @@ class QuestService extends BaseService
      * Check if quest can be Done
      *
      * @param PlayerQuest $playerQuest Player Quest
+     * @param array $messages Array of Messages
      *
      * @return boolean
      */
-    public function canBeDone(PlayerQuest $playerQuest)
+    public function canBeDone(PlayerQuest $playerQuest, array &$messages = [])
     {
         $quest = $playerQuest->getQuest();
         $canBeDone = true;
@@ -85,7 +94,7 @@ class QuestService extends BaseService
         }
 
         if ($canBeDone) {
-            $this->runEvent($playerQuest->getPlayer(), $quest->getOnCompleted());
+            $this->runEvent($playerQuest->getPlayer(), $quest->getOnCompleted(), $messages);
         }
 
         return [$canBeDone, $playerObjectsNeeded];

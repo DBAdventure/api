@@ -156,7 +156,6 @@ class MapController extends BaseController
         $mapRepo = $this->repos()->getMapRepository();
         $borders = $mapRepo->findPlayerBorders($this->getUser());
 
-        $this->services()->getPlayerService()->prepareTutorial($this->getUser());
         return [
             'map' => $this->getMap($mapRepo),
             'borders' => $borders,
