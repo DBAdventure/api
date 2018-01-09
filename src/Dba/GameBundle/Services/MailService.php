@@ -28,10 +28,9 @@ class MailService extends BaseService
             )
         );
 
-        $message = Swift_Message::newInstance()
-                 ->setSubject($mail->getSubject())
-                 ->setFrom(self::EMAIL_NO_REPLY)
-                 ->setTo($mail->getPlayer()->getEmail());
+        $message = new Swift_Message($mail->getSubject());
+        $message->setFrom(self::EMAIL_NO_REPLY)
+            ->setTo($mail->getPlayer()->getEmail());
         $message->setBody(
             $content,
             'text/html'
