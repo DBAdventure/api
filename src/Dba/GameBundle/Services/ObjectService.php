@@ -198,7 +198,7 @@ class ObjectService extends BaseService
      */
     public function addZenisOnMap(Map $map, $zenis)
     {
-        $numberItems = (int) ceil(($zenis * 0.5) / 30);
+        $numberItems = (int) ceil(($zenis * 0.7) / 20);
         $positions = $this->repos()->getMapRepository()->findPosition(
             $map,
             1,
