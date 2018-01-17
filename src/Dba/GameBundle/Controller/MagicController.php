@@ -15,6 +15,17 @@ class MagicController extends BaseController
      */
     public function getSpellsAction()
     {
-        return $this->getUser()->getPlayerSpells();
+        $spells = $this->getUser()->getPlayerSpells()->toArray();
+        usort(
+            $spells,
+            function ($a, $b) {
+                $aReq = $a->getSpell()->getRequirements();
+                $bReq = $b->getSpell()->getRequirements();
+                $aLevel = !empty($aReq['level']) ? $aReq['level'] : 0;
+                $bLevel = !empty($bReq['level']) ? $bReq['level'] : 0;
+                return $aLevel > $bLevel;
+            }
+        );
+        return $spells;
     }
 }
