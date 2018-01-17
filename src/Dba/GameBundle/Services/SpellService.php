@@ -79,6 +79,10 @@ class SpellService extends BaseService
      */
     protected function getMethod($string)
     {
+        if ($string === 'ki' || $string === 'health') {
+            $string .= 'max_';
+        }
+
         return 'get' . str_replace('_', '', ucwords($string, '_'));
     }
 }

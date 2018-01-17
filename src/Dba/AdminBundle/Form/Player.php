@@ -164,6 +164,7 @@ class Player extends AbstractType
             'x',
             'y',
             'zeni',
+            'level',
             'accuracy',
             'agility',
             'strength',

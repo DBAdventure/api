@@ -85,6 +85,14 @@ class BuildingController extends BaseController
 
             case Building::TYPE_MAGIC:
                 $objects = $this->repos()->getSpellRepository()->findByRace($player->getRace());
+                usort(
+                    $objects,
+                    function ($a, $b) {
+                        $aLevel = !empty($a->getRequirements()['level']) ? $a->getRequirements()['level'] : 0;
+                        $bLevel = !empty($b->getRequirements()['level']) ? $b->getRequirements()['level'] : 0;
+                        return $aLevel > $bLevel;
+                    }
+                );
                 $type = 'magic';
                 break;
 
