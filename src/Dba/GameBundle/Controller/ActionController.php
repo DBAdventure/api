@@ -787,7 +787,6 @@ class ActionController extends BaseController
         $player = $this->getUser();
         if ($player->getActionPoints() < Player::SPELL_ACTION ||
             $player->getMap()->getId() != $target->getMap()->getId() ||
-            $player->getId() == $target->getId() ||
             (!empty($playerSpell) && !$this->canMakeAction($player, $target, $playerSpell))
         ) {
             // failed to attack
@@ -818,7 +817,6 @@ class ActionController extends BaseController
         $player = $this->getUser();
         if ($player->getActionPoints() < Player::SPELL_ACTION ||
             $player->getMap()->getId() != $target->getMap()->getId() ||
-            $player->getId() == $target->getId() ||
             (!empty($playerSpell) && !$this->canMakeAction($player, $target, $playerSpell))
         ) {
             // failed to attack
