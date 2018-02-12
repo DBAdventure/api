@@ -1,0 +1,47 @@
+{% extends 'DbaAdminBundle::base.html.twig' %}
+{% import "DbaAdminBundle::default/macros.html.twig" as defaultHelper %}
+
+{% block body %}
+  <h2>{{ ('mail.list') | trans }}</h2>
+
+  {{ defaultHelper.pagination(nbPages, page, 'admin.mail') }}
+
+  <table class="table table-hover table-clickable">
+    <thead>
+      <tr>
+        <th>{{ 'mail.createdAt' | trans }}</th>
+        <th>{{ 'mail.player' | trans }}</th>
+        <th>{{ 'mail.template' | trans }}</th>
+        <th>{{ 'mail.actions' | trans }}</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for mail in mails %}
+        <tr>
+          <td>
+            {{ mail.createdAt | date('Y-m-d H:i:s') }}
+          </td>
+          <td>
+            {{ mail.player.name }}
+          </td>
+          <td>
+            {{ mail.templateName }}
+          </td>
+          <td>
+            <a href="{{ path('admin.mail.view', {"id": mail.id}) }}">
+              <img src="{{ asset('bundles/dbaadmin/images/edit.png') }}" alt="{{ 'edit' | trans }}" />
+            </a>
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  {{ defaultHelper.pagination(nbPages, page, 'admin.mail') }}
+{% endblock %}
+
+{% block javascripts %}
+  <script type="text/javascript">
+    DbaAdmin.clickable();
+  </script>
+{% endblock %}

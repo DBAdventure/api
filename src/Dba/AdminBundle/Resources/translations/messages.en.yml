@@ -23,6 +23,7 @@ admin:
   quest.create: "Create"
   quest.object.list: "List npc object"
   quest.object.create: "Create npc object"
+  mail: "Mail list"
   map:
     create: "Create a new Map"
     max.size: "Actual max size:"
@@ -234,3 +235,11 @@ map:
     name: "Name"
     position: "Position"
     actions: "Actions"
+
+mail:
+  list: "Mail List"
+  createdAt: "Created at"
+  player: "Player"
+  message: "Message sent"
+  template: "Template name"
+  actions: "Actions"

@@ -94,4 +94,11 @@
       <a href="{{ path('admin.generator.image') }}" class="list-group-item">{{ 'admin.generator.image' | trans }}</a>
     </div>
   {% endif %}
+
+  {% if is_granted('ROLE_ADMIN') %}
+    {% set isActive = (currentRoute matches '~^admin\.mail~') %}
+    <a href="{{ path('admin.mail') }}" class="list-group-item{% if isActive %} active{% endif %}">
+      <i class="glyphicon glyphicon-chevron-right"></i>{{ 'admin.mail' | trans }}
+    </a>
+  {% endif %}
 </div>

@@ -1,0 +1,32 @@
+{% extends 'DbaAdminBundle::base.html.twig' %}
+
+{% block body %}
+  <div class="form-horizontal">
+    <div class="form-group">
+      <div class="col-sm-2">
+        {{ 'mail.createdAt' | trans }}
+      </div>
+      <div class="col-sm-10">
+        {{ mail.createdAt | date('Y-m-d H:i:s')}}
+      </div>
+    </div>
+
+    <div class="form-group">
+      <div class="col-sm-2">
+        {{ 'mail.player' | trans }}
+      </div>
+      <div class="col-sm-10">
+        {{ mail.player.name }}
+      </div>
+    </div>
+
+    <div class="form-group">
+      <div class="col-sm-2">
+        {{ 'mail.message' | trans }}
+      </div>
+      <div class="col-sm-10">
+        {{ mail.messageSent | raw }}
+      </div>
+    </div>
+  </div>
+{% endblock %}
