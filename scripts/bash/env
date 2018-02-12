@@ -1,0 +1,6 @@
+#!/bin/bash
+#!/bin/bash
+
+COMPOSER_BIN=${COMPOSER_BIN:-`which composer`}
+PLATFORM_ENV=${PLATFORM_ENV:-dev}
+SF_CONSOLE=${SF_CONSOLE:-"${PROJECT_DIR}/bin/console"}
