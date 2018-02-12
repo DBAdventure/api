@@ -14,7 +14,7 @@ env:
 
 before_install:
   - cp phpunit.xml.dist phpunit.xml
-  - cp app/parameters.travis.yml app/parameters.yml
+  - cp app/config/parameters.travis.yml app/config/parameters.yml
   - psql -U postgres dba_test < var/sql/schema.sql
   - psql -U postgres dba_test < var/sql/data.sql
   - psql -U postgres dba_test < var/sql/todo.sql
