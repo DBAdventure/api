@@ -23,6 +23,7 @@ You must have created a [pgsql database][3].
 ```
 $ ./scripts/setup.sh
 $ psql -U DB_USER -W DB_NAME < var/sql/schema.sql
+$ psql -U DB_USER -W DB_NAME < var/sql/map.sql
 $ psql -U DB_USER -W DB_NAME < var/sql/data.sql
 $ psql -U DB_USER -W DB_NAME < var/sql/todo.sql # Currently spells 
 ```
