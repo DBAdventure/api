@@ -17,6 +17,7 @@ function project_setup() {
 function assets_setup() {
     display "Install assets"
     ${SF_CONSOLE} assets:install --env=${ENV} --relative
+    ${SF_CONSOLE} assetic:dump --env=${ENV}
 }
 
 

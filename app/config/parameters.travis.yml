@@ -4,8 +4,8 @@
 parameters:
     database_host: 127.0.0.1
     database_port: ~
-    database_name: symfony
-    database_user: root
+    database_name: dba_test
+    database_user: postgres
     database_password: ~
 
     mailer_transport: smtp

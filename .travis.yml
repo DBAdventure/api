@@ -1,0 +1,26 @@
+language: php
+
+php:
+  - 7.0
+
+services:
+  - postgresql
+
+before_script:
+  - psql -c 'CREATE DATABASE dba_test; -U postgres'
+
+env:
+  - PLATFORM_ENV=test
+
+before_install:
+  - cp phpunit.xml.dist phpunit.xml
+  - cp app/config.parameters.travis.yml app/config.parameters.yml
+  - psql -U postgres dba_test < var/sql/schema.sql
+  - psql -U postgres dba_test < var/sql/data.sql
+  - psql -U postgres dba_test < var/sql/todo.sql
+
+install:
+  - ./scripts/setup.sh
+  - ./bin/console doctrine:schema:update --force
+
+script: ./scripts/tests.sh
