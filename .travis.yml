@@ -12,7 +12,7 @@ env:
 before_install:
   - cp phpunit.xml.dist phpunit.xml
   - cp app/config/parameters.travis.yml app/config/parameters.yml
-  - psql -c 'CREATE DATABASE dba_test; -U postgres'
+  - psql -U postgres -c 'CREATE DATABASE dba_test;'
   - psql -U postgres dba_test < var/sql/schema.sql
   - psql -U postgres dba_test < var/sql/data.sql
   - psql -U postgres dba_test < var/sql/todo.sql
