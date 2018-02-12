@@ -18,6 +18,8 @@ use Symfony\Component\Validator\Constraints as Assert;
  * Player
  *
  * @ORM\Table(name="player", uniqueConstraints={
+              @ORM\UniqueConstraint(name="player_username", columns={"username"}),
+              @ORM\UniqueConstraint(name="player_email", columns={"email"}),
               @ORM\UniqueConstraint(name="player_username_canonical", columns={"username_canonical"}),
               @ORM\UniqueConstraint(name="player_email_canonical", columns={"email_canonical"}),
               @ORM\UniqueConstraint(name="player_name", columns={"name"}),

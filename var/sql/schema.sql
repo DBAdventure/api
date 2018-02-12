@@ -376,7 +376,8 @@ CREATE TABLE map (
     id integer NOT NULL,
     name character varying(80) NOT NULL,
     max_x integer NOT NULL,
-    max_y integer NOT NULL
+    max_y integer NOT NULL,
+    type INT DEFAULT 0 NOT NULL
 );
 
 
@@ -422,7 +423,8 @@ CREATE TABLE map_object (
     number integer,
     map_object_type_id integer NOT NULL,
     map_id integer NOT NULL,
-    object_id integer
+    object_id integer,
+    extra json DEFAULT NULL
 );
 
 
@@ -934,13 +936,12 @@ ALTER SEQUENCE player_spell_effect_id_seq OWNED BY player_spell_effect.id;
 
 
 --
--- Name: npc_object; Type: TABLE; Schema: public; Owner: dba
+-- Name: npc_object; Type: TABLE; Schema: public
 --
 
 CREATE TABLE npc_object (
     id integer NOT NULL,
     name character varying(80) NOT NULL,
-    list json NOT NULL,
     luck integer NOT NULL
 );
 
@@ -949,7 +950,7 @@ ALTER TABLE npc_object OWNER TO dba;
 
 
 --
--- Name: npc_object_id_seq; Type: SEQUENCE; Schema: public; Owner: dba
+-- Name: npc_object_id_seq; Type: SEQUENCE; Schema: public
 --
 
 CREATE SEQUENCE npc_object_id_seq
@@ -961,14 +962,14 @@ CREATE SEQUENCE npc_object_id_seq
 
 
 --
--- Name: npc_object_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: dba
+-- Name: npc_object_id_seq; Type: SEQUENCE OWNED BY; Schema: public
 --
 
 ALTER SEQUENCE npc_object_id_seq OWNED BY npc_object.id;
 
 
 --
--- Name: quest; Type: TABLE; Schema: public; Owner: dba
+-- Name: quest; Type: TABLE; Schema: public
 --
 
 CREATE TABLE quest (
@@ -984,12 +985,15 @@ CREATE TABLE quest (
     lifetime integer NOT NULL,
     gain_battle_points integer NOT NULL,
     gain_zeni integer NOT NULL,
-    requirements json NOT NULL
+    requirements json DEFAULT '{}' NOT NULL,
+    on_accepted JSON DEFAULT '{}' NOT NULL,
+    on_completed JSON DEFAULT '{}' NOT NULL,
+    on_finished JSON DEFAULT '{}' NOT NULL
 );
 
 
 --
--- Name: quest_gain_object; Type: TABLE; Schema: public; Owner: dba
+-- Name: quest_gain_object; Type: TABLE; Schema: public
 --
 
 CREATE TABLE quest_gain_object (
@@ -1000,7 +1004,7 @@ CREATE TABLE quest_gain_object (
 
 
 --
--- Name: quest_id_seq; Type: SEQUENCE; Schema: public; Owner: dba
+-- Name: quest_id_seq; Type: SEQUENCE; Schema: public
 --
 
 CREATE SEQUENCE quest_id_seq
@@ -1012,25 +1016,25 @@ CREATE SEQUENCE quest_id_seq
 
 
 --
--- Name: quest_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: dba
+-- Name: quest_id_seq; Type: SEQUENCE OWNED BY; Schema: public
 --
 
 ALTER SEQUENCE quest_id_seq OWNED BY quest.id;
 
 
 --
--- Name: quest_npc; Type: TABLE; Schema: public; Owner: dba
+-- Name: quest_npc; Type: TABLE; Schema: public
 --
 
 CREATE TABLE quest_npc (
     quest_id integer NOT NULL,
-    object_id integer NOT NULL,
+    race_id integer NOT NULL,
     number integer NOT NULL
 );
 
 
 --
--- Name: quest_npc_object; Type: TABLE; Schema: public; Owner: dba
+-- Name: quest_npc_object; Type: TABLE; Schema: public
 --
 
 CREATE TABLE quest_npc_object (
@@ -1041,13 +1045,37 @@ CREATE TABLE quest_npc_object (
 
 
 --
--- Name: quest_object; Type: TABLE; Schema: public; Owner: dba
+-- Name: quest_object; Type: TABLE; Schema: public
 --
 
 CREATE TABLE quest_object (
     quest_id integer NOT NULL,
     object_id integer NOT NULL,
     number integer NOT NULL
+);
+
+
+--
+-- Name: npc_object_race; Type: TABLE; Schema: public
+--
+
+CREATE TABLE npc_object_race (
+    npc_object_id integer NOT NULL,
+    race_id integer NOT NULL
+);
+
+
+--
+-- Name: player_quest; Type: TABLE; Schema: public
+--
+
+CREATE TABLE player_quest (
+    player_id integer NOT NULL,
+    quest_id integer NOT NULL,
+    status integer NOT NULL,
+    created_at timestamp(0) without time zone NOT NULL,
+    npc_objects JSON NOT NULL,
+    npcs JSON NOT NULL
 );
 
 
@@ -1215,7 +1243,7 @@ ALTER TABLE ONLY player_spell_effect ALTER COLUMN id SET DEFAULT nextval('player
 
 
 --
--- Name: quest id; Type: DEFAULT; Schema: public; Owner: dba
+-- Name: quest id; Type: DEFAULT; Schema: public
 --
 
 ALTER TABLE ONLY quest ALTER COLUMN id SET DEFAULT nextval('quest_id_seq'::regclass);
@@ -1446,7 +1474,7 @@ ALTER TABLE ONLY player_spell_effect
 
 
 --
--- Name: quest_gain_object quest_gain_object_pkey; Type: CONSTRAINT; Schema: public; Owner: dba
+-- Name: quest_gain_object quest_gain_object_pkey; Type: CONSTRAINT; Schema: public
 --
 
 ALTER TABLE ONLY quest_gain_object
@@ -1454,7 +1482,7 @@ ALTER TABLE ONLY quest_gain_object
 
 
 --
--- Name: quest_npc_object quest_npc_object_pkey; Type: CONSTRAINT; Schema: public; Owner: dba
+-- Name: quest_npc_object quest_npc_object_pkey; Type: CONSTRAINT; Schema: public
 --
 
 ALTER TABLE ONLY quest_npc_object
@@ -1462,15 +1490,15 @@ ALTER TABLE ONLY quest_npc_object
 
 
 --
--- Name: quest_npc quest_npc_pkey; Type: CONSTRAINT; Schema: public; Owner: dba
+-- Name: quest_npc quest_npc_pkey; Type: CONSTRAINT; Schema: public
 --
 
 ALTER TABLE ONLY quest_npc
-    ADD CONSTRAINT quest_npc_pkey PRIMARY KEY (quest_id, object_id);
+    ADD CONSTRAINT quest_npc_pkey PRIMARY KEY (quest_id, race_id);
 
 
 --
--- Name: quest_object quest_object_pkey; Type: CONSTRAINT; Schema: public; Owner: dba
+-- Name: quest_object quest_object_pkey; Type: CONSTRAINT; Schema: public
 --
 
 ALTER TABLE ONLY quest_object
@@ -1478,7 +1506,7 @@ ALTER TABLE ONLY quest_object
 
 
 --
--- Name: quest quest_pkey; Type: CONSTRAINT; Schema: public; Owner: dba
+-- Name: quest quest_pkey; Type: CONSTRAINT; Schema: public
 --
 
 ALTER TABLE ONLY quest
@@ -1486,7 +1514,7 @@ ALTER TABLE ONLY quest
 
 
 --
--- Name: npc_object id; Type: DEFAULT; Schema: public; Owner: dba
+-- Name: npc_object id; Type: DEFAULT; Schema: public
 --
 
 ALTER TABLE ONLY npc_object ALTER COLUMN id SET DEFAULT nextval('npc_object_id_seq'::regclass);
@@ -1518,6 +1546,57 @@ CREATE INDEX inbox_sender_id ON inbox USING btree (sender_id);
 --
 
 CREATE INDEX guild_player_guild ON guild_player USING btree (guild_id);
+
+
+--
+-- Name: idx_fc65835199e6f5df; Type: INDEX; Schema: public
+--
+
+CREATE INDEX idx_fc65835199e6f5df ON player_quest (player_id);
+
+--
+-- Name: idx_fc658351209e9ef4; Type: INDEX; Schema: public
+--
+
+CREATE INDEX idx_fc658351209e9ef4 ON player_quest (quest_id);
+
+--
+-- Name: idx_43daa8899b267ee1; Type: INDEX; Schema: public
+--
+
+CREATE INDEX idx_43daa8899b267ee1 ON npc_object_race (npc_object_id);
+
+--
+-- Name: idx_43daa8896e59d40d; Type: INDEX; Schema: public
+--
+
+CREATE INDEX idx_43daa8896e59d40d ON npc_object_race (race_id);
+--
+-- Name: map_box_unique
+--
+
+CREATE UNIQUE INDEX map_box_unique ON map_box (map_id, x, y);
+
+
+--
+-- Name: map_image_file_file
+--
+
+CREATE UNIQUE INDEX map_image_file_file ON map_image_file (file);
+
+
+--
+-- Name: player_username
+--
+
+CREATE UNIQUE INDEX player_username ON player (username);
+
+
+--
+-- Name: player_email
+--
+
+CREATE UNIQUE INDEX player_email ON player (email);
 
 
 --
@@ -1578,20 +1657,11 @@ CREATE INDEX idx_75407dabde12ab56 ON guild USING btree (created_by);
 CREATE INDEX building_map_id ON building USING btree (map_id);
 
 
---
--- Name: building_name;
-
-
---
-
-CREATE INDEX building_name ON building USING btree (name);
-
 
 --
 -- Name: event_type_name;
 
 
---
 
 CREATE INDEX event_type_name ON event_type USING btree (name);
 
@@ -1648,15 +1718,6 @@ CREATE INDEX map_image_id ON map_box USING btree (map_image_id);
 --
 
 CREATE UNIQUE INDEX map_image_name ON map_image USING btree (name);
-
-
---
--- Name: map_name;
-
-
---
-
-CREATE UNIQUE INDEX map_name ON map USING btree (name);
 
 
 --
@@ -1913,63 +1974,63 @@ CREATE INDEX dragon_ball_player_id ON dragon_ball USING btree (player_id);
 
 
 --
--- Name: quest_gain_object_object_id; Type: INDEX; Schema: public; Owner: dba
+-- Name: quest_gain_object_object_id; Type: INDEX; Schema: public
 --
 
 CREATE INDEX quest_gain_object_object_id ON quest_gain_object USING btree (object_id);
 
 
 --
--- Name: quest_gain_object_quest_id; Type: INDEX; Schema: public; Owner: dba
+-- Name: quest_gain_object_quest_id; Type: INDEX; Schema: public
 --
 
 CREATE INDEX quest_gain_object_quest_id ON quest_gain_object USING btree (quest_id);
 
 
 --
--- Name: quest_map_id; Type: INDEX; Schema: public; Owner: dba
+-- Name: quest_map_id; Type: INDEX; Schema: public
 --
 
 CREATE INDEX quest_map_id ON quest USING btree (map_id);
 
 
 --
--- Name: quest_npc_npc_id; Type: INDEX; Schema: public; Owner: dba
+-- Name: quest_npc_npc_id; Type: INDEX; Schema: public
 --
 
-CREATE INDEX quest_npc_npc_id ON quest_npc USING btree (object_id);
+CREATE INDEX quest_npc_race_id ON quest_npc USING btree (race_id);
 
 
 --
--- Name: quest_npc_object_npc_object_id; Type: INDEX; Schema: public; Owner: dba
+-- Name: quest_npc_object_npc_object_id; Type: INDEX; Schema: public
 --
 
 CREATE INDEX quest_npc_object_npc_object_id ON quest_npc_object USING btree (npc_object_id);
 
 
 --
--- Name: quest_npc_object_quest_id; Type: INDEX; Schema: public; Owner: dba
+-- Name: quest_npc_object_quest_id; Type: INDEX; Schema: public
 --
 
 CREATE INDEX quest_npc_object_quest_id ON quest_npc_object USING btree (quest_id);
 
 
 --
--- Name: quest_npc_quest_id; Type: INDEX; Schema: public; Owner: dba
+-- Name: quest_npc_quest_id; Type: INDEX; Schema: public
 --
 
 CREATE INDEX quest_npc_quest_id ON quest_npc USING btree (quest_id);
 
 
 --
--- Name: quest_object_object_id; Type: INDEX; Schema: public; Owner: dba
+-- Name: quest_object_object_id; Type: INDEX; Schema: public
 --
 
 CREATE INDEX quest_object_object_id ON quest_object USING btree (object_id);
 
 
 --
--- Name: quest_object_quest_id; Type: INDEX; Schema: public; Owner: dba
+-- Name: quest_object_quest_id; Type: INDEX; Schema: public
 --
 
 CREATE INDEX quest_object_quest_id ON quest_object USING btree (quest_id);
@@ -2341,7 +2402,7 @@ ALTER TABLE ONLY dragon_ball
 
 
 --
--- Name: npc_object npc_object_pkey; Type: CONSTRAINT; Schema: public; Owner: dba
+-- Name: npc_object npc_object_pkey; Type: CONSTRAINT; Schema: public
 --
 
 ALTER TABLE ONLY npc_object
@@ -2349,7 +2410,23 @@ ALTER TABLE ONLY npc_object
 
 
 --
--- Name: quest fk_4317f81753c55f64; Type: FK CONSTRAINT; Schema: public; Owner: dba
+-- Name: player_quest player_quest_pkey; Type: CONSTRAINT; Schema: public
+--
+
+ALTER TABLE ONLY player_quest
+    ADD CONSTRAINT player_quest_pkey PRIMARY KEY (player_id, quest_id);
+
+
+--
+-- Name: npc_object_race npc_object_race_pkey; Type: CONSTRAINT; Schema: public
+--
+
+ALTER TABLE ONLY npc_object_race
+    ADD CONSTRAINT npc_object_race_pkey PRIMARY KEY (npc_object_id, race_id);
+
+
+--
+-- Name: quest fk_4317f81753c55f64; Type: FK CONSTRAINT; Schema: public
 --
 
 ALTER TABLE ONLY quest
@@ -2357,7 +2434,7 @@ ALTER TABLE ONLY quest
 
 
 --
--- Name: quest_object fk_5147c91a209e9ef4; Type: FK CONSTRAINT; Schema: public; Owner: dba
+-- Name: quest_object fk_5147c91a209e9ef4; Type: FK CONSTRAINT; Schema: public
 --
 
 ALTER TABLE ONLY quest_object
@@ -2365,7 +2442,7 @@ ALTER TABLE ONLY quest_object
 
 
 --
--- Name: quest_object fk_5147c91a232d562b; Type: FK CONSTRAINT; Schema: public; Owner: dba
+-- Name: quest_object fk_5147c91a232d562b; Type: FK CONSTRAINT; Schema: public
 --
 
 ALTER TABLE ONLY quest_object
@@ -2373,7 +2450,7 @@ ALTER TABLE ONLY quest_object
 
 
 --
--- Name: quest_npc fk_97a8b624209e9ef4; Type: FK CONSTRAINT; Schema: public; Owner: dba
+-- Name: quest_npc fk_97a8b624209e9ef4; Type: FK CONSTRAINT; Schema: public
 --
 
 ALTER TABLE ONLY quest_npc
@@ -2381,15 +2458,15 @@ ALTER TABLE ONLY quest_npc
 
 
 --
--- Name: quest_npc fk_97a8b624232d562b; Type: FK CONSTRAINT; Schema: public; Owner: dba
+-- Name: quest_npc fk_97a8b624232d562b; Type: FK CONSTRAINT; Schema: public
 --
 
 ALTER TABLE ONLY quest_npc
-    ADD CONSTRAINT fk_97a8b624232d562b FOREIGN KEY (object_id) REFERENCES race(id) ON DELETE CASCADE;
+    ADD CONSTRAINT fk_97a8b624232d562b FOREIGN KEY (race_id) REFERENCES race(id) ON DELETE CASCADE;
 
 
 --
--- Name: quest_npc_object fk_c63facc2209e9ef4; Type: FK CONSTRAINT; Schema: public; Owner: dba
+-- Name: quest_npc_object fk_c63facc2209e9ef4; Type: FK CONSTRAINT; Schema: public
 --
 
 ALTER TABLE ONLY quest_npc_object
@@ -2397,12 +2474,64 @@ ALTER TABLE ONLY quest_npc_object
 
 
 --
--- Name: quest_npc_object fk_c63facc29b267ee1; Type: FK CONSTRAINT; Schema: public; Owner: dba
+-- Name: quest_npc_object fk_c63facc29b267ee1; Type: FK CONSTRAINT; Schema: public
 --
 
 ALTER TABLE ONLY quest_npc_object
     ADD CONSTRAINT fk_c63facc29b267ee1 FOREIGN KEY (npc_object_id) REFERENCES npc_object(id) ON DELETE CASCADE;
 
+
+--
+-- Name: quest_gain_object fk_e24ede89209e9ef4; Type: FK CONSTRAINT; Schema: public
+--
+
+ALTER TABLE ONLY quest_gain_object
+    ADD CONSTRAINT fk_e24ede89209e9ef4 FOREIGN KEY (quest_id) REFERENCES quest (id) ON DELETE CASCADE;
+
+
+--
+-- Name: quest_gain_object fk_e24ede89232d562b; Type: FK CONSTRAINT; Schema: public
+--
+
+
+ALTER TABLE ONLY quest_gain_object
+    ADD CONSTRAINT fk_e24ede89232d562b FOREIGN KEY (object_id) REFERENCES object (id) ON DELETE CASCADE;
+
+
+--
+-- Name: player_quest fk_fc65835199e6f5df; Type: FK CONSTRAINT; Schema: public
+--
+
+
+ALTER TABLE ONLY player_quest
+    ADD CONSTRAINT fk_fc65835199e6f5df FOREIGN KEY (player_id) REFERENCES player (id) ON DELETE CASCADE;
+
+
+--
+-- Name: player_quest fk_fc658351209e9ef4; Type: FK CONSTRAINT; Schema: public
+--
+
+
+ALTER TABLE ONLY player_quest
+    ADD CONSTRAINT fk_fc658351209e9ef4 FOREIGN KEY (quest_id) REFERENCES quest (id) ON DELETE CASCADE;
+
+
+--
+-- Name: npc_object_race fk_43daa8899b267ee1; Type: FK CONSTRAINT; Schema: public
+--
+
+
+ALTER TABLE ONLY npc_object_race
+    ADD CONSTRAINT fk_43daa8899b267ee1 FOREIGN KEY (npc_object_id) REFERENCES npc_object (id) ON DELETE CASCADE;
+
+
+--
+-- Name: npc_object_race fk_43daa8896e59d40d; Type: FK CONSTRAINT; Schema: public
+--
+
+
+ALTER TABLE ONLY npc_object_race
+    ADD CONSTRAINT fk_43daa8896e59d40d FOREIGN KEY (race_id) REFERENCES race (id) ON DELETE CASCADE NOT DEFERRABLE INITIALLY IMMEDIATE;
 
 --
 -- PostgreSQL database dump complete
