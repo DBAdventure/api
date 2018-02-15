@@ -1,4 +1,4 @@
-# DBAdventure
+# DBAdventure [![Build Status](https://travis-ci.org/DBAdventure/api.svg?branch=master)](https://travis-ci.org/DBAdventure/api)
 
 DBAdventure, the backend api!
 
