@@ -49,8 +49,7 @@ class InventoryControllerTest extends BaseTestCase
 
         $this->client->request('POST', '/api/inventory/use/4');
         $json = $this->assertJsonResponse($this->client->getResponse());
-        $this->assertNotEquals($x, $player->getX());
-        $this->assertNotEquals($y, $player->getY());
+        $this->assertNotEquals($x . '/' . $y, $player->getX() . '/' . $player->getY());
         $this->assertNotEquals($mapId, $player->getMap()->getId());
         $this->assertEquals('inventory.object.used', $json->message);
         $this->assertEquals(1, $json->parameters->number);
