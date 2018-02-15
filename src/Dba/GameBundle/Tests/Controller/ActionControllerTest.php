@@ -522,8 +522,8 @@ class ActionControllerTest extends BaseTestCase
         $player = $this->login();
         $player->setX(40);
         $player->setY(40);
-        $player->setAccuracy(5);
-        $player->setStrength(5);
+        $player->setAccuracy(100);
+        $player->setStrength(100);
         $player->setMap($this->repos()->getMapRepository()->getDefaultMap());
         $side = $this->repos()->getSideRepository()->findOneById(Side::GOOD);
         $player->setSide($side);
@@ -538,12 +538,11 @@ class ActionControllerTest extends BaseTestCase
         $this->em()->persist($player);
         $this->em()->flush();
 
-        $this->executeActionKillNTimes(
-            $player,
-            $enemy,
-            '/api/action/attack/' . $enemy->getId() . '/betray'
-        );
+        $this->client->request('POST', '/api/action/attack/' . $enemy->getId() . '/betray');
+        $this->assertJsonResponse($this->client->getResponse());
 
+        $this->em()->refresh($player);
+        $this->em()->refresh($enemy);
         $this->assertNotEquals(
             $this->repos()->getMapRepository()->getDefaultMap(),
             $enemy->getMap()->getId()
@@ -577,6 +576,7 @@ class ActionControllerTest extends BaseTestCase
         $this->client->request('POST', '/api/action/attack/' . $enemy->getId());
         $this->assertJsonResponse($this->client->getResponse());
 
+        $this->em()->refresh($enemy);
         $this->assertNotEquals(40, $enemy->getX());
         $this->assertNotEquals(40, $enemy->getY());
         $this->assertNotEquals(
@@ -1415,19 +1415,5 @@ class ActionControllerTest extends BaseTestCase
         $this->em()->flush();
 
         return $mapObject;
-    }
-
-    protected function executeActionKillNTimes($player, $enemy, $path, $times = 10)
-    {
-        for ($i = 0; $i < $times; $i ++) {
-            $this->client->request('POST', $path);
-            $json = $this->assertJsonResponse($this->client->getResponse());
-
-            if (!empty($json->isDead)) {
-                break;
-            }
-        }
-        $this->em()->refresh($player);
-        $this->em()->refresh($enemy);
     }
 }
