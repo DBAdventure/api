@@ -16,13 +16,10 @@
     <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('apple-touch-icon-180x180.png') }}" />
     <title>{% block title %}DBAdventure{% endblock %}</title>
 
-    {% stylesheets '@DbaAdminBundle/Resources/assets/css/shared/*.scss' filter="scssphp" output="/admin/css/dbadventure.css" %}
-      <link rel="stylesheet" href="{{ asset_url }}" type="text/css" />
-    {% endstylesheets %}
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous"/>
 
-    {% stylesheets '@DbaAdminBundle/Resources/assets/css/admin.scss' filter="scssphp" output="/admin/css/admin.css" %}
-      <link rel="stylesheet" href="{{ asset_url }}" type="text/css" />
-    {% endstylesheets %}
+    <link rel="stylesheet" href="/admin/css/dbadventure.css" type="text/css" />
+    <link rel="stylesheet" href="/admin/css/admin.css" type="text/css" />
   </head>
   <body id="admin">
     <div id="main">

@@ -24,10 +24,3 @@ framework:
   assets: ~
   php_errors:
     log: true
-
-assetic:
-  debug:          '%kernel.debug%'
-  use_controller: '%kernel.debug%'
-  filters:
-    scssphp:
-      formatter: 'Leafo\ScssPhp\Formatter\Compressed'

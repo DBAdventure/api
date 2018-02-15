@@ -160,6 +160,7 @@ choice:
   character: '-> Choice your character'
   group: '-> Choice group'
   clothes: '-> Choice his clothes'
+  appearance: "Choice Appearance"
 
 bonus:
   percent:

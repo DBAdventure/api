@@ -139,7 +139,7 @@ class Player extends AbstractType
                     'class' => Entity\Map::class,
                     'choice_label' => 'name',
                     'label' => 'form.map',
-                    'choice_translation_domain' => true
+                    'choice_translation_domain' => false
                 ]
             );
 

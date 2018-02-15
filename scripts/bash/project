@@ -17,7 +17,6 @@ function project_setup() {
 function assets_setup() {
     display "Install assets"
     ${SF_CONSOLE} assets:install --env=${ENV} --relative
-    ${SF_CONSOLE} assetic:dump --env=${ENV}
 }
 
 
@@ -28,7 +27,6 @@ function cache_setup() {
     pushd ${PROJECT_DIR}
     VERSION=`git rev-parse --short HEAD`
     sed -i.bak -r "s/^(\s*)(assets_version: *)/\1assets_version: ${VERSION}/" app/config/parameters.yml
-    ${SF_CONSOLE} assetic:dump --env=${ENV}
     ${SF_CONSOLE} cache:clear --env=${ENV}
     ${SF_CONSOLE} cache:warmup --env=${ENV}
     popd

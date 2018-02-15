@@ -1,0 +1,84 @@
+#admin #main {
+  width: auto;
+  background-image: none;
+  background-color: #fff;
+}
+#admin #menu {
+  float: left;
+  width: 280px;
+  margin-top: 15px;
+}
+#admin #menu div {
+  background: none;
+  width: auto;
+}
+#admin #menu div:after {
+  background: none;
+}
+#admin #content {
+  margin-left: 300px;
+  width: auto;
+  background-image: none;
+  background-color: #fff;
+  margin-top: 15px;
+}
+#admin #content .body {
+  display: table;
+}
+#admin #content .map-generator {
+  color: white;
+  display: block;
+  height: 800px;
+  overflow: auto;
+  padding: 0;
+  text-align: center;
+}
+#admin #content .map-generator td {
+  border: 1px solid black;
+}
+#admin #content .map-generator img:hover {
+  border: 1px solid red;
+  cursor: pointer;
+}
+#admin #content .map-generator img.selected {
+  border: 1px dashed yellow;
+}
+
+#save-map-form {
+  position: fixed;
+  background: white;
+  z-index: 999;
+  width: 300px;
+}
+
+.list-group.list-group-root {
+  padding: 0;
+  overflow: hidden;
+  border-top-width: 0;
+}
+.list-group.list-group-root .list-group {
+  margin-bottom: 0;
+}
+.list-group.list-group-root .list-group-item {
+  border-radius: 0;
+  border-width: 1px 0 0 0;
+}
+.list-group.list-group-root .list-group-item .glyphicon {
+  margin-right: 5px;
+}
+.list-group.list-group-root .list-group-item .list-group {
+  margin-left: 15px;
+}
+.list-group.list-group-root > .list-group-item:first-child:first-child {
+  border-top-width: 0;
+}
+.list-group.list-group-root > .list-group > .list-group-item {
+  padding-left: 30px;
+}
+.list-group.list-group-root > .list-group > .list-group > .list-group-item {
+  padding-left: 45px;
+}
+
+.table-clickable {
+  cursor: pointer;
+}
