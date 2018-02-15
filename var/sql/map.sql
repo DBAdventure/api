@@ -6,8 +6,6 @@
 -- Dumped by pg_dump version 9.6.6
 
 SET statement_timeout = 0;
-SET lock_timeout = 0;
-SET idle_in_transaction_session_timeout = 0;
 SET client_encoding = 'UTF8';
 SET standard_conforming_strings = on;
 SET check_function_bodies = false;
@@ -32468,4 +32466,3 @@ SELECT pg_catalog.setval('map_image_id_seq', 165, true);
 --
 -- PostgreSQL database dump complete
 --
-
