@@ -5,7 +5,7 @@ DBAdventure, the backend api!
 
 ## Requirements
 
-  * PHP 7.1.3 or higher;
+  * PHP 7.0 or higher;
   * PDO-PgSQL PHP extension enabled;
   * and the [usual Symfony application requirements][1].
 
