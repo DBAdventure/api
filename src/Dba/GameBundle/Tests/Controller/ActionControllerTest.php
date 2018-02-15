@@ -487,8 +487,8 @@ class ActionControllerTest extends BaseTestCase
     public function testAttackKillGood()
     {
         $player = $this->login();
-        $player->setX(5);
-        $player->setY(5);
+        $player->setX(40);
+        $player->setY(40);
         $player->setAccuracy(100);
         $player->setStrength(100);
         $player->setMap($this->repos()->getMapRepository()->getDefaultMap());
@@ -496,8 +496,8 @@ class ActionControllerTest extends BaseTestCase
         $player->setSide($side);
 
         $enemy = $this->createPlayer('bast');
-        $enemy->setX(5);
-        $enemy->setY(5);
+        $enemy->setX(40);
+        $enemy->setY(40);
         $enemy->setHealth(10);
         $enemy->setMap($this->repos()->getMapRepository()->getDefaultMap());
         $side = $this->repos()->getSideRepository()->findOneById(Side::GOOD);
@@ -506,12 +506,10 @@ class ActionControllerTest extends BaseTestCase
         $this->em()->persist($player);
         $this->em()->flush();
 
-        $this->executeActionKillNTimes(
-            $player,
-            $enemy,
-            '/api/action/attack/' . $enemy->getId()
-        );
+        $this->client->request('POST', '/api/action/attack/' . $enemy->getId());
+        $this->assertJsonResponse($this->client->getResponse());
 
+        $this->em()->refresh($enemy);
         $this->assertNotEquals(
             $this->repos()->getMapRepository()->getDefaultMap(),
             $enemy->getMap()->getId()
@@ -522,8 +520,8 @@ class ActionControllerTest extends BaseTestCase
     public function testAttackKillGoodBetray()
     {
         $player = $this->login();
-        $player->setX(5);
-        $player->setY(5);
+        $player->setX(40);
+        $player->setY(40);
         $player->setAccuracy(5);
         $player->setStrength(5);
         $player->setMap($this->repos()->getMapRepository()->getDefaultMap());
@@ -531,8 +529,8 @@ class ActionControllerTest extends BaseTestCase
         $player->setSide($side);
 
         $enemy = $this->createPlayer('bast');
-        $enemy->setX(5);
-        $enemy->setY(5);
+        $enemy->setX(40);
+        $enemy->setY(40);
         $enemy->setHealth(10);
         $enemy->setMap($this->repos()->getMapRepository()->getDefaultMap());
         $enemy->setSide($side);
@@ -557,8 +555,8 @@ class ActionControllerTest extends BaseTestCase
     public function testAttackKillBad()
     {
         $player = $this->login();
-        $player->setX(5);
-        $player->setY(5);
+        $player->setX(40);
+        $player->setY(40);
         $player->setAccuracy(100);
         $player->setStrength(100);
         $player->setMap($this->repos()->getMapRepository()->getDefaultMap());
@@ -566,8 +564,8 @@ class ActionControllerTest extends BaseTestCase
         $player->setSide($side);
 
         $enemy = $this->createPlayer('bast');
-        $enemy->setX(5);
-        $enemy->setY(5);
+        $enemy->setX(40);
+        $enemy->setY(40);
         $enemy->setHealth(10);
         $enemy->setMap($this->repos()->getMapRepository()->getDefaultMap());
         $side = $this->repos()->getSideRepository()->findOneById(Side::BAD);
@@ -576,14 +574,11 @@ class ActionControllerTest extends BaseTestCase
         $this->em()->persist($player);
         $this->em()->flush();
 
-        $this->executeActionKillNTimes(
-            $player,
-            $enemy,
-            '/api/action/attack/' . $enemy->getId()
-        );
+        $this->client->request('POST', '/api/action/attack/' . $enemy->getId());
+        $this->assertJsonResponse($this->client->getResponse());
 
-        $this->assertNotEquals(5, $enemy->getX());
-        $this->assertNotEquals(5, $enemy->getY());
+        $this->assertNotEquals(40, $enemy->getX());
+        $this->assertNotEquals(40, $enemy->getY());
         $this->assertNotEquals(
             $this->repos()->getMapRepository()->getDefaultMap(),
             $enemy->getMap()->getId()
@@ -594,8 +589,8 @@ class ActionControllerTest extends BaseTestCase
     public function testAttackKillBadBetrayAndHeadPrice()
     {
         $player = $this->login();
-        $player->setX(5);
-        $player->setY(5);
+        $player->setX(40);
+        $player->setY(40);
         $player->setAccuracy(100);
         $player->setStrength(100);
         $player->setMap($this->repos()->getMapRepository()->getDefaultMap());
@@ -604,8 +599,8 @@ class ActionControllerTest extends BaseTestCase
         $player->setZeni(10);
 
         $enemy = $this->createPlayer('bast');
-        $enemy->setX(5);
-        $enemy->setY(5);
+        $enemy->setX(40);
+        $enemy->setY(40);
         $enemy->setHealth(10);
         $enemy->setHeadPrice(100);
         $enemy->setMap($this->repos()->getMapRepository()->getDefaultMap());
@@ -615,12 +610,11 @@ class ActionControllerTest extends BaseTestCase
         $this->em()->persist($player);
         $this->em()->flush();
 
-        $this->executeActionKillNTimes(
-            $player,
-            $enemy,
-            '/api/action/attack/' . $enemy->getId() . '/betray'
-        );
+        $this->client->request('POST', '/api/action/attack/' . $enemy->getId() . '/betray');
+        $this->assertJsonResponse($this->client->getResponse());
 
+        $this->em()->refresh($player);
+        $this->em()->refresh($enemy);
         $this->assertNotEquals(
             $this->repos()->getMapRepository()->getDefaultMap(),
             $enemy->getMap()->getId()

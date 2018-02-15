@@ -16,6 +16,7 @@ security:
       security: false
 
     main:
+      logout_on_user_change: true
       anonymous: true
       provider: user_db
       json_login:

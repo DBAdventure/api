@@ -57,3 +57,7 @@ services:
     arguments: ['@security.token_storage', '@doctrine.orm.entity_manager']
     tags:
       - { name: kernel.event_listener, event: kernel.controller, method: onCoreController }
+
+  Dba\GameBundle\Command\:
+    resource: '../../../../../src/Dba/GameBundle/Command/*'
+    tags: ['console.command']
