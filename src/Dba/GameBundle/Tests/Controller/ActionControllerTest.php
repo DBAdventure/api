@@ -506,10 +506,12 @@ class ActionControllerTest extends BaseTestCase
         $this->em()->persist($player);
         $this->em()->flush();
 
-        $this->client->request('POST', '/api/action/attack/' . $enemy->getId());
-        $this->assertJsonResponse($this->client->getResponse());
+        $this->executeActionKillNTimes(
+            $player,
+            $enemy,
+            '/api/action/attack/' . $enemy->getId()
+        );
 
-        $this->em()->refresh($enemy);
         $this->assertNotEquals(
             $this->repos()->getMapRepository()->getDefaultMap(),
             $enemy->getMap()->getId()
@@ -538,11 +540,12 @@ class ActionControllerTest extends BaseTestCase
         $this->em()->persist($player);
         $this->em()->flush();
 
-        $this->client->request('POST', '/api/action/attack/' . $enemy->getId() . '/betray');
-        $this->assertJsonResponse($this->client->getResponse());
+        $this->executeActionKillNTimes(
+            $player,
+            $enemy,
+            '/api/action/attack/' . $enemy->getId() . '/betray'
+        );
 
-        $this->em()->refresh($player);
-        $this->em()->refresh($enemy);
         $this->assertNotEquals(
             $this->repos()->getMapRepository()->getDefaultMap(),
             $enemy->getMap()->getId()
@@ -573,10 +576,12 @@ class ActionControllerTest extends BaseTestCase
         $this->em()->persist($player);
         $this->em()->flush();
 
-        $this->client->request('POST', '/api/action/attack/' . $enemy->getId());
-        $this->assertJsonResponse($this->client->getResponse());
+        $this->executeActionKillNTimes(
+            $player,
+            $enemy,
+            '/api/action/attack/' . $enemy->getId()
+        );
 
-        $this->em()->refresh($enemy);
         $this->assertNotEquals(5, $enemy->getX());
         $this->assertNotEquals(5, $enemy->getY());
         $this->assertNotEquals(
@@ -610,11 +615,12 @@ class ActionControllerTest extends BaseTestCase
         $this->em()->persist($player);
         $this->em()->flush();
 
-        $this->client->request('POST', '/api/action/attack/' . $enemy->getId() . '/betray');
-        $this->assertJsonResponse($this->client->getResponse());
+        $this->executeActionKillNTimes(
+            $player,
+            $enemy,
+            '/api/action/attack/' . $enemy->getId() . '/betray'
+        );
 
-        $this->em()->refresh($player);
-        $this->em()->refresh($enemy);
         $this->assertNotEquals(
             $this->repos()->getMapRepository()->getDefaultMap(),
             $enemy->getMap()->getId()
@@ -1415,5 +1421,19 @@ class ActionControllerTest extends BaseTestCase
         $this->em()->flush();
 
         return $mapObject;
+    }
+
+    protected function executeActionKillNTimes($player, $enemy, $path, $times = 10)
+    {
+        for ($i = 0; $i < $times; $i ++) {
+            $this->client->request('POST', $path);
+            $json = $this->assertJsonResponse($this->client->getResponse());
+
+            if (!empty($json->isDead)) {
+                break;
+            }
+        }
+        $this->em()->refresh($player);
+        $this->em()->refresh($enemy);
     }
 }
