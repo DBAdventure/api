@@ -356,8 +356,7 @@ class BuildingControllerTest extends BaseTestCase
         $this->assertJsonResponse($this->client->getResponse());
 
         $this->assertNotEquals($building->getMap()->getId(), $player->getMap()->getId());
-        $this->assertNotEquals($building->getY(), $player->getY());
-        $this->assertNotEquals($building->getX(), $player->getX());
+        $this->assertNotEquals($building->getY() . '/' . $building->getX(), $player->getY() . '/' . $player->getX());
     }
 
     public function testBuyWithBadPosition()
