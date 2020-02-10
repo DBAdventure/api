@@ -1400,8 +1400,8 @@ class ActionControllerTest extends BaseTestCase
                 break;
             case MapObjectType::SIGN:
                 $mapObject->setExtra([
-                    ['key' => MapGameObject::EXTRA_DIALOGUE, 'value' => 'Bast'],
-                    ['key' => MapGameObject::EXTRA_DIALOGUE, 'value' => 'GoT'],
+                    ['key' => MapObject::EXTRA_DIALOGUE, 'value' => 'Bast'],
+                    ['key' => MapObject::EXTRA_DIALOGUE, 'value' => 'GoT'],
                 ]);
                 break;
             default:
