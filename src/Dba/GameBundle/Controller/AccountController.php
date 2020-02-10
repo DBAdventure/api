@@ -3,6 +3,7 @@
 namespace Dba\GameBundle\Controller;
 
 use Dba\GameBundle\Entity\Player;
+use Dba\GameBundle\Entity\GameObject;
 use Dba\GameBundle\Form\PlayerAppearance;
 use Dba\GameBundle\Form\PlayerSettings;
 use FOS\RestBundle\Controller\Annotations;
@@ -252,6 +253,9 @@ class AccountController extends BaseController
 
             return $this->badRequest();
         }
+
+        $this->em()->persist($player);
+        $this->em()->flush();
 
         return [];
     }

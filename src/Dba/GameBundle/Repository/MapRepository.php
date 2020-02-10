@@ -61,7 +61,7 @@ EOT;
      *
      * @return array
      */
-    public function generate(Player $player, $period)
+    public function generate(Player $player, string $period)
     {
         $request = <<<EOT
 SELECT

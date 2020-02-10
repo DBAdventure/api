@@ -28,15 +28,15 @@ class Building
         self::TYPE_MAGIC => 'magic',
         self::TYPE_DOOR => 'door',
 
-        Object::TYPE_UNIQUE => 'shop unique',
-        Object::TYPE_CONSUMABLE => 'shop consumable',
-        Object::TYPE_VISION => 'shop vision',
-        Object::TYPE_WEAPON => 'shop weapon',
-        Object::TYPE_SHIELD => 'shop shield',
-        Object::TYPE_ACCESSORY => 'shop accessory',
-        Object::TYPE_CAP => 'shop cap',
-        Object::TYPE_SHOES => 'shop shoes',
-        Object::TYPE_OUTFIT => 'shop outfit',
+        GameObject::TYPE_UNIQUE => 'shop unique',
+        GameObject::TYPE_CONSUMABLE => 'shop consumable',
+        GameObject::TYPE_VISION => 'shop vision',
+        GameObject::TYPE_WEAPON => 'shop weapon',
+        GameObject::TYPE_SHIELD => 'shop shield',
+        GameObject::TYPE_ACCESSORY => 'shop accessory',
+        GameObject::TYPE_CAP => 'shop cap',
+        GameObject::TYPE_SHOES => 'shop shoes',
+        GameObject::TYPE_OUTFIT => 'shop outfit',
     ];
 
     /**

@@ -53,13 +53,13 @@ class PlayerObject
     private $equipped;
 
     /**
-     * Set object
+     * Set Object
      *
      * @param object $object
      *
      * @return PlayerObject
      */
-    public function setObject(object $object = null)
+    public function setObject(GameObject $object = null)
     {
         $this->object = $object;
 
@@ -67,9 +67,9 @@ class PlayerObject
     }
 
     /**
-     * Get object
+     * Get GameObject
      *
-     * @return PlayerObject
+     * @return GameObject
      */
     public function getObject()
     {
@@ -124,6 +124,8 @@ class PlayerObject
 
     /**
      * Is equipped
+     *
+     * @return bool
      */
     public function isEquipped()
     {
@@ -132,6 +134,8 @@ class PlayerObject
 
     /**
      * Get is equipped
+     *
+     * @return bool
      */
     public function getEquipped()
     {
@@ -141,13 +145,13 @@ class PlayerObject
     /**
      * Set equipped
      *
-     * @param string $equipped
+     * @param bool $equipped
      *
      * @return PlayerObject
      */
-    public function setEquipped($equipped)
+    public function setEquipped(bool $equipped)
     {
-        $this->equipped = (bool) $equipped;
+        $this->equipped = $equipped;
 
         return $this;
     }
@@ -162,7 +166,7 @@ class PlayerObject
      */
     public function canBeDropped()
     {
-        return !in_array($this->getObject()->getType(), [Object::TYPE_UNIQUE]);
+        return !in_array($this->getObject()->getType(), [GameObject::TYPE_UNIQUE]);
     }
 
     /**
@@ -178,13 +182,13 @@ class PlayerObject
         return in_array(
             $this->getObject()->getType(),
             [
-                Object::TYPE_VISION,
-                Object::TYPE_WEAPON,
-                Object::TYPE_SHIELD,
-                Object::TYPE_ACCESSORY,
-                Object::TYPE_CAP,
-                Object::TYPE_SHOES,
-                Object::TYPE_OUTFIT,
+                GameObject::TYPE_VISION,
+                GameObject::TYPE_WEAPON,
+                GameObject::TYPE_SHIELD,
+                GameObject::TYPE_ACCESSORY,
+                GameObject::TYPE_CAP,
+                GameObject::TYPE_SHOES,
+                GameObject::TYPE_OUTFIT,
             ]
         );
     }
@@ -199,7 +203,7 @@ class PlayerObject
      */
     public function canBeUsed()
     {
-        return in_array($this->getObject()->getType(), [Object::TYPE_CONSUMABLE]);
+        return in_array($this->getObject()->getType(), [GameObject::TYPE_CONSUMABLE]);
     }
 
     /**
@@ -212,6 +216,6 @@ class PlayerObject
      */
     public function canUseMany()
     {
-        return in_array($this->getObject()->getType(), [Object::TYPE_CONSUMABLE]);
+        return in_array($this->getObject()->getType(), [GameObject::TYPE_CONSUMABLE]);
     }
 }
