@@ -52,7 +52,7 @@ class ObjectService extends BaseService
             $playerObject->setNumber($number);
             $playerObject->setEquipped(false);
         } else {
-            if ($object->getType() == GameGameObject::TYPE_CONSUMABLE || $playerObject->getNumber() == 0) {
+            if ($object->getType() == GameObject::TYPE_CONSUMABLE || $playerObject->getNumber() == 0) {
                 $playerObject->setNumber($playerObject->getNumber() + $number);
             } else {
                 return self::ERROR_ALREADY_PURCHASED;
@@ -120,7 +120,7 @@ class ObjectService extends BaseService
             if ($number < 50) {
                 $damagePercent = mt_rand(2, 10);
             } elseif ($number >= 50 && $number < 85) {
-                $object = ['id' => GameGameObject::DEFAULT_PEAR, 'quantity' => 5];
+                $object = ['id' => GameObject::DEFAULT_PEAR, 'quantity' => 5];
             } elseif ($number >= 85 && $number < 95) {
                 $object = ['id' => GameObject::DEFAULT_POTION_OF_LIFE, 'quantity' => 2];
             } else {
