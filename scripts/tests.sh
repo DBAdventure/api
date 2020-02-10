@@ -18,6 +18,7 @@ function static() {
     pushd ${PROJECT_DIR}
     execute "phpcs" "--colors --standard=PSR2 -p --extensions=php src/"
     execute "phpmd" "src/ text controversial,unusedcode --strict"
+    execute "php-cs-fixer" "fix --dry-run"
     check
     popd
 }
