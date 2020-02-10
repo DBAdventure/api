@@ -10,7 +10,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class Object extends AbstractType
+class GameObject extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
@@ -67,7 +67,7 @@ class Object extends AbstractType
                 Type\ChoiceType::class,
                 [
                     'label' => 'form.type',
-                    'choices' => array_flip(Entity\Object::TYPE_LIST),
+                    'choices' => array_flip(Entity\GameObject::TYPE_LIST),
                     'choice_translation_domain' => false,
                 ]
             )
@@ -168,7 +168,7 @@ class Object extends AbstractType
     {
         $resolver->setDefaults(
             [
-                'data_class' => Entity\Object::class,
+                'data_class' => Entity\GameObject::class,
             ]
         );
     }

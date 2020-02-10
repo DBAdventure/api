@@ -6,7 +6,7 @@ use DateTime;
 use Dba\GameBundle\Entity\Map;
 use Dba\GameBundle\Entity\MapObject;
 use Dba\GameBundle\Entity\MapObjectType;
-use Dba\GameBundle\Entity\Object;
+use Dba\GameBundle\Entity\GameObject;
 use Dba\GameBundle\Entity\Player;
 use Dba\GameBundle\Entity\PlayerQuest;
 use Dba\GameBundle\Entity\Quest;
@@ -127,14 +127,14 @@ EOT
                 'type' => MapObjectType::BUSH,
                 'x' => 9,
                 'y' => 10,
-                'object' => Object::DEFAULT_BERRIES,
+                'object' => GameObject::DEFAULT_BERRIES,
                 'number' => 4,
             ],
             [
                 'type' => MapObjectType::BUSH,
                 'x' => 6,
                 'y' => 3,
-                'object' => Object::DEFAULT_BERRIES,
+                'object' => GameObject::DEFAULT_BERRIES,
                 'number' => 3
             ],
             [

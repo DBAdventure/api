@@ -10,7 +10,7 @@ use Dba\GameBundle\Event\DbaEvents;
 use Dba\GameBundle\Entity\MapBonus;
 use Dba\GameBundle\Entity\MapObject;
 use Dba\GameBundle\Entity\MapObjectType;
-use Dba\GameBundle\Entity\Object;
+use Dba\GameBundle\Entity\GameObject;
 use Dba\GameBundle\Entity\Player;
 use Dba\GameBundle\Entity\PlayerQuest;
 use Dba\GameBundle\Entity\PlayerSpell;
@@ -580,11 +580,11 @@ class ActionController extends BaseController
 
     /**
      * @ParamConverter("target", class="Dba\GameBundle\Entity\Player")
-     * @ParamConverter("object", class="Dba\GameBundle\Entity\Object", isOptional="true")
+     * @ParamConverter("object", class="Dba\GameBundle\Entity\GameObject", isOptional="true")
      * @Annotations\Post("/give/{target}", name="_target")
      * @Annotations\Post("/give/{target}/{object}", name="_object")
      */
-    public function postGiveAction(Request $request, Player $target, Object $object = null)
+    public function postGiveAction(Request $request, Player $target, GameObject $object = null)
     {
         $player = $this->getUser();
         if ($this->checkPosition($player, $target, Player::GIVE_ACTION) ||

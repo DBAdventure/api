@@ -20,7 +20,7 @@ class RequirementsType extends AbstractType
                 Type\ChoiceType::class,
                 [
                     'label' => 'form.key',
-                    'choices' => array_flip(Entity\Object::REQUIREMENTS_LIST)
+                    'choices' => array_flip(Entity\GameObject::REQUIREMENTS_LIST)
                 ]
             )
             ->add(

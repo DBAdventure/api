@@ -6,7 +6,7 @@ use Dba\GameBundle\Entity\EventType;
 use Dba\GameBundle\Entity\Map;
 use Dba\GameBundle\Entity\MapObject;
 use Dba\GameBundle\Entity\MapObjectType;
-use Dba\GameBundle\Entity\Object;
+use Dba\GameBundle\Entity\GameObject;
 use Dba\GameBundle\Entity\Player;
 use Dba\GameBundle\Entity\PlayerEvent;
 use Dba\GameBundle\Entity\PlayerSpell;

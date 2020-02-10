@@ -20,7 +20,7 @@ class BonusType extends AbstractType
                 Type\ChoiceType::class,
                 [
                     'label' => 'form.key',
-                    'choices' => array_flip(Entity\Object::BONUS_LIST)
+                    'choices' => array_flip(Entity\GameObject::BONUS_LIST)
                 ]
             )
             ->add(

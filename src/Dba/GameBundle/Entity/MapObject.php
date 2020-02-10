@@ -80,7 +80,7 @@ class MapObject
     /**
      * @var Object
      *
-     * @ORM\ManyToOne(targetEntity="Object")
+     * @ORM\ManyToOne(targetEntity="GameObject")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="object_id", referencedColumnName="id", nullable=true, onDelete="CASCADE")
      * })

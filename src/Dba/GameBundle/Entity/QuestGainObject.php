@@ -33,7 +33,7 @@ class QuestGainObject
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="NONE")
      *
-     * @ORM\ManyToOne(targetEntity="Dba\GameBundle\Entity\Object", fetch="EAGER")
+     * @ORM\ManyToOne(targetEntity="Dba\GameBundle\Entity\GameObject", fetch="EAGER")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="object_id", referencedColumnName="id", nullable=false, onDelete="CASCADE")
      * })
@@ -99,11 +99,11 @@ class QuestGainObject
     /**
      * Set object
      *
-     * @param Object $object
+     * @param GameObject $object
      *
      * @return Quest
      */
-    public function setObject($object)
+    public function setObject(GameObject $object)
     {
         $this->object = $object;
 

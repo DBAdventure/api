@@ -7,7 +7,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Dba\AdminBundle\Controller\BaseController;
 use Dba\AdminBundle\Form;
-use Dba\GameBundle\Entity\Object;
+use Dba\GameBundle\Entity\GameObject;
 
 /**
  * @Route("/object")
@@ -38,9 +38,9 @@ class ObjectController extends BaseController
      */
     public function createAction(Request $request)
     {
-        $object = new Object();
+        $object = new GameObject();
         $form = $this->createForm(
-            Form\Object::class,
+            Form\GameObject::class,
             $object,
             [
                 'attr' => [
@@ -70,12 +70,12 @@ class ObjectController extends BaseController
 
     /**
      * @Route("/edit/{id}", name="admin.object.edit")
-     * @ParamConverter("object", class="Dba\GameBundle\Entity\Object")
+     * @ParamConverter("object", class="Dba\GameBundle\Entity\GameObject")
      */
-    public function editAction(Request $request, Object $object)
+    public function editAction(Request $request, GameObject $object)
     {
         $form = $this->createForm(
-            Form\Object::class,
+            Form\GameObject::class,
             $object,
             [
                 'attr' => [
@@ -105,7 +105,7 @@ class ObjectController extends BaseController
 
     /**
      * @Route("/delete/{id}", name="admin.object.delete")
-     * @ParamConverter("object", class="Dba\GameBundle\Entity\Object")
+     * @ParamConverter("object", class="Dba\GameBundle\Entity\GameObject")
      */
     public function deleteAction(Object $object)
     {

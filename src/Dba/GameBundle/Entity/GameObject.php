@@ -13,7 +13,7 @@ use JMS\Serializer\Annotation as JMS;
  * @ORM\Table(name="object", uniqueConstraints={@ORM\UniqueConstraint(name="object_name", columns={"name"})})
  * @ORM\Entity(repositoryClass="Dba\GameBundle\Repository\ObjectRepository")
  */
-class Object
+class GameObject
 {
     const DEFAULT_MAP = 1;
     const DEFAULT_SENZU = 2;

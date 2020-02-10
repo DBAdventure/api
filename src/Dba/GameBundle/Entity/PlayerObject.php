@@ -31,7 +31,7 @@ class PlayerObject
      *
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="NONE")
-     * @ORM\ManyToOne(targetEntity="Object", inversedBy="playerObjects")
+     * @ORM\ManyToOne(targetEntity="GameObject", inversedBy="playerObjects")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="object_id", referencedColumnName="id", onDelete="CASCADE")
      * })

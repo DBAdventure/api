@@ -6,7 +6,7 @@ use FOS\RestBundle\Controller\Annotations;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Dba\GameBundle\Entity\MapBox;
-use Dba\GameBundle\Entity\Object;
+use Dba\GameBundle\Entity\GameObject;
 use Dba\GameBundle\Repository\MapRepository;
 
 /**
@@ -21,7 +21,7 @@ class MapController extends BaseController
                 'player' => $this->getUser(),
                 'object' => $this->repos()->getObjectRepository()->findOneBy(
                     [
-                        'id' => Object::DEFAULT_MAP,
+                        'id' => GameObject::DEFAULT_MAP,
                         'enabled' => true,
                     ]
                 ),

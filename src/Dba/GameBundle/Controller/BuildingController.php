@@ -7,7 +7,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Request;
 use Dba\GameBundle\Entity\Bank;
 use Dba\GameBundle\Entity\Building;
-use Dba\GameBundle\Entity\Object;
+use Dba\GameBundle\Entity\GameObject;
 use Dba\GameBundle\Entity\Player;
 use Dba\GameBundle\Entity\Spell;
 
@@ -144,10 +144,10 @@ class BuildingController extends BaseController
 
     /**
      * @ParamConverter("building", class="Dba\GameBundle\Entity\Building")
-     * @ParamConverter("object", class="Dba\GameBundle\Entity\Object")
+     * @ParamConverter("object", class="Dba\GameBundle\Entity\GameObject")
      * @Annotations\Post("/shop/{building}/object/{object}")
      */
-    public function postBuyObjectAction(Building $building, Object $object)
+    public function postBuyObjectAction(Building $building, GameObject $object)
     {
         $player = $this->getUser();
         if ($this->checkPosition($player, $building) ||
@@ -176,9 +176,9 @@ class BuildingController extends BaseController
 
     /**
      * @ParamConverter("building", class="Dba\GameBundle\Entity\Building")
-     * @ParamConverter("object", class="Dba\GameBundle\Entity\Object")
+     * @ParamConverter("object", class="Dba\GameBundle\Entity\GameObject")
      */
-    public function postSellAction(Building $building, Object $object)
+    public function postSellAction(Building $building, GameObject $object)
     {
         $player = $this->getUser();
         if ($this->checkPosition($player, $building)) {

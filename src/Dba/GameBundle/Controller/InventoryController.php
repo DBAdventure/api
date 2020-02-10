@@ -5,7 +5,7 @@ namespace Dba\GameBundle\Controller;
 use FOS\RestBundle\Controller\Annotations;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Request;
-use Dba\GameBundle\Entity\Object;
+use Dba\GameBundle\Entity\GameObject;
 use Dba\GameBundle\Entity\Player;
 use Dba\GameBundle\Entity\PlayerObject;
 
@@ -25,10 +25,10 @@ class InventoryController extends BaseController
     }
 
     /**
-     * @ParamConverter("object", class="Dba\GameBundle\Entity\Object")
+     * @ParamConverter("object", class="Dba\GameBundle\Entity\GameObject")
      * @Annotations\Post("/use/{object}")
      */
-    public function postUseAction(Request $request, Object $object)
+    public function postUseAction(Request $request, GameObject $object)
     {
         if (!$object->isEnabled()) {
             return $this->forbidden();
@@ -47,41 +47,41 @@ class InventoryController extends BaseController
 
         foreach ($playerObject->getObject()->getBonus() as $bonus => $value) {
             switch ($bonus) {
-                case Object::BONUS_HEALTH_PERCENT:
+                case GameObject::BONUS_HEALTH_PERCENT:
                     $player->addPoints(
                         Player::HEALTH_POINT,
                         ceil((($value * $nbObjectsUsed) * $player->getTotalMaxHealth()) / 100)
                     );
                     break;
-                case Object::BONUS_HEALTH:
+                case GameObject::BONUS_HEALTH:
                     $player->addPoints(Player::HEALTH_POINT, ($value * $nbObjectsUsed));
                     break;
-                case Object::BONUS_ACTION_POINT:
+                case GameObject::BONUS_ACTION_POINT:
                     $player->addPoints(Player::ACTION_POINT, ($value * $nbObjectsUsed));
                     break;
-                case Object::BONUS_MOVEMENT_POINT:
+                case GameObject::BONUS_MOVEMENT_POINT:
                     $player->addPoints(Player::MOVEMENT_POINT, ($value * $nbObjectsUsed));
                     break;
-                case Object::BONUS_KI:
+                case GameObject::BONUS_KI:
                     $player->addPoints(Player::KI_POINT, ($value * $nbObjectsUsed));
                     break;
-                case Object::BONUS_KI_PERCENT:
+                case GameObject::BONUS_KI_PERCENT:
                     $player->addPoints(
                         Player::KI_POINT,
                         ceil((($value * $nbObjectsUsed) * $player->getTotalMaxKi()) / 100)
                     );
                     break;
-                case Object::BONUS_FATIGUE:
+                case GameObject::BONUS_FATIGUE:
                     $player->usePoints(Player::FATIGUE_POINT, ($value * $nbObjectsUsed));
                     break;
-                case Object::BONUS_FATIGUE_PERCENT:
+                case GameObject::BONUS_FATIGUE_PERCENT:
                     $player->usePoints(
                         Player::FATIGUE_POINT,
                         ceil((($value * $nbObjectsUsed) * $player->getMaxFatiguePoints()) / 100)
                     );
                     break;
 
-                case Object::BONUS_TELEPORT:
+                case GameObject::BONUS_TELEPORT:
                     if ($player->getMovementPoints() < self::TELEPORT_MOVEMENT_POINTS) {
                         return $this->forbidden('inventory.object.error.teleport');
                     }
@@ -108,10 +108,10 @@ class InventoryController extends BaseController
     }
 
     /**
-     * @ParamConverter("object", class="Dba\GameBundle\Entity\Object")
+     * @ParamConverter("object", class="Dba\GameBundle\Entity\GameObject")
      * @Annotations\Post("/drop/{object}")
      */
-    public function postDropAction(Request $request, Object $object)
+    public function postDropAction(Request $request, GameObject $object)
     {
         $player = $this->getUser();
         $playerObject = $this->repos()->getPlayerObjectRepository()->checkPlayerObject($player, $object);
@@ -138,7 +138,7 @@ class InventoryController extends BaseController
     }
 
     /**
-     * @ParamConverter("object", class="Dba\GameBundle\Entity\Object")
+     * @ParamConverter("object", class="Dba\GameBundle\Entity\GameObject")
      * @Annotations\Post("/unequip/{object}")
      */
     public function postUnequipAction(Object $object)
@@ -161,7 +161,7 @@ class InventoryController extends BaseController
     }
 
     /**
-     * @ParamConverter("object", class="Dba\GameBundle\Entity\Object")
+     * @ParamConverter("object", class="Dba\GameBundle\Entity\GameObject")
      * @Annotations\Post("/equip/{object}")
      */
     public function postEquipAction(Object $object)

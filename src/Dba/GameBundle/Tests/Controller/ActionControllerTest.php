@@ -4,7 +4,7 @@ namespace Dba\GameBundle\Tests\Controller;
 
 use Dba\GameBundle\Entity\MapObjectType;
 use Dba\GameBundle\Entity\MapObject;
-use Dba\GameBundle\Entity\Object;
+use Dba\GameBundle\Entity\GameObject;
 use Dba\GameBundle\Entity\Player;
 use Dba\GameBundle\Entity\PlayerObject;
 use Dba\GameBundle\Entity\Map;
@@ -247,7 +247,7 @@ class ActionControllerTest extends BaseTestCase
         $playerObject = $player->getPlayerObjects()[0];
         $this->assertEquals(5, $playerObject->getNumber());
         $this->assertEquals(
-            Object::DEFAULT_PEAR,
+            GameObject::DEFAULT_PEAR,
             $playerObject->getObject()->getId()
         );
     }
@@ -269,7 +269,7 @@ class ActionControllerTest extends BaseTestCase
         $playerObject = $player->getPlayerObjects()[0];
         $this->assertEquals(2, $playerObject->getNumber());
         $this->assertEquals(
-            Object::DEFAULT_POTION_OF_LIFE,
+            GameObject::DEFAULT_POTION_OF_LIFE,
             $playerObject->getObject()->getId()
         );
     }
@@ -291,7 +291,7 @@ class ActionControllerTest extends BaseTestCase
         $playerObject = $player->getPlayerObjects()[0];
         $this->assertEquals(1, $playerObject->getNumber());
         $this->assertEquals(
-            Object::DEFAULT_SENZU,
+            GameObject::DEFAULT_SENZU,
             $playerObject->getObject()->getId()
         );
     }
@@ -1391,7 +1391,7 @@ class ActionControllerTest extends BaseTestCase
             case MapObjectType::BUSH:
                 $mapObject->setNumber(mt_rand(1, 5));
                 $mapObject->setObject(
-                    $this->repos()->getObjectRepository()->findOneById(Object::DEFAULT_PEAR)
+                    $this->repos()->getObjectRepository()->findOneById(GameObject::DEFAULT_PEAR)
                 );
                 break;
             case MapObjectType::CAPSULE_BLUE:
@@ -1400,8 +1400,8 @@ class ActionControllerTest extends BaseTestCase
                 break;
             case MapObjectType::SIGN:
                 $mapObject->setExtra([
-                    ['key' => MapObject::EXTRA_DIALOGUE, 'value' => 'Bast'],
-                    ['key' => MapObject::EXTRA_DIALOGUE, 'value' => 'GoT']
+                    ['key' => MapGameObject::EXTRA_DIALOGUE, 'value' => 'Bast'],
+                    ['key' => MapGameObject::EXTRA_DIALOGUE, 'value' => 'GoT']
                 ]);
                 break;
             default:

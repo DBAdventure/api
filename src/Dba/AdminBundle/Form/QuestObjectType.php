@@ -22,7 +22,7 @@ class QuestObjectType extends AbstractQuestType
                 'object',
                 EntityType::class,
                 [
-                    'class' => Entity\Object::class,
+                    'class' => Entity\GameObject::class,
                     'choice_label' => 'name',
                     'label' => 'form.object',
                     'choice_translation_domain' => false

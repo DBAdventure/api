@@ -5,7 +5,7 @@ namespace Dba\GameBundle\Services;
 use Dba\GameBundle\Entity\Map;
 use Dba\GameBundle\Entity\MapObject;
 use Dba\GameBundle\Entity\MapObjectType;
-use Dba\GameBundle\Entity\Object;
+use Dba\GameBundle\Entity\GameObject;
 use Dba\GameBundle\Entity\Player;
 use Dba\GameBundle\Entity\PlayerObject;
 
@@ -20,13 +20,13 @@ class ObjectService extends BaseService
      * Add object into player inventory
      *
      * @param Player $player Player who buy
-     * @param Object $object Object to buy
+     * @param GameObject $object Object to buy
      * @param boolean $isPurchased Is the item is purchased or not
      * @param integer $number Number of item
      *
      * @return integer|PlayerObject
      */
-    public function addToInventory(Player $player, Object $object, $isPurchased = true, $number = 1)
+    public function addToInventory(Player $player, GameObject $object, $isPurchased = true, $number = 1)
     {
         if (($object->getWeight() + $player->getInventoryWeight()) >  $player->getInventoryMaxWeight()) {
             return self::ERROR_INVENTORY_FULL;
@@ -52,7 +52,7 @@ class ObjectService extends BaseService
             $playerObject->setNumber($number);
             $playerObject->setEquipped(false);
         } else {
-            if ($object->getType() == Object::TYPE_CONSUMABLE || $playerObject->getNumber() == 0) {
+            if ($object->getType() == GameGameObject::TYPE_CONSUMABLE || $playerObject->getNumber() == 0) {
                 $playerObject->setNumber($playerObject->getNumber() + $number);
             } else {
                 return self::ERROR_ALREADY_PURCHASED;
@@ -120,21 +120,21 @@ class ObjectService extends BaseService
             if ($number < 50) {
                 $damagePercent = mt_rand(2, 10);
             } elseif ($number >= 50 && $number < 85) {
-                $object = ['id' => Object::DEFAULT_PEAR, 'quantity' => 5];
+                $object = ['id' => GameGameObject::DEFAULT_PEAR, 'quantity' => 5];
             } elseif ($number >= 85 && $number < 95) {
-                $object = ['id' => Object::DEFAULT_POTION_OF_LIFE, 'quantity' => 2];
+                $object = ['id' => GameObject::DEFAULT_POTION_OF_LIFE, 'quantity' => 2];
             } else {
-                $object = ['id' => Object::DEFAULT_SENZU, 'quantity' => 1];
+                $object = ['id' => GameObject::DEFAULT_SENZU, 'quantity' => 1];
             }
         } else {
             if ($number < 75) {
                 $damagePercent = mt_rand(5, 25);
             } elseif ($number >= 75 && $number < 85) {
-                $object = ['id' => Object::DEFAULT_PEAR, 'quantity' => 10];
+                $object = ['id' => GameObject::DEFAULT_PEAR, 'quantity' => 10];
             } elseif ($number >= 85 && $number < 95) {
-                $object = ['id' => Object::DEFAULT_POTION_OF_LIFE, 'quantity' => 5];
+                $object = ['id' => GameObject::DEFAULT_POTION_OF_LIFE, 'quantity' => 5];
             } else {
-                $object = ['id' => Object::DEFAULT_SENZU, 'quantity' => 2];
+                $object = ['id' => GameObject::DEFAULT_SENZU, 'quantity' => 2];
             }
         }
 

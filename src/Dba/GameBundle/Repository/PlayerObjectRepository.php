@@ -4,20 +4,20 @@ namespace Dba\GameBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
 use Dba\GameBundle\Entity\Player;
-use Dba\GameBundle\Entity\Object;
+use Dba\GameBundle\Entity\GameObject;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class PlayerObjectRepository extends EntityRepository
 {
     /**
-     * Find similar Object
+     * Find similar GameObject
      *
      * @param Player $player Player
-     * @param Object $object Object
+     * @param GameObject $object GameObject
      *
      * @return PlayerObject
      */
-    public function findSimilarEquipped(Player $player, Object $object)
+    public function findSimilarEquipped(Player $player, GameObject $object)
     {
         $playerObjects = $this->findBy(
             [
@@ -38,12 +38,12 @@ class PlayerObjectRepository extends EntityRepository
      * Check if player has an object
      *
      * @param Player $player Player
-     * @param Object $object Object
+     * @param GameObject $object GameObject
      *
      * @throws NotFoundHttpException
      * @return PlayerObject
      */
-    public function checkPlayerObject(Player $player, Object $object)
+    public function checkPlayerObject(Player $player, GameObject $object)
     {
         $playerObject = $this->findOneBy(
             [

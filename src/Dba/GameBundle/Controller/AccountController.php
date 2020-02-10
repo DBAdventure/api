@@ -4,7 +4,7 @@ namespace Dba\GameBundle\Controller;
 
 use FOS\RestBundle\Controller\Annotations;
 use Symfony\Component\HttpFoundation\Request;
-use Dba\GameBundle\Entity\Object;
+use Dba\GameBundle\Entity\GameObjectObject;
 use Dba\GameBundle\Entity\Player;
 use Dba\GameBundle\Form\PlayerAppearance;
 use Dba\GameBundle\Form\PlayerSettings;
@@ -53,7 +53,7 @@ class AccountController extends BaseController
                 'player' => $this->getUser(),
                 'object' => $this->repos()->getObjectRepository()->findOneBy(
                     [
-                        'id' => Object::DEFAULT_MAP,
+                        'id' => GameObject::DEFAULT_MAP,
                         'enabled' => true,
                     ]
                 ),

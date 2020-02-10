@@ -115,7 +115,7 @@ class RepositoryService extends BaseService
      */
     public function getObjectRepository()
     {
-        return $this->em()->getRepository('DbaGameBundle:Object');
+        return $this->em()->getRepository('DbaGameBundle:GameObject');
     }
 
     /**

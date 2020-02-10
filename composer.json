@@ -1,5 +1,5 @@
 {
-    "name": "DBAdventure",
+    "name": "dbadventure/api",
     "license": "DBAdventure",
     "type": "project",
     "description": "DBAdventure game API",
@@ -12,33 +12,32 @@
         "files": [ "vendor/symfony/symfony/src/Symfony/Component/VarDumper/Resources/functions/dump.php" ]
     },
     "require": {
-        "php": ">= 7.0",
-        "beberlei/DoctrineExtensions": "^1.0",
-        "doctrine/doctrine-bundle": "^1.6",
-        "doctrine/doctrine-cache-bundle": "^1.2",
-        "doctrine/orm": "^2.5",
-        "friendsofsymfony/rest-bundle": "^2.1",
-        "incenteev/composer-parameter-handler": "^2.0",
-        "jms/serializer": "^1.6",
-        "jms/serializer-bundle": "^2.3",
-        "leafo/scssphp": "^0.7",
-        "nelmio/cors-bundle": "^1.5",
+        "php": ">= 7.2",
+        "beberlei/doctrineextensions": "^1.2",
+        "doctrine/doctrine-bundle": "^1",
+        "doctrine/doctrine-cache-bundle": "^1.4",
+        "doctrine/orm": "^2.7",
+        "friendsofsymfony/rest-bundle": "^2.7",
+        "incenteev/composer-parameter-handler": "^2.1",
+        "jms/serializer": "^3.4",
+        "jms/serializer-bundle": "^3.5",
+        "scssphp/scssphp": "^1",
+        "nelmio/cors-bundle": "^1",
         "sensio/distribution-bundle": "^5.0",
-        "sensio/framework-extra-bundle": "5.*",
-        "stof/doctrine-extensions-bundle": "^1.2",
-        "symfony/monolog-bundle": "^3.0.2",
-        "symfony/polyfill-apcu": "^1.0",
-        "symfony/swiftmailer-bundle": "^3.1",
+        "sensio/framework-extra-bundle": "5",
+        "stof/doctrine-extensions-bundle": "^1.3",
+        "symfony/monolog-bundle": "^3.5",
+        "symfony/swiftmailer-bundle": "^3",
         "symfony/symfony": "^3.4",
         "twig/extensions": "^1.5",
-        "twig/twig": "^2.4"
+        "twig/twig": "^2"
     },
     "require-dev": {
-        "sensio/generator-bundle": "^3.0",
-        "symfony/phpunit-bridge": "^4.0",
-        "phpunit/phpunit": "6.*",
+        "symfony/phpunit-bridge": "^5.0",
+        "phpunit/phpunit": "7.*",
         "squizlabs/php_codesniffer": "3.*",
-        "phpmd/phpmd": "^2.5"
+        "phpmd/phpmd": "^2.8",
+        "friendsofphp/php-cs-fixer": "^2"
     },
     "scripts": {
         "symfony-scripts": [
