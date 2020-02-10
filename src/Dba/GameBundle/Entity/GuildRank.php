@@ -9,7 +9,7 @@ use JMS\Serializer\Annotation as JMS;
  * Guild
  *
  * @ORM\Table(name="guild_rank", indexes={@ORM\Index(name="guild_rank_guild", columns={"guild_id"})},
-              uniqueConstraints={@ORM\UniqueConstraint(name="guild_rank_name", columns={"name", "guild_id"})})
+ * uniqueConstraints={@ORM\UniqueConstraint(name="guild_rank_name", columns={"name", "guild_id"})})
  * @ORM\Entity
  */
 class GuildRank
@@ -37,14 +37,14 @@ class GuildRank
      *
      * @ORM\ManyToOne(targetEntity="Guild", inversedBy="ranks")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="guild_id", referencedColumnName="id", nullable=false, onDelete="CASCADE")
+     *     @ORM\JoinColumn(name="guild_id", referencedColumnName="id", nullable=false, onDelete="CASCADE")
      * })
      * @JMS\Exclude
      */
     private $guild;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
@@ -79,7 +79,7 @@ class GuildRank
     /**
      * Get id
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -137,7 +137,7 @@ class GuildRank
     /**
      * Check if player is a moderator
      *
-     * @return boolean
+     * @return bool
      */
     public function isModo()
     {
@@ -147,7 +147,7 @@ class GuildRank
     /**
      * Check if player is an administrator
      *
-     * @return boolean
+     * @return bool
      */
     public function isAdmin()
     {

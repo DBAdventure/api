@@ -3,15 +3,15 @@
 namespace Dba\GameBundle\Form;
 
 use Dba\GameBundle\Entity;
-use Symfony\Component\Form\Extension\Core\Type;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class InboxRecipient extends AbstractType
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -19,7 +19,7 @@ class InboxRecipient extends AbstractType
             'name',
             Type\TextType::class,
             [
-                'label' => 'form.name'
+                'label' => 'form.name',
             ]
         );
     }

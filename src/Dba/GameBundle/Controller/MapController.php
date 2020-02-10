@@ -2,12 +2,11 @@
 
 namespace Dba\GameBundle\Controller;
 
-use FOS\RestBundle\Controller\Annotations;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
-use Dba\GameBundle\Entity\MapBox;
 use Dba\GameBundle\Entity\GameObject;
+use Dba\GameBundle\Entity\MapBox;
 use Dba\GameBundle\Repository\MapRepository;
+use FOS\RestBundle\Controller\Annotations;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * @Annotations\NamePrefix("map_")
@@ -27,6 +26,7 @@ class MapController extends BaseController
                 ),
             ]
         );
+
         return !empty($playerObject) && $playerObject->getNumber() == 1;
     }
 
@@ -78,7 +78,7 @@ class MapController extends BaseController
             200,
             [
                 'Content-Type' => 'image/png',
-                'Content-Disposition' => 'inline; filename="image-' . $player->getId() . '.png"'
+                'Content-Disposition' => 'inline; filename="image-' . $player->getId() . '.png"',
             ]
         );
     }
@@ -87,8 +87,8 @@ class MapController extends BaseController
      * Draw Ellipse for mini map
      *
      * @param resource $originalImage Original image
-     * @param Entity   $entity        Entity to display
-     * @param resource $color         Color of the ellipse
+     * @param Entity $entity Entity to display
+     * @param resource $color Color of the ellipse
      *
      * @return void
      */
@@ -108,6 +108,7 @@ class MapController extends BaseController
      * Mini map
      *
      * @Annotations\Get("/mini")
+     *
      * @return array
      */
     public function miniAction()
@@ -141,7 +142,7 @@ class MapController extends BaseController
             'items' => [
                 'buildings' => $buildings,
                 'players' => $guildPlayers,
-            ]
+            ],
         ];
     }
 
@@ -149,6 +150,7 @@ class MapController extends BaseController
      * Get map
      *
      * @Annotations\Get("")
+     *
      * @return array
      */
     public function getAction()
@@ -159,7 +161,7 @@ class MapController extends BaseController
         return [
             'map' => $this->getMap($mapRepo),
             'borders' => $borders,
-            'items' => $this->getItems($mapRepo, $borders)
+            'items' => $this->getItems($mapRepo, $borders),
         ];
     }
 
@@ -167,6 +169,7 @@ class MapController extends BaseController
      * Get map data
      *
      * @Annotations\Get("/player")
+     *
      * @param MapRepository $mapRepo Map repository
      *
      * @return array
@@ -183,7 +186,7 @@ class MapController extends BaseController
      * Get items on the map
      *
      * @param MapRepository $mapRepo Map repository
-     * @param array         $borders Limits
+     * @param array $borders Limits
      *
      * @return array
      */

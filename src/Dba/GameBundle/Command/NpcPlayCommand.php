@@ -2,14 +2,12 @@
 
 namespace Dba\GameBundle\Command;
 
-use Exception;
-use Dba\GameBundle\Entity\Side;
 use Dba\GameBundle\Entity\Player;
+use Dba\GameBundle\Entity\Side;
+use Symfony\Component\Console\Command\LockableTrait;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Command\LockableTrait;
 
 class NpcPlayCommand extends BaseCommand
 {
@@ -25,7 +23,7 @@ class NpcPlayCommand extends BaseCommand
             ->setDescription('Let Npcs play.')
             ->setDefinition(
                 [
-                    new InputArgument('number', InputArgument::REQUIRED, 'Number of npc')
+                    new InputArgument('number', InputArgument::REQUIRED, 'Number of npc'),
                 ]
             )
             ->setHelp(<<<'EOT'
@@ -43,6 +41,7 @@ EOT
     {
         if (!$this->lock()) {
             $output->writeln('The command is already running in another process.');
+
             return 0;
         }
 
@@ -74,7 +73,7 @@ EOT
                     Player::AVAILABLE_MOVE[array_rand(Player::AVAILABLE_MOVE)]
                 );
                 if (empty($result)) {
-                    $retry++;
+                    ++$retry;
                 } else {
                     $npc->usePoints(Player::MOVEMENT_POINT, Player::MOVEMENT_ACTION + (int) ($move > 1));
                     $message = sprintf(
@@ -114,7 +113,7 @@ EOT
 
                 list($result, $move) = $playerService->move($npc, $where);
                 if (empty($result)) {
-                    $retry++;
+                    ++$retry;
                 } else {
                     $npc->usePoints(Player::MOVEMENT_POINT, Player::MOVEMENT_ACTION + (int) ($move > 1));
                     $message = sprintf(
@@ -161,7 +160,7 @@ EOT
                     $target,
                     $eventMessage,
                     [
-                        'damages' => $damages
+                        'damages' => $damages,
                     ]
                 );
 

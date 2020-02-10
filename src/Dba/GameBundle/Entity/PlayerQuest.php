@@ -26,7 +26,7 @@ class PlayerQuest
      * @ORM\GeneratedValue(strategy="NONE")
      * @ORM\ManyToOne(targetEntity="Player", inversedBy="playerQuests", cascade={"persist", "remove"})
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="player_id", referencedColumnName="id", onDelete="CASCADE")
+     *     @ORM\JoinColumn(name="player_id", referencedColumnName="id", onDelete="CASCADE")
      * })
      * @JMS\Exclude
      */
@@ -39,13 +39,13 @@ class PlayerQuest
      * @ORM\GeneratedValue(strategy="NONE")
      * @ORM\ManyToOne(targetEntity="Quest")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="quest_id", referencedColumnName="id", onDelete="CASCADE")
+     *     @ORM\JoinColumn(name="quest_id", referencedColumnName="id", onDelete="CASCADE")
      * })
      */
     private $quest;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="status", type="integer", nullable=false)
      */
@@ -89,7 +89,6 @@ class PlayerQuest
 
     /**
      * Get quest
-     *
      *
      * @return PlayerQuest
      */
@@ -173,7 +172,7 @@ class PlayerQuest
     /**
      * Get status
      *
-     * @return integer
+     * @return int
      */
     public function getStatus()
     {
@@ -183,7 +182,7 @@ class PlayerQuest
     /**
      * Set status
      *
-     * @param integer $status
+     * @param int $status
      *
      * @return Inbox
      */
@@ -197,9 +196,10 @@ class PlayerQuest
     /**
      * Check if quest is in progress
      *
-     * @JMS\VirtualProperty()
+     * @JMS\VirtualProperty
      * @JMS\SerializedName("is_in_progress")
-     * @return boolean
+     *
+     * @return bool
      */
     public function isInProgress()
     {
@@ -209,9 +209,10 @@ class PlayerQuest
     /**
      * Check if quest is finished
      *
-     * @JMS\VirtualProperty()
+     * @JMS\VirtualProperty
      * @JMS\SerializedName("is_finished")
-     * @return boolean
+     *
+     * @return bool
      */
     public function isFinished()
     {

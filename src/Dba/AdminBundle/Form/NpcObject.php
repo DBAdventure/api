@@ -5,15 +5,15 @@ namespace Dba\AdminBundle\Form;
 use Dba\GameBundle\Entity;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
-use Symfony\Component\Form\Extension\Core\Type;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class NpcObject extends AbstractType
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -50,6 +50,7 @@ class NpcObject extends AbstractType
                                     ]
                                 )
                             );
+
                             return $qb;
                         },
                         'choice_translation_domain' => false,

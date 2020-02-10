@@ -20,7 +20,7 @@ class MapImage
     private $name;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
@@ -55,7 +55,7 @@ class MapImage
     /**
      * Get id
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {

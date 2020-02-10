@@ -1,17 +1,15 @@
 <?php
+
 namespace Dba\GameBundle\Controller;
 
-use DateTime;
-use FOS\RestBundle\Controller\Annotations;
-use Doctrine\ORM\Query\ResultSetMapping;
-use Doctrine\ORM\Tools\Pagination\Paginator;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Symfony\Component\HttpFoundation\Request;
-use Dba\GameBundle\Entity\GameObject;
 use Dba\GameBundle\Entity\Player;
 use Dba\GameBundle\Entity\Race;
 use Dba\GameBundle\Entity\Side;
-use Dba\GameBundle\Form\PlayerRegistration;
+use Doctrine\ORM\Query\ResultSetMapping;
+use Doctrine\ORM\Tools\Pagination\Paginator;
+use FOS\RestBundle\Controller\Annotations;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @Annotations\NamePrefix("data_")
@@ -58,6 +56,7 @@ class DataController extends BaseController
     public function getOnlinePlayerAction()
     {
         $playerRepository = $this->repos()->getPlayerRepository();
+
         return ['nbOnlinePlayers' => count($playerRepository->getOnlinePlayers())];
     }
 
@@ -81,7 +80,7 @@ class DataController extends BaseController
     public function getPlayerInfoAction(Player $player)
     {
         return [
-            'player' => $player
+            'player' => $player,
         ];
     }
 
@@ -98,7 +97,7 @@ class DataController extends BaseController
                         'Bulma normal' => 'H.png',
                         'Bulma décontracté' => 'H6.png',
                         'Bulma et bébé trunks' => 'H21.png',
-                        'Mère de Bulma' => 'H10.png'
+                        'Mère de Bulma' => 'H10.png',
                     ],
                 ],
                 'H2' => [
@@ -115,7 +114,7 @@ class DataController extends BaseController
                         'Chaozu' => 'H14.png',
                         'Videl cheveux longs' => 'H16.png',
                         'Videl cheveux courts' => 'H19.png',
-                        'Jackie Chun' => 'H47.png'
+                        'Jackie Chun' => 'H47.png',
                     ],
                 ],
                 'H3' => [
@@ -139,7 +138,7 @@ class DataController extends BaseController
                         'Colonel Silver' => 'H52.png',
                         'Arbitre terrien' => 'H53.png',
                         'Homme loup' => 'H54.png',
-                        'Maître des Grues' => 'H55.png'
+                        'Maître des Grues' => 'H55.png',
                     ],
                 ],
             ],
@@ -170,7 +169,7 @@ class DataController extends BaseController
                         'Sangohan habits noir de combat' => 'HS25.png',
                         'Sangohan Super Saiyen habits noir de combat' => 'HS43.png',
                         'Sangohan habits kaïoshin' => 'HS24.png',
-                        'Sangohan du futur' => 'HS7.png'
+                        'Sangohan du futur' => 'HS7.png',
                     ],
                 ],
                 'HS2' => [
@@ -189,7 +188,7 @@ class DataController extends BaseController
                         'Trunks enfant normal' => 'HS16.png',
                         'Trunks enfant Super Saïyen' => 'HS17.png',
                         'Trunks GT normal' => 'HS39.png',
-                        'Trunks GT Super Saïyen' => 'HS38.png'
+                        'Trunks GT Super Saïyen' => 'HS38.png',
                     ],
                 ],
                 'HS3' => [
@@ -198,7 +197,7 @@ class DataController extends BaseController
                         'Sangoten normal' => 'HS18.png',
                         'Sangoten Super Saïyen' => 'HS19.png',
                         'Sangoten GT normal' => 'HS40.png',
-                        'Sangoten GT Super Saïyen' => 'HS41.png'
+                        'Sangoten GT Super Saïyen' => 'HS41.png',
                     ],
                 ],
                 'HS4' => [
@@ -207,26 +206,26 @@ class DataController extends BaseController
                         'Gotrunks normal' => 'HS13.png',
                         'Gotrunks Super Saïyen' => 'HS14.png',
                         'Gotrunks Super Saïyen 3' => 'HS15.png',
-                        'Gotrunks Super Saïyen 3 + Eclairs' => 'HS35.png'
+                        'Gotrunks Super Saïyen 3 + Eclairs' => 'HS35.png',
                     ],
                 ],
                 'HS5' => [
                     'label' => 'Pan',
                     'value' => [
                         'Pan' => 'H101.png',
-                        'Pan Bébé' => 'HS47.png'
+                        'Pan Bébé' => 'HS47.png',
                     ],
                 ],
                 'HS6' => [
                     'label' => 'Justicier masqué',
                     'value' => [
-                        'Justicier masqué' => 'HS45.png'
+                        'Justicier masqué' => 'HS45.png',
                     ],
                 ],
                 'HS7' => [
                     'label' => 'Bra',
                     'value' => [
-                        'Bra' => 'HS46.png'
+                        'Bra' => 'HS46.png',
                     ],
                 ],
             ],
@@ -236,20 +235,20 @@ class DataController extends BaseController
                     'value' => [
                         'Piccolo enfant' => 'N10.png',
                         'Piccolo' => 'N.png',
-                        'Dieuccolo' => 'N1.png'
+                        'Dieuccolo' => 'N1.png',
                     ],
                 ],
                 'N2' => [
                     'label' => 'Tout-puissant',
                     'value' => [
-                        'Tout-puissant' => 'N3.png'
+                        'Tout-puissant' => 'N3.png',
                     ],
                 ],
                 'N3' => [
                     'label' => 'Dendé',
                     'value' => [
                         'Dendé jeune' => 'N2.png',
-                        'Dendé adolescent' => 'N7.png'
+                        'Dendé adolescent' => 'N7.png',
                     ],
                 ],
                 'N4' => [
@@ -257,14 +256,14 @@ class DataController extends BaseController
                     'value' => [
                         'Namek tunique rouge' => 'N4.png',
                         'Namek tunique bleu' => 'N5.png',
-                        'Namek tunique verte' => 'N6.png'
+                        'Namek tunique verte' => 'N6.png',
                     ],
                 ],
                 'N5' => [
                     'label' => 'Slug',
                     'value' => [
                         'Slug avec casque' => 'N8.png',
-                        'Slug sans casque' => 'N9.png'
+                        'Slug sans casque' => 'N9.png',
                     ],
                 ],
             ],
@@ -290,7 +289,7 @@ class DataController extends BaseController
                         'Sangoku Super Saïyen 4' => 'S10.png',
                         'Sangoku GT Super Saïyen' => 'S28.png',
                         'Sangoku GT Super Saïyen 3' => 'S23.png',
-                        'Sangoku GT Super Saïyen 3 + Eclairs' => 'S27.png'
+                        'Sangoku GT Super Saïyen 3 + Eclairs' => 'S27.png',
                     ],
                 ],
                 'S2' => [
@@ -305,7 +304,7 @@ class DataController extends BaseController
                         'Majin Végéta' => 'S20.png',
                         'Végéta mort' => 'S31.png',
                         'Végéta mort Super saïyen' => 'S32.png',
-                        'Prince Végéta' => 'S52.png'
+                        'Prince Végéta' => 'S52.png',
                     ],
                 ],
                 'S3' => [
@@ -315,7 +314,7 @@ class DataController extends BaseController
                         'Végéto Super Saïyen' => 'S14.png',
                         'Gogéta Super Saïyen 4' => 'S15.png',
                         'Gogéta Super Saïyen 2' => 'S19.png',
-                        'Gogéta Super Saïyen 2 + Eclairs' => 'S26.png'
+                        'Gogéta Super Saïyen 2 + Eclairs' => 'S26.png',
                     ],
                 ],
                 'S4' => [
@@ -327,7 +326,7 @@ class DataController extends BaseController
                         'Broly Super Saïyen Légendaire' => 'S18.png',
                         'Broly Super Saïyen Légendaire Altern 1' => 'S42.png',
                         'Broly Super Saïyen Légendaire Altern 2' => 'S50.png',
-                        'Broly Super Saïyen Légendaire Altern 3' => 'S53.png'
+                        'Broly Super Saïyen Légendaire Altern 3' => 'S53.png',
                     ],
                 ],
                 'S5' => [
@@ -345,7 +344,7 @@ class DataController extends BaseController
                         'Toma gorille' => 'S47.png',
                         'Sangoku Jr' => 'S48.png',
                         'Végéta Jr' => 'S49.png',
-                        'Roi Végéta' => 'S51.png'
+                        'Roi Végéta' => 'S51.png',
                     ],
                 ],
             ],
@@ -358,7 +357,7 @@ class DataController extends BaseController
                         'Freezer deuxième transformation' => 'A14.png',
                         'Freezer ultime transformation' => 'A4.png',
                         'Freezer puissance maximale' => 'A30.png',
-                        'Metal Freezer' => 'A3.png'
+                        'Metal Freezer' => 'A3.png',
                     ],
                 ],
                 'A2' => [
@@ -368,7 +367,7 @@ class DataController extends BaseController
                         'Guldo' => 'A24.png',
                         'Geece' => 'A10.png',
                         'Barta' => 'A9.png',
-                        'Recoom' => 'A8.png'
+                        'Recoom' => 'A8.png',
                     ],
                 ],
                 'A3' => [
@@ -383,7 +382,7 @@ class DataController extends BaseController
                         'Doria' => 'A45.png',
                         'Soldat agé' => 'A41.png',
                         'Sauza' => 'A42.png',
-                        'Kiwi' => 'A44.png'
+                        'Kiwi' => 'A44.png',
                     ],
                 ],
                 'A4' => [
@@ -391,7 +390,7 @@ class DataController extends BaseController
                     'value' => [
                         'Baby' => 'A38.png',
                         'Baby végéta' => 'A15.png',
-                        'Baby végéta gorille' => 'A39.png'
+                        'Baby végéta gorille' => 'A39.png',
                     ],
                 ],
                 'A5' => [
@@ -401,7 +400,7 @@ class DataController extends BaseController
                         'Bojack 2ème transformation' => 'A16.png',
                         'Zangya' => 'A22.png',
                         'Gokua' => 'A29.png',
-                        'Bido' => 'A36.png'
+                        'Bido' => 'A36.png',
                     ],
                 ],
                 'A6' => [
@@ -409,27 +408,27 @@ class DataController extends BaseController
                     'value' => [
                         'Cooler' => 'A18.png',
                         'Super Cooler' => 'A17.png',
-                        'Metal Cooler' => 'A19.png'
+                        'Metal Cooler' => 'A19.png',
                     ],
                 ],
                 'A7' => [
                     'label' => 'Tapion et son frère',
                     'value' => [
                         'Tapion' => 'A20.png',
-                        'Petit frère de Tapion' => 'A21.png'
+                        'Petit frère de Tapion' => 'A21.png',
                     ],
                 ],
                 'A8' => [
                     'label' => 'Garlic',
                     'value' => [
-                        'Garlic Junior' => 'A26.png'
+                        'Garlic Junior' => 'A26.png',
                     ],
                 ],
                 'A9' => [
                     'label' => 'Janemba',
                     'value' => [
                         'Janemba1' => 'A27.png',
-                        'Janemba2' => 'A28.png'
+                        'Janemba2' => 'A28.png',
                     ],
                 ],
                 'A10' => [
@@ -442,7 +441,7 @@ class DataController extends BaseController
                         'Vinegar' => 'A35.png',
                         'Torbie' => 'A37.png',
                         'Rild' => 'A40.png',
-                        'Saibaimen' => 'A43.png'
+                        'Saibaimen' => 'A43.png',
                     ],
                 ],
             ],
@@ -461,7 +460,7 @@ class DataController extends BaseController
                         'C-18' => 'C3.png',
                         'C-19' => 'C8.png',
                         'C-20' => 'C4.png',
-                        'C-20 sans chapeau' => 'C9.png'
+                        'C-20 sans chapeau' => 'C9.png',
                     ],
                 ],
                 'C2' => [
@@ -471,14 +470,14 @@ class DataController extends BaseController
                         'Cell deuxième transformation' => 'C7.png',
                         'Perfect Cell' => 'C1.png',
                         'Reborn Cell' => 'C14.png',
-                        'Mini cell' => 'C6.png'
+                        'Mini cell' => 'C6.png',
                     ],
                 ],
                 'C3' => [
                     'label' => 'Autres cyborgs',
                     'value' => [
                         'Taopaïppaï' => 'C5.png',
-                        'Gil' => 'C16.png'
+                        'Gil' => 'C16.png',
                     ],
                 ],
             ],
@@ -494,14 +493,14 @@ class DataController extends BaseController
                         'Majin Bou + Piccolo' => 'M11',
                         'Majin Bou + San Gohan' => 'M10.png',
                         'Bou Ultime' => 'M1.png',
-                        'Super Oub' => 'M13.png'
+                        'Super Oub' => 'M13.png',
                     ],
                 ],
                 'M2' => [
                     'label' => 'Babidi',
                     'value' => [
                         'choice.shape' => '',
-                        'Babidi' => 'M2.png'
+                        'Babidi' => 'M2.png',
                     ],
                 ],
                 'M3' => [
@@ -512,7 +511,7 @@ class DataController extends BaseController
                         'Sporovich' => 'M7.png',
                         'Yamu' => 'M5.png',
                         'Simple guerrier' => 'M4.png',
-                        'Yakon' => 'M6.png'
+                        'Yakon' => 'M6.png',
                     ],
                 ],
             ],
@@ -532,7 +531,7 @@ class DataController extends BaseController
                         'Dragon vert' => 'D8.png',
                         'Dragon blanc' => 'D9.png',
                         'Dragon rouge foncé' => 'D10.png',
-                        'Dragon marron clair' => 'D11.png'
+                        'Dragon marron clair' => 'D11.png',
                     ],
                 ],
                 'D2' => [
@@ -554,13 +553,12 @@ class DataController extends BaseController
                         'Chii Shenron' => 'D16.png',
                         'Otamine' => 'D17.png',
                         'Haze Shenron' => 'D18.png',
-                        '??? Shenron' => 'D19.png'
+                        '??? Shenron' => 'D19.png',
                     ],
                 ],
             ],
         ];
     }
-
 
     /**
      * @Annotations\Get("/ranking", name="")
@@ -571,60 +569,60 @@ class DataController extends BaseController
         $rankingList = [
             'battle-points' => [
                 'label' => 'ranking.battlePoints',
-                'field' => 'p.battlePoints'
+                'field' => 'p.battlePoints',
             ],
             'masterkill' => [
                 'label' => 'ranking.serialKillers',
                 'field' => 'masterKill',
-                'description' => 'ranking.description.serialKillers'
+                'description' => 'ranking.description.serialKillers',
             ],
             'good-killer' => [
                 'label' => 'ranking.assassins',
                 'field' => 'p.nbKillGood',
-                'description' => 'ranking.description.assassins'
+                'description' => 'ranking.description.assassins',
             ],
             'bad-killer' => [
                 'label' => 'ranking.crusaders',
                 'field' => 'p.nbKillBad',
-                'description' => 'ranking.description.crusaders'
+                'description' => 'ranking.description.crusaders',
             ],
             'bounty-hunter' => [
                 'label' => 'ranking.bounty',
-                'field' => 'p.nbWanted'
+                'field' => 'p.nbWanted',
             ],
             'hq-batter' => [
                 'label' => 'ranking.hq.hitters',
                 'field' => 'p.nbHitHq',
-                'description' => 'ranking.description.hq.hitters'
+                'description' => 'ranking.description.hq.hitters',
             ],
             'hq-damage' => [
                 'label' => 'ranking.hq.terrors',
                 'field' => 'p.nbDamageHq',
-                'description' => 'ranking.description.hq.terrors'
+                'description' => 'ranking.description.hq.terrors',
             ],
             'hq-killer' => [
                 'label' => 'ranking.hq.killers',
                 'field' => 'p.nbKillHq',
-                'description' => 'ranking.description.hq.killers'
+                'description' => 'ranking.description.hq.killers',
             ],
             'npc_killer' => [
                 'label' => 'ranking.hunters',
                 'field' => 'p.nbKillNpc',
-                'description' => 'ranking.description.hunters'
+                'description' => 'ranking.description.hunters',
             ],
             'death' => [
                 'label' => 'ranking.victims',
                 'field' => 'p.deathCount',
-                'description' => 'ranking.description.victims'
+                'description' => 'ranking.description.victims',
             ],
             'slap-given' => [
                 'label' => 'ranking.slap.given',
-                'field' => 'p.nbSlapGiven'
+                'field' => 'p.nbSlapGiven',
             ],
             'slap-taken' => [
                 'label' => 'ranking.slap.taken',
-                'field' => 'p.nbSlapTaken'
-            ]
+                'field' => 'p.nbSlapTaken',
+            ],
         ];
 
         if (empty($rankingList[$what])) {
@@ -679,8 +677,8 @@ EOF;
             $rsm->addScalarResult('row_number', 'row_number');
             $query = $this->em()->createNativeQuery($sqlRequest, $rsm);
             $query->setParameters([
-                'id' =>  $playerSearched->getId(),
-                'sides' => [Side::BAD, Side::GOOD]
+                'id' => $playerSearched->getId(),
+                'sides' => [Side::BAD, Side::GOOD],
             ]);
             $rowNumber = $query->getSingleScalarResult();
             $page = ceil($rowNumber / self::LIMIT_PER_PAGE);
@@ -706,7 +704,7 @@ EOF;
             'result' => [
                 'ranking' => $result,
                 'rankingList' => $rankingList,
-            ]
+            ],
         ];
     }
 }

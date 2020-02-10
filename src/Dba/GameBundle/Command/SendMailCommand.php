@@ -3,14 +3,9 @@
 namespace Dba\GameBundle\Command;
 
 use Exception;
-use Dba\GameBundle\Entity\Side;
-use Dba\GameBundle\Entity\Player;
-use Dba\GameBundle\Entity\EventType;
-use Symfony\Component\Console\Input\InputArgument;
-use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
-use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Command\LockableTrait;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Output\OutputInterface;
 
 class SendMailCommand extends BaseCommand
 {
@@ -39,6 +34,7 @@ EOT
     {
         if (!$this->lock()) {
             $output->writeln('The command is already running in another process.');
+
             return 0;
         }
 

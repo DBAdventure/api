@@ -20,33 +20,33 @@ class PlayerObject
      * @ORM\GeneratedValue(strategy="NONE")
      * @ORM\ManyToOne(targetEntity="Player", inversedBy="playerObjects", cascade={"persist", "remove"})
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="player_id", referencedColumnName="id", onDelete="CASCADE")
+     *     @ORM\JoinColumn(name="player_id", referencedColumnName="id", onDelete="CASCADE")
      * })
      * @JMS\Exclude
      */
     private $player;
 
     /**
-     * @var Object
+     * @var object
      *
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="NONE")
      * @ORM\ManyToOne(targetEntity="GameObject", inversedBy="playerObjects")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="object_id", referencedColumnName="id", onDelete="CASCADE")
+     *     @ORM\JoinColumn(name="object_id", referencedColumnName="id", onDelete="CASCADE")
      * })
      */
     private $object;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="number", type="integer", nullable=false)
      */
     private $number;
 
     /**
-     * @var boolean
+     * @var bool
      *
      * @ORM\Column(name="equipped", type="boolean", nullable=false, options={"default": false})
      */
@@ -55,11 +55,11 @@ class PlayerObject
     /**
      * Set object
      *
-     * @param Object $object
+     * @param object $object
      *
      * @return PlayerObject
      */
-    public function setObject(Object $object = null)
+    public function setObject(object $object = null)
     {
         $this->object = $object;
 
@@ -68,7 +68,6 @@ class PlayerObject
 
     /**
      * Get object
-     *
      *
      * @return PlayerObject
      */
@@ -156,10 +155,10 @@ class PlayerObject
     /**
      * Can be Dropped
      *
-     * @JMS\VirtualProperty()
+     * @JMS\VirtualProperty
      * @JMS\SerializedName("can_be_dropped")
      *
-     * @return boolean
+     * @return bool
      */
     public function canBeDropped()
     {
@@ -169,10 +168,10 @@ class PlayerObject
     /**
      * Can be Dropped
      *
-     * @JMS\VirtualProperty()
+     * @JMS\VirtualProperty
      * @JMS\SerializedName("can_be_equipped")
      *
-     * @return boolean
+     * @return bool
      */
     public function canBeEquipped()
     {
@@ -193,10 +192,10 @@ class PlayerObject
     /**
      * Can be used
      *
-     * @JMS\VirtualProperty()
+     * @JMS\VirtualProperty
      * @JMS\SerializedName("can_be_used")
      *
-     * @return boolean
+     * @return bool
      */
     public function canBeUsed()
     {
@@ -206,10 +205,10 @@ class PlayerObject
     /**
      * Can use many of them
      *
-     * @JMS\VirtualProperty()
+     * @JMS\VirtualProperty
      * @JMS\SerializedName("can_use_many")
      *
-     * @return boolean
+     * @return bool
      */
     public function canUseMany()
     {

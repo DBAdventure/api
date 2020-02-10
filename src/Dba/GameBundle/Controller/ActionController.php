@@ -2,22 +2,20 @@
 
 namespace Dba\GameBundle\Controller;
 
-use FOS\RestBundle\Controller\Annotations;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Symfony\Component\HttpFoundation\Request;
-use Dba\GameBundle\Event\ActionEvent;
-use Dba\GameBundle\Event\DbaEvents;
+use Dba\GameBundle\Entity\GameObject;
 use Dba\GameBundle\Entity\MapBonus;
 use Dba\GameBundle\Entity\MapObject;
 use Dba\GameBundle\Entity\MapObjectType;
-use Dba\GameBundle\Entity\GameObject;
 use Dba\GameBundle\Entity\Player;
 use Dba\GameBundle\Entity\PlayerQuest;
 use Dba\GameBundle\Entity\PlayerSpell;
 use Dba\GameBundle\Entity\Quest;
-use Dba\GameBundle\Entity\Side;
 use Dba\GameBundle\Entity\Spell;
-use Dba\GameBundle\Services\ObjectService;
+use Dba\GameBundle\Event\ActionEvent;
+use Dba\GameBundle\Event\DbaEvents;
+use FOS\RestBundle\Controller\Annotations;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @Annotations\NamePrefix("action_")
@@ -112,7 +110,7 @@ class ActionController extends BaseController
                 'messages' => $return,
                 'target' => $target,
                 'attackType' => $type,
-                'isDead' => false
+                'isDead' => false,
             ];
         }
 
@@ -155,8 +153,8 @@ class ActionController extends BaseController
         $messages[] = [
             'message' => 'action.attack.damages',
             'parameters' => [
-                'damages' => $damages
-            ]
+                'damages' => $damages,
+            ],
         ];
         if ($type == Player::ATTACK_TYPE_BETRAY) {
             $messages[] = 'action.betrayPoints';
@@ -166,7 +164,7 @@ class ActionController extends BaseController
             $target,
             $eventMessage,
             [
-                'damages' => $damages
+                'damages' => $damages,
             ]
         );
 
@@ -204,7 +202,7 @@ class ActionController extends BaseController
                 'type' => $type,
                 'messages' => &$messages,
                 'isDead' => $isDead,
-                'damages' => $damages
+                'damages' => $damages,
             ]
         );
 
@@ -216,7 +214,7 @@ class ActionController extends BaseController
             'messages' => $messages,
             'isDead' => $isDead,
             'target' => $target,
-            'attackType' => $type
+            'attackType' => $type,
         ];
     }
 
@@ -241,14 +239,14 @@ class ActionController extends BaseController
                 $messages[] = [
                     'message' => 'action.pickup.zeni',
                     'parameters' => [
-                        'zeni' => $mapObject->getNumber()
+                        'zeni' => $mapObject->getNumber(),
                     ],
                 ];
                 break;
 
             case MapObjectType::BUSH:
                 $objectService->cloneMapObject($mapObject);
-                // No Break
+                // no break
             case MapObjectType::BOX:
                 $playerObject = $objectService->addToInventory(
                     $player,
@@ -264,8 +262,8 @@ class ActionController extends BaseController
                         'message' => 'action.pickup.object',
                         'parameters' => [
                             'number' => $mapObject->getNumber(),
-                            'name' => $mapObject->getObject()->getName()
-                        ]
+                            'name' => $mapObject->getObject()->getName(),
+                        ],
                     ];
                 }
                 break;
@@ -282,7 +280,7 @@ class ActionController extends BaseController
                         'message' => 'action.pickup.damage',
                         'parameters' => [
                             'damages' => $result['damages'],
-                        ]
+                        ],
                     ];
                     $playerService = $this->services()->getPlayerService();
                     if ($playerService->takeDamage($player, $result['damages'])) {
@@ -291,7 +289,7 @@ class ActionController extends BaseController
                             'parameters' => [
                                 'x' => $player->getX(),
                                 'y' => $player->getY(),
-                            ]
+                            ],
                         ];
                     }
                 }
@@ -313,7 +311,7 @@ class ActionController extends BaseController
                             'parameters' => [
                                 'number' => $result['object']['quantity'],
                                 'name' => $result['object']['entity']->getName(),
-                            ]
+                            ],
                         ];
                     }
                 }
@@ -396,15 +394,15 @@ class ActionController extends BaseController
         $messages[] = [
             'message' => 'action.steal.zeni.added',
             'parameters' => [
-                'zenisAdded' => $zenisAdded
-            ]
+                'zenisAdded' => $zenisAdded,
+            ],
         ];
         $playerService->addEvent(
             $player,
             $target,
             $eventMessage,
             [
-                'zenisLost' => $zenisAdded
+                'zenisLost' => $zenisAdded,
             ]
         );
 
@@ -598,7 +596,7 @@ class ActionController extends BaseController
         if (empty($object)) {
             $zenis = $request->request->get('zenis');
             if (!empty($zenis)) {
-                $zenis = $zenis > $player->getZeni()  ? $player->getZeni() : $zenis;
+                $zenis = $zenis > $player->getZeni() ? $player->getZeni() : $zenis;
                 $player->setZeni($player->getZeni() - $zenis);
                 $target->setZeni($target->getZeni() + $zenis);
                 $player->usePoints(Player::ACTION_POINT, Player::GIVE_ACTION);
@@ -610,7 +608,7 @@ class ActionController extends BaseController
                     $target,
                     'event.action.give.zeni',
                     [
-                        'zenis' => $zenis
+                        'zenis' => $zenis,
                     ]
                 );
             }
@@ -618,7 +616,7 @@ class ActionController extends BaseController
             $playerObject = $this->repos()->getPlayerObjectRepository()->findOneBy(
                 [
                     'player' => $player,
-                    'object' => $object
+                    'object' => $object,
                 ]
             );
 
@@ -656,7 +654,7 @@ class ActionController extends BaseController
                     'event.action.give.item',
                     [
                         'name' => $playerObject->getObject()->getName(),
-                        'quantity' => $quantity
+                        'quantity' => $quantity,
                     ]
                 );
             }
@@ -724,15 +722,15 @@ class ActionController extends BaseController
         $messages[] = [
             'message' => 'action.heal.restore',
             'parameters' => [
-                'healPoints' => $healPoints
-            ]
+                'healPoints' => $healPoints,
+            ],
         ];
         $playerService->addEvent(
             $player,
             $target,
             $eventMessage,
             [
-                'healPoints' => $healPoints
+                'healPoints' => $healPoints,
             ]
         );
 
@@ -850,7 +848,7 @@ class ActionController extends BaseController
                 'messages' => $return,
                 'target' => $target,
                 'attackType' => $type,
-                'isDead' => false
+                'isDead' => false,
             ];
         }
 
@@ -858,8 +856,8 @@ class ActionController extends BaseController
         $messages[] = [
             'message' => 'action.spell.cast',
             'parameters' => [
-                'name' => sprintf('spells.%s.name', $playerSpell->getSpell()->getName())
-            ]
+                'name' => sprintf('spells.%s.name', $playerSpell->getSpell()->getName()),
+            ],
         ];
 
         $this->dispatchEvent(
@@ -909,8 +907,8 @@ class ActionController extends BaseController
             $messages[] = [
                 'message' => 'action.spell.damages',
                 'parameters' => [
-                    'damages' => $damages
-                ]
+                    'damages' => $damages,
+                ],
             ];
             if ($type == Player::ATTACK_TYPE_BETRAY) {
                 $messages[] = 'action.betrayPoints';
@@ -920,7 +918,7 @@ class ActionController extends BaseController
                 $target,
                 $eventMessage,
                 [
-                    'damages' => $damages
+                    'damages' => $damages,
                 ]
             );
         }
@@ -985,6 +983,7 @@ class ActionController extends BaseController
             ),
         ];
     }
+
     /**
      * @ParamConverter("quest", class="Dba\GameBundle\Entity\Quest")
      * @Annotations\Get("/talk/{quest}")
@@ -1021,7 +1020,7 @@ class ActionController extends BaseController
         foreach ($quest->getRequirements() as $bonus => $value) {
             $method = $this->getMethod($bonus);
             if (method_exists($player, $method)) {
-                if (call_user_func(array($player, $method)) < $value) {
+                if (call_user_func([$player, $method]) < $value) {
                     return $this->forbidden('action.talk.quest.conditions');
                 }
             }
@@ -1038,6 +1037,7 @@ class ActionController extends BaseController
             ];
             $questService->runEvent($player, $quest->getOnAccepted(), $messages);
             $this->em()->flush();
+
             return [
                 'messages' => $messages,
                 'player_quest' => $playerQuest,
@@ -1049,7 +1049,6 @@ class ActionController extends BaseController
         if ($playerQuest->isFinished()) {
             return $this->forbidden('action.talk.quest.already.finished');
         }
-
 
         // Quest not finished
         list($canBeDone, $playerObjectsNeeded) = $questService->canBeDone($playerQuest);
@@ -1073,7 +1072,7 @@ class ActionController extends BaseController
             $messages[] = [
                 'message' => 'action.talk.quest.gain.zeni',
                 'parameters' => [
-                    'zeni' => $quest->getGainZeni()
+                    'zeni' => $quest->getGainZeni(),
                 ],
             ];
         }
@@ -1112,6 +1111,7 @@ class ActionController extends BaseController
 
         $playerQuest->setStatus(PlayerQuest::STATUS_FINISHED);
         $this->em()->flush();
+
         return [
             'messages' => $messages,
             'player_quest' => $playerQuest,
@@ -1134,8 +1134,8 @@ class ActionController extends BaseController
         $messages[] = [
             'message' => 'action.head.price',
             'parameters' => [
-                'headPrice' => $target->getHeadPrice()
-            ]
+                'headPrice' => $target->getHeadPrice(),
+            ],
         ];
 
         $player->setZeni($player->getZeni() + $target->getHeadPrice());
@@ -1150,7 +1150,7 @@ class ActionController extends BaseController
      * @param Player $target Target
      * @param PlayerSpell $playerSpell Player spell
      *
-     * @return boolean
+     * @return bool
      */
     protected function canMakeAction(Player $player, Player $target, PlayerSpell $playerSpell = null)
     {
@@ -1192,9 +1192,9 @@ class ActionController extends BaseController
     /**
      * Check player and target prosition
      *
-     * @param Player  $player Player
-     * @param mixed  $target Player or MapObject or Quest
-     * @param integer $actionPoints Action points required
+     * @param Player $player Player
+     * @param mixed $target Player or MapObject or Quest
+     * @param int $actionPoints Action points required
      */
     protected function checkPosition(Player $player, $target, $actionPoints = 0)
     {
@@ -1209,7 +1209,7 @@ class ActionController extends BaseController
      *
      * @param string $string String to be convert to method
      *
-     * @return boolean|string
+     * @return bool|string
      */
     protected function getMethod($string)
     {

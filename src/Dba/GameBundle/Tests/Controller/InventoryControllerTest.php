@@ -104,7 +104,7 @@ class InventoryControllerTest extends BaseTestCase
         $playerObject = $this->repos()->getPlayerObjectRepository()->findOneBy(
             [
                 'player' => $player,
-                'object' => $this->repos()->getObjectRepository()->findOneById(12)
+                'object' => $this->repos()->getObjectRepository()->findOneById(12),
             ]
         );
 
@@ -129,7 +129,7 @@ class InventoryControllerTest extends BaseTestCase
         $playerObject = $this->repos()->getPlayerObjectRepository()->findOneBy(
             [
                 'player' => $this->login(),
-                'object' => $this->repos()->getObjectRepository()->findOneById(16)
+                'object' => $this->repos()->getObjectRepository()->findOneById(16),
             ]
         );
         $playerObject->setEquipped(true);
@@ -190,7 +190,7 @@ class InventoryControllerTest extends BaseTestCase
         $playerObject = $this->repos()->getPlayerObjectRepository()->findOneBy(
             [
                 'player' => $this->login(),
-                'object' => $this->repos()->getObjectRepository()->findOneById(12)
+                'object' => $this->repos()->getObjectRepository()->findOneById(12),
             ]
         );
         $playerObject->setEquipped(true);

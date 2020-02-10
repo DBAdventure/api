@@ -10,13 +10,13 @@ use Symfony\Component\Form\FormEvents;
 class AbstractQuestType extends AbstractType
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->addEventListener(
             FormEvents::POST_SUBMIT,
-            array($this, 'onPostSubmit')
+            [$this, 'onPostSubmit']
         );
     }
 

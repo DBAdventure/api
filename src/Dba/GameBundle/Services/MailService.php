@@ -3,9 +3,9 @@
 namespace Dba\GameBundle\Services;
 
 use DateTime;
-use Swift_Message;
 use Dba\GameBundle\Entity\Mail;
 use Dba\GameBundle\Entity\Player;
+use Swift_Message;
 
 class MailService extends BaseService
 {
@@ -37,7 +37,7 @@ class MailService extends BaseService
         );
 
         if ($this->container->get('mailer')->send($message)) {
-            $mail->setSentAt(new DateTime);
+            $mail->setSentAt(new DateTime());
             $mail->setMessageSent($content);
             $this->em()->persist($mail);
             $this->em()->flush();

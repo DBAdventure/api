@@ -27,21 +27,21 @@ class Map
     private $name;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="max_x", type="integer", nullable=false)
      */
     private $maxX;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="max_y", type="integer", nullable=false)
      */
     private $maxY;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
@@ -50,7 +50,7 @@ class Map
     private $id;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="type", type="integer", nullable=false, options={"default": 0})
      */
@@ -83,7 +83,7 @@ class Map
     /**
      * Set maxX
      *
-     * @param integer $maxX
+     * @param int $maxX
      *
      * @return Map
      */
@@ -97,7 +97,7 @@ class Map
     /**
      * Get maxX
      *
-     * @return integer
+     * @return int
      */
     public function getMaxX()
     {
@@ -107,7 +107,7 @@ class Map
     /**
      * Set maxY
      *
-     * @param integer $maxY
+     * @param int $maxY
      *
      * @return Map
      */
@@ -121,7 +121,7 @@ class Map
     /**
      * Get maxY
      *
-     * @return integer
+     * @return int
      */
     public function getMaxY()
     {
@@ -131,7 +131,7 @@ class Map
     /**
      * Set type
      *
-     * @param integer $type
+     * @param int $type
      *
      * @return Map
      */
@@ -145,7 +145,7 @@ class Map
     /**
      * Get type
      *
-     * @return integer
+     * @return int
      */
     public function getType()
     {
@@ -155,7 +155,7 @@ class Map
     /**
      * Get id
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -165,7 +165,7 @@ class Map
     /**
      * Check if it's respawn map
      *
-     * @return boolean
+     * @return bool
      */
     public function isRespawn()
     {
@@ -175,7 +175,7 @@ class Map
     /**
      * Check if it's tutorial map
      *
-     * @return boolean
+     * @return bool
      */
     public function isTutorial()
     {

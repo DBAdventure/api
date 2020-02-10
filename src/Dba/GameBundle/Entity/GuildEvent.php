@@ -5,19 +5,18 @@ namespace Dba\GameBundle\Entity;
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
-use JMS\Serializer\Annotation as JMS;
 
 /**
  * GuildEvent
  *
  * @ORM\Table(name="guild_event", indexes={@ORM\Index(name="guild_event_player", columns={"player_id"}),
-              @ORM\Index(name="guild_event_guild", columns={"guild_id"})})
+ * @ORM\Index(name="guild_event_guild", columns={"guild_id"})})
  * @ORM\Entity
  */
 class GuildEvent
 {
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
@@ -30,7 +29,7 @@ class GuildEvent
      *
      * @ORM\ManyToOne(targetEntity="Player")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="player_id", referencedColumnName="id", nullable=true, onDelete="CASCADE")
+     *     @ORM\JoinColumn(name="player_id", referencedColumnName="id", nullable=true, onDelete="CASCADE")
      * })
      */
     private $player;
@@ -40,7 +39,7 @@ class GuildEvent
      *
      * @ORM\ManyToOne(targetEntity="Guild", inversedBy="events")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="guild_id", referencedColumnName="id", nullable=false, onDelete="CASCADE")
+     *     @ORM\JoinColumn(name="guild_id", referencedColumnName="id", nullable=false, onDelete="CASCADE")
      * })
      */
     private $guild;
@@ -50,7 +49,7 @@ class GuildEvent
      *
      * @ORM\ManyToOne(targetEntity="EventType")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="event_type_id", referencedColumnName="id", nullable=false, onDelete="CASCADE")
+     *     @ORM\JoinColumn(name="event_type_id", referencedColumnName="id", nullable=false, onDelete="CASCADE")
      * })
      */
     private $eventType;
@@ -80,7 +79,7 @@ class GuildEvent
     /**
      * Get id
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {

@@ -12,7 +12,7 @@ use JMS\Serializer\Annotation as JMS;
  * Inbox
  *
  * @ORM\Table(name="inbox", indexes={@ORM\Index(name="inbox_sender_id", columns={"sender_id"}),
-              @ORM\Index(name="inbox_recipient_id", columns={"recipient_id"})})
+ * @ORM\Index(name="inbox_recipient_id", columns={"recipient_id"})})
  * @ORM\Entity(repositoryClass="Dba\GameBundle\Repository\InboxRepository")
  */
 class Inbox
@@ -33,7 +33,7 @@ class Inbox
     protected $recipients;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="status", type="integer", nullable=false)
      */
@@ -62,21 +62,21 @@ class Inbox
     private $createdAt;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="sender_directory", type="string", length=20, nullable=false)
      */
     private $senderDirectory = self::DIRECTORY_OUTBOX;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="recipient_directory", type="string", length=20, nullable=false)
      */
     private $recipientDirectory = self::DIRECTORY_INBOX;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
@@ -89,7 +89,7 @@ class Inbox
      *
      * @ORM\ManyToOne(targetEntity="Dba\GameBundle\Entity\Player", fetch="EAGER")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="recipient_id", referencedColumnName="id", nullable=false, onDelete="CASCADE")
+     *     @ORM\JoinColumn(name="recipient_id", referencedColumnName="id", nullable=false, onDelete="CASCADE")
      * })
      */
     private $recipient;
@@ -99,7 +99,7 @@ class Inbox
      *
      * @ORM\ManyToOne(targetEntity="Dba\GameBundle\Entity\Player", fetch="EAGER")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="sender_id", referencedColumnName="id", nullable=false, onDelete="CASCADE")
+     *     @ORM\JoinColumn(name="sender_id", referencedColumnName="id", nullable=false, onDelete="CASCADE")
      * })
      */
     private $sender;
@@ -115,7 +115,7 @@ class Inbox
     /**
      * Get id
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -221,7 +221,7 @@ class Inbox
     /**
      * Set sender directory
      *
-     * @param integer $senderDirectory
+     * @param int $senderDirectory
      *
      * @return Inbox
      */
@@ -235,7 +235,7 @@ class Inbox
     /**
      * Get sender directory
      *
-     * @return integer
+     * @return int
      */
     public function getSenderDirectory()
     {
@@ -245,7 +245,7 @@ class Inbox
     /**
      * Set recipient directory
      *
-     * @param integer $recipientDirectory
+     * @param int $recipientDirectory
      *
      * @return Inbox
      */
@@ -259,7 +259,7 @@ class Inbox
     /**
      * Get recipient directory
      *
-     * @return integer
+     * @return int
      */
     public function getRecipientDirectory()
     {
@@ -293,7 +293,7 @@ class Inbox
     /**
      * Get status
      *
-     * @return integer
+     * @return int
      */
     public function getStatus()
     {
@@ -303,7 +303,7 @@ class Inbox
     /**
      * Set status
      *
-     * @param integer $status
+     * @param int $status
      *
      * @return Inbox
      */
@@ -366,10 +366,10 @@ class Inbox
      * Check if user can archive
      *
      * @param Player $player Player
-     * @JMS\VirtualProperty()
+     * @JMS\VirtualProperty
      * @JMS\SerializedName("can_archive")
      *
-     * @return boolean
+     * @return bool
      */
     public function canArchive()
     {

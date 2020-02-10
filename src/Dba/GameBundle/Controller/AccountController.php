@@ -2,12 +2,11 @@
 
 namespace Dba\GameBundle\Controller;
 
-use FOS\RestBundle\Controller\Annotations;
-use Symfony\Component\HttpFoundation\Request;
-use Dba\GameBundle\Entity\GameObjectObject;
 use Dba\GameBundle\Entity\Player;
 use Dba\GameBundle\Form\PlayerAppearance;
 use Dba\GameBundle\Form\PlayerSettings;
+use FOS\RestBundle\Controller\Annotations;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @Annotations\NamePrefix("account_")
@@ -179,6 +178,7 @@ class AccountController extends BaseController
     public function getEventsAction()
     {
         $repos = $this->repos()->getPlayerEventRepository();
+
         return [
             'player' => $repos->findBy(
                 ['player' => $this->getUser()],
@@ -215,6 +215,7 @@ class AccountController extends BaseController
             $player->setHistory($backup['history']);
             $this->em()->persist($player);
             $this->em()->flush();
+
             return $this->badRequest();
         }
 
@@ -248,6 +249,7 @@ class AccountController extends BaseController
             $player->setImage($imageBackup);
             $this->em()->persist($player);
             $this->em()->flush();
+
             return $this->badRequest();
         }
 
@@ -305,7 +307,7 @@ class AccountController extends BaseController
             case self::SK:
             case self::ST:
             case self::VI:
-                $currentValue = call_user_func([$player, 'get'. ucfirst($what)]);
+                $currentValue = call_user_func([$player, 'get' . ucfirst($what)]);
                 call_user_func([$player, 'set' . ucfirst($what)], $currentValue + 1);
                 break;
         }

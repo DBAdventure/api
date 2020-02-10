@@ -17,7 +17,7 @@ class EventType
     const BANK = 3;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
@@ -35,7 +35,7 @@ class EventType
     /**
      * Get id
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {

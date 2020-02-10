@@ -55,8 +55,8 @@ class NewsControllerTest extends BaseTestCase
         $this->assertEquals(
             [
                 'success' => [
-                    'News created!'
-                ]
+                    'News created!',
+                ],
             ],
             $session->getBag('flashes')->all()
         );
@@ -88,8 +88,8 @@ class NewsControllerTest extends BaseTestCase
         $this->assertEquals(
             [
                 'success' => [
-                    'News saved!'
-                ]
+                    'News saved!',
+                ],
             ],
             $session->getBag('flashes')->all()
         );

@@ -4,16 +4,15 @@ namespace Dba\AdminBundle\Form;
 
 use Dba\GameBundle\Entity;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
-use Symfony\Component\Form\CallbackTransformer;
-use Symfony\Component\Form\Extension\Core\Type;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class MapObject extends AbstractType
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -35,7 +34,7 @@ class MapObject extends AbstractType
                     'class' => Entity\Map::class,
                     'choice_label' => 'name',
                     'label' => 'form.map',
-                    'choice_translation_domain' => false
+                    'choice_translation_domain' => false,
                 ]
             )
             ->add(
@@ -57,7 +56,7 @@ class MapObject extends AbstractType
                 Type\IntegerType::class,
                 [
                     'label' => 'form.number',
-                    'required' => false
+                    'required' => false,
                 ]
             )
             ->add(

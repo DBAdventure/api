@@ -4,14 +4,10 @@ namespace Dba\GameBundle\Services;
 
 use Dba\GameBundle\Entity\EventType;
 use Dba\GameBundle\Entity\Map;
-use Dba\GameBundle\Entity\MapObject;
-use Dba\GameBundle\Entity\MapObjectType;
-use Dba\GameBundle\Entity\GameObject;
 use Dba\GameBundle\Entity\Player;
 use Dba\GameBundle\Entity\PlayerEvent;
 use Dba\GameBundle\Entity\PlayerSpell;
 use Dba\GameBundle\Entity\PlayerSpellEffect;
-use Dba\GameBundle\Entity\QuestNpc;
 use Dba\GameBundle\Entity\Side;
 use Dba\GameBundle\Entity\Spell;
 
@@ -22,7 +18,7 @@ class PlayerService extends BaseService
     /**
      * Check for protect low level
      *
-     * @return boolean|array
+     * @return bool|array
      */
     public function protectLowLevel(
         Player $player,
@@ -37,9 +33,9 @@ class PlayerService extends BaseService
                 [
                     'message' => 'game.lose.life',
                     'parameters' => [
-                        'damages' => self::PILAF_ATTACK
-                    ]
-                ]
+                        'damages' => self::PILAF_ATTACK,
+                    ],
+                ],
             ];
 
             if ($this->takeDamage($player, self::PILAF_ATTACK)) {
@@ -56,7 +52,7 @@ class PlayerService extends BaseService
      *  Respawn a player
      *
      * @param Player $player Player
-     * @param boolean $forceRandom Force random teleport (default: false)
+     * @param bool $forceRandom Force random teleport (default: false)
      */
     public function respawn(Player $player, $forceRandom = false)
     {
@@ -67,6 +63,7 @@ class PlayerService extends BaseService
 
         if (!$player->isPlayer() || $forceRandom) {
             $where = ['c'] + Player::AVAILABLE_MOVE;
+
             return $this->teleport(
                 $player,
                 $player->getMap(),
@@ -75,7 +72,7 @@ class PlayerService extends BaseService
         }
 
         $map = $this->repos()->getMapRepository()->findOneBy([
-            'id' => $player->getSide()->getId() == Side::GOOD ? Map::HEAVEN : Map::HELL
+            'id' => $player->getSide()->getId() == Side::GOOD ? Map::HEAVEN : Map::HELL,
         ]);
         $player->setX(mt_rand(1, $map->getMaxX()));
         $player->setY(mt_rand(1, $map->getMaxY()));
@@ -86,7 +83,6 @@ class PlayerService extends BaseService
      *  Respawn a player
      *
      * @param Player $player Player
-     *
      */
     public function forbiddenTeleport(Player $player, Map $map)
     {
@@ -133,25 +129,25 @@ class PlayerService extends BaseService
         // if target more agile, 1/3 luck to do damage between 1 and 10
         $luck = rand(-12, 24) / 4;
         if ($player->getTotalAccuracy() > (0.90 * $target->getTotalAgility())) {
-            $ratio = (225/7942) * (
+            $ratio = (225 / 7942) * (
                 (1.10 * $player->getTotalStrength() + 0.3 * $player->getTotalAccuracy()) -
                 (
                     2 * $target->getTotalResistance() +
                     0.4 * $target->getTotalAgility() +
                     0.6 * $target->getTotalAnalysis()
                 )
-            ) + (3375/7942);
+            ) + (3375 / 7942);
 
             // target is too strong
             if ($ratio < 0) {
                 $ratio = abs($ratio);
                 $competences = 17 * sqrt($ratio);
-                $fatigue = ($target->getFatiguePoints() - $player->getFatiguePoints()) * (8/100);
+                $fatigue = ($target->getFatiguePoints() - $player->getFatiguePoints()) * (8 / 100);
                 $totalPercent = -($luck + $competences - $fatigue - 7);
                 $damages = ceil((mt_rand(25, 30) * $totalPercent) / 7);
             } else {
                 $competences = 19 * sqrt($ratio);
-                $fatigue = ($target->getFatiguePoints() - $player->getFatiguePoints()) * (8/100);
+                $fatigue = ($target->getFatiguePoints() - $player->getFatiguePoints()) * (8 / 100);
                 $totalPercent = ($luck + $competences + $fatigue - 7);
                 $damages = ceil(mt_rand(25, 30) * $totalPercent);
             }
@@ -173,6 +169,7 @@ class PlayerService extends BaseService
         }
 
         $isDead = $this->takeDamage($target, $damages);
+
         return [$luck, $damages, $isDead];
     }
 
@@ -208,7 +205,7 @@ class PlayerService extends BaseService
         }
 
         $luck = rand(-6, 6) / 4;
-        $ratio = (225/7942) * (
+        $ratio = (225 / 7942) * (
             (
                 (1.4 * $player->getTotalIntellect()) +
                 (0.4 * $player->getTotalVision()) +
@@ -219,10 +216,10 @@ class PlayerService extends BaseService
                 0.3 * $target->getTotalResistance() +
                 0.9 * $target->getTotalAnalysis()
             )
-        ) + (3375/7942);
+        ) + (3375 / 7942);
 
         $baseDamages = $playerSpell->getSpell()->getDamages();
-        $fatigue = ($target->getFatiguePoints() - $player->getFatiguePoints()) * (8/100);
+        $fatigue = ($target->getFatiguePoints() - $player->getFatiguePoints()) * (8 / 100);
         if ($ratio < 0) {
             $ratio = abs($ratio);
             $competences = 17 * sqrt($ratio);
@@ -235,6 +232,7 @@ class PlayerService extends BaseService
         $damages = ceil($damages / 5.6);
 
         $isDead = $this->takeDamage($target, $damages);
+
         return [$luck, $damages, $isDead];
     }
 
@@ -245,10 +243,10 @@ class PlayerService extends BaseService
      * and return true
      *
      * @param Player $player
-     * @param integer $damages
-     * @param boolean $isSlap
+     * @param int $damages
+     * @param bool $isSlap
      *
-     * @return boolean
+     * @return bool
      */
     public function takeDamage(Player $player, $damages, $isSlap = false)
     {
@@ -267,6 +265,7 @@ class PlayerService extends BaseService
             $player,
             $this->repos()->getMapRepository()->getDefaultMap()
         );
+
         return true;
     }
 
@@ -274,10 +273,10 @@ class PlayerService extends BaseService
      * Add battle points
      *
      * @param Player $player Player
-     * @param integer $actionPointsUsed Action points used
+     * @param int $actionPointsUsed Action points used
      * @param Player $target Target
      * @param array $messages Array of Messages
-     * @param integer $battlePoints BattlePoints
+     * @param int $battlePoints BattlePoints
      */
     public function addBattlePoints(
         Player $player,
@@ -294,8 +293,8 @@ class PlayerService extends BaseService
             $messages[] = [
                 'message' => 'action.battle.points',
                 'parameters' => [
-                    'battlePoints' => $battlePoints
-                ]
+                    'battlePoints' => $battlePoints,
+                ],
             ];
         }
 
@@ -303,8 +302,8 @@ class PlayerService extends BaseService
             $messages[] = [
                 'message' => 'action.level.up',
                 'parameters' => [
-                    'level' => $player->getLevel()
-                ]
+                    'level' => $player->getLevel(),
+                ],
             ];
         }
     }
@@ -313,7 +312,7 @@ class PlayerService extends BaseService
      * Calculate battle points
      *
      * @param Player $player Player
-     * @param integer $actionPointsUsed Action points used
+     * @param int $actionPointsUsed Action points used
      * @param Player $target Target
      *
      * @return Player
@@ -331,7 +330,7 @@ class PlayerService extends BaseService
         $baseBp = 5;
         // Guy attack a NPC, reduce the base
         if (!$target->isPlayer()) {
-            $baseBp -= 1;
+            --$baseBp;
         }
 
         // Attack a lower level, we penalize for every ten levels
@@ -344,6 +343,7 @@ class PlayerService extends BaseService
         }
 
         $battlePoints = $actionPointsUsed * $baseBp;
+
         return $battlePoints < 0 ? 1 : $battlePoints;
     }
 
@@ -351,9 +351,9 @@ class PlayerService extends BaseService
      * Update level
      *
      * @param Player $player
-     * @param integer $battlePoints
+     * @param int $battlePoints
      *
-     * @return boolean Return true if level is updated, otherwise false
+     * @return bool Return true if level is updated, otherwise false
      */
     protected function updateLevel(Player $player, $battlePoints = null)
     {
@@ -447,9 +447,9 @@ class PlayerService extends BaseService
      */
     public function steal(Player $player, Player $target)
     {
-        $fatigue = ($target->getFatiguePoints() - $player->getFatiguePoints()) * (8/100);
+        $fatigue = ($target->getFatiguePoints() - $player->getFatiguePoints()) * (8 / 100);
         $luck = rand(-12, 12) / 4;
-        $ratio = (225/7942) * (
+        $ratio = (225 / 7942) * (
             (
                 (2 * $player->getTotalAgility()) + (0.5 * $player->getTotalAccuracy())
             ) - (
@@ -457,12 +457,12 @@ class PlayerService extends BaseService
                 (0.7 * $target->getTotalStrength()) +
                 ($target->getTotalAnalysis() * 0.8)
             )
-        ) + (3375/7942);
+        ) + (3375 / 7942);
 
         if ($ratio < 0) {
             $ratio = abs($ratio);
-            $totalPercent = - ($luck + (17 * sqrt($ratio)) - $fatigue);
-            $zenisAdded = ceil(abs(ceil($totalPercent)/7)) + mt_rand(0, 5);
+            $totalPercent = -($luck + (17 * sqrt($ratio)) - $fatigue);
+            $zenisAdded = ceil(abs(ceil($totalPercent) / 7)) + mt_rand(0, 5);
         } else {
             $totalPercent = ($luck + (19 * sqrt($ratio)) + $fatigue);
             $zenisAdded = abs(ceil($totalPercent)) + mt_rand(0, 10);
@@ -482,7 +482,7 @@ class PlayerService extends BaseService
 
         return [
             $luck,
-            $zenisAdded
+            $zenisAdded,
         ];
     }
 
@@ -514,7 +514,7 @@ class PlayerService extends BaseService
             $targetLuckFactor = 1.3;
         }
 
-        $competence = 2.75 * ( 0.7 * $player->getTotalSkill() + 0.1 * $player->getTotalIntellect());
+        $competence = 2.75 * (0.7 * $player->getTotalSkill() + 0.1 * $player->getTotalIntellect());
         $healPoints = ceil(($playerLuckFactor * $targetLuckFactor) * ($luck + $competence));
         $healPoints = $healPoints < 0 ? 0 : $healPoints;
         $fatiguePoints = 0;
@@ -538,7 +538,6 @@ class PlayerService extends BaseService
 
         $target->addPoints(Player::HEALTH_POINT, $healPoints);
         $target->usePoints(Player::FATIGUE_POINT, $fatiguePoints);
-
 
         return [$luck, $healPoints, $fatiguePoints];
     }
@@ -616,7 +615,7 @@ class PlayerService extends BaseService
         $nbCompetences = round($nbCompetences);
         if ($nbCompetences > $nbMaxCompetences) {
             $nbCompetences = $nbMaxCompetences;
-        } elseif ($nbCompetences<1) {
+        } elseif ($nbCompetences < 1) {
             $nbCompetences = 1;
         }
 
@@ -630,7 +629,7 @@ class PlayerService extends BaseService
             'accuracy' => $target->getTotalAccuracy(),
             'skill' => $target->getTotalSkill(),
             'zeni' => $target->getZeni(),
-            'fatiguePoints' => $target->getFatiguePoints()
+            'fatiguePoints' => $target->getFatiguePoints(),
         ];
 
         $arrayDifference = [-1, 1];
@@ -701,7 +700,7 @@ class PlayerService extends BaseService
                 $resultCompetences['health'] = $target->getHealth();
                 $temoinAmu = 1;
             } else {
-                $resultCompetences['health'] = " ??? ";
+                $resultCompetences['health'] = ' ??? ';
                 $temoinAmu = 2;
             }
 
@@ -709,7 +708,7 @@ class PlayerService extends BaseService
                 $resultCompetences['ki'] = $target->getKi();
                 $temoinBouclier = 1;
             } else {
-                $resultCompetences['ki'] = " ??? ";
+                $resultCompetences['ki'] = ' ??? ';
                 $temoinBouclier = 2;
             }
         }
@@ -769,9 +768,9 @@ class PlayerService extends BaseService
      *
      * @param Player $player Player who attack
      * @param Player $target Player who receive attack
-     * @param integer $damages Damage taken by target
-     * @param boolean $isDead Check if target is dead
-     * @param integer $attackType Attack type (revenge, normal, guild, etc)
+     * @param int $damages Damage taken by target
+     * @param bool $isDead Check if target is dead
+     * @param int $attackType Attack type (revenge, normal, guild, etc)
      *
      * @return null
      */
@@ -822,7 +821,7 @@ class PlayerService extends BaseService
      * Add stats when player heal target
      *
      * @param Player $player Player who heal
-     * @param integer $healPoints Heal restored
+     * @param int $healPoints Heal restored
      *
      * @return null
      */
@@ -832,41 +831,39 @@ class PlayerService extends BaseService
         $player->setNbTotalHealthGiven($player->getNbTotalHealthGiven() + $healPoints);
     }
 
-
     /**
      * Move player to a specific direction
      *
      * @param Player $player Player who will move
      * @param string $where Direction
      *
-     * @return boolean
+     * @return bool
      */
     public function move(Player $player, $where)
     {
         $move = 0;
         if (preg_match('~n~', $where)) {
             $player->setY($player->getY() - 1);
-            $move++;
+            ++$move;
         }
 
         if (preg_match('~s~', $where)) {
             $player->setY($player->getY() + 1);
-            $move++;
+            ++$move;
         }
 
         if (preg_match('~e~', $where)) {
             $player->setX($player->getX() + 1);
-            $move++;
+            ++$move;
         }
 
         if (preg_match('~w~', $where)) {
             $player->setX($player->getX() - 1);
-            $move++;
+            ++$move;
         }
 
         return [$this->repos()->getMapRepository()->hasValidPosition($player), $move];
     }
-
 
     /**
      * Find available player objects
@@ -894,6 +891,7 @@ class PlayerService extends BaseService
      * - Create Map Object
      *
      * @param Player $player The player
+     *
      * @return void
      */
     public function prepareTutorial(Player $player)
@@ -906,7 +904,7 @@ class PlayerService extends BaseService
             $tutorial->setType(Map::TYPE_TUTORIAL);
             $mapBoxes = $this->repos()->getMapBoxRepository()->findBy(
                 [
-                    'map' => $originalTutorial
+                    'map' => $originalTutorial,
                 ]
             );
 
@@ -918,7 +916,7 @@ class PlayerService extends BaseService
 
             $mapObjects = $this->repos()->getMapObjectRepository()->findBy(
                 [
-                    'map' => $originalTutorial
+                    'map' => $originalTutorial,
                 ]
             );
 
@@ -930,7 +928,7 @@ class PlayerService extends BaseService
 
             $quests = $this->repos()->getQuestRepository()->findBy(
                 [
-                    'map' => $originalTutorial
+                    'map' => $originalTutorial,
                 ]
             );
             foreach ($quests as $quest) {

@@ -2,12 +2,11 @@
 
 namespace Dba\AdminBundle\Controller;
 
+use Dba\AdminBundle\Form;
+use Dba\GameBundle\Entity\Guild;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
-use Dba\AdminBundle\Controller\BaseController;
-use Dba\AdminBundle\Form;
-use Dba\GameBundle\Entity\Guild;
 
 /**
  * @Route("/guild")
@@ -37,7 +36,7 @@ class GuildController extends BaseController
                 'guilds' => [
                     'disabled' => $guildsDisabled,
                     'enabled' => $guildsEnabled,
-                ]
+                ],
             ]
         );
     }
@@ -78,7 +77,7 @@ class GuildController extends BaseController
             'DbaAdminBundle::guild/edit.html.twig',
             [
                 'form' => $form->createView(),
-                'guild' => $guild
+                'guild' => $guild,
             ]
         );
     }
@@ -91,6 +90,7 @@ class GuildController extends BaseController
     {
         $this->em()->remove($guild);
         $this->em()->flush();
+
         return $this->redirect($this->generateUrl('admin.guild'));
     }
 }

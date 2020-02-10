@@ -3,14 +3,14 @@
 namespace Dba\GameBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints as Assert;
 use JMS\Serializer\Annotation as JMS;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Quest Npc
  *
  * @ORM\Table(name="quest_npc", indexes={@ORM\Index(name="quest_npc_quest_id", columns={"quest_id"}),
-   @ORM\Index(name="quest_npc_race_id", columns={"race_id"})})
+ * @ORM\Index(name="quest_npc_race_id", columns={"race_id"})})
  * @ORM\Entity(repositoryClass="Dba\GameBundle\Repository\QuestNpcRepository")
  */
 class QuestNpc
@@ -22,7 +22,7 @@ class QuestNpc
      *
      * @ORM\ManyToOne(targetEntity="Dba\GameBundle\Entity\Quest", fetch="EAGER", inversedBy="npcsNeeded")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="quest_id", referencedColumnName="id", nullable=false, onDelete="CASCADE")
+     *     @ORM\JoinColumn(name="quest_id", referencedColumnName="id", nullable=false, onDelete="CASCADE")
      * })
      * @JMS\Exclude
      */
@@ -35,16 +35,16 @@ class QuestNpc
      *
      * @ORM\ManyToOne(targetEntity="Dba\GameBundle\Entity\Race", fetch="EAGER")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="race_id", referencedColumnName="id", nullable=false, onDelete="CASCADE")
+     *     @ORM\JoinColumn(name="race_id", referencedColumnName="id", nullable=false, onDelete="CASCADE")
      * })
      */
     private $race;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="number", type="integer", nullable=false)
-     * @Assert\NotBlank()
+     * @Assert\NotBlank
      */
     private $number = 1;
 
@@ -65,7 +65,7 @@ class QuestNpc
     /**
      * Get number
      *
-     * @return integer
+     * @return int
      */
     public function getNumber()
     {

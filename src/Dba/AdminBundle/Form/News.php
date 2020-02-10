@@ -4,15 +4,15 @@ namespace Dba\AdminBundle\Form;
 
 use Dba\GameBundle\Entity;
 use Symfony\Component\Finder\Finder;
-use Symfony\Component\Form\Extension\Core\Type;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class News extends AbstractType
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -52,7 +52,7 @@ class News extends AbstractType
                 [
                     'label' => 'form.image',
                     'choices' => $images,
-                    'choice_translation_domain' => false
+                    'choice_translation_domain' => false,
                 ]
             )
             ->add(

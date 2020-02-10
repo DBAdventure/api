@@ -5,8 +5,8 @@ namespace Dba\AdminBundle\Form;
 use Dba\GameBundle\Entity;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
-use Symfony\Component\Form\Extension\Core\Type;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -22,7 +22,7 @@ class Npc extends AbstractType
         7 => 'snake.blue',
         8 => 'monkey',
         9 => 'ghost',
-        10 => 'soldier'
+        10 => 'soldier',
     ];
 
     const LEVELS = [
@@ -35,11 +35,11 @@ class Npc extends AbstractType
         '61 - 30',
         '71 - 30',
         '81 - 30',
-        '91 - 100'
+        '91 - 100',
     ];
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -72,7 +72,7 @@ class Npc extends AbstractType
                 [
                     'label' => 'form.level',
                     'choices' => array_flip(self::LEVELS),
-                    'choice_translation_domain' => false
+                    'choice_translation_domain' => false,
                 ]
             )
             ->add(
@@ -88,11 +88,12 @@ class Npc extends AbstractType
                                 [Entity\Map::HELL, Entity\Map::HEAVEN]
                             )
                         );
+
                         return $qb;
                     },
                     'choice_label' => 'name',
                     'label' => 'form.map',
-                    'choice_translation_domain' => true
+                    'choice_translation_domain' => true,
                 ]
             )
         ;

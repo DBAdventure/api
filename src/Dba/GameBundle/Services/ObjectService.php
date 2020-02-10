@@ -2,10 +2,10 @@
 
 namespace Dba\GameBundle\Services;
 
+use Dba\GameBundle\Entity\GameObject;
 use Dba\GameBundle\Entity\Map;
 use Dba\GameBundle\Entity\MapObject;
 use Dba\GameBundle\Entity\MapObjectType;
-use Dba\GameBundle\Entity\GameObject;
 use Dba\GameBundle\Entity\Player;
 use Dba\GameBundle\Entity\PlayerObject;
 
@@ -28,7 +28,7 @@ class ObjectService extends BaseService
      */
     public function addToInventory(Player $player, GameObject $object, $isPurchased = true, $number = 1)
     {
-        if (($object->getWeight() + $player->getInventoryWeight()) >  $player->getInventoryMaxWeight()) {
+        if (($object->getWeight() + $player->getInventoryWeight()) > $player->getInventoryMaxWeight()) {
             return self::ERROR_INVENTORY_FULL;
         }
 
@@ -41,7 +41,7 @@ class ObjectService extends BaseService
         $playerObject = $objectRepo->findOneBy(
             [
                 'object' => $object,
-                'player' => $player
+                'player' => $player,
             ]
         );
 
@@ -65,6 +65,7 @@ class ObjectService extends BaseService
         }
 
         $player->addPlayerObject($playerObject);
+
         return $playerObject;
     }
 
@@ -104,7 +105,6 @@ class ObjectService extends BaseService
 
         return true;
     }
-
 
     /*
      * Open capsule
@@ -152,17 +152,17 @@ class ObjectService extends BaseService
      * Drop item on the map
      *
      * @param PlayerObject $playerObject Player object
-     * @param integer $nbObjects Number of objects to drop
-     * @param integer $distance Distance
+     * @param int $nbObjects Number of objects to drop
+     * @param int $distance Distance
      *
-     * @return boolean
+     * @return bool
      */
     public function drop(PlayerObject $playerObject, $nbObjects, $distance = 0)
     {
         if (empty($distance)) {
             $newPosition = [
                 'x' => $playerObject->getPlayer()->getX(),
-                'y' => $playerObject->getPlayer()->getY()
+                'y' => $playerObject->getPlayer()->getY(),
             ];
         } else {
             $mapRepo = $this->repos()->getMapRepository();
@@ -187,6 +187,7 @@ class ObjectService extends BaseService
         );
 
         $this->em()->persist($newMapObject);
+
         return true;
     }
 
@@ -194,7 +195,7 @@ class ObjectService extends BaseService
      * Add Zenis on map
      *
      * @param Map $map Map
-     * @param integer $zenis Zenis to add on the map
+     * @param int $zenis Zenis to add on the map
      */
     public function addZenisOnMap(Map $map, $zenis)
     {
@@ -216,9 +217,8 @@ class ObjectService extends BaseService
             $positions = [$positions];
         }
 
-
         foreach ($positions as $position) {
-            $indexNumber = $numberItems-1;
+            $indexNumber = $numberItems - 1;
             if (!empty($indexNumber)) {
                 // We take a random amount of zenis in the stack
                 $zenisAdded = mt_rand(1, ceil($zenis / $numberItems));
@@ -227,7 +227,7 @@ class ObjectService extends BaseService
             }
 
             $zenis -= $zenisAdded;
-            $numberItems--;
+            --$numberItems;
 
             $mapObject = new MapObject();
             $mapObject->setMap($map);
@@ -247,9 +247,9 @@ class ObjectService extends BaseService
      * Sell an item
      *
      * @param PlayerObject $playerObject Player object
-     * @param integer $number NUmber of objects
+     * @param int $number NUmber of objects
      *
-     * @return boolean
+     * @return bool
      */
     public function sell(PlayerObject $playerObject, $number = 0)
     {

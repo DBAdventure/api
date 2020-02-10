@@ -3,7 +3,6 @@
 namespace Dba\GameBundle\Controller;
 
 use FOS\RestBundle\Controller\Annotations;
-use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @Annotations\NamePrefix("magic_")
@@ -23,9 +22,11 @@ class MagicController extends BaseController
                 $bReq = $b->getSpell()->getRequirements();
                 $aLevel = !empty($aReq['level']) ? $aReq['level'] : 0;
                 $bLevel = !empty($bReq['level']) ? $bReq['level'] : 0;
+
                 return $aLevel > $bLevel;
             }
         );
+
         return $spells;
     }
 }

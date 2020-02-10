@@ -12,7 +12,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class QuestNpcType extends AbstractQuestType
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -33,6 +33,7 @@ class QuestNpcType extends AbstractQuestType
                                 array_flip(Entity\Race::NPC_LIST)
                             )
                         );
+
                         return $qb;
                     },
                 ]

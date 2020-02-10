@@ -2,9 +2,9 @@
 
 namespace Dba\GameBundle\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -16,7 +16,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 class NpcObject
 {
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
@@ -28,23 +28,22 @@ class NpcObject
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=80, nullable=false)
-     * @Assert\NotBlank()
+     * @Assert\NotBlank
      */
     private $name;
 
     /**
      * @var array
-     *
      * @var ArrayCollection
      * @ORM\ManyToMany(targetEntity="Dba\GameBundle\Entity\Race", cascade={"persist"})
      */
     private $races;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="luck", type="integer", nullable=false)
-     * @Assert\NotBlank()
+     * @Assert\NotBlank
      */
     private $luck = 100;
 
@@ -59,7 +58,7 @@ class NpcObject
     /**
      * Get id
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -83,7 +82,7 @@ class NpcObject
     /**
      * Get luck
      *
-     * @return integer
+     * @return int
      */
     public function getLuck()
     {
@@ -203,6 +202,7 @@ class NpcObject
         $races = $this->getRaces();
         $this->setRaces();
         $this->setRaces($races);
+
         return $this;
     }
 }

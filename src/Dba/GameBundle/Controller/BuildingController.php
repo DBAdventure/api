@@ -2,14 +2,14 @@
 
 namespace Dba\GameBundle\Controller;
 
-use FOS\RestBundle\Controller\Annotations;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Symfony\Component\HttpFoundation\Request;
 use Dba\GameBundle\Entity\Bank;
 use Dba\GameBundle\Entity\Building;
 use Dba\GameBundle\Entity\GameObject;
 use Dba\GameBundle\Entity\Player;
 use Dba\GameBundle\Entity\Spell;
+use FOS\RestBundle\Controller\Annotations;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @Annotations\NamePrefix("building_")
@@ -90,6 +90,7 @@ class BuildingController extends BaseController
                     function ($a, $b) {
                         $aLevel = !empty($a->getRequirements()['level']) ? $a->getRequirements()['level'] : 0;
                         $bLevel = !empty($b->getRequirements()['level']) ? $b->getRequirements()['level'] : 0;
+
                         return $aLevel > $bLevel;
                     }
                 );
@@ -134,11 +135,12 @@ class BuildingController extends BaseController
         $this->em()->persist($player);
         $this->em()->persist($result);
         $this->em()->flush();
+
         return [
             'message' => 'building.magic.success',
             'parameters' => [
                 'name' => sprintf('spells.%s.name', $spell->getName()),
-            ]
+            ],
         ];
     }
 
@@ -165,14 +167,14 @@ class BuildingController extends BaseController
         $this->em()->persist($player);
         $this->em()->persist($result);
         $this->em()->flush();
+
         return [
             'message' => 'building.shop.success',
             'parameters' => [
                 'name' => $object->getName(),
-            ]
+            ],
         ];
     }
-
 
     /**
      * @ParamConverter("building", class="Dba\GameBundle\Entity\Building")
@@ -245,7 +247,7 @@ class BuildingController extends BaseController
             'parameters' => [
                 'goldBar' => $goldBar,
                 'goldBank' => $goldBank,
-            ]
+            ],
         ];
     }
 
@@ -281,7 +283,7 @@ class BuildingController extends BaseController
             'parameters' => [
                 'goldBar' => $withdraw,
                 'goldBank' => $goldBank,
-            ]
+            ],
         ];
     }
 
@@ -316,7 +318,7 @@ class BuildingController extends BaseController
             'parameters' => [
                 'amount' => $amount,
                 'headPrice' => $target->getHeadPrice(),
-            ]
+            ],
         ];
     }
 }

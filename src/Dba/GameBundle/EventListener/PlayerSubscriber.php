@@ -3,18 +3,18 @@
 namespace Dba\GameBundle\EventListener;
 
 use DateTime;
-use Doctrine\ORM\Events;
+use Dba\GameBundle\Entity\Player;
 use Doctrine\Common\EventSubscriber;
 use Doctrine\Common\Persistence\Event\LifecycleEventArgs;
-use Dba\GameBundle\Entity\Player;
+use Doctrine\ORM\Events;
 
 class PlayerSubscriber implements EventSubscriber
 {
     public function getSubscribedEvents()
     {
-        return array(
+        return [
             Events::postLoad,
-        );
+        ];
     }
 
     public function postLoad(LifecycleEventArgs $args)
@@ -33,7 +33,7 @@ class PlayerSubscriber implements EventSubscriber
             Player::ACTION_POINT,
             Player::MOVEMENT_POINT,
             Player::FATIGUE_POINT,
-            Player::KI_POINT
+            Player::KI_POINT,
         ];
 
         foreach ($data as $what) {
@@ -56,7 +56,7 @@ class PlayerSubscriber implements EventSubscriber
                     break;
             }
 
-            $currentDate = new DateTime;
+            $currentDate = new DateTime();
             $originalTime = $entity->{'get' . $method . 'UpdatedAt'}();
 
             $points = floor(($currentDate->getTimestamp() - $originalTime->getTimestamp()) / (60 * $pointTime));

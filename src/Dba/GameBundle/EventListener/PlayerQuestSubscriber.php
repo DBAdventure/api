@@ -2,11 +2,10 @@
 
 namespace Dba\GameBundle\EventListener;
 
-use DateTime;
-use Dba\GameBundle\Services\ServicesService;
-use Dba\GameBundle\Event\DbaEvents;
-use Dba\GameBundle\Event\ActionEvent;
 use Dba\GameBundle\Entity\Side;
+use Dba\GameBundle\Event\ActionEvent;
+use Dba\GameBundle\Event\DbaEvents;
+use Dba\GameBundle\Services\ServicesService;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class PlayerQuestSubscriber implements EventSubscriberInterface
@@ -17,21 +16,19 @@ class PlayerQuestSubscriber implements EventSubscriberInterface
      * Constructor
      *
      * @param ServicesService $services Services
-     *
      */
     public function __construct(ServicesService $services)
     {
         $this->services = $services;
     }
 
-
     public static function getSubscribedEvents()
     {
-        return array(
+        return [
             DbaEvents::AFTER_SPELL => 'afterAttack',
             DbaEvents::AFTER_ATTACK => 'afterAttack',
             DbaEvents::AFTER_SLAP => 'afterAttack',
-        );
+        ];
     }
 
     public function afterAttack(ActionEvent $event)
@@ -67,7 +64,7 @@ class PlayerQuestSubscriber implements EventSubscriberInterface
                         'parameters' => [
                             'name' => $npcNeeded->getRace()->getName(),
                             'questName' => $quest->getName(),
-                        ]
+                        ],
                     ];
                 }
             }
@@ -85,13 +82,13 @@ class PlayerQuestSubscriber implements EventSubscriberInterface
                     $value < $npcObjectNeeded->getNumber()
                 ) {
                     if (mt_rand(0, 100) > (100 - $npcObject->getLuck())) {
-                        $npcObjects[$npcObject->getId()] = $value += 1;
+                        $npcObjects[$npcObject->getId()] = ++$value;
                         $messages[] = [
                             'message' => 'game.quest.npc.object.found',
                             'parameters' => [
                                 'name' => $npcObject->getName(),
                                 'questName' => $quest->getName(),
-                            ]
+                            ],
                         ];
                     } else {
                         $messages[] = [
@@ -99,7 +96,7 @@ class PlayerQuestSubscriber implements EventSubscriberInterface
                             'parameters' => [
                                 'name' => $npcObject->getName(),
                                 'questName' => $quest->getName(),
-                            ]
+                            ],
                         ];
                     }
                 }

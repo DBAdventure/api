@@ -3,8 +3,8 @@
 namespace Dba\GameBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints as Assert;
 use JMS\Serializer\Annotation as JMS;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Building
@@ -43,7 +43,7 @@ class Building
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=80, nullable=false)
-     * @Assert\NotBlank()
+     * @Assert\NotBlank
      * @JMS\Expose
      */
     private $name;
@@ -52,38 +52,38 @@ class Building
      * @var string
      *
      * @ORM\Column(name="image", type="string", length=50, nullable=false)
-     * @Assert\NotBlank()
+     * @Assert\NotBlank
      * @JMS\Expose
      */
     private $image;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="x", type="integer", nullable=false)
-     * @Assert\NotBlank()
+     * @Assert\NotBlank
      */
     private $x;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="y", type="integer", nullable=false)
-     * @Assert\NotBlank()
+     * @Assert\NotBlank
      */
     private $y;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="type", type="integer", nullable=false)
-     * @Assert\NotBlank()
+     * @Assert\NotBlank
      * @JMS\Expose
      */
     private $type;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
@@ -97,18 +97,17 @@ class Building
      *
      * @ORM\ManyToOne(targetEntity="Dba\GameBundle\Entity\Map", fetch="EAGER")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="map_id", referencedColumnName="id", nullable=false, onDelete="CASCADE")
+     *     @ORM\JoinColumn(name="map_id", referencedColumnName="id", nullable=false, onDelete="CASCADE")
      * })
      */
     private $map;
 
     /**
-     * @var boolean
+     * @var bool
      *
      * @ORM\Column(name="enabled", type="boolean", options={"default": false})
      */
     private $enabled = false;
-
 
     /**
      * Set name
@@ -161,7 +160,7 @@ class Building
     /**
      * Set x
      *
-     * @param integer $x
+     * @param int $x
      *
      * @return Building
      */
@@ -175,7 +174,7 @@ class Building
     /**
      * Get x
      *
-     * @return integer
+     * @return int
      */
     public function getX()
     {
@@ -185,7 +184,7 @@ class Building
     /**
      * Set y
      *
-     * @param integer $y
+     * @param int $y
      *
      * @return Building
      */
@@ -199,7 +198,7 @@ class Building
     /**
      * Get y
      *
-     * @return integer
+     * @return int
      */
     public function getY()
     {
@@ -209,7 +208,7 @@ class Building
     /**
      * Set type
      *
-     * @param integer $type
+     * @param int $type
      *
      * @return Building
      */
@@ -223,7 +222,7 @@ class Building
     /**
      * Get type
      *
-     * @return integer
+     * @return int
      */
     public function getType()
     {
@@ -233,7 +232,7 @@ class Building
     /**
      * Get id
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -277,7 +276,7 @@ class Building
     /**
      * Is enabled
      *
-     * @return boolean
+     * @return bool
      */
     public function isEnabled()
     {
@@ -287,7 +286,7 @@ class Building
     /**
      * Get enabled
      *
-     * @return boolean
+     * @return bool
      */
     public function getEnabled()
     {
@@ -297,7 +296,7 @@ class Building
     /**
      * Set enabled
      *
-     * @param boolean $enabled
+     * @param bool $enabled
      *
      * @return Guild
      */

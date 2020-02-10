@@ -50,11 +50,12 @@ EOT;
     /**
      * Count active guilds
      *
-     * @return integer
+     * @return int
      */
     public function countGuilds()
     {
         $qb = $this->createQueryBuilder('g');
+
         return $qb->select('COUNT(g)')
             ->where('g.enabled = true')
             ->getQuery()

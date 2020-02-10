@@ -26,7 +26,7 @@ class GuildControllerTest extends BaseTestCase
                     'name' => '',
                     'shortName' => 'DBA',
                     'history' => 'This is sparta!',
-                ]
+                ],
             ]
         );
         $this->assertJsonResponse($this->client->getResponse(), 400);
@@ -47,7 +47,7 @@ class GuildControllerTest extends BaseTestCase
                     'name' => 'DBAdventure guild',
                     'shortName' => 'DBA',
                     'history' => 'This is sparta!',
-                ]
+                ],
             ]
         );
         $this->assertJsonResponse($this->client->getResponse());

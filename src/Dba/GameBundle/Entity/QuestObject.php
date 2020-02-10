@@ -3,14 +3,14 @@
 namespace Dba\GameBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints as Assert;
 use JMS\Serializer\Annotation as JMS;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Quest Object
  *
  * @ORM\Table(name="quest_object", indexes={@ORM\Index(name="quest_object_quest_id", columns={"quest_id"}),
-   @ORM\Index(name="quest_object_object_id", columns={"object_id"})})
+ * @ORM\Index(name="quest_object_object_id", columns={"object_id"})})
  * @ORM\Entity(repositoryClass="Dba\GameBundle\Repository\QuestObjectRepository")
  */
 class QuestObject
@@ -22,29 +22,29 @@ class QuestObject
      *
      * @ORM\ManyToOne(targetEntity="Dba\GameBundle\Entity\Quest", fetch="EAGER", inversedBy="objectsNeeded")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="quest_id", referencedColumnName="id", nullable=false, onDelete="CASCADE")
+     *     @ORM\JoinColumn(name="quest_id", referencedColumnName="id", nullable=false, onDelete="CASCADE")
      * })
      * @JMS\Exclude
      */
     private $quest;
 
     /**
-     * @var Object
+     * @var object
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="NONE")
      *
      * @ORM\ManyToOne(targetEntity="Dba\GameBundle\Entity\GameObject", fetch="EAGER")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="object_id", referencedColumnName="id", nullable=false, onDelete="CASCADE")
+     *     @ORM\JoinColumn(name="object_id", referencedColumnName="id", nullable=false, onDelete="CASCADE")
      * })
      */
     private $object;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="number", type="integer", nullable=false)
-     * @Assert\NotBlank()
+     * @Assert\NotBlank
      */
     private $number = 1;
 
@@ -65,7 +65,7 @@ class QuestObject
     /**
      * Get number
      *
-     * @return integer
+     * @return int
      */
     public function getNumber()
     {
@@ -113,7 +113,7 @@ class QuestObject
     /**
      * Get object
      *
-     * @return Object
+     * @return object
      */
     public function getObject()
     {

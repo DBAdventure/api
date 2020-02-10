@@ -2,9 +2,9 @@
 
 namespace Dba\GameBundle\Repository;
 
-use Doctrine\ORM\EntityRepository;
-use Dba\GameBundle\Entity\Player;
 use Dba\GameBundle\Entity\GameObject;
+use Dba\GameBundle\Entity\Player;
+use Doctrine\ORM\EntityRepository;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class PlayerObjectRepository extends EntityRepository
@@ -21,7 +21,7 @@ class PlayerObjectRepository extends EntityRepository
     {
         $playerObjects = $this->findBy(
             [
-                'player' => $player
+                'player' => $player,
             ]
         );
 
@@ -41,6 +41,7 @@ class PlayerObjectRepository extends EntityRepository
      * @param GameObject $object GameObject
      *
      * @throws NotFoundHttpException
+     *
      * @return PlayerObject
      */
     public function checkPlayerObject(Player $player, GameObject $object)
@@ -48,7 +49,7 @@ class PlayerObjectRepository extends EntityRepository
         $playerObject = $this->findOneBy(
             [
                 'player' => $player,
-                'object' => $object
+                'object' => $object,
             ]
         );
 

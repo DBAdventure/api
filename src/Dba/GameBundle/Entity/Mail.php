@@ -15,7 +15,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
 class Mail
 {
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
@@ -49,7 +49,7 @@ class Mail
      *
      * @ORM\ManyToOne(targetEntity="Dba\GameBundle\Entity\Player")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="player_id", referencedColumnName="id", nullable=false, onDelete="CASCADE")
+     *     @ORM\JoinColumn(name="player_id", referencedColumnName="id", nullable=false, onDelete="CASCADE")
      * })
      */
     private $player;
@@ -76,11 +76,10 @@ class Mail
      */
     private $messageSent;
 
-
     /**
      * Get id
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -193,6 +192,7 @@ class Mail
     public function setCreatedAt(DateTime $createdAt)
     {
         $this->createdAt = $createdAt;
+
         return $this;
     }
 
@@ -216,6 +216,7 @@ class Mail
     public function setSentAt(DateTime $sentAt)
     {
         $this->sentAt = $sentAt;
+
         return $this;
     }
 

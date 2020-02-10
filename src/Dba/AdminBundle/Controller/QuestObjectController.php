@@ -2,12 +2,11 @@
 
 namespace Dba\AdminBundle\Controller;
 
+use Dba\AdminBundle\Form;
+use Dba\GameBundle\Entity\NpcObject;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
-use Dba\AdminBundle\Controller\BaseController;
-use Dba\AdminBundle\Form;
-use Dba\GameBundle\Entity\NpcObject;
 
 /**
  * @Route("/quest-object")
@@ -100,6 +99,7 @@ class QuestObjectController extends BaseController
     {
         $this->em()->remove($questNpcObject);
         $this->em()->flush();
+
         return $this->redirect($this->generateUrl('admin.quest'));
     }
 }

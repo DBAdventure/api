@@ -6,14 +6,12 @@ use Dba\GameBundle\Entity;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\FormEvent;
-use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class QuestObjectType extends AbstractQuestType
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -25,7 +23,7 @@ class QuestObjectType extends AbstractQuestType
                     'class' => Entity\GameObject::class,
                     'choice_label' => 'name',
                     'label' => 'form.object',
-                    'choice_translation_domain' => false
+                    'choice_translation_domain' => false,
                 ]
             )
             ->add(

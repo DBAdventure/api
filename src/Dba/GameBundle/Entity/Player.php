@@ -3,13 +3,12 @@
 namespace Dba\GameBundle\Entity;
 
 use DateTime;
-use Exception;
-use Serializable;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
-use FOS\UserBundle\Model\User as BaseUser;
+use Exception;
 use Gedmo\Mapping\Annotation as Gedmo;
 use JMS\Serializer\Annotation as JMS;
+use Serializable;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\AdvancedUserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -18,17 +17,20 @@ use Symfony\Component\Validator\Constraints as Assert;
  * Player
  *
  * @ORM\Table(name="player", uniqueConstraints={
-              @ORM\UniqueConstraint(name="player_username", columns={"username"}),
-              @ORM\UniqueConstraint(name="player_email", columns={"email"}),
-              @ORM\UniqueConstraint(name="player_username_canonical", columns={"username_canonical"}),
-              @ORM\UniqueConstraint(name="player_email_canonical", columns={"email_canonical"}),
-              @ORM\UniqueConstraint(name="player_name", columns={"name"}),
-              @ORM\UniqueConstraint(name="player_confirmation_token", columns={"confirmation_token"})},
-              indexes={@ORM\Index(name="player_race_id", columns={"race_id"}),
-              @ORM\Index(name="player_map_id", columns={"map_id"}),
-              @ORM\Index(name="player_rank_id", columns={"rank_id"}),
-              @ORM\Index(name="player_side_id", columns={"side_id"}),
-              @ORM\Index(name="player_target_id", columns={"target_id"})})
+ *     @ORM\UniqueConstraint(name="player_username", columns={"username"}),
+ *     @ORM\UniqueConstraint(name="player_email", columns={"email"}),
+ *     @ORM\UniqueConstraint(name="player_username_canonical", columns={"username_canonical"}),
+ *     @ORM\UniqueConstraint(name="player_email_canonical", columns={"email_canonical"}),
+ *     @ORM\UniqueConstraint(name="player_name", columns={"name"}),
+ *     @ORM\UniqueConstraint(name="player_confirmation_token", columns={"confirmation_token"})
+ * },
+ * indexes={
+ *     @ORM\Index(name="player_race_id", columns={"race_id"}),
+ *     @ORM\Index(name="player_map_id", columns={"map_id"}),
+ *     @ORM\Index(name="player_rank_id", columns={"rank_id"}),
+ *     @ORM\Index(name="player_side_id", columns={"side_id"}),
+ *     @ORM\Index(name="player_target_id", columns={"target_id"})
+ * })
  * @ORM\Entity(repositoryClass="Dba\GameBundle\Repository\PlayerRepository")
  * @UniqueEntity("name")
  * @UniqueEntity("email")
@@ -84,7 +86,7 @@ class Player implements AdvancedUserInterface, Serializable
     protected $specifications = [];
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
@@ -105,7 +107,7 @@ class Player implements AdvancedUserInterface, Serializable
      * @var string
      *
      * @ORM\Column(name="username", type="string", length=180, nullable=false, unique=true)
-     * @Assert\NotBlank()
+     * @Assert\NotBlank
      * @JMS\Exclude
      */
     private $username;
@@ -122,8 +124,8 @@ class Player implements AdvancedUserInterface, Serializable
      * @var string
      *
      * @ORM\Column(name="email", type="string", length=180, nullable=false, unique=true)
-     * @Assert\NotBlank()
-     * @Assert\Email()
+     * @Assert\NotBlank
+     * @Assert\Email
      * @JMS\Exclude
      */
     private $email;
@@ -188,10 +190,10 @@ class Player implements AdvancedUserInterface, Serializable
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=50, nullable=false, unique=true)
-     * @Assert\NotBlank()
+     * @Assert\NotBlank
      * @Assert\Length(
-     *      min = 3,
-     *      max = 50
+     *     min=3,
+     *     max=50
      * )
      * @JMS\Expose
      */
@@ -209,13 +211,13 @@ class Player implements AdvancedUserInterface, Serializable
      * @var string
      *
      * @ORM\Column(name="image", type="string", length=10, nullable=false)
-     * @Assert\NotBlank()
+     * @Assert\NotBlank
      * @JMS\Expose
      */
     private $image;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="zeni", type="integer", nullable=false)
      * @JMS\Exclude
@@ -223,7 +225,7 @@ class Player implements AdvancedUserInterface, Serializable
     private $zeni = 0;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="level", type="integer", nullable=false)
      * @JMS\Expose
@@ -231,7 +233,7 @@ class Player implements AdvancedUserInterface, Serializable
     private $level = 0;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="accuracy", type="integer", nullable=false)
      * @JMS\Exclude
@@ -239,7 +241,7 @@ class Player implements AdvancedUserInterface, Serializable
     private $accuracy;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="agility", type="integer", nullable=false)
      * @JMS\Exclude
@@ -247,7 +249,7 @@ class Player implements AdvancedUserInterface, Serializable
     private $agility;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="strength", type="integer", nullable=false)
      * @JMS\Exclude
@@ -255,7 +257,7 @@ class Player implements AdvancedUserInterface, Serializable
     private $strength;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="resistance", type="integer", nullable=false)
      * @JMS\Exclude
@@ -263,7 +265,7 @@ class Player implements AdvancedUserInterface, Serializable
     private $resistance;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="skill", type="integer", nullable=false)
      * @JMS\Exclude
@@ -271,7 +273,7 @@ class Player implements AdvancedUserInterface, Serializable
     private $skill;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="vision", type="integer", nullable=false)
      * @JMS\Exclude
@@ -279,7 +281,7 @@ class Player implements AdvancedUserInterface, Serializable
     private $vision;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="analysis", type="integer", nullable=false)
      * @JMS\Exclude
@@ -287,7 +289,7 @@ class Player implements AdvancedUserInterface, Serializable
     private $analysis;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="intellect", type="integer", nullable=false)
      * @JMS\Exclude
@@ -295,7 +297,7 @@ class Player implements AdvancedUserInterface, Serializable
     private $intellect;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="ki", type="integer", nullable=false)
      * @JMS\Exclude
@@ -303,7 +305,7 @@ class Player implements AdvancedUserInterface, Serializable
     private $ki;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="max_ki", type="integer", nullable=false)
      * @JMS\Exclude
@@ -311,7 +313,7 @@ class Player implements AdvancedUserInterface, Serializable
     private $maxKi;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="health", type="integer", nullable=false)
      * @JMS\Exclude
@@ -319,7 +321,7 @@ class Player implements AdvancedUserInterface, Serializable
     private $health;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="max_health", type="integer", nullable=false)
      * @JMS\Exclude
@@ -327,7 +329,7 @@ class Player implements AdvancedUserInterface, Serializable
     private $maxHealth;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="side_points", type="integer", nullable=false, options={"default": 0})
      * @JMS\Exclude
@@ -335,7 +337,7 @@ class Player implements AdvancedUserInterface, Serializable
     private $sidePoints;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="action_points", type="integer", nullable=false)
      * @JMS\Exclude
@@ -343,7 +345,7 @@ class Player implements AdvancedUserInterface, Serializable
     private $actionPoints;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="fatigue_points", type="integer", nullable=false)
      * @JMS\Exclude
@@ -351,7 +353,7 @@ class Player implements AdvancedUserInterface, Serializable
     private $fatiguePoints;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="movement_points", type="integer", nullable=false)
      * @JMS\Exclude
@@ -359,7 +361,7 @@ class Player implements AdvancedUserInterface, Serializable
     private $movementPoints;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="battle_points", type="integer", nullable=false)
      * @JMS\Exclude
@@ -367,7 +369,7 @@ class Player implements AdvancedUserInterface, Serializable
     private $battlePoints;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="skill_points", type="integer", nullable=false, options={"default": 0})
      * @JMS\Exclude
@@ -433,7 +435,7 @@ class Player implements AdvancedUserInterface, Serializable
     private $fatigueUpdatedAt;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="x", type="integer", nullable=false)
      * @JMS\Groups("Guild")
@@ -441,7 +443,7 @@ class Player implements AdvancedUserInterface, Serializable
     private $x;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="y", type="integer", nullable=false)
      * @JMS\Groups("Guild")
@@ -457,7 +459,7 @@ class Player implements AdvancedUserInterface, Serializable
     private $forbiddenTeleport;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="death_count", type="integer", nullable=false, options={"default": 0})
      * @JMS\Exclude
@@ -465,7 +467,7 @@ class Player implements AdvancedUserInterface, Serializable
     private $deathCount = 0;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="nb_kill_good", type="integer", nullable=false, options={"default": 0})
      * @JMS\Expose
@@ -473,7 +475,7 @@ class Player implements AdvancedUserInterface, Serializable
     private $nbKillGood = 0;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="nb_hit_good", type="integer", nullable=false, options={"default": 0})
      * @JMS\Exclude
@@ -481,7 +483,7 @@ class Player implements AdvancedUserInterface, Serializable
     private $nbHitGood = 0;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="nb_damage_good", type="integer", nullable=false, options={"default": 0})
      * @JMS\Exclude
@@ -489,7 +491,7 @@ class Player implements AdvancedUserInterface, Serializable
     private $nbDamageGood = 0;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="nb_kill_bad", type="integer", nullable=false, options={"default": 0})
      * @JMS\Expose
@@ -497,7 +499,7 @@ class Player implements AdvancedUserInterface, Serializable
     private $nbKillBad = 0;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="nb_hit_bad", type="integer", nullable=false, options={"default": 0})
      * @JMS\Exclude
@@ -505,7 +507,7 @@ class Player implements AdvancedUserInterface, Serializable
     private $nbHitBad = 0;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="nb_damage_bad", type="integer", nullable=false, options={"default": 0})
      * @JMS\Exclude
@@ -513,7 +515,7 @@ class Player implements AdvancedUserInterface, Serializable
     private $nbDamageBad = 0;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="nb_kill_npc", type="integer", nullable=false, options={"default": 0})
      * @JMS\Expose
@@ -521,7 +523,7 @@ class Player implements AdvancedUserInterface, Serializable
     private $nbKillNpc = 0;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="nb_hit_npc", type="integer", nullable=false, options={"default": 0})
      * @JMS\Exclude
@@ -529,7 +531,7 @@ class Player implements AdvancedUserInterface, Serializable
     private $nbHitNpc = 0;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="nb_damage_npc", type="integer", nullable=false, options={"default": 0})
      * @JMS\Exclude
@@ -537,7 +539,7 @@ class Player implements AdvancedUserInterface, Serializable
     private $nbDamageNpc = 0;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="nb_kill_hq", type="integer", nullable=false, options={"default": 0})
      * @JMS\Expose
@@ -545,7 +547,7 @@ class Player implements AdvancedUserInterface, Serializable
     private $nbKillHq = 0;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="nb_hit_hq", type="integer", nullable=false, options={"default": 0})
      * @JMS\Exclude
@@ -553,7 +555,7 @@ class Player implements AdvancedUserInterface, Serializable
     private $nbHitHq = 0;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="nb_damage_hq", type="integer", nullable=false, options={"default": 0})
      * @JMS\Exclude
@@ -561,7 +563,7 @@ class Player implements AdvancedUserInterface, Serializable
     private $nbDamageHq = 0;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="nb_stolen_zeni", type="integer", nullable=false, options={"default": 0})
      * @JMS\Exclude
@@ -569,7 +571,7 @@ class Player implements AdvancedUserInterface, Serializable
     private $nbStolenZeni = 0;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="nb_action_stolen_zeni", type="integer", nullable=false, options={"default": 0})
      * @JMS\Exclude
@@ -577,7 +579,7 @@ class Player implements AdvancedUserInterface, Serializable
     private $nbActionStolenZeni = 0;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="nb_dodge", type="integer", nullable=false, options={"default": 0})
      * @JMS\Exclude
@@ -585,7 +587,7 @@ class Player implements AdvancedUserInterface, Serializable
     private $nbDodge = 0;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="nb_wanted", type="integer", nullable=false, options={"default": 0})
      * @JMS\Exclude
@@ -593,7 +595,7 @@ class Player implements AdvancedUserInterface, Serializable
     private $nbWanted = 0;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="nb_analysis", type="integer", nullable=false, options={"default": 0})
      * @JMS\Exclude
@@ -601,7 +603,7 @@ class Player implements AdvancedUserInterface, Serializable
     private $nbAnalysis = 0;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="nb_spell", type="integer", nullable=false, options={"default": 0})
      * @JMS\Exclude
@@ -609,7 +611,7 @@ class Player implements AdvancedUserInterface, Serializable
     private $nbSpell = 0;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="nb_health_given", type="integer", nullable=false, options={"default": 0})
      * @JMS\Exclude
@@ -617,7 +619,7 @@ class Player implements AdvancedUserInterface, Serializable
     private $nbHealthGiven = 0;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="nb_total_health_given", type="integer", nullable=false, options={"default": 0})
      * @JMS\Exclude
@@ -625,7 +627,7 @@ class Player implements AdvancedUserInterface, Serializable
     private $nbTotalHealthGiven = 0;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="nb_slap_taken", type="integer", nullable=false, options={"default": 0})
      * @JMS\Exclude
@@ -633,7 +635,7 @@ class Player implements AdvancedUserInterface, Serializable
     private $nbSlapTaken = 0;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="nb_slap_given", type="integer", nullable=false, options={"default": 0})
      * @JMS\Exclude
@@ -641,7 +643,7 @@ class Player implements AdvancedUserInterface, Serializable
     private $nbSlapGiven = 0;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="betrayals", type="integer", nullable=false, options={"default": 0})
      * @JMS\Exclude
@@ -649,7 +651,7 @@ class Player implements AdvancedUserInterface, Serializable
     private $betrayals = 0;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="head_price", type="integer", nullable=false, options={"default": 0})
      * @JMS\Exclude
@@ -753,6 +755,7 @@ class Player implements AdvancedUserInterface, Serializable
     public function setName($name)
     {
         $this->name = $name;
+
         return $this;
     }
 
@@ -776,6 +779,7 @@ class Player implements AdvancedUserInterface, Serializable
     public function setHistory($history)
     {
         $this->history = $history;
+
         return $this;
     }
 
@@ -799,6 +803,7 @@ class Player implements AdvancedUserInterface, Serializable
     public function setImage($image)
     {
         $this->image = $image;
+
         return $this;
     }
 
@@ -815,20 +820,21 @@ class Player implements AdvancedUserInterface, Serializable
     /**
      * Set zeni
      *
-     * @param integer $zeni
+     * @param int $zeni
      *
      * @return Player
      */
     public function setZeni($zeni)
     {
         $this->zeni = $zeni;
+
         return $this;
     }
 
     /**
      * Get zeni
      *
-     * @return integer
+     * @return int
      */
     public function getZeni()
     {
@@ -838,20 +844,21 @@ class Player implements AdvancedUserInterface, Serializable
     /**
      * Set level
      *
-     * @param integer $level
+     * @param int $level
      *
      * @return Player
      */
     public function setLevel($level)
     {
         $this->level = $level;
+
         return $this;
     }
 
     /**
      * Get level
      *
-     * @return integer
+     * @return int
      */
     public function getLevel()
     {
@@ -861,20 +868,21 @@ class Player implements AdvancedUserInterface, Serializable
     /**
      * Set accuracy
      *
-     * @param integer $accuracy
+     * @param int $accuracy
      *
      * @return Player
      */
     public function setAccuracy($accuracy)
     {
         $this->accuracy = $accuracy;
+
         return $this;
     }
 
     /**
      * Get accuracy
      *
-     * @return integer
+     * @return int
      */
     public function getAccuracy()
     {
@@ -884,7 +892,7 @@ class Player implements AdvancedUserInterface, Serializable
     /**
      * Get total accuracy
      *
-     * @return integer
+     * @return int
      */
     public function getTotalAccuracy()
     {
@@ -894,7 +902,7 @@ class Player implements AdvancedUserInterface, Serializable
     /**
      * Get objects accuracy
      *
-     * @return integer
+     * @return int
      */
     public function getObjectsAccuracy()
     {
@@ -904,20 +912,21 @@ class Player implements AdvancedUserInterface, Serializable
     /**
      * Set agility
      *
-     * @param integer $agility
+     * @param int $agility
      *
      * @return Player
      */
     public function setAgility($agility)
     {
         $this->agility = $agility;
+
         return $this;
     }
 
     /**
      * Get agility
      *
-     * @return integer
+     * @return int
      */
     public function getAgility()
     {
@@ -927,7 +936,7 @@ class Player implements AdvancedUserInterface, Serializable
     /**
      * Get total agility
      *
-     * @return integer
+     * @return int
      */
     public function getTotalAgility()
     {
@@ -937,7 +946,7 @@ class Player implements AdvancedUserInterface, Serializable
     /**
      * Get objects agility
      *
-     * @return integer
+     * @return int
      */
     public function getObjectsAgility()
     {
@@ -947,20 +956,21 @@ class Player implements AdvancedUserInterface, Serializable
     /**
      * Set strength
      *
-     * @param integer $strength
+     * @param int $strength
      *
      * @return Player
      */
     public function setStrength($strength)
     {
         $this->strength = $strength;
+
         return $this;
     }
 
     /**
      * Get strength
      *
-     * @return integer
+     * @return int
      */
     public function getStrength()
     {
@@ -970,7 +980,7 @@ class Player implements AdvancedUserInterface, Serializable
     /**
      * Get total strength
      *
-     * @return integer
+     * @return int
      */
     public function getTotalStrength()
     {
@@ -980,7 +990,7 @@ class Player implements AdvancedUserInterface, Serializable
     /**
      * Get objects strength
      *
-     * @return integer
+     * @return int
      */
     public function getObjectsStrength()
     {
@@ -990,20 +1000,21 @@ class Player implements AdvancedUserInterface, Serializable
     /**
      * Set resistance
      *
-     * @param integer $resistance
+     * @param int $resistance
      *
      * @return Player
      */
     public function setResistance($resistance)
     {
         $this->resistance = $resistance;
+
         return $this;
     }
 
     /**
      * Get resistance
      *
-     * @return integer
+     * @return int
      */
     public function getResistance()
     {
@@ -1013,7 +1024,7 @@ class Player implements AdvancedUserInterface, Serializable
     /**
      * Get total resistance
      *
-     * @return integer
+     * @return int
      */
     public function getTotalResistance()
     {
@@ -1023,7 +1034,7 @@ class Player implements AdvancedUserInterface, Serializable
     /**
      * Get objects resistance
      *
-     * @return integer
+     * @return int
      */
     public function getObjectsResistance()
     {
@@ -1033,20 +1044,21 @@ class Player implements AdvancedUserInterface, Serializable
     /**
      * Set skill
      *
-     * @param integer $skill
+     * @param int $skill
      *
      * @return Player
      */
     public function setSkill($skill)
     {
         $this->skill = $skill;
+
         return $this;
     }
 
     /**
      * Get skill
      *
-     * @return integer
+     * @return int
      */
     public function getSkill()
     {
@@ -1056,7 +1068,7 @@ class Player implements AdvancedUserInterface, Serializable
     /**
      * Get total skill
      *
-     * @return integer
+     * @return int
      */
     public function getTotalSkill()
     {
@@ -1066,7 +1078,7 @@ class Player implements AdvancedUserInterface, Serializable
     /**
      * Get objects skill
      *
-     * @return integer
+     * @return int
      */
     public function getObjectsSkill()
     {
@@ -1076,20 +1088,21 @@ class Player implements AdvancedUserInterface, Serializable
     /**
      * Set vision
      *
-     * @param integer $vision
+     * @param int $vision
      *
      * @return Player
      */
     public function setVision($vision)
     {
         $this->vision = $vision;
+
         return $this;
     }
 
     /**
      * Get vision
      *
-     * @return integer
+     * @return int
      */
     public function getVision()
     {
@@ -1099,7 +1112,7 @@ class Player implements AdvancedUserInterface, Serializable
     /**
      * Get total vision
      *
-     * @return integer
+     * @return int
      */
     public function getTotalVision()
     {
@@ -1109,7 +1122,7 @@ class Player implements AdvancedUserInterface, Serializable
     /**
      * Get objects vision
      *
-     * @return integer
+     * @return int
      */
     public function getObjectsVision()
     {
@@ -1119,20 +1132,21 @@ class Player implements AdvancedUserInterface, Serializable
     /**
      * Set analysis
      *
-     * @param integer $analysis
+     * @param int $analysis
      *
      * @return Player
      */
     public function setAnalysis($analysis)
     {
         $this->analysis = $analysis;
+
         return $this;
     }
 
     /**
      * Get analysis
      *
-     * @return integer
+     * @return int
      */
     public function getAnalysis()
     {
@@ -1142,7 +1156,7 @@ class Player implements AdvancedUserInterface, Serializable
     /**
      * Get total analysis
      *
-     * @return integer
+     * @return int
      */
     public function getTotalAnalysis()
     {
@@ -1152,7 +1166,7 @@ class Player implements AdvancedUserInterface, Serializable
     /**
      * Get objects analysis
      *
-     * @return integer
+     * @return int
      */
     public function getObjectsAnalysis()
     {
@@ -1162,20 +1176,21 @@ class Player implements AdvancedUserInterface, Serializable
     /**
      * Set intellect
      *
-     * @param integer $intellect
+     * @param int $intellect
      *
      * @return Player
      */
     public function setIntellect($intellect)
     {
         $this->intellect = $intellect;
+
         return $this;
     }
 
     /**
      * Get intellect
      *
-     * @return integer
+     * @return int
      */
     public function getIntellect()
     {
@@ -1185,7 +1200,7 @@ class Player implements AdvancedUserInterface, Serializable
     /**
      * Get total intellect
      *
-     * @return integer
+     * @return int
      */
     public function getTotalIntellect()
     {
@@ -1195,7 +1210,7 @@ class Player implements AdvancedUserInterface, Serializable
     /**
      * Get objects intellect
      *
-     * @return integer
+     * @return int
      */
     public function getObjectsIntellect()
     {
@@ -1205,20 +1220,21 @@ class Player implements AdvancedUserInterface, Serializable
     /**
      * Set ki
      *
-     * @param integer $ki
+     * @param int $ki
      *
      * @return Player
      */
     public function setKi($ki)
     {
         $this->ki = $ki;
+
         return $this;
     }
 
     /**
      * Get ki
      *
-     * @return integer
+     * @return int
      */
     public function getKi()
     {
@@ -1228,20 +1244,21 @@ class Player implements AdvancedUserInterface, Serializable
     /**
      * Set maxKi
      *
-     * @param integer $maxKi
+     * @param int $maxKi
      *
      * @return Player
      */
     public function setMaxKi($maxKi)
     {
         $this->maxKi = $maxKi;
+
         return $this;
     }
 
     /**
      * Get maxKi
      *
-     * @return integer
+     * @return int
      */
     public function getMaxKi()
     {
@@ -1251,7 +1268,7 @@ class Player implements AdvancedUserInterface, Serializable
     /**
      * Get total maxKi
      *
-     * @return integer
+     * @return int
      */
     public function getTotalMaxKi()
     {
@@ -1261,7 +1278,7 @@ class Player implements AdvancedUserInterface, Serializable
     /**
      * Get objects maxKi
      *
-     * @return integer
+     * @return int
      */
     public function getObjectsMaxKi()
     {
@@ -1271,20 +1288,21 @@ class Player implements AdvancedUserInterface, Serializable
     /**
      * Set health
      *
-     * @param integer $health
+     * @param int $health
      *
      * @return Player
      */
     public function setHealth($health)
     {
         $this->health = $health;
+
         return $this;
     }
 
     /**
      * Get health
      *
-     * @return integer
+     * @return int
      */
     public function getHealth()
     {
@@ -1294,20 +1312,21 @@ class Player implements AdvancedUserInterface, Serializable
     /**
      * Set maxHealth
      *
-     * @param integer $maxHealth
+     * @param int $maxHealth
      *
      * @return Player
      */
     public function setMaxHealth($maxHealth)
     {
         $this->maxHealth = $maxHealth;
+
         return $this;
     }
 
     /**
      * Get maxHealth
      *
-     * @return integer
+     * @return int
      */
     public function getMaxHealth()
     {
@@ -1317,7 +1336,7 @@ class Player implements AdvancedUserInterface, Serializable
     /**
      * Get total maxHealth
      *
-     * @return integer
+     * @return int
      */
     public function getTotalMaxHealth()
     {
@@ -1327,7 +1346,7 @@ class Player implements AdvancedUserInterface, Serializable
     /**
      * Get objects maxHealth
      *
-     * @return integer
+     * @return int
      */
     public function getObjectsMaxHealth()
     {
@@ -1337,20 +1356,21 @@ class Player implements AdvancedUserInterface, Serializable
     /**
      * Set actionPoints
      *
-     * @param integer $actionPoints
+     * @param int $actionPoints
      *
      * @return Player
      */
     public function setActionPoints($actionPoints)
     {
         $this->actionPoints = $actionPoints;
+
         return $this;
     }
 
     /**
      * Get actionPoints
      *
-     * @return integer
+     * @return int
      */
     public function getActionPoints()
     {
@@ -1360,7 +1380,7 @@ class Player implements AdvancedUserInterface, Serializable
     /**
      * Get maxActionPoints
      *
-     * @return integer
+     * @return int
      */
     public function getMaxActionPoints()
     {
@@ -1370,20 +1390,21 @@ class Player implements AdvancedUserInterface, Serializable
     /**
      * Set fatiguePoints
      *
-     * @param integer $fatiguePoints
+     * @param int $fatiguePoints
      *
      * @return Player
      */
     public function setFatiguePoints($fatiguePoints)
     {
         $this->fatiguePoints = $fatiguePoints;
+
         return $this;
     }
 
     /**
      * Get fatiguePoints
      *
-     * @return integer
+     * @return int
      */
     public function getFatiguePoints()
     {
@@ -1393,7 +1414,7 @@ class Player implements AdvancedUserInterface, Serializable
     /**
      * Get maxFatiguePoints
      *
-     * @return integer
+     * @return int
      */
     public function getMaxFatiguePoints()
     {
@@ -1403,20 +1424,21 @@ class Player implements AdvancedUserInterface, Serializable
     /**
      * Set movementPoints
      *
-     * @param integer $movementPoints
+     * @param int $movementPoints
      *
      * @return Player
      */
     public function setMovementPoints($movementPoints)
     {
         $this->movementPoints = $movementPoints;
+
         return $this;
     }
 
     /**
      * Get movementPoints
      *
-     * @return integer
+     * @return int
      */
     public function getMovementPoints()
     {
@@ -1426,7 +1448,7 @@ class Player implements AdvancedUserInterface, Serializable
     /**
      * Get maxMovementPoints
      *
-     * @return integer
+     * @return int
      */
     public function getMaxMovementPoints()
     {
@@ -1436,20 +1458,21 @@ class Player implements AdvancedUserInterface, Serializable
     /**
      * Set battlePoints
      *
-     * @param integer $battlePoints
+     * @param int $battlePoints
      *
      * @return Player
      */
     public function setBattlePoints($battlePoints)
     {
         $this->battlePoints = $battlePoints;
+
         return $this;
     }
 
     /**
      * Get battlePoints
      *
-     * @return integer
+     * @return int
      */
     public function getBattlePoints()
     {
@@ -1459,20 +1482,21 @@ class Player implements AdvancedUserInterface, Serializable
     /**
      * Set ip
      *
-     * @param integer $ip
+     * @param int $ip
      *
      * @return Player
      */
     public function setIp($ip)
     {
         $this->ip = $ip;
+
         return $this;
     }
 
     /**
      * Get ip
      *
-     * @return integer
+     * @return int
      */
     public function getIp()
     {
@@ -1489,6 +1513,7 @@ class Player implements AdvancedUserInterface, Serializable
     public function setCreatedAt(DateTime $createdAt)
     {
         $this->createdAt = $createdAt;
+
         return $this;
     }
 
@@ -1512,6 +1537,7 @@ class Player implements AdvancedUserInterface, Serializable
     public function setUpdatedAt(DateTime $updatedAt)
     {
         $this->updatedAt = $updatedAt;
+
         return $this;
     }
 
@@ -1528,7 +1554,7 @@ class Player implements AdvancedUserInterface, Serializable
     /**
      * Get id
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -1545,6 +1571,7 @@ class Player implements AdvancedUserInterface, Serializable
     public function setSide(Side $side = null)
     {
         $this->side = $side;
+
         return $this;
     }
 
@@ -1568,6 +1595,7 @@ class Player implements AdvancedUserInterface, Serializable
     public function setRank(Rank $rank = null)
     {
         $this->rank = $rank;
+
         return $this;
     }
 
@@ -1591,6 +1619,7 @@ class Player implements AdvancedUserInterface, Serializable
     public function setRace(Race $race = null)
     {
         $this->race = $race;
+
         return $this;
     }
 
@@ -1614,6 +1643,7 @@ class Player implements AdvancedUserInterface, Serializable
     public function setMap(Map $map = null)
     {
         $this->map = $map;
+
         return $this;
     }
 
@@ -1630,20 +1660,21 @@ class Player implements AdvancedUserInterface, Serializable
     /**
      * Set X
      *
-     * @param integer $x
+     * @param int $x
      *
      * @return Player
      */
     public function setX($x)
     {
         $this->x = $x;
+
         return $this;
     }
 
     /**
      * Get x
      *
-     * @return integer
+     * @return int
      */
     public function getX()
     {
@@ -1653,20 +1684,21 @@ class Player implements AdvancedUserInterface, Serializable
     /**
      * Set Y
      *
-     * @param integer $y
+     * @param int $y
      *
      * @return Player
      */
     public function setY($y)
     {
         $this->y = $y;
+
         return $this;
     }
 
     /**
      * Get y
      *
-     * @return integer
+     * @return int
      */
     public function getY()
     {
@@ -1683,6 +1715,7 @@ class Player implements AdvancedUserInterface, Serializable
     public function setForbiddenTeleport($forbiddenTeleport)
     {
         $this->forbiddenTeleport = $forbiddenTeleport;
+
         return $this;
     }
 
@@ -1699,20 +1732,21 @@ class Player implements AdvancedUserInterface, Serializable
     /**
      * Set sidePoints
      *
-     * @param integer $sidePoints
+     * @param int $sidePoints
      *
      * @return Player
      */
     public function setSidePoints($sidePoints)
     {
         $this->sidePoints = $sidePoints;
+
         return $this;
     }
 
     /**
      * Get sidePoints
      *
-     * @return integer
+     * @return int
      */
     public function getSidePoints()
     {
@@ -1722,20 +1756,21 @@ class Player implements AdvancedUserInterface, Serializable
     /**
      * Set skillPoints
      *
-     * @param integer $skillPoints
+     * @param int $skillPoints
      *
      * @return Player
      */
     public function setSkillPoints($skillPoints)
     {
         $this->skillPoints = $skillPoints;
+
         return $this;
     }
 
     /**
      * Get skillPoints
      *
-     * @return integer
+     * @return int
      */
     public function getSkillPoints()
     {
@@ -1752,6 +1787,7 @@ class Player implements AdvancedUserInterface, Serializable
     public function setActionUpdatedAt(DateTime $actionUpdatedAt)
     {
         $this->actionUpdatedAt = $actionUpdatedAt;
+
         return $this;
     }
 
@@ -1775,6 +1811,7 @@ class Player implements AdvancedUserInterface, Serializable
     public function setMovementUpdatedAt(DateTime $movementUpdatedAt)
     {
         $this->movementUpdatedAt = $movementUpdatedAt;
+
         return $this;
     }
 
@@ -1798,6 +1835,7 @@ class Player implements AdvancedUserInterface, Serializable
     public function setKiUpdatedAt(DateTime $kiUpdatedAt)
     {
         $this->kiUpdatedAt = $kiUpdatedAt;
+
         return $this;
     }
 
@@ -1821,6 +1859,7 @@ class Player implements AdvancedUserInterface, Serializable
     public function setFatigueUpdatedAt(DateTime $fatigueUpdatedAt)
     {
         $this->fatigueUpdatedAt = $fatigueUpdatedAt;
+
         return $this;
     }
 
@@ -1837,20 +1876,21 @@ class Player implements AdvancedUserInterface, Serializable
     /**
      * Set deathCount
      *
-     * @param integer $deathCount
+     * @param int $deathCount
      *
      * @return Player
      */
     public function setDeathCount($deathCount)
     {
         $this->deathCount = $deathCount;
+
         return $this;
     }
 
     /**
      * Get deathCount
      *
-     * @return integer
+     * @return int
      */
     public function getDeathCount()
     {
@@ -1860,20 +1900,21 @@ class Player implements AdvancedUserInterface, Serializable
     /**
      * Set nbKillGood
      *
-     * @param integer $nbKillGood
+     * @param int $nbKillGood
      *
      * @return Player
      */
     public function setNbKillGood($nbKillGood)
     {
         $this->nbKillGood = $nbKillGood;
+
         return $this;
     }
 
     /**
      * Get nbKillGood
      *
-     * @return integer
+     * @return int
      */
     public function getNbKillGood()
     {
@@ -1883,20 +1924,21 @@ class Player implements AdvancedUserInterface, Serializable
     /**
      * Set nbHitGood
      *
-     * @param integer $nbHitGood
+     * @param int $nbHitGood
      *
      * @return Player
      */
     public function setNbHitGood($nbHitGood)
     {
         $this->nbHitGood = $nbHitGood;
+
         return $this;
     }
 
     /**
      * Get nbHitGood
      *
-     * @return integer
+     * @return int
      */
     public function getNbHitGood()
     {
@@ -1906,20 +1948,21 @@ class Player implements AdvancedUserInterface, Serializable
     /**
      * Set nbDamageGood
      *
-     * @param integer $nbDamageGood
+     * @param int $nbDamageGood
      *
      * @return Player
      */
     public function setNbDamageGood($nbDamageGood)
     {
         $this->nbDamageGood = $nbDamageGood;
+
         return $this;
     }
 
     /**
      * Get nbDamageGood
      *
-     * @return integer
+     * @return int
      */
     public function getNbDamageGood()
     {
@@ -1929,20 +1972,21 @@ class Player implements AdvancedUserInterface, Serializable
     /**
      * Set nbKillBad
      *
-     * @param integer $nbKillBad
+     * @param int $nbKillBad
      *
      * @return Player
      */
     public function setNbKillBad($nbKillBad)
     {
         $this->nbKillBad = $nbKillBad;
+
         return $this;
     }
 
     /**
      * Get nbKillBad
      *
-     * @return integer
+     * @return int
      */
     public function getNbKillBad()
     {
@@ -1952,20 +1996,21 @@ class Player implements AdvancedUserInterface, Serializable
     /**
      * Set nbHitBad
      *
-     * @param integer $nbHitBad
+     * @param int $nbHitBad
      *
      * @return Player
      */
     public function setNbHitBad($nbHitBad)
     {
         $this->nbHitBad = $nbHitBad;
+
         return $this;
     }
 
     /**
      * Get nbHitBad
      *
-     * @return integer
+     * @return int
      */
     public function getNbHitBad()
     {
@@ -1975,20 +2020,21 @@ class Player implements AdvancedUserInterface, Serializable
     /**
      * Set nbDamageBad
      *
-     * @param integer $nbDamageBad
+     * @param int $nbDamageBad
      *
      * @return Player
      */
     public function setNbDamageBad($nbDamageBad)
     {
         $this->nbDamageBad = $nbDamageBad;
+
         return $this;
     }
 
     /**
      * Get nbDamageBad
      *
-     * @return integer
+     * @return int
      */
     public function getNbDamageBad()
     {
@@ -1998,20 +2044,21 @@ class Player implements AdvancedUserInterface, Serializable
     /**
      * Set nbKillNpc
      *
-     * @param integer $nbKillNpc
+     * @param int $nbKillNpc
      *
      * @return Player
      */
     public function setNbKillNpc($nbKillNpc)
     {
         $this->nbKillNpc = $nbKillNpc;
+
         return $this;
     }
 
     /**
      * Get nbKillNpc
      *
-     * @return integer
+     * @return int
      */
     public function getNbKillNpc()
     {
@@ -2021,20 +2068,21 @@ class Player implements AdvancedUserInterface, Serializable
     /**
      * Set nbHitNpc
      *
-     * @param integer $nbHitNpc
+     * @param int $nbHitNpc
      *
      * @return Player
      */
     public function setNbHitNpc($nbHitNpc)
     {
         $this->nbHitNpc = $nbHitNpc;
+
         return $this;
     }
 
     /**
      * Get nbHitNpc
      *
-     * @return integer
+     * @return int
      */
     public function getNbHitNpc()
     {
@@ -2044,20 +2092,21 @@ class Player implements AdvancedUserInterface, Serializable
     /**
      * Set nbDamageNpc
      *
-     * @param integer $nbDamageNpc
+     * @param int $nbDamageNpc
      *
      * @return Player
      */
     public function setNbDamageNpc($nbDamageNpc)
     {
         $this->nbDamageNpc = $nbDamageNpc;
+
         return $this;
     }
 
     /**
      * Get nbDamageNpc
      *
-     * @return integer
+     * @return int
      */
     public function getNbDamageNpc()
     {
@@ -2067,20 +2116,21 @@ class Player implements AdvancedUserInterface, Serializable
     /**
      * Set nbKillHq
      *
-     * @param integer $nbKillHq
+     * @param int $nbKillHq
      *
      * @return Player
      */
     public function setNbKillHq($nbKillHq)
     {
         $this->nbKillHq = $nbKillHq;
+
         return $this;
     }
 
     /**
      * Get nbKillHq
      *
-     * @return integer
+     * @return int
      */
     public function getNbKillHq()
     {
@@ -2090,20 +2140,21 @@ class Player implements AdvancedUserInterface, Serializable
     /**
      * Set nbHitHq
      *
-     * @param integer $nbHitHq
+     * @param int $nbHitHq
      *
      * @return Player
      */
     public function setNbHitHq($nbHitHq)
     {
         $this->nbHitHq = $nbHitHq;
+
         return $this;
     }
 
     /**
      * Get nbHitHq
      *
-     * @return integer
+     * @return int
      */
     public function getNbHitHq()
     {
@@ -2113,20 +2164,21 @@ class Player implements AdvancedUserInterface, Serializable
     /**
      * Set nbDamageHq
      *
-     * @param integer $nbDamageHq
+     * @param int $nbDamageHq
      *
      * @return Player
      */
     public function setNbDamageHq($nbDamageHq)
     {
         $this->nbDamageHq = $nbDamageHq;
+
         return $this;
     }
 
     /**
      * Get nbDamageHq
      *
-     * @return integer
+     * @return int
      */
     public function getNbDamageHq()
     {
@@ -2136,20 +2188,21 @@ class Player implements AdvancedUserInterface, Serializable
     /**
      * Set nbStolenZeni
      *
-     * @param integer $nbStolenZeni
+     * @param int $nbStolenZeni
      *
      * @return Player
      */
     public function setNbStolenZeni($nbStolenZeni)
     {
         $this->nbStolenZeni = $nbStolenZeni;
+
         return $this;
     }
 
     /**
      * Get nbStolenZeni
      *
-     * @return integer
+     * @return int
      */
     public function getNbStolenZeni()
     {
@@ -2159,20 +2212,21 @@ class Player implements AdvancedUserInterface, Serializable
     /**
      * Set nbActionStolenZeni
      *
-     * @param integer $nbActionStolenZeni
+     * @param int $nbActionStolenZeni
      *
      * @return Player
      */
     public function setNbActionStolenZeni($nbActionStolenZeni)
     {
         $this->nbActionStolenZeni = $nbActionStolenZeni;
+
         return $this;
     }
 
     /**
      * Get nbActionStolenZeni
      *
-     * @return integer
+     * @return int
      */
     public function getNbActionStolenZeni()
     {
@@ -2182,20 +2236,21 @@ class Player implements AdvancedUserInterface, Serializable
     /**
      * Set nbDodge
      *
-     * @param integer $nbDodge
+     * @param int $nbDodge
      *
      * @return Player
      */
     public function setNbDodge($nbDodge)
     {
         $this->nbDodge = $nbDodge;
+
         return $this;
     }
 
     /**
      * Get nbDodge
      *
-     * @return integer
+     * @return int
      */
     public function getNbDodge()
     {
@@ -2205,20 +2260,21 @@ class Player implements AdvancedUserInterface, Serializable
     /**
      * Set nbWanted
      *
-     * @param integer $nbWanted
+     * @param int $nbWanted
      *
      * @return Player
      */
     public function setNbWanted($nbWanted)
     {
         $this->nbWanted = $nbWanted;
+
         return $this;
     }
 
     /**
      * Get nbWanted
      *
-     * @return integer
+     * @return int
      */
     public function getNbWanted()
     {
@@ -2228,20 +2284,21 @@ class Player implements AdvancedUserInterface, Serializable
     /**
      * Set nbAnalysis
      *
-     * @param integer $nbAnalysis
+     * @param int $nbAnalysis
      *
      * @return Player
      */
     public function setNbAnalysis($nbAnalysis)
     {
         $this->nbAnalysis = $nbAnalysis;
+
         return $this;
     }
 
     /**
      * Get nbAnalysis
      *
-     * @return integer
+     * @return int
      */
     public function getNbAnalysis()
     {
@@ -2251,20 +2308,21 @@ class Player implements AdvancedUserInterface, Serializable
     /**
      * Set nbSpell
      *
-     * @param integer $nbSpell
+     * @param int $nbSpell
      *
      * @return Player
      */
     public function setNbSpell($nbSpell)
     {
         $this->nbSpell = $nbSpell;
+
         return $this;
     }
 
     /**
      * Get nbSpell
      *
-     * @return integer
+     * @return int
      */
     public function getNbSpell()
     {
@@ -2274,20 +2332,21 @@ class Player implements AdvancedUserInterface, Serializable
     /**
      * Set nbHealthGiven
      *
-     * @param integer $nbHealthGiven
+     * @param int $nbHealthGiven
      *
      * @return Player
      */
     public function setNbHealthGiven($nbHealthGiven)
     {
         $this->nbHealthGiven = $nbHealthGiven;
+
         return $this;
     }
 
     /**
      * Get nbHealthGiven
      *
-     * @return integer
+     * @return int
      */
     public function getNbHealthGiven()
     {
@@ -2297,20 +2356,21 @@ class Player implements AdvancedUserInterface, Serializable
     /**
      * Set nbTotalHealthGiven
      *
-     * @param integer $nbTotalHealthGiven
+     * @param int $nbTotalHealthGiven
      *
      * @return Player
      */
     public function setNbTotalHealthGiven($nbTotalHealthGiven)
     {
         $this->nbTotalHealthGiven = $nbTotalHealthGiven;
+
         return $this;
     }
 
     /**
      * Get nbTotalHealthGiven
      *
-     * @return integer
+     * @return int
      */
     public function getNbTotalHealthGiven()
     {
@@ -2320,20 +2380,21 @@ class Player implements AdvancedUserInterface, Serializable
     /**
      * Set nbSlapTaken
      *
-     * @param integer $nbSlapTaken
+     * @param int $nbSlapTaken
      *
      * @return Player
      */
     public function setNbSlapTaken($nbSlapTaken)
     {
         $this->nbSlapTaken = $nbSlapTaken;
+
         return $this;
     }
 
     /**
      * Get nbSlapTaken
      *
-     * @return integer
+     * @return int
      */
     public function getNbSlapTaken()
     {
@@ -2343,20 +2404,21 @@ class Player implements AdvancedUserInterface, Serializable
     /**
      * Set nbSlapGiven
      *
-     * @param integer $nbSlapGiven
+     * @param int $nbSlapGiven
      *
      * @return Player
      */
     public function setNbSlapGiven($nbSlapGiven)
     {
         $this->nbSlapGiven = $nbSlapGiven;
+
         return $this;
     }
 
     /**
      * Get nbSlapGiven
      *
-     * @return integer
+     * @return int
      */
     public function getNbSlapGiven()
     {
@@ -2366,20 +2428,21 @@ class Player implements AdvancedUserInterface, Serializable
     /**
      * Set betrayals
      *
-     * @param integer $betrayals
+     * @param int $betrayals
      *
      * @return Player
      */
     public function setBetrayals($betrayals)
     {
         $this->betrayals = $betrayals;
+
         return $this;
     }
 
     /**
      * Get betrayals
      *
-     * @return integer
+     * @return int
      */
     public function getBetrayals()
     {
@@ -2389,20 +2452,21 @@ class Player implements AdvancedUserInterface, Serializable
     /**
      * Set head price
      *
-     * @param integer $headPrice
+     * @param int $headPrice
      *
      * @return Player
      */
     public function setHeadPrice($headPrice)
     {
         $this->headPrice = $headPrice;
+
         return $this;
     }
 
     /**
      * Get head price
      *
-     * @return integer
+     * @return int
      */
     public function getHeadPrice()
     {
@@ -2419,6 +2483,7 @@ class Player implements AdvancedUserInterface, Serializable
     public function setTarget(Player $target = null)
     {
         $this->target = $target;
+
         return $this;
     }
 
@@ -2442,6 +2507,7 @@ class Player implements AdvancedUserInterface, Serializable
     public function addPlayerObject(PlayerObject $playerObject)
     {
         $this->playerObjects[] = $playerObject;
+
         return $this;
     }
 
@@ -2475,6 +2541,7 @@ class Player implements AdvancedUserInterface, Serializable
     public function addPlayerQuest(PlayerQuest $playerQuest)
     {
         $this->playerQuests[] = $playerQuest;
+
         return $this;
     }
 
@@ -2508,6 +2575,7 @@ class Player implements AdvancedUserInterface, Serializable
     public function addPlayerSpell(PlayerSpell $playerSpell)
     {
         $this->playerSpells[] = $playerSpell;
+
         return $this;
     }
 
@@ -2534,7 +2602,7 @@ class Player implements AdvancedUserInterface, Serializable
     /**
      * Player has spell
      *
-     * @return boolean
+     * @return bool
      */
     public function hasSpell(Spell $spell)
     {
@@ -2557,6 +2625,7 @@ class Player implements AdvancedUserInterface, Serializable
     public function setGuildPlayer(GuildPlayer $guildPlayer = null)
     {
         $this->guildPlayer = $guildPlayer;
+
         return $this;
     }
 
@@ -2612,6 +2681,7 @@ class Player implements AdvancedUserInterface, Serializable
     public function setUsername($username)
     {
         $this->username = $username;
+
         return $this;
     }
 
@@ -2635,6 +2705,7 @@ class Player implements AdvancedUserInterface, Serializable
     public function setUsernameCanonical($usernameCanonical)
     {
         $this->usernameCanonical = $usernameCanonical;
+
         return $this;
     }
 
@@ -2680,6 +2751,7 @@ class Player implements AdvancedUserInterface, Serializable
     public function setEmail($email)
     {
         $this->email = $email;
+
         return $this;
     }
 
@@ -2703,6 +2775,7 @@ class Player implements AdvancedUserInterface, Serializable
     public function setEmailCanonical($emailCanonical)
     {
         $this->emailCanonical = $emailCanonical;
+
         return $this;
     }
 
@@ -2726,6 +2799,7 @@ class Player implements AdvancedUserInterface, Serializable
     public function setPassword($password)
     {
         $this->password = $password;
+
         return $this;
     }
 
@@ -2749,6 +2823,7 @@ class Player implements AdvancedUserInterface, Serializable
     public function setLastLogin(DateTime $date = null)
     {
         $this->lastLogin = $date;
+
         return $this;
     }
 
@@ -2772,6 +2847,7 @@ class Player implements AdvancedUserInterface, Serializable
     public function setConfirmationToken($confirmationToken)
     {
         $this->confirmationToken = $confirmationToken;
+
         return $this;
     }
 
@@ -2792,7 +2868,7 @@ class Player implements AdvancedUserInterface, Serializable
     /**
      * Get enabled
      *
-     * @return boolean
+     * @return bool
      */
     public function getEnabled()
     {
@@ -2802,7 +2878,7 @@ class Player implements AdvancedUserInterface, Serializable
     /**
      * Get enabled
      *
-     * @return boolean
+     * @return bool
      */
     public function isEnabled()
     {
@@ -2829,13 +2905,14 @@ class Player implements AdvancedUserInterface, Serializable
     /**
      * Set enabled
      *
-     * @param boolean $enabled
+     * @param bool $enabled
      *
      * @return Player
      */
     public function setEnabled($enabled)
     {
         $this->enabled = (bool) $enabled;
+
         return $this;
     }
 
@@ -2849,13 +2926,14 @@ class Player implements AdvancedUserInterface, Serializable
     public function setPasswordRequestedAt(DateTime $date = null)
     {
         $this->passwordRequestedAt = $date;
+
         return $this;
     }
 
     /**
      * Gets the timestamp that the user requested a password reset
      *
-     * @return null|DateTime
+     * @return DateTime|null
      */
     public function getPasswordRequestedAt()
     {
@@ -2871,7 +2949,7 @@ class Player implements AdvancedUserInterface, Serializable
      */
     public function setRoles(array $roles)
     {
-        $this->roles = array();
+        $this->roles = [];
         foreach ($roles as $role) {
             $this->addRole($role);
         }
@@ -2890,7 +2968,7 @@ class Player implements AdvancedUserInterface, Serializable
     /**
      * Get Inventory Weight
      *
-     * @return integer
+     * @return int
      */
     public function getInventoryMaxWeight()
     {
@@ -2900,7 +2978,7 @@ class Player implements AdvancedUserInterface, Serializable
     /**
      * Get Inventory Weight
      *
-     * @return integer
+     * @return int
      */
     public function getInventoryWeight()
     {
@@ -2910,7 +2988,7 @@ class Player implements AdvancedUserInterface, Serializable
     /**
      * Get map vision
      *
-     * @return integer
+     * @return int
      */
     public function getMapVision()
     {
@@ -2958,7 +3036,7 @@ class Player implements AdvancedUserInterface, Serializable
      * Add ki, action, movement, fatigue, health points
      *
      * @param string $what What points do you want to add
-     * @param integer $howMuch How much you want to add
+     * @param int $howMuch How much you want to add
      */
     public function addPoints($what, $howMuch)
     {
@@ -2990,7 +3068,7 @@ class Player implements AdvancedUserInterface, Serializable
      * Use action, skill, movement and fatigue points
      *
      * @param string $what What points do you want to use
-     * @param integer $howMuch How much you want to use
+     * @param int $howMuch How much you want to use
      */
     public function usePoints($what, $howMuch)
     {
@@ -3047,16 +3125,17 @@ class Player implements AdvancedUserInterface, Serializable
         }
 
         $originalTime = $this->{'get' . $method . 'UpdatedAt'}();
-        $currentDate = new DateTime;
+        $currentDate = new DateTime();
+
         return $pointTime - (int) $currentDate->diff($originalTime)->format('%i');
     }
 
     /**
      * Take damage
      *
-     * @param integer $damages Damage taken
-     * @param boolean $loseAP Lose action points, default true
-     * @param boolean $isSLap Is a nbSlap?
+     * @param int $damages Damage taken
+     * @param bool $loseAP Lose action points, default true
+     * @param bool $isSLap Is a nbSlap?
      *
      * @return booelean, true if player si dead, false if not
      */
@@ -3092,9 +3171,9 @@ class Player implements AdvancedUserInterface, Serializable
     /**
      * Get battle points remaining
      *
-     * @param integer $level Level
+     * @param int $level Level
      *
-     * @return integer
+     * @return int
      */
     public function getBattlePointsRemaining($level = null)
     {
@@ -3105,303 +3184,403 @@ class Player implements AdvancedUserInterface, Serializable
             case 100:
                 $battlePoints += 55660;
             // Level
+            // no break
             case 99:
                 $battlePoints += 54610;
             // Level
+            // no break
             case 98:
                 $battlePoints += 53570;
             // Level
+            // no break
             case 97:
                 $battlePoints += 52540;
             // Level
+            // no break
             case 96:
                 $battlePoints += 51520;
             // Level
+            // no break
             case 95:
                 $battlePoints += 50510;
             // Level
+            // no break
             case 94:
                 $battlePoints += 49510;
             // Level
+            // no break
             case 93:
                 $battlePoints += 48520;
             // Level
+            // no break
             case 92:
                 $battlePoints += 47530;
             // Level
+            // no break
             case 91:
                 $battlePoints += 46550;
             // Level
+            // no break
             case 90:
                 $battlePoints += 45580;
             // Level
+            // no break
             case 89:
                 $battlePoints += 44620;
             // Level
+            // no break
             case 88:
                 $battlePoints += 43670;
             // Level
+            // no break
             case 87:
                 $battlePoints += 42730;
             // Level
+            // no break
             case 86:
                 $battlePoints += 41800;
             // Level
+            // no break
             case 85:
                 $battlePoints += 40880;
             // Level
+            // no break
             case 84:
                 $battlePoints += 39970;
             // Level
+            // no break
             case 83:
                 $battlePoints += 39070;
             // Level
+            // no break
             case 82:
                 $battlePoints += 38180;
             // Level
+            // no break
             case 81:
                 $battlePoints += 37310;
             // Level
+            // no break
             case 80:
                 $battlePoints += 36450;
             // Level
+            // no break
             case 79:
                 $battlePoints += 35600;
             // Level
+            // no break
             case 78:
                 $battlePoints += 34760;
             // Level
+            // no break
             case 77:
                 $battlePoints += 33930;
             // Level
+            // no break
             case 76:
                 $battlePoints += 33110;
             // Level
+            // no break
             case 75:
                 $battlePoints += 32300;
             // Level
+            // no break
             case 74:
                 $battlePoints += 31500;
             // Level
+            // no break
             case 73:
                 $battlePoints += 30710;
             // Level
+            // no break
             case 72:
                 $battlePoints += 29930;
             // Level
+            // no break
             case 71:
                 $battlePoints += 29160;
             // Level
+            // no break
             case 70:
                 $battlePoints += 28400;
             // Level
+            // no break
             case 69:
                 $battlePoints += 27650;
             // Level
+            // no break
             case 68:
                 $battlePoints += 26910;
             // Level
+            // no break
             case 67:
                 $battlePoints += 26180;
             // Level
+            // no break
             case 66:
                 $battlePoints += 25460;
             // Level
+            // no break
             case 65:
                 $battlePoints += 24750;
             // Level
+            // no break
             case 64:
                 $battlePoints += 24050;
             // Level
+            // no break
             case 63:
                 $battlePoints += 23360;
             // Level
+            // no break
             case 62:
                 $battlePoints += 22680;
             // Level
+            // no break
             case 61:
                 $battlePoints += 22010;
             // Level
+            // no break
             case 60:
                 $battlePoints += 21350;
             // Level
+            // no break
             case 59:
                 $battlePoints += 20700;
             // Level
+            // no break
             case 58:
                 $battlePoints += 20060;
             // Level
+            // no break
             case 57:
                 $battlePoints += 19430;
             // Level
+            // no break
             case 56:
                 $battlePoints += 18810;
             // Level
+            // no break
             case 55:
                 $battlePoints += 18200;
             // Level
+            // no break
             case 54:
                 $battlePoints += 17600;
             // Level
+            // no break
             case 53:
                 $battlePoints += 17010;
             // Level
+            // no break
             case 52:
                 $battlePoints += 16430;
             // Level
+            // no break
             case 51:
                 $battlePoints += 15860;
             // Level
+            // no break
             case 50:
                 $battlePoints += 15300;
             // Level
+            // no break
             case 49:
                 $battlePoints += 14750;
             // Level
+            // no break
             case 48:
                 $battlePoints += 14210;
             // Level
+            // no break
             case 47:
                 $battlePoints += 13680;
             // Level
+            // no break
             case 46:
                 $battlePoints += 13160;
             // Level
+            // no break
             case 45:
                 $battlePoints += 12650;
             // Level
+            // no break
             case 44:
                 $battlePoints += 12150;
             // Level
+            // no break
             case 43:
                 $battlePoints += 11660;
             // Level
+            // no break
             case 42:
                 $battlePoints += 11180;
             // Level
+            // no break
             case 41:
                 $battlePoints += 10710;
             // Level
+            // no break
             case 40:
                 $battlePoints += 10250;
             // Level
+            // no break
             case 39:
                 $battlePoints += 9800;
             // Level
+            // no break
             case 38:
                 $battlePoints += 9360;
             // Level
+            // no break
             case 37:
                 $battlePoints += 8930;
             // Level
+            // no break
             case 36:
                 $battlePoints += 8510;
             // Level
+            // no break
             case 35:
                 $battlePoints += 8100;
             // Level
+            // no break
             case 34:
                 $battlePoints += 7700;
             // Level
+            // no break
             case 33:
                 $battlePoints += 7310;
             // Level
+            // no break
             case 32:
                 $battlePoints += 6930;
             // Level
+            // no break
             case 31:
                 $battlePoints += 6560;
             // Level
+            // no break
             case 30:
                 $battlePoints += 6200;
             // Level
+            // no break
             case 29:
                 $battlePoints += 5850;
             // Level
+            // no break
             case 28:
                 $battlePoints += 5510;
             // Level
+            // no break
             case 27:
                 $battlePoints += 5180;
             // Level
+            // no break
             case 26:
                 $battlePoints += 4860;
             // Level
+            // no break
             case 25:
                 $battlePoints += 4550;
             // Level
+            // no break
             case 24:
                 $battlePoints += 4250;
             // Level
+            // no break
             case 23:
                 $battlePoints += 3960;
             // Level
+            // no break
             case 22:
                 $battlePoints += 3680;
             // Level
+            // no break
             case 21:
                 $battlePoints += 3410;
             // Level
+            // no break
             case 20:
                 $battlePoints += 3150;
             // Level
+            // no break
             case 19:
                 $battlePoints += 2900;
             // Level
+            // no break
             case 18:
                 $battlePoints += 2660;
             // Level
+            // no break
             case 17:
                 $battlePoints += 2430;
             // Level
+            // no break
             case 16:
                 $battlePoints += 2210;
             // Level
+            // no break
             case 15:
                 $battlePoints += 2000;
             // Level
+            // no break
             case 14:
                 $battlePoints += 1800;
             // Level
+            // no break
             case 13:
                 $battlePoints += 1610;
             // Level
+            // no break
             case 12:
                 $battlePoints += 1430;
             // Level
+            // no break
             case 11:
                 $battlePoints += 1260;
             // Level
+            // no break
             case 10:
                 $battlePoints += 1100;
             // Level
+            // no break
             case 9:
                 $battlePoints += 950;
             // Level
+            // no break
             case 8:
                 $battlePoints += 810;
             // Level
+            // no break
             case 7:
                 $battlePoints += 680;
             // Level
+            // no break
             case 6:
                 $battlePoints += 560;
             // Level
+            // no break
             case 5:
                 $battlePoints += 450;
             // Level
+            // no break
             case 4:
                 $battlePoints += 350;
             // Level
+            // no break
             case 3:
                 $battlePoints += 260;
             // Level
+            // no break
             case 2:
                 $battlePoints += 180;
             // Level
+            // no break
             case 1:
                 $battlePoints += 110;
             // Level
+            // no break
             case 0:
                 $battlePoints += 50;
         }
@@ -3428,7 +3607,7 @@ class Player implements AdvancedUserInterface, Serializable
             're' => 'Resistance',
             'vi' => 'Vision',
             'mk' => 'MaxKi',
-            'mh' => 'MaxHealth'
+            'mh' => 'MaxHealth',
         ];
 
         $skillValue = 0;
@@ -3466,7 +3645,7 @@ class Player implements AdvancedUserInterface, Serializable
             $firstSkill = $this->findBestSkill();
             $secondSkill = $this->findBestSkill($firstSkill);
         } else {
-            $specifications = ['st','ac','ag','an','sk','in','re','vi','mk','mh'];
+            $specifications = ['st', 'ac', 'ag', 'an', 'sk', 'in', 're', 'vi', 'mk', 'mh'];
             $rand = array_rand($specifications, 2);
             $firstSkill = $specifications[$rand[0]];
             $secondSkill = $specifications[$rand[1]];
@@ -3490,7 +3669,7 @@ class Player implements AdvancedUserInterface, Serializable
         } elseif (($firstSkill == 'st' and $secondSkill == 'mh') or ($firstSkill == 'mh' and $secondSkill == 'st')) {
             $class = 'imperialGuard';
 
-            // intellect
+        // intellect
         } elseif (($firstSkill == 'in' and $secondSkill == 'mk') or ($firstSkill == 'mk' and $secondSkill == 'in')) {
             $class = 'magus';
         } elseif (($firstSkill == 'in' and $secondSkill == 'vi') or ($firstSkill == 'vi' and $secondSkill == 'in')) {
@@ -3508,7 +3687,7 @@ class Player implements AdvancedUserInterface, Serializable
         } elseif (($firstSkill == 'in' and $secondSkill == 'ac') or ($firstSkill == 'ac' and $secondSkill == 'in')) {
             $class = 'blackMagus';
 
-            // Agility
+        // Agility
         } elseif (($firstSkill == 'ag' and $secondSkill == 'ac') or ($firstSkill == 'ac' and $secondSkill == 'ag')) {
             $class = 'thief';
         } elseif (($firstSkill == 'ag' and $secondSkill == 'mh') or ($firstSkill == 'mh' and $secondSkill == 'ag')) {
@@ -3520,7 +3699,7 @@ class Player implements AdvancedUserInterface, Serializable
         } elseif (($firstSkill == 'ag' and $secondSkill == 'an') or ($firstSkill == 'an' and $secondSkill == 'ag')) {
             $class = 'specialist';
 
-            // Skill
+        // Skill
         } elseif (($firstSkill == 'sk' and $secondSkill == 're') or ($firstSkill == 're' and $secondSkill == 'sk')) {
             $class = 'soldierStone';
         } elseif (($firstSkill == 'sk' and $secondSkill == 'mh') or ($firstSkill == 'mh' and $secondSkill == 'sk')) {
@@ -3534,13 +3713,13 @@ class Player implements AdvancedUserInterface, Serializable
         } elseif (($firstSkill == 'mk' and $secondSkill == 'sk') or ($firstSkill == 'mk' and $secondSkill == 'sk')) {
             $class = 'bishop';
 
-            // Analysis
+        // Analysis
         } elseif (($firstSkill == 'an' and $secondSkill == 'vi') or ($firstSkill == 'vi' and $secondSkill == 'an')) {
             $class = 'scout';
         } elseif (($firstSkill == 'an' and $secondSkill == 'mh') or ($firstSkill == 'mh' and $secondSkill == 'an')) {
             $class = 'highResearcher';
 
-            // Ki
+        // Ki
         } elseif (($firstSkill == 'mk' and $secondSkill == 'in') or ($firstSkill == 'in' and $secondSkill == 'mk')) {
             $class = 'magus';
         } else {
@@ -3553,7 +3732,7 @@ class Player implements AdvancedUserInterface, Serializable
     /**
      * Is Player entity is a real player
      *
-     * @return boolean
+     * @return bool
      */
     public function isPlayer()
     {
@@ -3593,7 +3772,7 @@ class Player implements AdvancedUserInterface, Serializable
                 'max_ki' => $this->getMaxKi(),
                 'max_health' => $this->getMaxHealth(),
             ],
-            'weight' => 0
+            'weight' => 0,
         ];
 
         foreach ($this->getPlayerObjects() as $playerObject) {
@@ -3632,7 +3811,7 @@ class Player implements AdvancedUserInterface, Serializable
     /**
      * Check if user can convert AP to MP
      *
-     * @return boolean
+     * @return bool
      */
     public function canConvert()
     {
@@ -3666,11 +3845,12 @@ class Player implements AdvancedUserInterface, Serializable
     /**
      * Whether the user is connected or not
      *
-     * @return boolean
+     * @return bool
      */
     public function isConnected()
     {
         $delay = new DateTime('2 minutes ago');
+
         return $this->getLastLogin() > $delay;
     }
 
@@ -3679,7 +3859,7 @@ class Player implements AdvancedUserInterface, Serializable
      */
     public function serialize()
     {
-        return serialize(array(
+        return serialize([
             $this->password,
             $this->salt,
             $this->usernameCanonical,
@@ -3688,7 +3868,7 @@ class Player implements AdvancedUserInterface, Serializable
             $this->id,
             $this->email,
             $this->emailCanonical,
-        ));
+        ]);
     }
 
     /**
@@ -3709,9 +3889,8 @@ class Player implements AdvancedUserInterface, Serializable
         ) = $data;
     }
 
-
     /**
-     * @JMS\VirtualProperty()
+     * @JMS\VirtualProperty
      * @JMS\SerializedName("can_be_healed")
      * @JMS\Expose
      */
@@ -3728,6 +3907,7 @@ class Player implements AdvancedUserInterface, Serializable
     public function getImagePath()
     {
         $directory = $this->isPlayer() ? 'players' : 'npc';
+
         return sprintf('/bundles/dbaadmin/images/avatars/%s/%s', $directory, $this->getImage());
     }
 }

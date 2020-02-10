@@ -9,11 +9,12 @@ class ObjectRepository extends EntityRepository
     /**
      * Count objects
      *
-     * @return integer
+     * @return int
      */
     public function countObjects()
     {
         $qb = $this->createQueryBuilder('o');
+
         return $qb->select('COUNT(o)')
             ->getQuery()
             ->getSingleScalarResult();

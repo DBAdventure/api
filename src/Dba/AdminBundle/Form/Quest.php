@@ -66,8 +66,8 @@ class Quest extends AbstractType
                     'choices' => $images,
                     'choice_translation_domain' => false,
                     'attr' => [
-                        'data-asset-path' => '/' . $options['attr']['asset-path']
-                    ]
+                        'data-asset-path' => '/' . $options['attr']['asset-path'],
+                    ],
                 ]
             )
             ->add(
@@ -159,7 +159,7 @@ class Quest extends AbstractType
                     'class' => Entity\Map::class,
                     'choice_label' => 'name',
                     'label' => 'form.map',
-                    'choice_translation_domain' => false
+                    'choice_translation_domain' => false,
                 ]
             );
         $integerAttributes = [
@@ -189,9 +189,10 @@ class Quest extends AbstractType
                         foreach ($bonus as $key => $value) {
                             $data[$key] = [
                                 'key' => $key,
-                                'value' => $value
+                                'value' => $value,
                             ];
                         }
+
                         return $data;
                     },
                     function ($data) {

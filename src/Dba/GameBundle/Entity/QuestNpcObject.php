@@ -10,7 +10,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * Quest Npc Object
  *
  * @ORM\Table(name="quest_npc_object", indexes={@ORM\Index(name="quest_npc_object_quest_id", columns={"quest_id"}),
-   @ORM\Index(name="quest_npc_object_npc_object_id", columns={"npc_object_id"})})
+ * @ORM\Index(name="quest_npc_object_npc_object_id", columns={"npc_object_id"})})
  * @ORM\Entity(repositoryClass="Dba\GameBundle\Repository\QuestObjectRepository")
  */
 class QuestNpcObject
@@ -22,7 +22,7 @@ class QuestNpcObject
      *
      * @ORM\ManyToOne(targetEntity="Dba\GameBundle\Entity\Quest", fetch="EAGER", inversedBy="npcObjectsNeeded")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="quest_id", referencedColumnName="id", nullable=false, onDelete="CASCADE")
+     *     @ORM\JoinColumn(name="quest_id", referencedColumnName="id", nullable=false, onDelete="CASCADE")
      * })
      * @JMS\Exclude
      */
@@ -35,16 +35,16 @@ class QuestNpcObject
      *
      * @ORM\ManyToOne(targetEntity="Dba\GameBundle\Entity\NpcObject", fetch="EAGER")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="npc_object_id", referencedColumnName="id", nullable=false, onDelete="CASCADE")
+     *     @ORM\JoinColumn(name="npc_object_id", referencedColumnName="id", nullable=false, onDelete="CASCADE")
      * })
      */
     private $npcObject;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="number", type="integer", nullable=false)
-     * @Assert\NotBlank()
+     * @Assert\NotBlank
      */
     private $number = 1;
 
@@ -65,7 +65,7 @@ class QuestNpcObject
     /**
      * Get number
      *
-     * @return integer
+     * @return int
      */
     public function getNumber()
     {

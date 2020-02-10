@@ -106,7 +106,7 @@ class AccountControllerTest extends BaseTestCase
                 'nb_health_given',
                 'nb_total_health_given',
                 'nb_slap_taken',
-                'nb_slap_given'
+                'nb_slap_given',
             ],
             'betrayals',
             'head_price',
@@ -141,11 +141,11 @@ class AccountControllerTest extends BaseTestCase
     {
         $player = $this->login();
         $data = [
-            'player_registration_race' =>  2,
+            'player_registration_race' => 2,
             'player_appearance' => [
                 'type' => 'HS1',
                 'image' => 'HS10.png',
-            ]
+            ],
         ];
         $this->client->request(
             'POST',
@@ -162,10 +162,10 @@ class AccountControllerTest extends BaseTestCase
     {
         $player = $this->login();
         $data = [
-            'player_registration_race' =>  2,
+            'player_registration_race' => 2,
             'player_appearance' => [
                 'type' => 'H1',
-            ]
+            ],
         ];
         $this->client->request(
             'POST',
@@ -187,7 +187,7 @@ class AccountControllerTest extends BaseTestCase
                 'email' => 'blyat@blyat.com',
                 'history' => 'Mouahahah',
                 'username' => 'Bast',
-            ]
+            ],
         ];
         $this->client->request(
             'POST',
@@ -213,7 +213,7 @@ class AccountControllerTest extends BaseTestCase
                 'history' => 'Mouahahah',
                 'username' => 'Bast',
                 'password' => 'newPassword',
-            ]
+            ],
         ];
         $this->client->request(
             'POST',
@@ -237,7 +237,7 @@ class AccountControllerTest extends BaseTestCase
                 'email' => 'blyat',
                 'history' => 'Mouahahah',
                 'username' => 'Bast',
-            ]
+            ],
         ];
         $this->client->request(
             'POST',

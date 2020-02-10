@@ -32,6 +32,7 @@ class ActionEvent extends Event
     public function setPlayer(Player $player)
     {
         $this->player = $player;
+
         return $this;
     }
 
@@ -55,6 +56,7 @@ class ActionEvent extends Event
     public function setTarget(Player $target)
     {
         $this->target = $target;
+
         return $this;
     }
 
@@ -78,6 +80,7 @@ class ActionEvent extends Event
     public function setData(array $data)
     {
         $this->data = $data;
+
         return $this;
     }
 

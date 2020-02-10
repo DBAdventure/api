@@ -35,7 +35,7 @@ class News
      * @var string
      *
      * @ORM\Column(name="subject", type="string")
-     * @Assert\NotBlank()
+     * @Assert\NotBlank
      */
     private $subject;
 
@@ -43,7 +43,7 @@ class News
      * @var string
      *
      * @ORM\Column(name="message", type="text")
-     * @Assert\NotBlank()
+     * @Assert\NotBlank
      */
     private $message;
 
@@ -51,12 +51,12 @@ class News
      * @var string
      *
      * @ORM\Column(name="image", type="string", length=80)
-     * @Assert\NotBlank()
+     * @Assert\NotBlank
      */
     private $image;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
@@ -69,18 +69,17 @@ class News
      *
      * @ORM\ManyToOne(targetEntity="Dba\GameBundle\Entity\Player", fetch="EAGER")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="created_by", referencedColumnName="id", nullable=true, onDelete="SET NULL")
+     *     @ORM\JoinColumn(name="created_by", referencedColumnName="id", nullable=true, onDelete="SET NULL")
      * })
      */
     private $createdBy;
 
     /**
-     * @var boolean
+     * @var bool
      *
      * @ORM\Column(name="enabled", type="boolean", options={"default": false})
      */
     private $enabled = false;
-
 
     /**
      * Set createdAt
@@ -205,7 +204,7 @@ class News
     /**
      * Get id
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -239,7 +238,7 @@ class News
     /**
      * Is enabled
      *
-     * @return boolean
+     * @return bool
      */
     public function isEnabled()
     {
@@ -249,7 +248,7 @@ class News
     /**
      * Get enabled
      *
-     * @return boolean
+     * @return bool
      */
     public function getEnabled()
     {
@@ -259,7 +258,7 @@ class News
     /**
      * Set enabled
      *
-     * @param boolean $enabled
+     * @param bool $enabled
      *
      * @return Guild
      */

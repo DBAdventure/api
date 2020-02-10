@@ -7,15 +7,17 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Rank
  *
- * @ORM\Table(name="rank", uniqueConstraints={@ORM\UniqueConstraint(name="rank_name", columns={"name"}),
-              @ORM\UniqueConstraint(name="rank_race_id_level", columns={"race_id", "level"})},
-              indexes={@ORM\Index(name="rank_race_id", columns={"race_id"})})
+ * @ORM\Table(name="rank", uniqueConstraints={
+ *     @ORM\UniqueConstraint(name="rank_name", columns={"name"}),
+ *     @ORM\UniqueConstraint(name="rank_race_id_level", columns={"race_id", "level"})
+ * },
+ * indexes={@ORM\Index(name="rank_race_id", columns={"race_id"})})
  * @ORM\Entity
  */
 class Rank
 {
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="level", type="integer", nullable=false)
      */
@@ -29,7 +31,7 @@ class Rank
     private $name;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
@@ -42,7 +44,7 @@ class Rank
      *
      * @ORM\ManyToOne(targetEntity="Dba\GameBundle\Entity\Race", fetch="EAGER")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="race_id", referencedColumnName="id", nullable=false)
+     *     @ORM\JoinColumn(name="race_id", referencedColumnName="id", nullable=false)
      * })
      */
     private $race;
@@ -50,7 +52,7 @@ class Rank
     /**
      * Set level
      *
-     * @param integer $level
+     * @param int $level
      *
      * @return Rank
      */
@@ -64,7 +66,7 @@ class Rank
     /**
      * Get level
      *
-     * @return integer
+     * @return int
      */
     public function getLevel()
     {
@@ -98,7 +100,7 @@ class Rank
     /**
      * Get id
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {

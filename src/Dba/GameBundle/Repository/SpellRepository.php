@@ -2,9 +2,9 @@
 
 namespace Dba\GameBundle\Repository;
 
-use Doctrine\ORM\EntityRepository;
-use Dba\GameBundle\Entity\Spell;
 use Dba\GameBundle\Entity\Player;
+use Dba\GameBundle\Entity\Spell;
+use Doctrine\ORM\EntityRepository;
 
 class SpellRepository extends EntityRepository
 {
@@ -96,9 +96,10 @@ class SpellRepository extends EntityRepository
             ->findBy(
                 [
                     'spell' => $ids,
-                    'target' => $target
+                    'target' => $target,
                 ]
             );
+
         return $playerSpells;
     }
 }

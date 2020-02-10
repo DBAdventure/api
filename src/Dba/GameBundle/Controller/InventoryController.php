@@ -2,12 +2,11 @@
 
 namespace Dba\GameBundle\Controller;
 
+use Dba\GameBundle\Entity\GameObject;
+use Dba\GameBundle\Entity\Player;
 use FOS\RestBundle\Controller\Annotations;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Request;
-use Dba\GameBundle\Entity\GameObject;
-use Dba\GameBundle\Entity\Player;
-use Dba\GameBundle\Entity\PlayerObject;
 
 /**
  * @Annotations\NamePrefix("inventory_")
@@ -129,11 +128,12 @@ class InventoryController extends BaseController
         $playerObject->setEquipped(false);
         $this->em()->persist($playerObject);
         $this->em()->flush();
+
         return [
             'message' => 'inventory.object.drop',
             'parameters' => [
                 'name' => $playerObject->getObject()->getName(),
-            ]
+            ],
         ];
     }
 
@@ -141,7 +141,7 @@ class InventoryController extends BaseController
      * @ParamConverter("object", class="Dba\GameBundle\Entity\GameObject")
      * @Annotations\Post("/unequip/{object}")
      */
-    public function postUnequipAction(Object $object)
+    public function postUnequipAction(object $object)
     {
         if (!$object->isEnabled()) {
             return $this->forbidden();
@@ -152,11 +152,12 @@ class InventoryController extends BaseController
         $playerObject->setEquipped(false);
         $this->em()->persist($playerObject);
         $this->em()->flush();
+
         return [
             'message' => 'inventory.object.unequip',
             'parameters' => [
                 'name' => $playerObject->getObject()->getName(),
-            ]
+            ],
         ];
     }
 
@@ -164,7 +165,7 @@ class InventoryController extends BaseController
      * @ParamConverter("object", class="Dba\GameBundle\Entity\GameObject")
      * @Annotations\Post("/equip/{object}")
      */
-    public function postEquipAction(Object $object)
+    public function postEquipAction(object $object)
     {
         if (!$object->isEnabled()) {
             return $this->forbidden();
@@ -180,7 +181,7 @@ class InventoryController extends BaseController
         foreach ($playerObject->getObject()->getRequirements() as $bonus => $value) {
             $method = $this->getMethod($bonus);
             if (method_exists($player, $method)) {
-                if (call_user_func(array($player, $method)) < $value) {
+                if (call_user_func([$player, $method]) < $value) {
                     $canEquip = false;
                     break;
                 }
@@ -192,7 +193,7 @@ class InventoryController extends BaseController
                 'message' => 'inventory.object.error.equip',
                 'parameters' => [
                     'name' => $playerObject->getObject()->getName(),
-                ]
+                ],
             ]);
         }
 
@@ -207,7 +208,7 @@ class InventoryController extends BaseController
                 'message' => 'inventory.object.unequip',
                 'parameters' => [
                     'name' => $similarObject->getObject()->getName(),
-                ]
+                ],
             ];
             $similarObject->setEquipped(false);
             $this->em()->persist($similarObject);
@@ -217,14 +218,14 @@ class InventoryController extends BaseController
             'message' => 'inventory.object.equip',
             'parameters' => [
                 'name' => $playerObject->getObject()->getName(),
-            ]
+            ],
         ];
         $playerObject->setEquipped(true);
         $this->em()->persist($playerObject);
         $this->em()->flush();
 
         return [
-            'messages' => $messages
+            'messages' => $messages,
         ];
     }
 
@@ -233,7 +234,7 @@ class InventoryController extends BaseController
      *
      * @param string $string String to be convert to method
      *
-     * @return boolean|string
+     * @return bool|string
      */
     protected function getMethod($string)
     {

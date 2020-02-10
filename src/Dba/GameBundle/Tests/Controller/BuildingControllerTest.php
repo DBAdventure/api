@@ -122,7 +122,7 @@ class BuildingControllerTest extends BaseTestCase
             'POST',
             '/api/building/bank/' . $building->getId() . '/deposit',
             [
-                'deposit' => -100
+                'deposit' => -100,
             ]
         );
         $this->assertJsonResponse($this->client->getResponse(), 400);
@@ -143,7 +143,7 @@ class BuildingControllerTest extends BaseTestCase
             'POST',
             '/api/building/bank/' . $building->getId() . '/deposit',
             [
-                'deposit' => 4000
+                'deposit' => 4000,
             ]
         );
         $this->assertJsonResponse($this->client->getResponse(), 400);
@@ -165,7 +165,7 @@ class BuildingControllerTest extends BaseTestCase
             'POST',
             '/api/building/bank/' . $building->getId() . '/deposit',
             [
-                'deposit' => 29
+                'deposit' => 29,
             ]
         );
 
@@ -208,7 +208,7 @@ class BuildingControllerTest extends BaseTestCase
             'POST',
             '/api/building/bank/' . $building->getId() . '/withdraw',
             [
-                'withdraw' => 4000
+                'withdraw' => 4000,
             ]
         );
         $this->assertJsonResponse($this->client->getResponse(), 400);
@@ -235,7 +235,7 @@ class BuildingControllerTest extends BaseTestCase
             'POST',
             '/api/building/bank/' . $building->getId() . '/withdraw',
             [
-                'withdraw' => -9
+                'withdraw' => -9,
             ]
         );
         $this->assertJsonResponse($this->client->getResponse(), 400);
@@ -262,7 +262,7 @@ class BuildingControllerTest extends BaseTestCase
             'POST',
             '/api/building/bank/' . $building->getId() . '/withdraw',
             [
-                'withdraw' => 9
+                'withdraw' => 9,
             ]
         );
 

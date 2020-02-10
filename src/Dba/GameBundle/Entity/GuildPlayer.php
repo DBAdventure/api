@@ -10,15 +10,17 @@ use JMS\Serializer\Annotation as JMS;
 /**
  * GuildPlayer
  *
- * @ORM\Table(name="guild_player", indexes={@ORM\Index(name="guild_player_rank", columns={"rank_id"}),
-              @ORM\Index(name="guild_player_guild", columns={"guild_id"})},
-              uniqueConstraints={@ORM\UniqueConstraint(name="guild_player_player", columns={"player_id"})})
+ * @ORM\Table(name="guild_player", indexes={
+ *     @ORM\Index(name="guild_player_rank", columns={"rank_id"}),
+ *     @ORM\Index(name="guild_player_guild", columns={"guild_id"})
+ * },
+ * uniqueConstraints={@ORM\UniqueConstraint(name="guild_player_player", columns={"player_id"})})
  * @ORM\Entity
  */
 class GuildPlayer
 {
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
@@ -31,7 +33,7 @@ class GuildPlayer
      *
      * @ORM\OneToOne(targetEntity="Player", inversedBy="guildPlayer")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="player_id", referencedColumnName="id", nullable=false, onDelete="CASCADE")
+     *     @ORM\JoinColumn(name="player_id", referencedColumnName="id", nullable=false, onDelete="CASCADE")
      * })
      * @JMS\Groups({"Guild", "GuildView"})
      */
@@ -42,7 +44,7 @@ class GuildPlayer
      *
      * @ORM\ManyToOne(targetEntity="Guild", inversedBy="players")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="guild_id", referencedColumnName="id", nullable=false, onDelete="CASCADE")
+     *     @ORM\JoinColumn(name="guild_id", referencedColumnName="id", nullable=false, onDelete="CASCADE")
      * })
      */
     private $guild;
@@ -52,7 +54,7 @@ class GuildPlayer
      *
      * @ORM\ManyToOne(targetEntity="GuildRank", cascade={"persist"}))
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="rank_id", referencedColumnName="id", nullable=false, onDelete="CASCADE")
+     *     @ORM\JoinColumn(name="rank_id", referencedColumnName="id", nullable=false, onDelete="CASCADE")
      * })
      */
     private $rank;
@@ -66,14 +68,14 @@ class GuildPlayer
     private $createdAt;
 
     /**
-     * @var boolean
+     * @var bool
      *
      * @ORM\Column(name="enabled", type="boolean", nullable=false, options={"default": false})
      */
     private $enabled = false;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="zeni", type="integer", nullable=false)
      */
@@ -82,7 +84,7 @@ class GuildPlayer
     /**
      * Get id
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -164,7 +166,7 @@ class GuildPlayer
     /**
      * Get is enabled
      *
-     * @return boolean
+     * @return bool
      */
     public function getEnabled()
     {
@@ -174,7 +176,7 @@ class GuildPlayer
     /**
      * Is enabled
      *
-     * @return boolean
+     * @return bool
      */
     public function isEnabled()
     {
@@ -184,7 +186,7 @@ class GuildPlayer
     /**
      * Set enabled
      *
-     * @param boolean $enabled
+     * @param bool $enabled
      *
      * @return GuildPlayer
      */
@@ -222,7 +224,7 @@ class GuildPlayer
     /**
      * Get zeni
      *
-     * @return integer
+     * @return int
      */
     public function getZeni()
     {
@@ -232,7 +234,7 @@ class GuildPlayer
     /**
      * Set zeni
      *
-     * @param integer $zeni
+     * @param int $zeni
      *
      * @return GuildPlayer
      */

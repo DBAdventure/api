@@ -3,13 +3,12 @@
 namespace Dba\GameBundle\Controller;
 
 use DateTime;
-use FOS\RestBundle\Controller\Annotations;
-use Symfony\Component\HttpFoundation\Request;
 use Dba\GameBundle\Entity\GameObject;
 use Dba\GameBundle\Entity\Player;
-use Dba\GameBundle\Entity\Race;
 use Dba\GameBundle\Entity\Side;
 use Dba\GameBundle\Form\PlayerRegistration;
+use FOS\RestBundle\Controller\Annotations;
+use Symfony\Component\HttpFoundation\Request;
 
 class DefaultController extends BaseController
 {
@@ -76,7 +75,7 @@ class DefaultController extends BaseController
             $this->trans('account.registered'),
             'account-confirm',
             [
-                'front_url' => $this->getParameter('front_url')
+                'front_url' => $this->getParameter('front_url'),
             ]
         );
 
@@ -184,7 +183,7 @@ class DefaultController extends BaseController
         $objects = [
             GameObject::DEFAULT_SENZU => 1,
             GameObject::DEFAULT_POTION_OF_FATIGUE => 2,
-            GameObject::DEFAULT_BERRIES => 5
+            GameObject::DEFAULT_BERRIES => 5,
         ];
         $objectService = $this->services()->getObjectService();
         $objectRepo = $this->repos()->getObjectRepository();

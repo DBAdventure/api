@@ -25,13 +25,14 @@ class RoleService
      *
      * @param string $role
      * @param Player $player
+     *
      * @return bool
      */
     public function isGranted($role, $player)
     {
         $role = new Role($role);
         foreach ($player->getRoles() as $playerRole) {
-            if (in_array($role, $this->roleHierarchy->getReachableRoles(array(new Role($playerRole))))) {
+            if (in_array($role, $this->roleHierarchy->getReachableRoles([new Role($playerRole)]))) {
                 return true;
             }
         }

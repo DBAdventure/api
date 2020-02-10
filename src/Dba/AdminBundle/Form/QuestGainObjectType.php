@@ -11,7 +11,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class QuestGainObjectType extends AbstractQuestType
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -23,7 +23,7 @@ class QuestGainObjectType extends AbstractQuestType
                     'class' => Entity\GameObject::class,
                     'choice_label' => 'name',
                     'label' => 'form.object',
-                    'choice_translation_domain' => false
+                    'choice_translation_domain' => false,
                 ]
             )
             ->add(

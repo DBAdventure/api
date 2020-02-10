@@ -35,7 +35,7 @@ class MapObjectType
     ];
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
@@ -57,11 +57,10 @@ class MapObjectType
      */
     private $image;
 
-
     /**
      * Get id
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {

@@ -2,12 +2,11 @@
 
 namespace Dba\AdminBundle\Controller;
 
+use Dba\AdminBundle\Form;
+use Dba\GameBundle\Entity\Building;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
-use Dba\AdminBundle\Controller\BaseController;
-use Dba\AdminBundle\Form;
-use Dba\GameBundle\Entity\Building;
 
 /**
  * @Route("/building")
@@ -46,7 +45,7 @@ class BuildingController extends BaseController
                 'attr' => [
                     'asset-path' => 'bundles/dbaadmin/images/buildings',
                     'web-dir' => $this->getParameter('kernel.root_dir') . '/../web/',
-                ]
+                ],
             ]
         );
         $form->handleRequest($request);
@@ -81,7 +80,7 @@ class BuildingController extends BaseController
                 'attr' => [
                     'asset-path' => 'bundles/dbaadmin/images/buildings',
                     'web-dir' => $this->getParameter('kernel.root_dir') . '/../web/',
-                ]
+                ],
             ]
         );
         $form->handleRequest($request);
@@ -111,6 +110,7 @@ class BuildingController extends BaseController
     {
         $this->em()->remove($building);
         $this->em()->flush();
+
         return $this->redirect($this->generateUrl('admin.building'));
     }
 }

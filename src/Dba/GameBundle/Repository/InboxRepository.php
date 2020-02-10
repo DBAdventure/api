@@ -2,11 +2,9 @@
 
 namespace Dba\GameBundle\Repository;
 
-use Doctrine\ORM\NoResultException;
-use Doctrine\ORM\Query\ResultSetMapping;
-use Doctrine\ORM\EntityRepository;
 use Dba\GameBundle\Entity\Inbox;
 use Dba\GameBundle\Entity\Player;
+use Doctrine\ORM\EntityRepository;
 
 class InboxRepository extends EntityRepository
 {
@@ -34,11 +32,12 @@ class InboxRepository extends EntityRepository
      *
      * @param Player $player Player
      *
-     * @return integer
+     * @return int
      */
     public function countUnreadMessages(Player $player)
     {
         $qb = $this->createQueryBuilder('i');
+
         return $qb->select('COUNT(i)')
             ->andWhere('i.recipient = :player')
             ->andWhere('i.recipientDirectory = :directory')
@@ -46,7 +45,7 @@ class InboxRepository extends EntityRepository
             ->setParameters([
                 'player' => $player,
                 'directory' => Inbox::DIRECTORY_INBOX,
-                'status' => Inbox::STATUS_UNREAD
+                'status' => Inbox::STATUS_UNREAD,
             ])
             ->getQuery()
             ->getSingleScalarResult();

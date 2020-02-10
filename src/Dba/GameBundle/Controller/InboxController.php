@@ -2,13 +2,12 @@
 
 namespace Dba\GameBundle\Controller;
 
+use Dba\GameBundle\Entity\Inbox;
+use Dba\GameBundle\Entity\Player;
+use Dba\GameBundle\Form;
 use FOS\RestBundle\Controller\Annotations;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Request;
-use Dba\GameBundle\Entity\Inbox;
-use Dba\GameBundle\Entity\Player;
-use Dba\GameBundle\Entity\Side;
-use Dba\GameBundle\Form;
 
 /**
  * @Annotations\NamePrefix("inbox_")
@@ -23,10 +22,10 @@ class InboxController extends BaseController
         $messages = $this->repos()->getInboxRepository()->findBy(
             [
                 'recipient' => $this->getUser(),
-                'recipientDirectory' => Inbox::DIRECTORY_INBOX
+                'recipientDirectory' => Inbox::DIRECTORY_INBOX,
             ],
             [
-                'createdAt' => 'DESC'
+                'createdAt' => 'DESC',
             ]
         );
 
@@ -41,12 +40,13 @@ class InboxController extends BaseController
         $messages = $this->repos()->getInboxRepository()->findBy(
             [
                 'sender' => $this->getUser(),
-                'senderDirectory' => Inbox::DIRECTORY_OUTBOX
+                'senderDirectory' => Inbox::DIRECTORY_OUTBOX,
             ],
             [
-                'createdAt' => 'DESC'
+                'createdAt' => 'DESC',
             ]
         );
+
         return $this->displayList($messages);
     }
 
@@ -59,6 +59,7 @@ class InboxController extends BaseController
             ->findArchive(
                 $this->getUser()
             );
+
         return $this->displayList($messages);
     }
 
@@ -90,6 +91,7 @@ class InboxController extends BaseController
             $this->em()->persist($message);
             $this->em()->flush();
         }
+
         return [];
     }
 
@@ -187,7 +189,6 @@ class InboxController extends BaseController
             }
         }
 
-
         $form = $this->createForm(Form\InboxMessage::class, $originalInbox);
         $form->handleRequest($request);
         if (!$form->isSubmitted() && !$form->isValid()) {
@@ -237,7 +238,7 @@ class InboxController extends BaseController
                 $messages = $inboxRepo->findBy(
                     [
                         'recipient' => $player,
-                        'recipientDirectory' => Inbox::DIRECTORY_INBOX
+                        'recipientDirectory' => Inbox::DIRECTORY_INBOX,
                     ]
                 );
                 break;
@@ -245,7 +246,7 @@ class InboxController extends BaseController
                 $messages = $inboxRepo->findBy(
                     [
                         'sender' => $player,
-                        'senderDirectory' => Inbox::DIRECTORY_OUTBOX
+                        'senderDirectory' => Inbox::DIRECTORY_OUTBOX,
                     ]
                 );
                 break;
@@ -259,7 +260,7 @@ class InboxController extends BaseController
                     [
                         'recipient' => $player,
                         'recipientDirectory' => Inbox::DIRECTORY_INBOX,
-                        'status' => Inbox::STATUS_READ
+                        'status' => Inbox::STATUS_READ,
                     ]
                 );
                 break;
@@ -276,6 +277,7 @@ class InboxController extends BaseController
         }
 
         $this->em()->flush();
+
         return [];
     }
 
@@ -300,6 +302,7 @@ class InboxController extends BaseController
 
         $this->em()->persist($message);
         $this->em()->flush();
+
         return [];
     }
 }

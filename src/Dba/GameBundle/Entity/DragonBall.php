@@ -7,36 +7,35 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * DragonBall
  *
- * @ORM\Table(name="dragon_ball",
-              indexes={@ORM\Index(name="dragon_ball_map_id", columns={"map_id"}),
-              @ORM\Index(name="dragon_ball_player_id", columns={"player_id"})})
+ * @ORM\Table(name="dragon_ball", indexes={@ORM\Index(name="dragon_ball_map_id", columns={"map_id"}),
+ * @ORM\Index(name="dragon_ball_player_id", columns={"player_id"})})
  * @ORM\Entity(repositoryClass="Dba\GameBundle\Repository\DragonBallRepository")
  */
 class DragonBall
 {
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="x", type="integer", nullable=true)
      */
     private $x;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="y", type="integer", nullable=true)
      */
     private $y;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="visible", type="boolean", nullable=false)
      */
     private $visible;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
@@ -49,18 +48,17 @@ class DragonBall
      *
      * @ORM\ManyToOne(targetEntity="Dba\GameBundle\Entity\Player", fetch="EAGER")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="player_id", referencedColumnName="id", nullable=true, onDelete="SET NULL")
+     *     @ORM\JoinColumn(name="player_id", referencedColumnName="id", nullable=true, onDelete="SET NULL")
      * })
      */
     private $player;
-
 
     /**
      * @var Map
      *
      * @ORM\ManyToOne(targetEntity="Dba\GameBundle\Entity\Map", fetch="EAGER")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="map_id", referencedColumnName="id", nullable=true, onDelete="SET NULL")
+     *     @ORM\JoinColumn(name="map_id", referencedColumnName="id", nullable=true, onDelete="SET NULL")
      * })
      */
     private $map;
@@ -68,7 +66,7 @@ class DragonBall
     /**
      * Set x
      *
-     * @param integer $x
+     * @param int $x
      *
      * @return DragonBall
      */
@@ -82,7 +80,7 @@ class DragonBall
     /**
      * Get x
      *
-     * @return integer
+     * @return int
      */
     public function getX()
     {
@@ -92,7 +90,7 @@ class DragonBall
     /**
      * Set y
      *
-     * @param integer $y
+     * @param int $y
      *
      * @return DragonBall
      */
@@ -106,7 +104,7 @@ class DragonBall
     /**
      * Get y
      *
-     * @return integer
+     * @return int
      */
     public function getY()
     {
@@ -116,7 +114,7 @@ class DragonBall
     /**
      * Set is visible
      *
-     * @param boolean $visible
+     * @param bool $visible
      *
      * @return DragonBall
      */
@@ -130,7 +128,7 @@ class DragonBall
     /**
      * Get type
      *
-     * @return boolean
+     * @return bool
      */
     public function isVisible()
     {
@@ -140,7 +138,7 @@ class DragonBall
     /**
      * Get id
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -208,7 +206,7 @@ class DragonBall
     /**
      * Get visible
      *
-     * @return boolean
+     * @return bool
      */
     public function getVisible()
     {

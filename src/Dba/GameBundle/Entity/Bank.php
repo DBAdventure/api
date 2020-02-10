@@ -13,7 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
 class Bank
 {
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="zeni", type="integer", nullable=false)
      */
@@ -26,7 +26,7 @@ class Bank
      * @ORM\GeneratedValue(strategy="NONE")
      * @ORM\OneToOne(targetEntity="Dba\GameBundle\Entity\Player")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="player_id", referencedColumnName="id", nullable=false, onDelete="CASCADE")
+     *     @ORM\JoinColumn(name="player_id", referencedColumnName="id", nullable=false, onDelete="CASCADE")
      * })
      */
     private $player;
@@ -34,7 +34,7 @@ class Bank
     /**
      * Set zeni
      *
-     * @param integer $zeni
+     * @param int $zeni
      *
      * @return Bank
      */
@@ -48,7 +48,7 @@ class Bank
     /**
      * Get zeni
      *
-     * @return integer
+     * @return int
      */
     public function getZeni()
     {

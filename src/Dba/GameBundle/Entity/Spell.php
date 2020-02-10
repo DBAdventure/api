@@ -8,9 +8,11 @@ use Doctrine\ORM\Mapping as ORM;
  * Bank
  *
  * @ORM\Table(name="spell",
-              uniqueConstraints={@ORM\UniqueConstraint(name="spell_name_race_id",
-              columns={"name", "race_id"})})
- * @ORM\Entity
+ *     uniqueConstraints={
+ *         @ORM\UniqueConstraint(name="spell_name_race_id",
+ *         columns={"name", "race_id"})
+ *     })
+ *     @ORM\Entity
  */
 class Spell
 {
@@ -19,7 +21,7 @@ class Spell
     const TYPE_TARGET = 3;
     const TYPE_BOTH = 4;
 
-     /**
+    /**
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=80, nullable=false)
@@ -49,35 +51,35 @@ class Spell
     private $race;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="distance", type="integer", nullable=false)
      */
     private $distance;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="damages", type="integer", nullable=false)
      */
     private $damages;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="price", type="integer", nullable=false)
      */
     private $price;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="type", type="integer", nullable=false)
      */
     private $type;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
@@ -167,6 +169,7 @@ class Spell
     public function setRace(Race $race = null)
     {
         $this->race = $race;
+
         return $this;
     }
 
@@ -183,7 +186,7 @@ class Spell
     /**
      * Get id
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -193,20 +196,21 @@ class Spell
     /**
      * Set price
      *
-     * @param integer $price
+     * @param int $price
      p*
      * @return Spell
      */
     public function setPrice($price)
     {
         $this->price = $price;
+
         return $this;
     }
 
     /**
      * Get price
      *
-     * @return integer
+     * @return int
      */
     public function getPrice()
     {
@@ -216,20 +220,21 @@ class Spell
     /**
      * Set distance
      *
-     * @param integer $distance
+     * @param int $distance
      *
      * @return Spell
      */
     public function setDistance($distance)
     {
         $this->distance = $distance;
+
         return $this;
     }
 
     /**
      * Get distance
      *
-     * @return integer
+     * @return int
      */
     public function getDistance()
     {
@@ -239,20 +244,21 @@ class Spell
     /**
      * Set damages
      *
-     * @param integer $damages
+     * @param int $damages
      *
      * @return Spell
      */
     public function setDamages($damages)
     {
         $this->damages = $damages;
+
         return $this;
     }
 
     /**
      * Get damages
      *
-     * @return integer
+     * @return int
      */
     public function getDamages()
     {
@@ -262,20 +268,21 @@ class Spell
     /**
      * Set type
      *
-     * @param integer $type
+     * @param int $type
      *
      * @return Spell
      */
     public function setType($type)
     {
         $this->type = $type;
+
         return $this;
     }
 
     /**
      * Get type
      *
-     * @return integer
+     * @return int
      */
     public function getType()
     {

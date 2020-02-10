@@ -47,14 +47,13 @@ class Race
     private $name;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $id;
-
 
     /**
      * Set name
@@ -83,7 +82,7 @@ class Race
     /**
      * Get id
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {

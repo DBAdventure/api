@@ -3,11 +3,11 @@
 namespace Dba\GameBundle\EventListener;
 
 use DateTime;
-use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
+use Dba\GameBundle\Entity\Player;
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
 use Symfony\Component\HttpKernel\HttpKernel;
-use Dba\GameBundle\Entity\Player;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
 
 class PlayerActivityListener
 {
@@ -19,7 +19,6 @@ class PlayerActivityListener
      *
      * @param TokenStorage $context Token context
      * @param EntityManager $manager Entity manager
-     *
      */
     public function __construct(TokenStorage $context, EntityManager $manager)
     {

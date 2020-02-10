@@ -5,14 +5,14 @@ namespace Dba\AdminBundle\Form;
 use Dba\GameBundle\Entity;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
-use Symfony\Component\Form\Extension\Core\Type;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type;
 use Symfony\Component\Form\FormBuilderInterface;
 
 class EventType extends AbstractType
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -38,6 +38,7 @@ class EventType extends AbstractType
                                 [Entity\Map::TYPE_NORMAL]
                             )
                         );
+
                         return $qb;
                     },
                     'choice_label' => 'name',

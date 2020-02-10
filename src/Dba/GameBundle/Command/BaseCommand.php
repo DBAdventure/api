@@ -2,8 +2,6 @@
 
 namespace Dba\GameBundle\Command;
 
-use Dba\GameBundle\Command\ServicesService;
-use Dba\GameBundle\Command\RepositoryService;
 use Doctrine\ORM\EntityManager;
 use Monolog\Logger;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;

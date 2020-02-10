@@ -2,14 +2,13 @@
 
 namespace Dba\AdminBundle\Controller;
 
+use Dba\AdminBundle\Form;
+use Dba\GameBundle\Entity\Player;
+use Dba\GameBundle\Entity\Side;
 use Doctrine\ORM\Tools\Pagination\Paginator;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
-use Dba\AdminBundle\Controller\BaseController;
-use Dba\AdminBundle\Form;
-use Dba\GameBundle\Entity\Player;
-use Dba\GameBundle\Entity\Side;
 
 /**
  * @Route("/player")
@@ -64,6 +63,7 @@ class PlayerController extends BaseController
                     ['%name%' => $who]
                 )
             );
+
             return $this->redirect($this->generateUrl('admin.player'));
         }
 
@@ -123,7 +123,7 @@ class PlayerController extends BaseController
             'DbaAdminBundle::player/edit.html.twig',
             [
                 'form' => $form->createView(),
-                'player' => $player
+                'player' => $player,
             ]
         );
     }

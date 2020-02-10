@@ -67,8 +67,8 @@ class ObjectControllerTest extends BaseTestCase
         $this->assertEquals(
             [
                 'success' => [
-                    'Object created!'
-                ]
+                    'Object created!',
+                ],
             ],
             $session->getBag('flashes')->all()
         );
@@ -96,8 +96,8 @@ class ObjectControllerTest extends BaseTestCase
         $this->assertEquals(
             [
                 'success' => [
-                    'Object saved!'
-                ]
+                    'Object saved!',
+                ],
             ],
             $session->getBag('flashes')->all()
         );

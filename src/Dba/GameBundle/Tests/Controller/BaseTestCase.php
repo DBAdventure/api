@@ -3,15 +3,14 @@
 namespace Dba\GameBundle\Tests\Controller;
 
 use DateTime;
-use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
-use Symfony\Component\BrowserKit\Cookie;
-use Dba\GameBundle\Entity\Player;
 use Dba\GameBundle\Entity\Guild;
 use Dba\GameBundle\Entity\GuildPlayer;
 use Dba\GameBundle\Entity\GuildRank;
+use Dba\GameBundle\Entity\Player;
 use Dba\GameBundle\Entity\Side;
-use Dba\GameBundle\Entity\Type;
+use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Symfony\Component\BrowserKit\Cookie;
+use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 
 class BaseTestCase extends WebTestCase
 {
@@ -81,12 +80,13 @@ class BaseTestCase extends WebTestCase
 
         // save the login token into the session and put it in a cookie
         $session = $this->container->get('session');
-        $token = new UsernamePasswordToken($player, null, $firewallName, array('ROLE_ADMIN'));
-        $session->set('_security_'. $firewallName, serialize($token));
+        $token = new UsernamePasswordToken($player, null, $firewallName, ['ROLE_ADMIN']);
+        $session->set('_security_' . $firewallName, serialize($token));
         $session->save();
         $this->client->getCookieJar()->set(new Cookie($session->getName(), $session->getId()));
 
         $this->player = $player;
+
         return $this->player;
     }
 

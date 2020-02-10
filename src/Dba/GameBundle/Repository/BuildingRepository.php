@@ -9,11 +9,12 @@ class BuildingRepository extends EntityRepository
     /**
      * Count buildings
      *
-     * @return integer
+     * @return int
      */
     public function countBuildings()
     {
         $qb = $this->createQueryBuilder('b');
+
         return $qb->select('COUNT(b)')
             ->getQuery()
             ->getSingleScalarResult();

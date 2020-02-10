@@ -2,12 +2,11 @@
 
 namespace Dba\AdminBundle\Controller;
 
+use Dba\AdminBundle\Form;
+use Dba\GameBundle\Entity\GameObject;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
-use Dba\AdminBundle\Controller\BaseController;
-use Dba\AdminBundle\Form;
-use Dba\GameBundle\Entity\GameObject;
 
 /**
  * @Route("/object")
@@ -26,7 +25,7 @@ class ObjectController extends BaseController
                     [],
                     [
                         'type' => 'ASC',
-                        'price' => 'ASC'
+                        'price' => 'ASC',
                     ]
                 ),
             ]
@@ -46,7 +45,7 @@ class ObjectController extends BaseController
                 'attr' => [
                     'asset-path' => 'bundles/dbaadmin/images/objects',
                     'web-dir' => $this->getParameter('kernel.root_dir') . '/../web/',
-                ]
+                ],
             ]
         );
         $form->handleRequest($request);
@@ -81,7 +80,7 @@ class ObjectController extends BaseController
                 'attr' => [
                     'asset-path' => 'bundles/dbaadmin/images/objects',
                     'web-dir' => $this->getParameter('kernel.root_dir') . '/../web/',
-                ]
+                ],
             ]
         );
         $form->handleRequest($request);
@@ -107,10 +106,11 @@ class ObjectController extends BaseController
      * @Route("/delete/{id}", name="admin.object.delete")
      * @ParamConverter("object", class="Dba\GameBundle\Entity\GameObject")
      */
-    public function deleteAction(Object $object)
+    public function deleteAction(object $object)
     {
         $this->em()->remove($object);
         $this->em()->flush();
+
         return $this->redirect($this->generateUrl('admin.object'));
     }
 }

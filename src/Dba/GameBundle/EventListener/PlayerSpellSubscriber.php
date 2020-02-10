@@ -2,18 +2,17 @@
 
 namespace Dba\GameBundle\EventListener;
 
-use DateTime;
-use Dba\GameBundle\Event\DbaEvents;
 use Dba\GameBundle\Event\ActionEvent;
+use Dba\GameBundle\Event\DbaEvents;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class PlayerSpellSubscriber implements EventSubscriberInterface
 {
     public static function getSubscribedEvents()
     {
-        return array(
+        return [
             DbaEvents::AFTER_SPELL => 'afterSpellAttack',
-        );
+        ];
     }
 
     public function afterSpellAttack(ActionEvent $event)
@@ -152,7 +151,7 @@ class PlayerSpellSubscriber implements EventSubscriberInterface
                 case 72: // Sword Attack
                     $damages *= 1.5;
                     $messages[] = 'janemba.attack';
-                    $message[] = "";
+                    $message[] = '';
                     break;
                 case 78: // Kamehameha Père Fils
                     $damages *= 2.5;

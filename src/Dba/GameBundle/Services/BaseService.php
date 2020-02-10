@@ -13,7 +13,6 @@ abstract class BaseService implements ContainerAwareInterface
     use ContainerAwareTrait;
 
     /**
-     *
      * @return Logger
      */
     public function getLogger()
@@ -22,7 +21,6 @@ abstract class BaseService implements ContainerAwareInterface
     }
 
     /**
-     *
      * @return Session
      */
     public function getSession()
@@ -31,7 +29,6 @@ abstract class BaseService implements ContainerAwareInterface
     }
 
     /**
-     *
      * @return ServicesService
      */
     public function services()
@@ -40,7 +37,6 @@ abstract class BaseService implements ContainerAwareInterface
     }
 
     /**
-     *
      * @return EntityManager
      */
     public function em()
@@ -49,7 +45,6 @@ abstract class BaseService implements ContainerAwareInterface
     }
 
     /**
-     *
      * @return RepositoryService
      */
     public function repos()

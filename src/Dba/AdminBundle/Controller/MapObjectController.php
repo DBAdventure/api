@@ -2,14 +2,13 @@
 
 namespace Dba\AdminBundle\Controller;
 
+use Dba\AdminBundle\Form;
+use Dba\GameBundle\Entity\MapObject;
+use Dba\GameBundle\Entity\MapObjectType;
 use Doctrine\ORM\Tools\Pagination\Paginator;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
-use Dba\AdminBundle\Controller\BaseController;
-use Dba\AdminBundle\Form;
-use Dba\GameBundle\Entity\MapObject;
-use Dba\GameBundle\Entity\MapObjectType;
 
 /**
  * @Route("/map-object")
@@ -120,6 +119,7 @@ class MapObjectController extends BaseController
     {
         $this->em()->remove($mapObject);
         $this->em()->flush();
+
         return $this->redirect($this->generateUrl('admin.map.object'));
     }
 }

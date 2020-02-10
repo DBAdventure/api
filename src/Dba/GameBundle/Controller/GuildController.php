@@ -2,14 +2,13 @@
 
 namespace Dba\GameBundle\Controller;
 
-use FOS\RestBundle\Controller\Annotations;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Symfony\Component\HttpFoundation\Request;
 use Dba\GameBundle\Entity\Guild;
 use Dba\GameBundle\Entity\GuildPlayer;
 use Dba\GameBundle\Entity\GuildRank;
-use Dba\GameBundle\Entity\Player;
 use Dba\GameBundle\Form;
+use FOS\RestBundle\Controller\Annotations;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @Annotations\NamePrefix("guild_")
@@ -42,7 +41,7 @@ class GuildController extends BaseController
         $guild = new Guild();
         $form = $this->createForm(Form\GuildCreate::class, $guild);
         $form->handleRequest($request);
-        if (!$form->isSubmitted() ||! $form->isValid()) {
+        if (!$form->isSubmitted() || !$form->isValid()) {
             return $this->badRequest($this->getErrorMessages($form));
         }
 
@@ -106,7 +105,7 @@ class GuildController extends BaseController
         }
 
         return [
-            'players' => $guildPlayers
+            'players' => $guildPlayers,
         ];
     }
 
@@ -119,7 +118,6 @@ class GuildController extends BaseController
         if (empty($guildPlayer) or !$guildPlayer->isEnabled()) {
             return $this->forbidden();
         }
-
 
         return $guildPlayer->getGuild()->getEvents()->slice(0, 50);
     }
@@ -175,7 +173,7 @@ class GuildController extends BaseController
         } else {
             if ($playerRole === GuildRank::ROLE_ADMIN) {
                 if (!$guildPlayer->getGuild()->isEnabled()) {
-                    /**
+                    /*
                      * Guild not validated yet, get back the money!
                      */
                     $player->setZeni($player->getZeni() - self::CREATE_GUILD_AMOUNT);

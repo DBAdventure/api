@@ -3,10 +3,10 @@
 namespace Dba\AdminBundle\Form;
 
 use Dba\GameBundle\Entity;
-use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Finder\Finder;
-use Symfony\Component\Form\Extension\Core\Type;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\CallbackTransformer;
+use Symfony\Component\Form\Extension\Core\Type;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -99,8 +99,8 @@ class GameObject extends AbstractType
                     'choices' => $images,
                     'choice_translation_domain' => false,
                     'attr' => [
-                        'data-asset-path' => '/' . $options['attr']['asset-path']
-                    ]
+                        'data-asset-path' => '/' . $options['attr']['asset-path'],
+                    ],
                 ]
             )
             ->add(
@@ -141,9 +141,10 @@ class GameObject extends AbstractType
                 foreach ($bonus as $key => $value) {
                     $data[$key] = [
                         'key' => $key,
-                        'value' => $value
+                        'value' => $value,
                     ];
                 }
+
                 return $data;
             },
             function ($data) {

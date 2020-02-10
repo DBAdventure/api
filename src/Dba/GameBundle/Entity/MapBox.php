@@ -8,8 +8,8 @@ use Doctrine\ORM\Mapping as ORM;
  * MapBox
  *
  * @ORM\Table(name="map_box", indexes={@ORM\Index(name="map_image_id", columns={"map_image_id"}),
-              @ORM\Index(name="map_bonus_id", columns={"map_bonus_id"})},
-              uniqueConstraints={@ORM\UniqueConstraint(name="map_box_unique", columns={"map_id", "x", "y"})})
+ * @ORM\Index(name="map_bonus_id", columns={"map_bonus_id"})},
+ * uniqueConstraints={@ORM\UniqueConstraint(name="map_box_unique", columns={"map_id", "x", "y"})})
  * @ORM\Entity
  */
 class MapBox
@@ -17,26 +17,26 @@ class MapBox
     const MINIMAP_SIZE = 5;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="damage", type="integer", nullable=false)
      */
     private $damage = '0';
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="NONE")
      * @ORM\ManyToOne(targetEntity="Dba\GameBundle\Entity\Map", fetch="EAGER", cascade={"persist"}))
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="map_id", referencedColumnName="id", nullable=false, onDelete="CASCADE")
+     *     @ORM\JoinColumn(name="map_id", referencedColumnName="id", nullable=false, onDelete="CASCADE")
      * })
      */
     private $map;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="x", type="integer")
      * @ORM\Id
@@ -45,7 +45,7 @@ class MapBox
     private $x;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="y", type="integer")
      * @ORM\Id
@@ -58,7 +58,7 @@ class MapBox
      *
      * @ORM\ManyToOne(targetEntity="Dba\GameBundle\Entity\MapImage", fetch="EAGER")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="map_image_id", referencedColumnName="id", nullable=false, onDelete="CASCADE")
+     *     @ORM\JoinColumn(name="map_image_id", referencedColumnName="id", nullable=false, onDelete="CASCADE")
      * })
      */
     private $mapImage;
@@ -68,7 +68,7 @@ class MapBox
      *
      * @ORM\ManyToOne(targetEntity="Dba\GameBundle\Entity\MapBonus", fetch="EAGER")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="map_bonus_id", referencedColumnName="id", nullable=false, onDelete="CASCADE")
+     *     @ORM\JoinColumn(name="map_bonus_id", referencedColumnName="id", nullable=false, onDelete="CASCADE")
      * })
      */
     private $mapBonus;
@@ -76,7 +76,7 @@ class MapBox
     /**
      * Set damage
      *
-     * @param integer $damage
+     * @param int $damage
      *
      * @return MapBox
      */
@@ -90,7 +90,7 @@ class MapBox
     /**
      * Get damage
      *
-     * @return integer
+     * @return int
      */
     public function getDamage()
     {
@@ -124,7 +124,7 @@ class MapBox
     /**
      * Set x
      *
-     * @param integer $x
+     * @param int $x
      *
      * @return MapBox
      */
@@ -138,7 +138,7 @@ class MapBox
     /**
      * Get x
      *
-     * @return integer
+     * @return int
      */
     public function getX()
     {
@@ -148,7 +148,7 @@ class MapBox
     /**
      * Set y
      *
-     * @param integer $y
+     * @param int $y
      *
      * @return MapBox
      */
@@ -162,7 +162,7 @@ class MapBox
     /**
      * Get y
      *
-     * @return integer
+     * @return int
      */
     public function getY()
     {

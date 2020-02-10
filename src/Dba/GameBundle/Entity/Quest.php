@@ -2,8 +2,8 @@
 
 namespace Dba\GameBundle\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -18,7 +18,7 @@ class Quest
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=80, nullable=false)
-     * @Assert\NotBlank()
+     * @Assert\NotBlank
      */
     private $name;
 
@@ -26,7 +26,7 @@ class Quest
      * @var string
      *
      * @ORM\Column(name="npc_name", type="string", length=80, nullable=false)
-     * @Assert\NotBlank()
+     * @Assert\NotBlank
      */
     private $npcName;
 
@@ -34,7 +34,7 @@ class Quest
      * @var string
      *
      * @ORM\Column(name="image", type="string", length=50, nullable=false)
-     * @Assert\NotBlank()
+     * @Assert\NotBlank
      */
     private $image;
 
@@ -46,18 +46,18 @@ class Quest
     private $history;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="x", type="integer", nullable=false)
-     * @Assert\NotBlank()
+     * @Assert\NotBlank
      */
     private $x;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="y", type="integer", nullable=false)
-     * @Assert\NotBlank()
+     * @Assert\NotBlank
      */
     private $y;
 
@@ -66,13 +66,13 @@ class Quest
      *
      * @ORM\ManyToOne(targetEntity="Dba\GameBundle\Entity\Map", fetch="EAGER")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="map_id", referencedColumnName="id", nullable=false, onDelete="CASCADE")
+     *     @ORM\JoinColumn(name="map_id", referencedColumnName="id", nullable=false, onDelete="CASCADE")
      * })
      */
     private $map;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
@@ -81,32 +81,32 @@ class Quest
     private $id;
 
     /**
-     * @var boolean
+     * @var bool
      *
      * @ORM\Column(name="enabled", type="boolean", options={"default": false})
      */
     private $enabled = false;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="lifetime", type="integer", nullable=false)
      */
     private $lifetime = 0;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="gain_battle_points", type="integer", nullable=false)
-     * @Assert\NotBlank()
+     * @Assert\NotBlank
      */
     private $gainBattlePoints = 0;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="gain_zeni", type="integer", nullable=false)
-     * @Assert\NotBlank()
+     * @Assert\NotBlank
      */
     private $gainZeni = 0;
 
@@ -265,7 +265,7 @@ class Quest
     /**
      * Set x
      *
-     * @param integer $x
+     * @param int $x
      *
      * @return Quest
      */
@@ -279,7 +279,7 @@ class Quest
     /**
      * Get x
      *
-     * @return integer
+     * @return int
      */
     public function getX()
     {
@@ -289,7 +289,7 @@ class Quest
     /**
      * Set y
      *
-     * @param integer $y
+     * @param int $y
      *
      * @return Quest
      */
@@ -303,7 +303,7 @@ class Quest
     /**
      * Get y
      *
-     * @return integer
+     * @return int
      */
     public function getY()
     {
@@ -313,7 +313,7 @@ class Quest
     /**
      * Get id
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -357,7 +357,7 @@ class Quest
     /**
      * Is enabled
      *
-     * @return boolean
+     * @return bool
      */
     public function isEnabled()
     {
@@ -367,7 +367,7 @@ class Quest
     /**
      * Get enabled
      *
-     * @return boolean
+     * @return bool
      */
     public function getEnabled()
     {
@@ -377,7 +377,7 @@ class Quest
     /**
      * Set enabled
      *
-     * @param boolean $enabled
+     * @param bool $enabled
      *
      * @return Guild
      */
@@ -387,6 +387,7 @@ class Quest
 
         return $this;
     }
+
     /**
      * Constructor
      */
@@ -401,7 +402,7 @@ class Quest
     /**
      * Set lifetime
      *
-     * @param integer $lifetime
+     * @param int $lifetime
      *
      * @return Quest
      */
@@ -415,7 +416,7 @@ class Quest
     /**
      * Get lifetime
      *
-     * @return integer
+     * @return int
      */
     public function getLifetime()
     {
@@ -425,7 +426,7 @@ class Quest
     /**
      * Set gainBattlePoints
      *
-     * @param integer $gainBattlePoints
+     * @param int $gainBattlePoints
      *
      * @return Quest
      */
@@ -439,7 +440,7 @@ class Quest
     /**
      * Get gainBattlePoints
      *
-     * @return integer
+     * @return int
      */
     public function getGainBattlePoints()
     {
@@ -449,7 +450,7 @@ class Quest
     /**
      * Set gainZeni
      *
-     * @param integer $gainZeni
+     * @param int $gainZeni
      *
      * @return Quest
      */
@@ -463,7 +464,7 @@ class Quest
     /**
      * Get gainZeni
      *
-     * @return integer
+     * @return int
      */
     public function getGainZeni()
     {
@@ -569,11 +570,11 @@ class Quest
     /**
      * Add gainObject
      *
-     * @param Object $gainObject
+     * @param object $gainObject
      *
      * @return Quest
      */
-    public function addGainObject(Object $gainObject)
+    public function addGainObject(object $gainObject)
     {
         $this->gainObjects[] = $gainObject;
 
@@ -583,9 +584,9 @@ class Quest
     /**
      * Remove gainObject
      *
-     * @param Object $gainObject
+     * @param object $gainObject
      */
-    public function removeGainObject(Object $gainObject)
+    public function removeGainObject(object $gainObject)
     {
         $this->gainObjects->removeElement($gainObject);
     }

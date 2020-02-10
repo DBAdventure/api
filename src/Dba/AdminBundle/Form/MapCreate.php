@@ -3,15 +3,15 @@
 namespace Dba\AdminBundle\Form;
 
 use Dba\GameBundle\Entity;
-use Symfony\Component\Form\Extension\Core\Type;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class MapCreate extends AbstractType
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -28,7 +28,7 @@ class MapCreate extends AbstractType
                 Type\IntegerType::class,
                 [
                     'label' => 'form.max.x',
-                    'data' => 20
+                    'data' => 20,
                 ]
             )
             ->add(
@@ -36,7 +36,7 @@ class MapCreate extends AbstractType
                 Type\IntegerType::class,
                 [
                     'label' => 'form.max.y',
-                    'data' => 20
+                    'data' => 20,
                 ]
             );
     }

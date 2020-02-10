@@ -2,24 +2,25 @@
 
 namespace Dba\GameBundle\Entity;
 
-use DateTime;
-use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
-use Gedmo\Mapping\Annotation as Gedmo;
+use Doctrine\ORM\Mapping as ORM;
 
 /**
  * PlayerSpell
  *
- * @ORM\Table(name="player_spell", indexes={@ORM\Index(name="player_spell_spell", columns={"spell_id"}),
-              @ORM\Index(name="player_spell_player", columns={"player_id"})},
-              uniqueConstraints={@ORM\UniqueConstraint(name="player_spell_player_spell",
-              columns={"player_id", "spell_id"})})
+ * @ORM\Table(name="player_spell", indexes={
+ *     @ORM\Index(name="player_spell_spell", columns={"spell_id"}),
+ * @ORM\Index(name="player_spell_player", columns={"player_id"})},
+ * uniqueConstraints={
+ *     @ORM\UniqueConstraint(name="player_spell_player_spell",
+ *     columns={"player_id", "spell_id"})
+ * })
  * @ORM\Entity
  */
 class PlayerSpell
 {
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
@@ -32,7 +33,7 @@ class PlayerSpell
      *
      * @ORM\ManyToOne(targetEntity="Player", inversedBy="playerSpells")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="player_id", referencedColumnName="id", nullable=false, onDelete="CASCADE")
+     *     @ORM\JoinColumn(name="player_id", referencedColumnName="id", nullable=false, onDelete="CASCADE")
      * })
      */
     private $player;
@@ -42,7 +43,7 @@ class PlayerSpell
      *
      * @ORM\ManyToOne(targetEntity="Spell")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="spell_id", referencedColumnName="id", nullable=false, onDelete="CASCADE")
+     *     @ORM\JoinColumn(name="spell_id", referencedColumnName="id", nullable=false, onDelete="CASCADE")
      * })
      */
     private $spell;
@@ -65,7 +66,7 @@ class PlayerSpell
     /**
      * Get id
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -154,16 +155,16 @@ class PlayerSpell
         return $this->playerSpellEffects;
     }
 
-
     /**
      * Check if spell can be used
      *
-     * @return boolean
+     * @return bool
      */
     public function canBeUsed()
     {
         $player = $this->getPlayer();
         $requirements = $this->getSpell()->getRequirements();
+
         return $player->getKi() >= $requirements['ki'] &&
                (empty($requirements['level']) || $player->getLevel() >= $requirements['level']) &&
                $player->getIntellect() >= $requirements['intellect'];

@@ -4,10 +4,9 @@ namespace Dba\AdminBundle\Form;
 
 use Dba\GameBundle\Entity;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
-use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Finder\Finder;
-use Symfony\Component\Form\Extension\Core\Type;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -49,7 +48,7 @@ class Building extends AbstractType
                     'class' => Entity\Map::class,
                     'choice_label' => 'name',
                     'label' => 'form.map',
-                    'choice_translation_domain' => true
+                    'choice_translation_domain' => true,
                 ]
             )
             ->add(
@@ -83,8 +82,8 @@ class Building extends AbstractType
                     'choices' => $images,
                     'choice_translation_domain' => false,
                     'attr' => [
-                        'data-asset-path' => '/' . $options['attr']['asset-path']
-                    ]
+                        'data-asset-path' => '/' . $options['attr']['asset-path'],
+                    ],
                 ]
             )
             ->add(

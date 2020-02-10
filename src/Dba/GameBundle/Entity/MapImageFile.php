@@ -8,20 +8,20 @@ use Doctrine\ORM\Mapping as ORM;
  * MapImageFile
  *
  * @ORM\Table(name="map_image_file", indexes={@ORM\Index(name="map_image_file_id", columns={"map_image_id"})},
-              uniqueConstraints={@ORM\UniqueConstraint(name="map_image_file_file", columns={"file"})})
+ * uniqueConstraints={@ORM\UniqueConstraint(name="map_image_file_file", columns={"file"})})
  * @ORM\Entity
  */
 class MapImageFile
 {
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="damage", type="integer", nullable=false)
      */
     private $damage = '0';
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="period", type="integer", nullable=false)
      */
@@ -35,7 +35,7 @@ class MapImageFile
     private $file;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
@@ -48,17 +48,15 @@ class MapImageFile
      *
      * @ORM\ManyToOne(targetEntity="Dba\GameBundle\Entity\MapImage", fetch="EAGER")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="map_image_id", referencedColumnName="id", nullable=false, onDelete="CASCADE")
+     *     @ORM\JoinColumn(name="map_image_id", referencedColumnName="id", nullable=false, onDelete="CASCADE")
      * })
      */
     private $mapImage;
 
-
-
     /**
      * Set damage
      *
-     * @param integer $damage
+     * @param int $damage
      *
      * @return MapImageFile
      */
@@ -72,7 +70,7 @@ class MapImageFile
     /**
      * Get damage
      *
-     * @return integer
+     * @return int
      */
     public function getDamage()
     {
@@ -82,7 +80,7 @@ class MapImageFile
     /**
      * Set period
      *
-     * @param integer $period
+     * @param int $period
      *
      * @return MapImageFile
      */
@@ -96,7 +94,7 @@ class MapImageFile
     /**
      * Get period
      *
-     * @return integer
+     * @return int
      */
     public function getPeriod()
     {
@@ -130,7 +128,7 @@ class MapImageFile
     /**
      * Get id
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {

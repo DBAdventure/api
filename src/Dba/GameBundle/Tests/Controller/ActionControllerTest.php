@@ -2,12 +2,12 @@
 
 namespace Dba\GameBundle\Tests\Controller;
 
-use Dba\GameBundle\Entity\MapObjectType;
-use Dba\GameBundle\Entity\MapObject;
 use Dba\GameBundle\Entity\GameObject;
+use Dba\GameBundle\Entity\Map;
+use Dba\GameBundle\Entity\MapObject;
+use Dba\GameBundle\Entity\MapObjectType;
 use Dba\GameBundle\Entity\Player;
 use Dba\GameBundle\Entity\PlayerObject;
-use Dba\GameBundle\Entity\Map;
 use Dba\GameBundle\Entity\Side;
 
 class ActionControllerTest extends BaseTestCase
@@ -312,6 +312,7 @@ class ActionControllerTest extends BaseTestCase
         $this->assertEquals($json->messages[1], 'GoT');
         $this->em()->refresh($player);
     }
+
     public function testAttackDifferentXPosition()
     {
         $player = $this->login();
@@ -388,7 +389,7 @@ class ActionControllerTest extends BaseTestCase
         $this->em()->persist($player);
         $this->em()->flush();
 
-        for ($i = 0; $i <= 10; $i++) {
+        for ($i = 0; $i <= 10; ++$i) {
             $this->client->request('POST', '/api/action/attack/' . $enemy->getId());
             if ($this->client->getResponse()->getStatusCode() != 200 && $i >= 5) {
                 return;
@@ -737,7 +738,7 @@ class ActionControllerTest extends BaseTestCase
         $this->em()->persist($player);
         $this->em()->flush();
 
-        for ($i = 0; $i <= 10; $i++) {
+        for ($i = 0; $i <= 10; ++$i) {
             $this->client->request('POST', '/api/action/steal/' . $enemy->getId());
             $this->assertJsonResponse($this->client->getResponse());
         }
@@ -831,7 +832,6 @@ class ActionControllerTest extends BaseTestCase
         $this->client->request('POST', '/api/action/analysis/' . $enemy->getId());
         $this->assertJsonResponse($this->client->getResponse(), 403);
     }
-
 
     public function testAnalysisWithoutActionPoints()
     {
@@ -1163,14 +1163,14 @@ class ActionControllerTest extends BaseTestCase
         $playerObject = $this->repos()->getPlayerObjectRepository()->findOneBy(
             [
                 'player' => $player,
-                'object' => $this->repos()->getObjectRepository()->findOneById(12)
+                'object' => $this->repos()->getObjectRepository()->findOneById(12),
             ]
         );
         $this->assertEquals(0, $playerObject->getNumber());
         $playerObject = $this->repos()->getPlayerObjectRepository()->findOneBy(
             [
                 'player' => $enemy,
-                'object' => $this->repos()->getObjectRepository()->findOneById(12)
+                'object' => $this->repos()->getObjectRepository()->findOneById(12),
             ]
         );
         $this->assertEquals(1, $playerObject->getNumber());
@@ -1194,7 +1194,7 @@ class ActionControllerTest extends BaseTestCase
         $playerObject = $this->repos()->getPlayerObjectRepository()->findOneBy(
             [
                 'player' => $player,
-                'object' => $this->repos()->getObjectRepository()->findOneById(12)
+                'object' => $this->repos()->getObjectRepository()->findOneById(12),
             ]
         );
         $playerObject->setNumber(0);
@@ -1359,7 +1359,7 @@ class ActionControllerTest extends BaseTestCase
         }
         $this->assertEquals(56, $player->getActionPoints());
 
-        for ($i = 0; $i <= ($skill > 50 ? 2 : 10); $i++) {
+        for ($i = 0; $i <= ($skill > 50 ? 2 : 10); ++$i) {
             $this->client->request('POST', '/api/action/heal/' . $enemy->getId());
             $this->assertJsonResponse($this->client->getResponse());
         }
@@ -1401,7 +1401,7 @@ class ActionControllerTest extends BaseTestCase
             case MapObjectType::SIGN:
                 $mapObject->setExtra([
                     ['key' => MapGameObject::EXTRA_DIALOGUE, 'value' => 'Bast'],
-                    ['key' => MapGameObject::EXTRA_DIALOGUE, 'value' => 'GoT']
+                    ['key' => MapGameObject::EXTRA_DIALOGUE, 'value' => 'GoT'],
                 ]);
                 break;
             default:

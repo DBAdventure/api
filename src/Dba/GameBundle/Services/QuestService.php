@@ -6,7 +6,6 @@ use Dba\GameBundle\Entity\Map;
 use Dba\GameBundle\Entity\Player;
 use Dba\GameBundle\Entity\PlayerQuest;
 use Dba\GameBundle\Entity\Quest;
-use Dba\GameBundle\Entity\Side;
 
 class QuestService extends BaseService
 {
@@ -48,7 +47,7 @@ class QuestService extends BaseService
      * @param PlayerQuest $playerQuest Player Quest
      * @param array $messages Array of Messages
      *
-     * @return boolean
+     * @return bool
      */
     public function canBeDone(PlayerQuest $playerQuest, array &$messages = [])
     {

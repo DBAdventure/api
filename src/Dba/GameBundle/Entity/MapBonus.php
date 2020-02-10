@@ -31,22 +31,20 @@ class MapBonus
     private $bonus;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="type", type="integer", nullable=false)
      */
     private $type;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $id;
-
-
 
     /**
      * Set name
@@ -99,7 +97,7 @@ class MapBonus
     /**
      * Set type
      *
-     * @param integer $type
+     * @param int $type
      *
      * @return MapBonus
      */
@@ -113,7 +111,7 @@ class MapBonus
     /**
      * Get type
      *
-     * @return integer
+     * @return int
      */
     public function getType()
     {
@@ -123,7 +121,7 @@ class MapBonus
     /**
      * Get id
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {

@@ -6,17 +6,17 @@ use Dba\GameBundle\Entity;
 use Dba\GameBundle\Form\PlayerAppearance;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
-use Symfony\Component\Form\Extension\Core\Type;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class Player extends AbstractType
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -98,11 +98,12 @@ class Player extends AbstractType
                                 ]
                             )
                         );
+
                         return $qb;
                     },
                     'choice_label' => 'name',
                     'label' => 'form.race',
-                    'choice_translation_domain' => true
+                    'choice_translation_domain' => true,
                 ]
             )
             ->add(
@@ -118,18 +119,19 @@ class Player extends AbstractType
                                 [Entity\Side::GOOD, Entity\Side::BAD]
                             )
                         );
+
                         return $qb;
                     },
                     'choice_label' => 'name',
                     'label' => 'form.side',
-                    'choice_translation_domain' => true
+                    'choice_translation_domain' => true,
                 ]
             )
             ->add(
                 'appearance',
                 PlayerAppearance::class,
                 [
-                    'mapped' => false
+                    'mapped' => false,
                 ]
             )
             ->add(
@@ -139,7 +141,7 @@ class Player extends AbstractType
                     'class' => Entity\Map::class,
                     'choice_label' => 'name',
                     'label' => 'form.map',
-                    'choice_translation_domain' => false
+                    'choice_translation_domain' => false,
                 ]
             );
 
@@ -181,7 +183,7 @@ class Player extends AbstractType
             'fatiguePoints',
             'movementPoints',
             'battlePoints',
-            'skillPoints'
+            'skillPoints',
         ];
         foreach ($integerAttributes as $attribute) {
             $builder->add(
@@ -195,12 +197,12 @@ class Player extends AbstractType
 
         $builder->addEventListener(
             FormEvents::PRE_SUBMIT,
-            array($this, 'onPreSubmit')
+            [$this, 'onPreSubmit']
         );
 
         $builder->addEventListener(
             FormEvents::POST_SET_DATA,
-            array($this, 'onPostSetData')
+            [$this, 'onPostSetData']
         );
     }
 

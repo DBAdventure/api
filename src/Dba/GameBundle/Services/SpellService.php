@@ -2,9 +2,9 @@
 
 namespace Dba\GameBundle\Services;
 
-use Dba\GameBundle\Entity\Spell;
-use Dba\GameBundle\Entity\PlayerSpell;
 use Dba\GameBundle\Entity\Player;
+use Dba\GameBundle\Entity\PlayerSpell;
+use Dba\GameBundle\Entity\Spell;
 
 class SpellService extends BaseService
 {
@@ -36,7 +36,7 @@ class SpellService extends BaseService
         foreach ($spell->getRequirements() as $bonus => $value) {
             $method = $this->getMethod($bonus);
             if (method_exists($player, $method)) {
-                if (call_user_func(array($player, $method)) < $value) {
+                if (call_user_func([$player, $method]) < $value) {
                     $canBuy = false;
                     break;
                 }
@@ -51,7 +51,7 @@ class SpellService extends BaseService
         $playerSpell = $spellRepo->findOneBy(
             [
                 'spell' => $spell,
-                'player' => $player
+                'player' => $player,
             ]
         );
 
@@ -67,6 +67,7 @@ class SpellService extends BaseService
         $this->services()->getObjectService()->addZenisOnMap($player->getMap(), $spell->getPrice());
 
         $player->addPlayerSpell($playerSpell);
+
         return $playerSpell;
     }
 
@@ -75,7 +76,7 @@ class SpellService extends BaseService
      *
      * @param string $string String to be convert to method
      *
-     * @return boolean|string
+     * @return bool|string
      */
     protected function getMethod($string)
     {

@@ -10,16 +10,20 @@ use Gedmo\Mapping\Annotation as Gedmo;
  * PlayerSpellEffect
  *
  * @ORM\Table(name="player_spell_effect",
-              indexes={@ORM\Index(name="player_spell_effect_spell", columns={"player_spell_id"}),
-              @ORM\Index(name="player_spell_effect_target_id", columns={"target_id"})},
-              uniqueConstraints={@ORM\UniqueConstraint(name="player_spell_effect_target_player_spell",
-              columns={"target_id", "player_spell_id"})})
- * @ORM\Entity
+ *     indexes={
+ *         @ORM\Index(name="player_spell_effect_spell", columns={"player_spell_id"}),
+ *         @ORM\Index(name="player_spell_effect_target_id", columns={"target_id"})
+ *     },
+ *     uniqueConstraints={
+ *         @ORM\UniqueConstraint(name="player_spell_effect_target_player_spell",
+ *         columns={"target_id", "player_spell_id"})
+ *     })
+ *     @ORM\Entity
  */
 class PlayerSpellEffect
 {
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
@@ -32,7 +36,7 @@ class PlayerSpellEffect
      *
      * @ORM\ManyToOne(targetEntity="PlayerSpell", fetch="EAGER", inversedBy="playerSpellEffects")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="player_spell_id", referencedColumnName="id", nullable=false, onDelete="CASCADE")
+     *     @ORM\JoinColumn(name="player_spell_id", referencedColumnName="id", nullable=false, onDelete="CASCADE")
      * })
      */
     private $playerSpell;
@@ -54,7 +58,7 @@ class PlayerSpellEffect
     private $createdAt;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="times_used", type="integer", nullable=true)
      */
@@ -63,7 +67,7 @@ class PlayerSpellEffect
     /**
      * Get id
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -145,7 +149,7 @@ class PlayerSpellEffect
     /**
      * Get times used
      *
-     * @return integer
+     * @return int
      */
     public function getTimesUsed()
     {
@@ -155,7 +159,7 @@ class PlayerSpellEffect
     /**
      * Set times used
      *
-     * @param integer $timesUsed
+     * @param int $timesUsed
      *
      * @return PlayerSpellEffect
      */

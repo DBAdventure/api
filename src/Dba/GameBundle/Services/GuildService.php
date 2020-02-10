@@ -4,8 +4,8 @@ namespace Dba\GameBundle\Services;
 
 use Dba\GameBundle\Entity\EventType;
 use Dba\GameBundle\Entity\Guild;
-use Dba\GameBundle\Entity\Player;
 use Dba\GameBundle\Entity\GuildEvent;
+use Dba\GameBundle\Entity\Player;
 
 class GuildService extends BaseService
 {

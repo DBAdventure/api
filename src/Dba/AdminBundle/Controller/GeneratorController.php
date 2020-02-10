@@ -2,17 +2,16 @@
 
 namespace Dba\AdminBundle\Controller;
 
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Symfony\Component\Finder\Finder;
-use Symfony\Component\HttpFoundation\Request;
-use Dba\AdminBundle\Controller\BaseController;
 use Dba\AdminBundle\Form;
 use Dba\GameBundle\Entity\Map;
 use Dba\GameBundle\Entity\MapBox;
 use Dba\GameBundle\Entity\MapImage;
 use Dba\GameBundle\Entity\MapImageFile;
 use Dba\GameBundle\Entity\Player;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\Finder\Finder;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @Route("/generator")
@@ -29,8 +28,8 @@ class GeneratorController extends BaseController
 
     /**
      * @Route("/minimap/{id}", name="admin.generator.minimap", methods={"GET", "POST"},
-              defaults={"id": null}, requirements={"id": "\d+"})
-     * @ParamConverter("map", class="Dba\GameBundle\Entity\Map", isOptional="true", options={"id" = "id"})
+     * defaults={"id": null}, requirements={"id": "\d+"})
+     * @ParamConverter("map", class="Dba\GameBundle\Entity\Map", isOptional="true", options={"id": "id"})
      */
     public function minimapAction(Map $map = null)
     {
@@ -70,7 +69,7 @@ class GeneratorController extends BaseController
             'DbaAdminBundle::generator/minimap.html.twig',
             [
                 'map' => $map,
-                'imagePath' => $bundlePath . '/map/mini/' . $map->getId() . '.png'
+                'imagePath' => $bundlePath . '/map/mini/' . $map->getId() . '.png',
             ]
         );
     }
@@ -85,7 +84,7 @@ class GeneratorController extends BaseController
     protected function loadImage($imagePath)
     {
         if (empty($this->images[$imagePath])) {
-            $this->images[$imagePath] = imagecreatefromPng($imagePath);
+            $this->images[$imagePath] = imagecreatefrompng($imagePath);
         }
 
         return $this->images[$imagePath];
@@ -93,8 +92,8 @@ class GeneratorController extends BaseController
 
     /**
      * @Route("/map/{id}", name="admin.generator.map", methods={"GET", "POST"},
-              defaults={"id": null}, requirements={"id": "\d+"})
-     * @ParamConverter("map", class="Dba\GameBundle\Entity\Map", isOptional="true", options={"id" = "id"})
+     * defaults={"id": null}, requirements={"id": "\d+"})
+     * @ParamConverter("map", class="Dba\GameBundle\Entity\Map", isOptional="true", options={"id": "id"})
      */
     public function mapAction(Request $request, Map $map = null)
     {
@@ -118,7 +117,7 @@ class GeneratorController extends BaseController
                             [
                                 'x' => $x,
                                 'y' => $y,
-                                'map' => $map
+                                'map' => $map,
                             ]
                         );
 
@@ -137,6 +136,7 @@ class GeneratorController extends BaseController
                     }
                 }
                 $this->em()->flush();
+
                 return $this->redirect($this->generateUrl('admin.generator.map', ['id' => $map->getid()]));
             }
 
@@ -145,7 +145,7 @@ class GeneratorController extends BaseController
             $maxX = ($partX + 1) * self::MAP_DIVISOR;
             $maxX = $maxX > $map->getMaxX() ? $map->getMaxX() : $maxX;
             $minY = (self::MAP_DIVISOR * $partY) + 1;
-            $minY = $minY < 1 ?  : $minY;
+            $minY = $minY < 1 ?: $minY;
             $maxY = ($partY + 1) * self::MAP_DIVISOR;
             $maxY = $maxY > $map->getMaxY() ? $map->getMaxY() : $maxY;
         }
@@ -196,7 +196,7 @@ class GeneratorController extends BaseController
         return $this->render(
             'DbaAdminBundle::generator/create.html.twig',
             [
-                'form' => $form->createView()
+                'form' => $form->createView(),
             ]
         );
     }
@@ -249,8 +249,8 @@ class GeneratorController extends BaseController
             $error = false;
             $imagesCenter = $this->findImages('center', basename(dirname($images['C'])));
             foreach ($imagesCenter as $key => $center) {
-                $fileDay = 'map/day/' . $name . "_" . basename($center);
-                $fileNight = 'map/night/' . $name . "_" . basename($center);
+                $fileDay = 'map/day/' . $name . '_' . basename($center);
+                $fileNight = 'map/night/' . $name . '_' . basename($center);
 
                 $finalImage[$key] = imagecreatetruecolor(140, 140);
                 $imageCenter = imagecreatefrompng(realpath($webDirectory . $center));
@@ -310,7 +310,7 @@ class GeneratorController extends BaseController
 
                 $imagesResult[$key] = [
                     'day' => $fileDay,
-                    'night' => $fileNight
+                    'night' => $fileNight,
                 ];
             }
 
@@ -326,13 +326,14 @@ class GeneratorController extends BaseController
                     'danger',
                     $this->trans('generator.image.failed')
                 );
+
                 return $this->redirect($this->generateUrl('admin.generator.image'));
             }
 
             // Destroy generated images
             if (!empty($arrayOfImages)) {
                 foreach ($arrayOfImages as $key => $value) {
-                    imagedestroy($arrayOfImages[$key]) ;
+                    imagedestroy($arrayOfImages[$key]);
                 }
             }
 
@@ -371,13 +372,13 @@ class GeneratorController extends BaseController
                 empty($specificDirectory) ? '0.png' : '*.png'
             )->in($directory . 'center/' . ltrim($specificDirectory, '/'));
         } else {
-            $files = $finder->name('*.png')->in($directory. 'border');
+            $files = $finder->name('*.png')->in($directory . 'border');
         }
 
         $return = [];
         foreach ($files as $file) {
             $filename = '/' . $file->getPathname();
-            list ($height, $width) = getimagesize($file);
+            list($height, $width) = getimagesize($file);
             if ($type == 'angle' && $height == 20 && $width == 20) {
                 $return[$file->getBaseName('.png')] = $filename;
             } elseif ($type == 'vertical-border' && $height == 20 && $width == 100) {
@@ -394,6 +395,7 @@ class GeneratorController extends BaseController
         }
 
         ksort($return);
+
         return $return;
     }
 
@@ -401,7 +403,7 @@ class GeneratorController extends BaseController
     {
         $files = $this->repos()->getMapImageFileRepository()->findBy(
             [
-                'mapImage' => $mapImage
+                'mapImage' => $mapImage,
             ]
         );
 
@@ -431,6 +433,7 @@ class GeneratorController extends BaseController
 
         $this->em()->remove($map);
         $this->em()->flush();
+
         return $this->redirect($this->generateUrl('admin.generator.map'));
     }
 }

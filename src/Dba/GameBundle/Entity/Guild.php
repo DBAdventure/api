@@ -2,16 +2,16 @@
 
 namespace Dba\GameBundle\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
-use Symfony\Component\Validator\Constraints as Assert;
+use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as JMS;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Guild
  *
  * @ORM\Table(name="guild", uniqueConstraints={@ORM\UniqueConstraint(name="guild_short_name", columns={"short_name"}),
-              @ORM\UniqueConstraint(name="guild_name", columns={"name"})})
+ * @ORM\UniqueConstraint(name="guild_name", columns={"name"})})
  * @ORM\Entity(repositoryClass="Dba\GameBundle\Repository\GuildRepository")
  */
 class Guild
@@ -22,7 +22,7 @@ class Guild
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=80, nullable=false)
-     * @Assert\NotBlank()
+     * @Assert\NotBlank
      */
     private $name;
 
@@ -30,7 +30,7 @@ class Guild
      * @var string
      *
      * @ORM\Column(name="short_name", type="string", length=5, nullable=false)
-     * @Assert\NotBlank()
+     * @Assert\NotBlank
      */
     private $shortName;
 
@@ -38,7 +38,7 @@ class Guild
      * @var string
      *
      * @ORM\Column(name="history", type="text")
-     * @Assert\NotBlank()
+     * @Assert\NotBlank
      */
     private $history;
 
@@ -57,14 +57,14 @@ class Guild
     private $zeni = 0;
 
     /**
-     * @var boolean
+     * @var bool
      *
      * @ORM\Column(name="enabled", type="boolean", options={"default": false})
      */
     private $enabled = false;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
@@ -77,7 +77,7 @@ class Guild
      *
      * @ORM\ManyToOne(targetEntity="Dba\GameBundle\Entity\Player", fetch="EAGER")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="created_by", referencedColumnName="id", nullable=true, onDelete="SET NULL")
+     *     @ORM\JoinColumn(name="created_by", referencedColumnName="id", nullable=true, onDelete="SET NULL")
      * })
      */
     private $createdBy;
@@ -94,7 +94,7 @@ class Guild
      * @var ArrayCollection
      *
      * @ORM\OneToMany(targetEntity="Dba\GameBundle\Entity\GuildEvent", mappedBy="guild", cascade={"all"})
-     * @ORM\OrderBy({"createdAt" = "DESC"})
+     * @ORM\OrderBy({"createdAt": "DESC"})
      * @JMS\Exclude
      */
     private $events;
@@ -214,7 +214,7 @@ class Guild
     /**
      * Get zeni
      *
-     * @return integer
+     * @return int
      */
     public function getZeni()
     {
@@ -224,7 +224,7 @@ class Guild
     /**
      * Set zeni
      *
-     * @param integer $zeni
+     * @param int $zeni
      *
      * @return Guild
      */
@@ -238,7 +238,7 @@ class Guild
     /**
      * Is enabled
      *
-     * @return boolean
+     * @return bool
      */
     public function isEnabled()
     {
@@ -248,7 +248,7 @@ class Guild
     /**
      * Get enabled
      *
-     * @return boolean
+     * @return bool
      */
     public function getEnabled()
     {
@@ -258,7 +258,7 @@ class Guild
     /**
      * Set enabled
      *
-     * @param boolean $enabled
+     * @param bool $enabled
      *
      * @return Guild
      */
@@ -296,7 +296,7 @@ class Guild
     /**
      * Get id
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -412,10 +412,10 @@ class Guild
     /**
      * Check if user can archive
      *
-     * @JMS\VirtualProperty()
+     * @JMS\VirtualProperty
      * @JMS\SerializedName("nb_members")
      *
-     * @return integer
+     * @return int
      */
     public function getNbMembers()
     {
@@ -429,10 +429,10 @@ class Guild
     /**
      * Check if user can archive
      *
-     * @JMS\VirtualProperty()
+     * @JMS\VirtualProperty
      * @JMS\SerializedName("nb_max_members")
      *
-     * @return integer
+     * @return int
      */
     public function getNbMaxMembers()
     {

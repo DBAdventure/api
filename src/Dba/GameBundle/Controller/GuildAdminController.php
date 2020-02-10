@@ -2,14 +2,13 @@
 
 namespace Dba\GameBundle\Controller;
 
-use FOS\RestBundle\Controller\Annotations;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Symfony\Component\HttpFoundation\Request;
 use Dba\GameBundle\Entity\Guild;
 use Dba\GameBundle\Entity\GuildPlayer;
 use Dba\GameBundle\Entity\GuildRank;
-use Dba\GameBundle\Entity\Player;
 use Dba\GameBundle\Form\GuildSettings;
+use FOS\RestBundle\Controller\Annotations;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @Annotations\NamePrefix("guild_admin_")
@@ -169,7 +168,7 @@ class GuildAdminController extends BaseController
         if (!empty($ranks[$role]) && !empty(trim($ranks[$role]))) {
             $guildRank = $this->repos()->getGuildRankRepository()->findOneBy([
                 'guild' => $guild,
-                'role' => $role
+                'role' => $role,
             ]);
             $guildRank->setName($ranks[$role]);
             $this->em()->persist($guildRank);

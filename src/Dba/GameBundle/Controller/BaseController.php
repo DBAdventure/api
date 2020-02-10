@@ -2,13 +2,10 @@
 
 namespace Dba\GameBundle\Controller;
 
-use FOS\RestBundle\Controller\FOSRestController;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\Form\Form;
-use Dba\GameBundle\Entity\Player;
 use Dba\GameBundle\Services;
-use JMS\Serializer\SerializerBuilder;
+use FOS\RestBundle\Controller\FOSRestController;
+use Symfony\Component\Form\Form;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 class BaseController extends FOSRestController
 {
@@ -72,6 +69,7 @@ class BaseController extends FOSRestController
             $response->setData(['error' => $message]);
         }
         $response->setStatusCode(JsonResponse::HTTP_FORBIDDEN);
+
         return $response;
     }
 
@@ -89,6 +87,7 @@ class BaseController extends FOSRestController
             $response->setData($message);
         }
         $response->setStatusCode(JsonResponse::HTTP_CREATED);
+
         return $response;
     }
 
@@ -106,6 +105,7 @@ class BaseController extends FOSRestController
             $response->setData(['error' => $message]);
         }
         $response->setStatusCode(JsonResponse::HTTP_BAD_REQUEST);
+
         return $response;
     }
 
@@ -114,11 +114,11 @@ class BaseController extends FOSRestController
      *
      * @param Form $form Form
      *
-     * @return Array
+     * @return array
      */
     protected function getErrorMessages(Form $form)
     {
-        $errors = array();
+        $errors = [];
         foreach ($form->getErrors() as $error) {
             if ($form->isRoot()) {
                 $errors['#'][] = $error->getMessage();

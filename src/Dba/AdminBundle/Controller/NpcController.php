@@ -3,15 +3,14 @@
 namespace Dba\AdminBundle\Controller;
 
 use DateTime;
-use Doctrine\ORM\Tools\Pagination\Paginator;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Symfony\Component\HttpFoundation\Request;
-use Dba\AdminBundle\Controller\BaseController;
 use Dba\AdminBundle\Form;
 use Dba\GameBundle\Entity\Map;
 use Dba\GameBundle\Entity\Player;
-use Dba\GameBundle\Entity\Side;
 use Dba\GameBundle\Entity\Race;
+use Dba\GameBundle\Entity\Side;
+use Doctrine\ORM\Tools\Pagination\Paginator;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @Route("/npc")
@@ -26,8 +25,8 @@ class NpcController extends BaseController
                 'skill',
                 'agility',
                 'accuracy',
-                'intellect'
-            ]
+                'intellect',
+            ],
         ],
         2 => [
             'fyi' => 'crocodile',
@@ -36,7 +35,7 @@ class NpcController extends BaseController
                 'resistance',
                 'strength',
                 'max_health',
-            ]
+            ],
         ],
         3 => [
             'fyi' => 'wolf',
@@ -44,8 +43,8 @@ class NpcController extends BaseController
             'stats' => [
                 'resistance',
                 'strength',
-                'agility'
-            ]
+                'agility',
+            ],
         ],
         4 => [
             'fyi' => 'triceratop',
@@ -54,7 +53,7 @@ class NpcController extends BaseController
                 'resistance',
                 'strength',
                 'max_health',
-            ]
+            ],
         ],
         5 => [
             'fyi' => 'snake.green',
@@ -62,7 +61,7 @@ class NpcController extends BaseController
             'stats' => [
                 'agility',
                 'intellect',
-            ]
+            ],
         ],
         6 => [
             'fyi' => 'snake.purple',
@@ -71,7 +70,7 @@ class NpcController extends BaseController
                 'agility',
                 'accuracy',
                 'intellect',
-            ]
+            ],
         ],
         7 => [
             'fyi' => 'snake.blue',
@@ -80,7 +79,7 @@ class NpcController extends BaseController
                 'agility',
                 'accuracy',
                 'intellect',
-            ]
+            ],
         ],
         8 => [
             'fyi' => 'monkey',
@@ -88,8 +87,8 @@ class NpcController extends BaseController
             'stats' => [
                 'agility',
                 'accuracy',
-                'resistance'
-            ]
+                'resistance',
+            ],
         ],
         9 => [
             'fyi' => 'ghost',
@@ -99,7 +98,7 @@ class NpcController extends BaseController
                 'intellect',
                 'skill',
                 'analysis',
-            ]
+            ],
         ],
         10 => [
             'fyi' => 'soldier',
@@ -108,9 +107,10 @@ class NpcController extends BaseController
                 'strength',
                 'agility',
                 'max_health',
-            ]
+            ],
         ],
     ];
+
     /**
      * @Route("", name="admin.npc")
      */
@@ -156,7 +156,7 @@ class NpcController extends BaseController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $data = $form->getData();
-            for ($i = 0; $i < $data['number']; $i++) {
+            for ($i = 0; $i < $data['number']; ++$i) {
                 $level = mt_rand(
                     ($data['level'] * 10) + 1,
                     ($data['level'] + 1) * 10
@@ -177,7 +177,7 @@ class NpcController extends BaseController
         return $this->render(
             'DbaAdminBundle::npc/create.html.twig',
             [
-                'form' => $form->createView()
+                'form' => $form->createView(),
             ]
         );
     }
@@ -239,7 +239,7 @@ class NpcController extends BaseController
         $npc->setIntellect(1);
 
         $skillPoints = 29 + ($level * 2);
-        for ($i = 0; $i < $skillPoints; $i++) {
+        for ($i = 0; $i < $skillPoints; ++$i) {
             $stat = $mapping['stats'][array_rand($mapping['stats'])];
             if ($stat == 'max_health') {
                 $npc->setMaxHealth($npc->getMaxHealth() + 40);
@@ -249,8 +249,8 @@ class NpcController extends BaseController
             $npc->{'set' . ucfirst($stat)}($npc->{'get' . ucfirst($stat)}() + 1);
         }
 
-
         $npc->setHealth($npc->getMaxHealth());
+
         return $npc;
     }
 }

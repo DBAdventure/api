@@ -2,6 +2,7 @@
 
 namespace Dba\GameBundle\Form;
 
+use Dba\GameBundle\Entity;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -11,15 +12,13 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Symfony\Component\Serializer\Serializer;
-use Symfony\Component\Validator\Constraints as Assert;
-use Dba\GameBundle\Entity;
 
 class PlayerAppearance extends AbstractType
 {
     protected $serializer;
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -27,7 +26,7 @@ class PlayerAppearance extends AbstractType
         $this->addImageChoice($builder);
         $builder->addEventListener(
             FormEvents::PRE_SUBMIT,
-            array($this, 'onPreSubmit')
+            [$this, 'onPreSubmit']
         );
     }
 
@@ -52,7 +51,7 @@ class PlayerAppearance extends AbstractType
     /**
      * Get image type list
      *
-     * @param Object $builder
+     * @param object $builder
      * @param string $raceId Race id
      *
      * @return array
@@ -64,7 +63,7 @@ class PlayerAppearance extends AbstractType
                 'choice.group' => '',
                 'Famille de Bulma' => 'H1',
                 'Guerrier(Krilin, Yam...)' => 'H2',
-                'Autres persos' => 'H3'
+                'Autres persos' => 'H3',
             ],
             2 => [
                 'choice.character' => '',
@@ -74,7 +73,7 @@ class PlayerAppearance extends AbstractType
                 'Gotrunks' => 'HS4',
                 'Pan' => 'HS5',
                 'Justicier masqué' => 'HS6',
-                'Bra' => 'HS7'
+                'Bra' => 'HS7',
             ],
             3 => [
                 'choice.character' => '',
@@ -82,7 +81,7 @@ class PlayerAppearance extends AbstractType
                 'Tout-puissant' => 'N2',
                 'Dendé' => 'N3',
                 'Simple Namek' => 'N4',
-                'Slug' => 'N5'
+                'Slug' => 'N5',
             ],
             4 => [
                 'choice.character' => '',
@@ -90,7 +89,7 @@ class PlayerAppearance extends AbstractType
                 'Végéta' => 'S2',
                 'Fusion Goku et Végéta' => 'S3',
                 'Broly' => 'S4',
-                'Autres Saïyens' => 'S5'
+                'Autres Saïyens' => 'S5',
             ],
             5 => [
                 'choice.group' => '',
@@ -103,26 +102,26 @@ class PlayerAppearance extends AbstractType
                 'Tapion et son frère' => 'A7',
                 'Garlic' => 'A8',
                 'Janemba' => 'A9',
-                'Autres persos' => 'A10'
+                'Autres persos' => 'A10',
             ],
             6 => [
                 'choice.group' => '',
                 'Les C' => 'C1',
                 'Cell' => 'C2',
-                'Autres cyborgs' => 'C3'
+                'Autres cyborgs' => 'C3',
             ],
             7 => [
                 'choice.character' => '',
                 'Boubou' => 'M1',
                 'Babidi' => 'M2',
-                'Servant de Babidi' => 'M3'
+                'Servant de Babidi' => 'M3',
             ],
             8 => [
                 'choice.character' => '',
                 'Dragon de couleur' => 'D1',
                 'Li Shenron' => 'D2',
-                'Autre dragon GT' => 'D3'
-            ]
+                'Autre dragon GT' => 'D3',
+            ],
         ];
 
         $builder->add(
@@ -134,7 +133,7 @@ class PlayerAppearance extends AbstractType
                 'mapped' => false,
                 'attr' => [
                     'data-list' => $this->getSerializer()->serialize($result, 'json'),
-                    'class' => 'hide'
+                    'class' => 'hide',
                 ],
             ]
         );
@@ -171,7 +170,7 @@ class PlayerAppearance extends AbstractType
                 'Sangoku Super Saïyen 4' => 'S10.png',
                 'Sangoku GT Super Saïyen' => 'S28.png',
                 'Sangoku GT Super Saïyen 3' => 'S23.png',
-                'Sangoku GT Super Saïyen 3 + Eclairs' => 'S27.png'
+                'Sangoku GT Super Saïyen 3 + Eclairs' => 'S27.png',
             ],
             'S2' => [
                 'choice.clothes' => '',
@@ -184,7 +183,7 @@ class PlayerAppearance extends AbstractType
                 'Majin Végéta' => 'S20.png',
                 'Végéta mort' => 'S31.png',
                 'Végéta mort Super saïyen' => 'S32.png',
-                'Prince Végéta' => 'S52.png'
+                'Prince Végéta' => 'S52.png',
             ],
             'S3' => [
                 'choice.clothes' => '',
@@ -192,7 +191,7 @@ class PlayerAppearance extends AbstractType
                 'Végéto Super Saïyen' => 'S14.png',
                 'Gogéta Super Saïyen 4' => 'S15.png',
                 'Gogéta Super Saïyen 2' => 'S19.png',
-                'Gogéta Super Saïyen 2 + Eclairs' => 'S26.png'
+                'Gogéta Super Saïyen 2 + Eclairs' => 'S26.png',
             ],
             'S4' => [
                 'choice.clothes' => '',
@@ -202,7 +201,7 @@ class PlayerAppearance extends AbstractType
                 'Broly Super Saïyen Légendaire' => 'S18.png',
                 'Broly Super Saïyen Légendaire Altern 1' => 'S42.png',
                 'Broly Super Saïyen Légendaire Altern 2' => 'S50.png',
-                'Broly Super Saïyen Légendaire Altern 3' => 'S53.png'
+                'Broly Super Saïyen Légendaire Altern 3' => 'S53.png',
             ],
             'S5' => [
                 'choice.character' => '',
@@ -218,7 +217,7 @@ class PlayerAppearance extends AbstractType
                 'Toma gorille' => 'S47.png',
                 'Sangoku Jr' => 'S48.png',
                 'Végéta Jr' => 'S49.png',
-                'Roi Végéta' => 'S51.png'
+                'Roi Végéta' => 'S51.png',
             ],
             'A1' => [
                 'choice.character' => '',
@@ -227,7 +226,7 @@ class PlayerAppearance extends AbstractType
                 'Freezer deuxième transformation' => 'A14.png',
                 'Freezer ultime transformation' => 'A4.png',
                 'Freezer puissance maximale' => 'A30.png',
-                'Metal Freezer' => 'A3.png'
+                'Metal Freezer' => 'A3.png',
             ],
             'A2' => [
                 'choice.character' => '',
@@ -235,7 +234,7 @@ class PlayerAppearance extends AbstractType
                 'Guldo' => 'A24.png',
                 'Geece' => 'A10.png',
                 'Barta' => 'A9.png',
-                'Recoom' => 'A8.png'
+                'Recoom' => 'A8.png',
             ],
             'A3' => [
                 'choice.character' => '',
@@ -248,13 +247,13 @@ class PlayerAppearance extends AbstractType
                 'Doria' => 'A45.png',
                 'Soldat agé' => 'A41.png',
                 'Sauza' => 'A42.png',
-                'Kiwi' => 'A44.png'
+                'Kiwi' => 'A44.png',
             ],
             'A4' => [
                 'choice.character' => '',
                 'Baby' => 'A38.png',
                 'Baby végéta' => 'A15.png',
-                'Baby végéta gorille' => 'A39.png'
+                'Baby végéta gorille' => 'A39.png',
             ],
             'A5' => [
                 'choice.character' => '',
@@ -262,27 +261,27 @@ class PlayerAppearance extends AbstractType
                 'Bojack 2ème transformation' => 'A16.png',
                 'Zangya' => 'A22.png',
                 'Gokua' => 'A29.png',
-                'Bido' => 'A36.png'
+                'Bido' => 'A36.png',
             ],
             'A6' => [
                 'choice.character' => '',
                 'Cooler' => 'A18.png',
                 'Super Cooler' => 'A17.png',
-                'Metal Cooler' => 'A19.png'
+                'Metal Cooler' => 'A19.png',
             ],
             'A7' => [
                 'choice.character' => '',
                 'Tapion' => 'A20.png',
-                'Petit frère de Tapion' => 'A21.png'
+                'Petit frère de Tapion' => 'A21.png',
             ],
             'A8' => [
                 'choice.character' => '',
-                'Garlic Junior' => 'A26.png'
+                'Garlic Junior' => 'A26.png',
             ],
             'A9' => [
                 'choice.character' => '',
                 'Janemba1' => 'A27.png',
-                'Janemba2' => 'A28.png'
+                'Janemba2' => 'A28.png',
             ],
             'A10.png' => [
                 'choice.character' => '',
@@ -293,7 +292,7 @@ class PlayerAppearance extends AbstractType
                 'Vinegar' => 'A35.png',
                 'Torbie' => 'A37.png',
                 'Rild' => 'A40.png',
-                'Saibaimen' => 'A43.png'
+                'Saibaimen' => 'A43.png',
             ],
             'C1' => [
                 'choice.character' => '',
@@ -308,7 +307,7 @@ class PlayerAppearance extends AbstractType
                 'C-18' => 'C3.png',
                 'C-19' => 'C8.png',
                 'C-20' => 'C4.png',
-                'C-20 sans chapeau' => 'C9.png'
+                'C-20 sans chapeau' => 'C9.png',
             ],
             'C2' => [
                 'choice.character' => '',
@@ -316,19 +315,19 @@ class PlayerAppearance extends AbstractType
                 'Cell deuxième transformation' => 'C7.png',
                 'Perfect Cell' => 'C1.png',
                 'Reborn Cell' => 'C14.png',
-                'Mini cell' => 'C6.png'
+                'Mini cell' => 'C6.png',
             ],
             'C3' => [
                 'choice.character' => '',
                 'Taopaïppaï' => 'C5.png',
-                'Gil' => 'C16.png'
+                'Gil' => 'C16.png',
             ],
             'H1' => [
                 'choice.character' => '',
                 'Bulma normal' => 'H.png',
                 'Bulma décontracté' => 'H6.png',
                 'Bulma et bébé trunks' => 'H21.png',
-                'Mère de Bulma' => 'H10.png'
+                'Mère de Bulma' => 'H10.png',
             ],
             'H2' => [
                 'choice.character' => '',
@@ -343,7 +342,7 @@ class PlayerAppearance extends AbstractType
                 'Chaozu' => 'H14.png',
                 'Videl cheveux longs' => 'H16.png',
                 'Videl cheveux courts' => 'H19.png',
-                'Jackie Chun' => 'H47.png'
+                'Jackie Chun' => 'H47.png',
             ],
             'H3' => [
                 'choice.character' => '',
@@ -365,7 +364,7 @@ class PlayerAppearance extends AbstractType
                 'Colonel Silver' => 'H52.png',
                 'Arbitre terrien' => 'H53.png',
                 'Homme loup' => 'H54.png',
-                'Maître des Grues' => 'H55.png'
+                'Maître des Grues' => 'H55.png',
             ],
             'HS1' => [
                 'choice.clothes' => '',
@@ -392,7 +391,7 @@ class PlayerAppearance extends AbstractType
                 'Sangohan habits noir de combat' => 'HS25.png',
                 'Sangohan Super Saiyen habits noir de combat' => 'HS43.png',
                 'Sangohan habits kaïoshin' => 'HS24.png',
-                'Sangohan du futur' => 'HS7.png'
+                'Sangohan du futur' => 'HS7.png',
             ],
             'HS2' => [
                 'choice.clothes' => '',
@@ -409,60 +408,60 @@ class PlayerAppearance extends AbstractType
                 'Trunks enfant normal' => 'HS16.png',
                 'Trunks enfant Super Saïyen' => 'HS17.png',
                 'Trunks GT normal' => 'HS39.png',
-                'Trunks GT Super Saïyen' => 'HS38.png'
+                'Trunks GT Super Saïyen' => 'HS38.png',
             ],
             'HS3' => [
                 'choice.clothes' => '',
                 'Sangoten normal' => 'HS18.png',
                 'Sangoten Super Saïyen' => 'HS19.png',
                 'Sangoten GT normal' => 'HS40.png',
-                'Sangoten GT Super Saïyen' => 'HS41.png'
+                'Sangoten GT Super Saïyen' => 'HS41.png',
             ],
             'HS4' => [
                 'choice.clothes' => '',
                 'Gotrunks normal' => 'HS13.png',
                 'Gotrunks Super Saïyen' => 'HS14.png',
                 'Gotrunks Super Saïyen 3' => 'HS15.png',
-                'Gotrunks Super Saïyen 3 + Eclairs' => 'HS35.png'
+                'Gotrunks Super Saïyen 3 + Eclairs' => 'HS35.png',
             ],
             'HS5' => [
                 'choice.clothes' => '',
                 'Pan' => 'H101.png',
-                'Pan Bébé' => 'HS47.png'
+                'Pan Bébé' => 'HS47.png',
             ],
             'HS6' => [
                 'choice.clothes' => '',
-                'Justicier masqué' => 'HS45.png'
+                'Justicier masqué' => 'HS45.png',
             ],
             'HS7' => [
                 'choice.clothes' => '',
-                'Bra' => 'HS46.png'
+                'Bra' => 'HS46.png',
             ],
             'N1' => [
                 'choice.character' => '',
                 'Piccolo enfant' => 'N10.png',
                 'Piccolo' => 'N.png',
-                'Dieuccolo' => 'N1.png'
+                'Dieuccolo' => 'N1.png',
             ],
             'N2' => [
                 'choice.character' => '',
-                'Tout-puissant' => 'N3.png'
+                'Tout-puissant' => 'N3.png',
             ],
             'N3' => [
                 'choice.character' => '',
                 'Dendé jeune' => 'N2.png',
-                'Dendé adolescent' => 'N7.png'
+                'Dendé adolescent' => 'N7.png',
             ],
             'N4' => [
                 'choice.character' => '',
                 'Namek tunique rouge' => 'N4.png',
                 'Namek tunique bleu' => 'N5.png',
-                'Namek tunique verte' => 'N6.png'
+                'Namek tunique verte' => 'N6.png',
             ],
             'N5' => [
                 'choice.character' => '',
                 'Slug avec casque' => 'N8.png',
-                'Slug sans casque' => 'N9.png'
+                'Slug sans casque' => 'N9.png',
             ],
             'M1' => [
                 'choice.shape' => '',
@@ -473,11 +472,11 @@ class PlayerAppearance extends AbstractType
                 'Majin Bou + Piccolo' => 'M11.png',
                 'Majin Bou + San Gohan' => 'M10.png',
                 'Bou Ultime' => 'M1.png',
-                'Super Oub' => 'M13.png'
+                'Super Oub' => 'M13.png',
             ],
             'M2' => [
                 'choice.shape' => '',
-                'Babidi' => 'M2.png'
+                'Babidi' => 'M2.png',
             ],
             'M3' => [
                 'choice.shape' => '',
@@ -485,7 +484,7 @@ class PlayerAppearance extends AbstractType
                 'Sporovich' => 'M7.png',
                 'Yamu' => 'M5.png',
                 'Simple guerrier' => 'M4.png',
-                'Yakon' => 'M6.png'
+                'Yakon' => 'M6.png',
             ],
             'D1' => [
                 'choice.shape' => '',
@@ -500,14 +499,13 @@ class PlayerAppearance extends AbstractType
                 'Dragon vert' => 'D8.png',
                 'Dragon blanc' => 'D9.png',
                 'Dragon rouge foncé' => 'D10.png',
-                'Dragon marron clair' => 'D11.png'
+                'Dragon marron clair' => 'D11.png',
             ],
             'D2' => [
                 'choice.shape' => '',
                 'Première transformation' => 'D12.png',
                 'Première transformation Altern' => 'D21.png',
                 'Deuxième transformation' => 'D13.png',
-
             ],
             'D3' => [
                 'choice.character' => '',
@@ -517,8 +515,8 @@ class PlayerAppearance extends AbstractType
                 'Chii Shenron' => 'D16.png',
                 'Otamine' => 'D17.png',
                 'Haze Shenron' => 'D18.png',
-                '??? Shenron' => 'D19.png'
-            ]
+                '??? Shenron' => 'D19.png',
+            ],
         ];
         $builder->add(
             'image',
@@ -529,7 +527,7 @@ class PlayerAppearance extends AbstractType
                 'label' => false,
                 'attr' => [
                     'data-list' => $this->getSerializer()->serialize($result, 'json'),
-                    'class' => 'hide'
+                    'class' => 'hide',
                 ],
             ]
         );

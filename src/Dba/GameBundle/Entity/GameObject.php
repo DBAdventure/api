@@ -2,10 +2,10 @@
 
 namespace Dba\GameBundle\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
-use Symfony\Component\Validator\Constraints as Assert;
+use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as JMS;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Object
@@ -105,9 +105,8 @@ class GameObject
         self::TYPE_OUTFIT => 'outfit',
     ];
 
-
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
@@ -119,7 +118,7 @@ class GameObject
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=50, nullable=false)
-     * @Assert\NotBlank()
+     * @Assert\NotBlank
      */
     private $name;
 
@@ -127,15 +126,15 @@ class GameObject
      * @var string
      *
      * @ORM\Column(name="description", type="text", nullable=false)
-     * @Assert\NotBlank()
+     * @Assert\NotBlank
      */
     private $description;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="price", type="integer", nullable=false)
-     * @Assert\NotBlank()
+     * @Assert\NotBlank
      */
     private $price;
 
@@ -143,7 +142,7 @@ class GameObject
      * @var string
      *
      * @ORM\Column(name="image", type="string", length=30, nullable=false)
-     * @Assert\NotBlank()
+     * @Assert\NotBlank
      */
     private $image;
 
@@ -151,7 +150,7 @@ class GameObject
      * @var string
      *
      * @ORM\Column(name="weight", type="decimal", precision=10, scale=0, nullable=false)
-     * @Assert\NotBlank()
+     * @Assert\NotBlank
      */
     private $weight;
 
@@ -170,10 +169,10 @@ class GameObject
     private $requirements;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="type", type="integer", nullable=false)
-     * @Assert\NotBlank()
+     * @Assert\NotBlank
      */
     private $type;
 
@@ -186,7 +185,7 @@ class GameObject
     private $playerObjects;
 
     /**
-     * @var boolean
+     * @var bool
      *
      * @ORM\Column(name="enabled", type="boolean", options={"default": false})
      */
@@ -205,11 +204,12 @@ class GameObject
      *
      * @param string $name
      *
-     * @return Object
+     * @return object
      */
     public function setName($name)
     {
         $this->name = $name;
+
         return $this;
     }
 
@@ -228,11 +228,12 @@ class GameObject
      *
      * @param string $description
      *
-     * @return Object
+     * @return object
      */
     public function setDescription($description)
     {
         $this->description = $description;
+
         return $this;
     }
 
@@ -249,20 +250,21 @@ class GameObject
     /**
      * Set price
      *
-     * @param integer $price
+     * @param int $price
      *
-     * @return Object
+     * @return object
      */
     public function setPrice($price)
     {
         $this->price = $price;
+
         return $this;
     }
 
     /**
      * Get price
      *
-     * @return integer
+     * @return int
      */
     public function getPrice()
     {
@@ -274,11 +276,12 @@ class GameObject
      *
      * @param string $image
      *
-     * @return Object
+     * @return object
      */
     public function setImage($image)
     {
         $this->image = $image;
+
         return $this;
     }
 
@@ -297,11 +300,12 @@ class GameObject
      *
      * @param string $weight
      *
-     * @return Object
+     * @return object
      */
     public function setWeight($weight)
     {
         $this->weight = $weight;
+
         return $this;
     }
 
@@ -320,11 +324,12 @@ class GameObject
      *
      * @param array $bonus
      *
-     * @return Object
+     * @return object
      */
     public function setBonus($bonus)
     {
         $this->bonus = $bonus;
+
         return $this;
     }
 
@@ -365,20 +370,21 @@ class GameObject
     /**
      * Set type
      *
-     * @param integer $type
+     * @param int $type
      *
-     * @return Object
+     * @return object
      */
     public function setType($type)
     {
         $this->type = $type;
+
         return $this;
     }
 
     /**
      * Get type
      *
-     * @return integer
+     * @return int
      */
     public function getType()
     {
@@ -388,7 +394,7 @@ class GameObject
     /**
      * Get id
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -400,11 +406,12 @@ class GameObject
      *
      * @param PlayerObject $playerObject
      *
-     * @return Object
+     * @return object
      */
     public function addPlayerObject(PlayerObject $playerObject)
     {
         $this->playerObjects[] = $playerObject;
+
         return $this;
     }
 
@@ -441,7 +448,7 @@ class GameObject
     /**
      * Is enabled
      *
-     * @return boolean
+     * @return bool
      */
     public function isEnabled()
     {
@@ -451,7 +458,7 @@ class GameObject
     /**
      * Get enabled
      *
-     * @return boolean
+     * @return bool
      */
     public function getEnabled()
     {
@@ -461,7 +468,7 @@ class GameObject
     /**
      * Set enabled
      *
-     * @param boolean $enabled
+     * @param bool $enabled
      *
      * @return Guild
      */

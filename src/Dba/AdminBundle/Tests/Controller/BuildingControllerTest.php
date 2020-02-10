@@ -67,8 +67,8 @@ class BuildingControllerTest extends BaseTestCase
         $this->assertEquals(
             [
                 'success' => [
-                    'Building created!'
-                ]
+                    'Building created!',
+                ],
             ],
             $session->getBag('flashes')->all()
         );
@@ -96,8 +96,8 @@ class BuildingControllerTest extends BaseTestCase
         $this->assertEquals(
             [
                 'success' => [
-                    'Building saved!'
-                ]
+                    'Building saved!',
+                ],
             ],
             $session->getBag('flashes')->all()
         );

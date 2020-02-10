@@ -3,21 +3,22 @@
 namespace Dba\GameBundle\Repository;
 
 use DateTime;
+use Dba\GameBundle\Entity\Player;
 use Dba\GameBundle\Entity\Side;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query\ResultSetMapping;
-use Dba\GameBundle\Entity\Player;
 
 class PlayerRepository extends EntityRepository
 {
     /**
      * Count by enabled
      *
-     * @return integer
+     * @return int
      */
     public function countByEnabled()
     {
         $qb = $this->createQueryBuilder('p');
+
         return $qb->select('COUNT(p)')
             ->andWhere('p.enabled = TRUE')
             ->andWhere('p.side IN (:sides)')
@@ -25,7 +26,7 @@ class PlayerRepository extends EntityRepository
                 'sides' => [
                     Side::BAD,
                     Side::GOOD,
-                ]
+                ],
             ])
             ->getQuery()
             ->getSingleScalarResult();
@@ -34,13 +35,14 @@ class PlayerRepository extends EntityRepository
     /**
      * Count by race
      *
-     * @param integer $race Race
+     * @param int $race Race
      *
-     * @return integer
+     * @return int
      */
     public function countByRace($race)
     {
         $qb = $this->createQueryBuilder('p');
+
         return $qb->select('COUNT(p)')
             ->where('p.race = :race')
             ->andWhere('p.enabled = TRUE')
@@ -52,13 +54,14 @@ class PlayerRepository extends EntityRepository
     /**
      * Count by side
      *
-     * @param integer $side Side
+     * @param int $side Side
      *
-     * @return integer
+     * @return int
      */
     public function countBySide($side)
     {
         $qb = $this->createQueryBuilder('p');
+
         return $qb->select('COUNT(p)')
             ->where('p.side = :side')
             ->andWhere('p.enabled = TRUE')
@@ -75,6 +78,7 @@ class PlayerRepository extends EntityRepository
     public function getOnlinePlayers()
     {
         $qb = $this->createQueryBuilder('p');
+
         return $qb->select('p')
             ->where('p.lastLogin > :delay')
             ->andWhere('p.enabled = TRUE')
@@ -113,7 +117,7 @@ EOT;
         $query->setParameters([
             'id' => $player->getId(),
             'sides' => [Side::BAD, Side::GOOD],
-            'vision' => 5 // @TODO Npc vision, maybe must change
+            'vision' => 5, // @TODO Npc vision, maybe must change
         ]);
 
         $players = [];

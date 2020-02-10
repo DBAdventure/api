@@ -3,17 +3,16 @@
 namespace Dba\GameBundle\Command;
 
 use DateTime;
+use Dba\GameBundle\Entity\GameObject;
 use Dba\GameBundle\Entity\Map;
 use Dba\GameBundle\Entity\MapObject;
 use Dba\GameBundle\Entity\MapObjectType;
-use Dba\GameBundle\Entity\GameObject;
 use Dba\GameBundle\Entity\Player;
 use Dba\GameBundle\Entity\PlayerQuest;
 use Dba\GameBundle\Entity\Quest;
 use Dba\GameBundle\Entity\QuestNpc;
 use Dba\GameBundle\Entity\Race;
 use Dba\GameBundle\Entity\Side;
-use Exception;
 use Symfony\Component\Console\Command\LockableTrait;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -54,6 +53,7 @@ EOT
     {
         if (!$this->lock()) {
             $output->writeln('The command is already running in another process.');
+
             return 0;
         }
 
@@ -135,7 +135,7 @@ EOT
                 'x' => 6,
                 'y' => 3,
                 'object' => GameObject::DEFAULT_BERRIES,
-                'number' => 3
+                'number' => 3,
             ],
             [
                 'type' => MapObjectType::ZENI,
@@ -158,7 +158,7 @@ EOT
                     'sont à ta disposition pour bien comprendre les bases du jeu.',
                     MapObject::EXTRA_DIALOGUE => 'Prends ton temps, ici, personne ne pourra venir te déranger.',
                     MapObject::EXTRA_DIALOGUE => 'Shu.',
-                ]
+                ],
             ],
         ];
 
@@ -194,7 +194,6 @@ EOT
             $this->getLogger()->info($message);
             $this->em()->persist($newMapObject);
         }
-
 
         $quest = $this->repos()->getQuestRepository()->findOneBy([
             'map' => $tutorial,

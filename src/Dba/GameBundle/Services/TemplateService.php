@@ -1,8 +1,8 @@
 <?php
+
 namespace Dba\GameBundle\Services;
 
 use DateTime;
-use Symfony\Component\HttpFoundation\Request;
 
 class TemplateService extends BaseService
 {
@@ -32,7 +32,7 @@ class TemplateService extends BaseService
     /**
      * Get last authentication errors
      *
-     * @return integer
+     * @return int
      */
     public function getLastAuthenticationError()
     {

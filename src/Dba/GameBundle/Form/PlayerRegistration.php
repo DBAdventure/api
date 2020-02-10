@@ -4,18 +4,18 @@ namespace Dba\GameBundle\Form;
 
 use Dba\GameBundle\Entity;
 use Doctrine\ORM\EntityRepository;
-use Symfony\Component\Form\Extension\Core\Type;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class PlayerRegistration extends AbstractType
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -56,7 +56,7 @@ class PlayerRegistration extends AbstractType
                         'thief' => 3,
                         'healer' => 4,
                         'analyst' => 5,
-                        'ranger' => 6
+                        'ranger' => 6,
                     ],
                     'mapped' => false,
                 ]
@@ -83,6 +83,7 @@ class PlayerRegistration extends AbstractType
                                 ]
                             )
                         );
+
                         return $qb;
                     },
                 ]
@@ -100,6 +101,7 @@ class PlayerRegistration extends AbstractType
                                 [Entity\Side::GOOD, Entity\Side::BAD]
                             )
                         );
+
                         return $qb;
                     },
                 ]
@@ -108,13 +110,13 @@ class PlayerRegistration extends AbstractType
                 'appearance',
                 PlayerAppearance::class,
                 [
-                    'mapped' => false
+                    'mapped' => false,
                 ]
             );
 
         $builder->addEventListener(
             FormEvents::PRE_SUBMIT,
-            array($this, 'onPreSubmit')
+            [$this, 'onPreSubmit']
         );
     }
 

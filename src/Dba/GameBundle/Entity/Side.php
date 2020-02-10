@@ -24,7 +24,7 @@ class Side
     private $name;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
@@ -59,7 +59,7 @@ class Side
     /**
      * Get id
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {

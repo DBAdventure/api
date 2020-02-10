@@ -2,13 +2,13 @@
 
 namespace Dba\GameBundle\Repository;
 
-use Doctrine\ORM\NoResultException;
-use Doctrine\ORM\Query\ResultSetMapping;
-use Doctrine\ORM\EntityRepository;
-use Dba\GameBundle\Services\TemplateService;
 use Dba\GameBundle\Entity\Map;
 use Dba\GameBundle\Entity\MapBonus;
 use Dba\GameBundle\Entity\Player;
+use Dba\GameBundle\Services\TemplateService;
+use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\NoResultException;
+use Doctrine\ORM\Query\ResultSetMapping;
 
 class MapRepository extends EntityRepository
 {
@@ -94,7 +94,7 @@ EOT;
         $query->setParameters([
             'period' => (int) ($period == TemplateService::PERIOD_NIGHT),
             'id' => $player->getId(),
-            'vision' => $player->getMapVision()
+            'vision' => $player->getMapVision(),
         ]);
 
         $mapData = [];
@@ -105,7 +105,7 @@ EOT;
 
             $mapData[$box['x_map']][$box['y_map']] = [
                 'file' => $box['box_file'],
-                'bonus' => $box['bonus']
+                'bonus' => $box['bonus'],
             ];
         }
 
@@ -173,7 +173,7 @@ EOT;
             'xStart' => ($xStart <= 0) ? 1 : $xStart,
             'xEnd' => ($xEnd >= $map->getMaxX()) ? $map->getMaxX() : $xEnd,
             'yStart' => ($yStart <= 0) ? 1 : $yStart,
-            'yEnd' => ($yEnd >= $map->getMaxY()) ? $map->getMaxY() : $yEnd
+            'yEnd' => ($yEnd >= $map->getMaxY()) ? $map->getMaxY() : $yEnd,
         ];
     }
 
@@ -181,11 +181,11 @@ EOT;
      * Generate random position
      *
      * @param Map $map Map to find a position
-     * @param integer $xMin X min
-     * @param integer $xMax X max
-     * @param integer $yMin Y min
-     * @param integer $yMax Y max
-     * @param integer $limit Limit of result
+     * @param int $xMin X min
+     * @param int $xMax X max
+     * @param int $yMin Y min
+     * @param int $yMax Y max
+     * @param int $limit Limit of result
      *
      * @return array
      */
@@ -216,7 +216,7 @@ EOT;
             'x_max' => (int) $xMax,
             'y_min' => (int) $yMin,
             'y_max' => (int) $yMax,
-            'limit' => (int) $limit
+            'limit' => (int) $limit,
         ]);
 
         return ($limit == 1) ? $query->getSingleResult() : $query->getResult();
@@ -228,7 +228,7 @@ EOT;
      * @param Player $player Player
      * @param array $mapBonusTypes Map bonus Type, check if it's different. Default is Impassable
      *
-     * @return boolean
+     * @return bool
      */
     public function hasValidPosition(Player $player, array $mapBonusTypes = [MapBonus::TYPE_IMPASSABLE])
     {
@@ -251,6 +251,7 @@ EOT;
 
         try {
             $result = $query->getSingleResult();
+
             return !in_array($result['type'], $mapBonusTypes);
         } catch (NoResultException $e) {
             return false;
@@ -267,6 +268,7 @@ EOT;
         if (empty($this->defaultMap)) {
             $this->defaultMap = $this->findOneById(Map::ISLAND);
         }
+
         return $this->defaultMap;
     }
 
@@ -274,8 +276,8 @@ EOT;
      * Add damage on map case
      *
      * @param Map $map Map
-     * @param integer $x X position
-     * @param integer $y Y position
+     * @param int $x X position
+     * @param int $y Y position
      */
     public function takeDamage(Map $map, $x, $y)
     {
@@ -285,7 +287,7 @@ EOT;
                 [
                     'x' => (int) $x,
                     'y' => (int) $y,
-                    'map' => $map
+                    'map' => $map,
                 ]
             );
         $mapBox->setDamage($mapBox->getDamage() + 1);
@@ -297,8 +299,8 @@ EOT;
      * Generate map for admin generator
      *
      * @param Map $map Map
-     * @param integer $partX Part X of the map
-     * @param integer $partY Part y of the map
+     * @param int $partX Part X of the map
+     * @param int $partY Part y of the map
      *
      * @return array
      */
@@ -347,7 +349,7 @@ EOT;
         foreach ($query->getResult() as $box) {
             $mapData[$box['x_map']][$box['y_map']] = [
                 'image' => $box['box_file'],
-                'bonus' => $box['bonus']
+                'bonus' => $box['bonus'],
             ];
         }
 
@@ -377,6 +379,7 @@ EOT;
         $rsm->addScalarResult('name', 'name');
 
         $query = $this->getEntityManager()->createNativeQuery($request, $rsm);
+
         return $query->getResult();
     }
 }

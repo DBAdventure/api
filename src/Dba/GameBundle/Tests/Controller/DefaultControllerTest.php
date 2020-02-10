@@ -26,7 +26,6 @@ class DefaultControllerTest extends BaseTestCase
         $this->assertJsonResponse($this->client->getResponse(), 400);
     }
 
-
     /**
      * @ExpectedException Symfony\Component\HttpKernel\Exception\NotFoundHttpException
      */
@@ -163,8 +162,8 @@ class DefaultControllerTest extends BaseTestCase
                     'appearance' => [
                         'type' => 'H3',
                         'image' => 'H1.png',
-                    ]
-                ]
+                    ],
+                ],
             ]
         );
 
@@ -189,8 +188,8 @@ class DefaultControllerTest extends BaseTestCase
                     'appearance' => [
                         'type' => 'H3',
                         'image' => 'H1.png',
-                    ]
-                ]
+                    ],
+                ],
             ]
         );
 
