@@ -214,7 +214,6 @@ class InboxController extends BaseController
 
             $inbox = clone $originalInbox;
             $inbox->setRecipient($recipient);
-            $this->em()->detach($inbox);
             $this->em()->persist($inbox);
             $recipients[] = $recipient->getName();
         }
