@@ -359,7 +359,7 @@ SELECT pg_catalog.setval('building_id_seq', 77, true);
 --
 
 INSERT INTO map_object_type VALUES (1, 'zeni', 'zeni.png');
-INSERT INTO map_object_type VALUES (3, 'chest', 'chest.png');
+INSERT INTO map_object_type VALUES (3, 'box', 'box.png');
 INSERT INTO map_object_type VALUES (2, 'bush', 'bush.png');
 INSERT INTO map_object_type VALUES (4, 'capsule.blue', 'capsule-blue.png');
 INSERT INTO map_object_type VALUES (5, 'capsule.red', 'capsule-red.png');
