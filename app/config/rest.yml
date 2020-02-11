@@ -23,5 +23,5 @@ nelmio_cors:
     allow_headers: ['x-csrftoken', 'content-type', 'x-xsrf-token']
     allow_methods: ['POST', 'GET', 'PUT', 'PATCH', 'DELETE']
     forced_allow_origin_value: false
-    hosts: ['localhost', 'jdr-dba.dev', 'rpg-dbadventure.com']
+    hosts: "%allowed_hosts%"
     max_age: 3600

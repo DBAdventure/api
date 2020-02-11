@@ -18,3 +18,4 @@ parameters:
 
     # Front url
     front_url: 'http://localhost:3000'
+    allowed_hosts: ['localhost', 'jdr-dba.dev', 'rpg-dbadventure.com']
