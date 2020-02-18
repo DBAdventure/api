@@ -28,6 +28,7 @@ class GuildSettings extends AbstractType
                 Type\TextareaType::class,
                 [
                     'label' => 'form.message',
+                    'required' => false,
                 ]
             )
         ;

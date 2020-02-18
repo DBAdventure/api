@@ -2,6 +2,7 @@
 
 namespace Dba\GameBundle\Entity;
 
+use Doctrine\ORM\PersistentCollection;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as JMS;
@@ -134,7 +135,7 @@ class Guild
      *
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
@@ -158,7 +159,7 @@ class Guild
      *
      * @return string
      */
-    public function getShortName()
+    public function getShortName(): string
     {
         return $this->shortName;
     }
@@ -182,7 +183,7 @@ class Guild
      *
      * @return string
      */
-    public function getHistory()
+    public function getHistory(): string
     {
         return $this->history;
     }
@@ -196,7 +197,7 @@ class Guild
      */
     public function setMessage($message)
     {
-        $this->message = $message;
+        $this->message = (string) $message;
 
         return $this;
     }
@@ -206,7 +207,7 @@ class Guild
      *
      * @return string
      */
-    public function getMessage()
+    public function getMessage(): string
     {
         return $this->message;
     }
@@ -216,7 +217,7 @@ class Guild
      *
      * @return int
      */
-    public function getZeni()
+    public function getZeni(): int
     {
         return $this->zeni;
     }
@@ -240,7 +241,7 @@ class Guild
      *
      * @return bool
      */
-    public function isEnabled()
+    public function isEnabled(): bool
     {
         return $this->getEnabled();
     }
@@ -250,7 +251,7 @@ class Guild
      *
      * @return bool
      */
-    public function getEnabled()
+    public function getEnabled(): bool
     {
         return $this->enabled;
     }
@@ -274,7 +275,7 @@ class Guild
      *
      * @return Player
      */
-    public function getCreatedBy()
+    public function getCreatedBy(): Player
     {
         return $this->createdBy;
     }
@@ -298,7 +299,7 @@ class Guild
      *
      * @return int
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
@@ -322,7 +323,7 @@ class Guild
      *
      * @param GuildPlayer $guildPlayer
      */
-    public function removePlayer(GuildPlayer $guildPlayer)
+    public function removePlayer(GuildPlayer $guildPlayer): void
     {
         $this->players->removeElement($guildPlayer);
     }
@@ -330,7 +331,7 @@ class Guild
     /**
      * Get Players
      *
-     * @return ArrayCollection
+     * @return ArrayCollection|PersistentCollection
      */
     public function getPlayers()
     {
@@ -356,7 +357,7 @@ class Guild
      *
      * @param GuildEvent $guildEvent
      */
-    public function removeEvent(GuildEvent $guildEvent)
+    public function removeEvent(GuildEvent $guildEvent): void
     {
         $this->event->removeElement($guildEvent);
     }
@@ -364,7 +365,7 @@ class Guild
     /**
      * Get Events
      *
-     * @return ArrayCollection
+     * @return ArrayCollection|PersistentCollection
      */
     public function getEvents()
     {
@@ -390,7 +391,7 @@ class Guild
      *
      * @param GuildRank $guildRank
      */
-    public function removeRank(GuildRank $guildRank)
+    public function removeRank(GuildRank $guildRank): void
     {
         if (in_array($guildRank->getRole(), [GuildRank::ROLE_MODO, GuildRank::ROLE_ADMIN])) {
             return;
@@ -402,7 +403,7 @@ class Guild
     /**
      * Get Ranks
      *
-     * @return ArrayCollection
+     * @return ArrayCollection|PersistentCollection
      */
     public function getRanks()
     {
@@ -417,7 +418,7 @@ class Guild
      *
      * @return int
      */
-    public function getNbMembers()
+    public function getNbMembers(): int
     {
         return count($this->getPlayers()->filter(
             function ($entity) {
@@ -434,7 +435,7 @@ class Guild
      *
      * @return int
      */
-    public function getNbMaxMembers()
+    public function getNbMaxMembers(): int
     {
         return self::MAX_MEMBERS;
     }
