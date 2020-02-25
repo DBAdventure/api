@@ -171,6 +171,14 @@ class Player implements AdvancedUserInterface, Serializable
     private $confirmationToken;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="password_request_token", type="string", length=180, nullable=true, unique=true)
+     * @JMS\Exclude
+     */
+    private $passwordRequestToken;
+
+    /**
      * @var DateTime
      *
      * @ORM\Column(name="password_requested_at", type="datetime", nullable=true)
@@ -2847,6 +2855,30 @@ class Player implements AdvancedUserInterface, Serializable
     public function setConfirmationToken($confirmationToken)
     {
         $this->confirmationToken = $confirmationToken;
+
+        return $this;
+    }
+
+    /**
+     * Get password request token
+     *
+     * @return string
+     */
+    public function getPasswordRequestToken()
+    {
+        return $this->passwordRequestToken;
+    }
+
+    /**
+     * Set password request token
+     *
+     * @param string $passwordRequestToken
+     *
+     * @return Player
+     */
+    public function setPasswordRequestToken($passwordRequestToken)
+    {
+        $this->passwordRequestToken = $passwordRequestToken;
 
         return $this;
     }

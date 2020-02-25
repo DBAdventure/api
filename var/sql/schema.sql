@@ -589,6 +589,7 @@ CREATE TABLE player (
     password character varying(255) NOT NULL,
     last_login timestamp(0) without time zone DEFAULT NULL::timestamp without time zone,
     confirmation_token character varying(180) DEFAULT NULL::character varying,
+    password_request_token character varying(180) DEFAULT NULL::character varying,
     password_requested_at timestamp(0) without time zone DEFAULT NULL::timestamp without time zone,
     roles json NOT NULL,
     name character varying(50) NOT NULL,

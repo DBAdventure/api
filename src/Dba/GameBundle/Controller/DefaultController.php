@@ -82,6 +82,45 @@ class DefaultController extends BaseController
         return [];
     }
 
+    /**
+     * @Annotations\Post("/lost-password")
+     */
+    public function postLostPasswordAction(Request $request)
+    {
+        if (!empty($this->getUser())) {
+            return $this->forbidden();
+        }
+
+        $player = $this->repos()->getPlayerRepository()->findOneBy(
+            [
+                'username' => $request->request->get('username'),
+                'email' => $request->request->get('email'),
+            ]
+        );
+
+        if (empty($player)) {
+            // Simulate an everything is ok to prevent enumeration
+            return [];
+        }
+
+        $player->setPasswordRequestToken(rtrim(strtr(base64_encode(random_bytes(32)), '+/', '-_'), '='));
+        $player->setPasswordRequestedAt(new DateTime());
+
+        $this->em()->persist($player);
+        $this->em()->flush();
+
+        $this->services()->getMailService()->save(
+            $player,
+            $this->trans('account.lost.password'),
+            'lost-password',
+            [
+                'front_url' => $this->getParameter('front_url'),
+            ]
+        );
+
+        return [];
+    }
+
     protected function setRegisterStats(Request $request, Player $player)
     {
         $playerRegistration = $request->request->get('player_registration');
