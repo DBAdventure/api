@@ -53,7 +53,8 @@
         ],
         "post-update-cmd": [
             "@symfony-scripts"
-        ]
+        ],
+        "fix-cs": "@php ./bin/php-cs-fixer fix"
     },
     "config": {
         "bin-dir": "bin",
