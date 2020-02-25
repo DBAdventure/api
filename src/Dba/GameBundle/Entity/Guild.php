@@ -135,7 +135,7 @@ class Guild
      *
      * @return string
      */
-    public function getName(): string
+    public function getName(): ?string
     {
         return $this->name;
     }
@@ -159,7 +159,7 @@ class Guild
      *
      * @return string
      */
-    public function getShortName(): string
+    public function getShortName(): ?string
     {
         return $this->shortName;
     }
@@ -183,7 +183,7 @@ class Guild
      *
      * @return string
      */
-    public function getHistory(): string
+    public function getHistory(): ?string
     {
         return $this->history;
     }
@@ -207,7 +207,7 @@ class Guild
      *
      * @return string
      */
-    public function getMessage(): string
+    public function getMessage(): ?string
     {
         return $this->message;
     }
